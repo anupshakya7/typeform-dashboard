@@ -11,7 +11,10 @@
     <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicon.ico')); ?>">
    
     <?php echo $__env->make('layouts.head-css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <link rel="shortcut icon" href="<?php echo e(URL::asset('build/css/style.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/css/style.css')); ?>">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
+
 </head>
 
 <?php $__env->startSection('body'); ?>

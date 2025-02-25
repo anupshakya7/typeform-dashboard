@@ -11,7 +11,10 @@
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico')}}">
    
     @include('layouts.head-css')
-    <link rel="shortcut icon" href="{{ URL::asset('build/css/style.css')}}">
+    <link rel="stylesheet" href="{{ URL::asset('build/css/style.css')}}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
+
 </head>
 
 @section('body')

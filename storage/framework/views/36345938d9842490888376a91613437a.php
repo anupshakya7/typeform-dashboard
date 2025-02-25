@@ -357,11 +357,10 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Responsive Tables</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
                 <div class="flex-shrink-0">
                     <div class="form-check form-switch form-switch-right form-switch-md">
-                        <label for="responsive-table-showcode" class="form-label text-muted">Show Code</label>
-                        <input class="form-check-input code-switcher" type="checkbox" id="responsive-table-showcode">
+                        <!--info here-->
                     </div>
                 </div>
             </div><!-- end card header -->
@@ -372,124 +371,80 @@
                         <table class="table align-middle table-nowrap mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" style="width: 42px;">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="responsivetableCheck"></label>
-                                        </div>
-                                    </th>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Customer</th>
+                                   
+                                    <th scope="col"></th>
+                                    <th scope="col">Before</th>
+                                    <th scope="col">During</th>
+                                    <th scope="col">% Change</th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="responsivetableCheck01"></label>
-                                        </div>
-                                    </th>
-                                    <td><a href="#" class="fw-medium">#VZ2110</a></td>
-                                    <td>10 Oct, 14:47</td>
-                                    <td class="text-success"><i class="ri-checkbox-circle-line fs-17 align-middle"></i> Paid</td>
-                                    <td>
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                Jordan Kennedy
-                                            </div>
-                                        </div>
-                                    </td>
+                                  
+                                    <td><a href="#" class="fw-medium">Well-Functioning Government</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
                                     
                                 </tr>
                                 <tr>
-                                    <th scope="row">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="responsivetableCheck02"></label>
-                                        </div>
-                                    </th>
-                                    <td><a href="#" class="fw-medium">#VZ2109</a></td>
-                                    <td>17 Oct, 02:10</td>
-                                    <td class="text-success"><i class="ri-checkbox-circle-line fs-17 align-middle"></i> Paid</td>
-                                    <td>
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-4.jpg')); ?>" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                Jackson Graham
-                                            </div>
-                                        </div>
-                                    </td>
                                   
+                                    <td><a href="#" class="fw-medium">Low Levels of Corruption</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    
                                 </tr>
                                 <tr>
-                                    <th scope="row">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="responsivetableCheck03"></label>
-                                        </div>
-                                    </th>
-                                    <td><a href="#" class="fw-medium">#VZ2108</a></td>
-                                    <td>26 Oct, 08:20</td>
-                                    <td class="text-primary"><i class="ri-refresh-line fs-17 align-middle"></i> Refunded</td>
-                                    <td>
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                Lauren Trujillo
-                                            </div>
-                                        </div>
-                                    </td>
+                                  
+                                    <td><a href="#" class="fw-medium">Equitable Distribution Of Resource</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-red">3.8%</span><i class="fa-solid fa-arrow-trend-down trend-red"></i></td>
+                                    
+                                </tr>
+                                <tr>
+                                  
+                                    <td><a href="#" class="fw-medium">Good Relations With Neighbours</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    
+                                </tr>
+                                <tr>
+                                  
+                                    <td><a href="#" class="fw-medium">Free Flow Of Information</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    
+                                </tr>
+                                <tr>
+                                  
+                                    <td><a href="#" class="fw-medium">High Levels Of Human Capital</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-red">3.8%</span><i class="fa-solid fa-arrow-trend-down trend-red"></i></td>
+                                    
+                                </tr>
+                                <tr>
+                                  
+                                    <td><a href="#" class="fw-medium">Sound Business Environment</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    
+                                </tr>
+                                <tr>
+                                  
+                                    <td><a href="#" class="fw-medium">Acceptance Of The Rights Of Others</a></td>
+                                    <td>3.8</td>
+                                    <td>3.8</td>
+                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    
+                                </tr>
                                 
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="responsivetableCheck04"></label>
-                                        </div>
-                                    </th>
-                                    <td><a href="#" class="fw-medium">#VZ2107</a></td>
-                                    <td>02 Nov, 04:52</td>
-                                    <td class="text-danger"><i class="ri-close-circle-line fs-17 align-middle"></i> Cancel</td>
-                                    <td>
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                Curtis Weaver
-                                            </div>
-                                        </div>
-                                    </td>
-                                  
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="responsivetableCheck05"></label>
-                                        </div>
-                                    </th>
-                                    <td><a href="#" class="fw-medium">#VZ2106</a></td>
-                                    <td>10 Nov, 07:20</td>
-                                    <td class="text-success"><i class="ri-checkbox-circle-line fs-17 align-middle"></i> Paid</td>
-                                    <td>
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-1.jpg')); ?>" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                Jason schuller
-                                            </div>
-                                        </div>
-                                    </td>
-                               
-                                </tr>
                             </tbody>
                             
                         </table>
