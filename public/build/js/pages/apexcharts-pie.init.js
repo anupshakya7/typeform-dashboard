@@ -63,6 +63,30 @@ var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options)
 chart.render();
 }
 
+var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
+if(chartPieBasicColors2){
+var options = {
+    series: [34, 50, 23, 43, 42],
+    chart: {
+        height: 300,
+        type: 'pie',
+    },
+    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    legend: {
+        position: 'bottom'
+    },
+    dataLabels: {
+        dropShadow: {
+            enabled: false,
+        }
+    },
+    colors: chartPieBasicColors2
+};
+
+var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
+chart2.render();
+}
+
 // Simple Donut Charts
 var chartDonutBasicColors = getChartColorsArray("simple_dount_chart");
 if(chartDonutBasicColors){
