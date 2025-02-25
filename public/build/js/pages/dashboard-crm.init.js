@@ -87,7 +87,6 @@ function loadCharts() {
                     offsetY: 0
                 },
                 title: {
-                    text: 'Total Forecasted Value',
                     offsetX: 0,
                     offsetY: -30,
                     style: {
@@ -138,16 +137,16 @@ function loadCharts() {
      areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
      if (areachartSalesColorst) {
          var options = {
-             series: [{
-                 name: 'Goal',
-                 data: [37]
-             }, {
-                 name: 'Pending Forcast',
-                 data: [12]
-             }, {
-                 name: 'Revenue',
-                 data: [18]
-             }],
+            series: [{
+                name: 'Mean',
+                data: [37]
+            }, {
+                name: 'Country Mean',
+                data: [12]
+            }, {
+                name: 'Global Mean',
+                data: [18]
+            }],
              chart: {
                  type: 'bar',
                  height: 341,
@@ -177,7 +176,6 @@ function loadCharts() {
                      offsetY: 0
                  },
                  title: {
-                     text: 'Total Forecasted Value',
                      offsetX: 0,
                      offsetY: -30,
                      style: {
@@ -229,13 +227,13 @@ function loadCharts() {
      if (areachartSalesColorsth) {
          var options = {
              series: [{
-                 name: 'Goal',
+                 name: 'Mean',
                  data: [37]
              }, {
-                 name: 'Pending Forcast',
+                 name: 'Country Mean',
                  data: [12]
              }, {
-                 name: 'Revenue',
+                 name: 'Global Mean',
                  data: [18]
              }],
              chart: {
@@ -248,7 +246,7 @@ function loadCharts() {
              plotOptions: {
                  bar: {
                      horizontal: false,
-                     columnWidth: '65%',
+                     columnWidth: '20%',
                  },
              },
              stroke: {
@@ -267,7 +265,6 @@ function loadCharts() {
                      offsetY: 0
                  },
                  title: {
-                     text: 'Total Forecasted Value',
                      offsetX: 0,
                      offsetY: -30,
                      style: {

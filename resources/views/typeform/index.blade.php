@@ -339,8 +339,15 @@
 <!--area radar chart section starts here -->
 
 <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title mb-0">Radar Chart - Multiple series</h4>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0">Results by pillars of Positive Peace</h4>
+                    <div class="flex-shrink-0">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <!--info here-->
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/download.svg')}}"></object>
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/info.svg')}}"></object>
+                    </div>
+                </div>
                 </div><!-- end card header -->
 
                 <div class="card-body">
@@ -359,8 +366,10 @@
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
                 <div class="flex-shrink-0">
-                    <div class="form-check form-switch form-switch-right form-switch-md">
+                    <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/download.svg')}}"></object>
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/info.svg')}}"></object>
                     </div>
                 </div>
             </div><!-- end card header -->

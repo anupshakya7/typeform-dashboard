@@ -64,50 +64,51 @@ chart.render();
 
 // Radar Chart - Multi series
 var chartRadarMultiColors = getChartColorsArray("multi_radar");
-if(chartRadarMultiColors){
-var options = {
-    series: [{
-            name: 'Series 1',
-            data: [80, 50, 30, 40, 100, 20],
+if (chartRadarMultiColors) {
+    var options = {
+        series: [
+            {
+                name: 'Mean',
+                data: [80, 50, 30, 40, 100, 20, 60, 70],
+            },
+            {
+                name: 'Country Mean',
+                data: [20, 30, 40, 80, 20, 80, 50, 90],
+            },
+            {
+                name: 'Global Mean',
+                data: [44, 76, 78, 13, 43, 10, 55, 85],
+            }
+        ],
+        chart: {
+            height: 550,
+            type: 'radar',
+            dropShadow: {
+                enabled: true,
+                blur: 1,
+                left: 1,
+                top: 1
+            },
+            toolbar: {
+                show: false
+            },
         },
-        {
-            name: 'Series 2',
-            data: [20, 30, 40, 80, 20, 80],
+        stroke: {
+            width: 2
         },
-        {
-            name: 'Series 3',
-            data: [44, 76, 78, 13, 43, 10],
+        fill: {
+            opacity: 0.2
+        },
+        markers: {
+            size: 0
+        },
+        colors: chartRadarMultiColors,
+        xaxis: {
+            categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government', 'Low Levels of Corruption', 'Equitable Distribution Of Resource', 'Good Relations With Neighbours', 'Free Flow Of Information', 'High Levels Of Human Capital', 'Sound Business Environment']
         }
-    ],
-    chart: {
-        height: 350,
-        type: 'radar',
-        dropShadow: {
-            enabled: true,
-            blur: 1,
-            left: 1,
-            top: 1
-        },
-        toolbar: {
-            show: false
-        },
-    },
-    stroke: {
-        width: 2
-    },
-    fill: {
-        opacity: 0.2
-    },
-    markers: {
-        size: 0
-    },
-    colors: chartRadarMultiColors,
-    xaxis: {
-        categories: ['2014', '2015', '2016', '2017', '2018', '2019']
-    }
-};
-var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
-chart.render();
+    };
+    var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
+    chart.render();
 }
 
 // Polygon - Radar Charts
