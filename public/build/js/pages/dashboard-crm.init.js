@@ -68,7 +68,7 @@ function loadCharts() {
             plotOptions: {
                 bar: {
                     horizontal: false,
-                    columnWidth: '65%',
+                    columnWidth: '40%',
                 },
             },
             stroke: {
@@ -99,7 +99,7 @@ function loadCharts() {
             yaxis: {
                 labels: {
                     formatter: function (value) {
-                        return "$" + value + "k";
+                        return value;
                     }
                 },
                 tickAmount: 4,
@@ -157,7 +157,7 @@ function loadCharts() {
              plotOptions: {
                  bar: {
                      horizontal: false,
-                     columnWidth: '65%',
+                     columnWidth: '40%',
                  },
              },
              stroke: {
@@ -188,7 +188,7 @@ function loadCharts() {
              yaxis: {
                  labels: {
                      formatter: function (value) {
-                         return "$" + value + "k";
+                         return value;
                      }
                  },
                  tickAmount: 4,
@@ -246,7 +246,7 @@ function loadCharts() {
              plotOptions: {
                  bar: {
                      horizontal: false,
-                     columnWidth: '20%',
+                     columnWidth: '40%',
                  },
              },
              stroke: {
@@ -277,7 +277,7 @@ function loadCharts() {
              yaxis: {
                  labels: {
                      formatter: function (value) {
-                         return "$" + value + "k";
+                         return value;
                      }
                  },
                  tickAmount: 4,
