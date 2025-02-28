@@ -46,6 +46,7 @@
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
     <script src="{{ URL::asset('build/js/script.js')}}"></script>
+
 </body>
 
 </html>

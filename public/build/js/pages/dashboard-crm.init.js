@@ -49,15 +49,32 @@ function loadCharts() {
     if (areachartSalesColors) {
         var options = {
             series: [{
-                name: 'Goal',
-                data: [37]
+                name: 'Well Functioning Government',
+                data: [7]
             }, {
-                name: 'Pending Forcast',
-                data: [12]
+                name: 'Low Levels of corruption',
+                data: [4]
+            }, 
+            {
+                name: 'Equitable distribution of resources',
+                data: [8]
+            },{
+                name: 'Good relations with neighbours',
+                data: [5]
             }, {
-                name: 'Revenue',
-                data: [18]
+                name: 'Free Flow Of Information',
+                data: [7]
+            },{
+                name: 'High Levels Of Human Capital',
+                data: [4]
+            }, {
+                name: 'Sound Business Environment',
+                data: [6]
+            },{
+                name: 'Acceptance Of The Rights Of Others',
+                data: [3]
             }],
+            
             chart: {
                 type: 'bar',
                 height: 341,
@@ -69,7 +86,7 @@ function loadCharts() {
                 bar: {
                     horizontal: false,
                     columnWidth: '40%',
-                },
+                }
             },
             stroke: {
                 show: true,
@@ -77,7 +94,7 @@ function loadCharts() {
                 colors: ['transparent']
             },
             xaxis: {
-                categories: [''],
+                categories:  ['' ],
                 axisTicks: {
                     show: false,
                     borderType: 'solid',

@@ -42,14 +42,14 @@ function getChartColorsArray(chartId) {
 var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
 if(chartPieBasicColors){
 var options = {
-    series: [44, 55, 13, 43, 22],
+    series: [40, 60],
     chart: {
-        height: 300,
+        height: 192,
         type: 'pie',
     },
-    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    labels: ['Male', 'Female'],
     legend: {
-        position: 'bottom'
+        position: 'right'
     },
     dataLabels: {
         dropShadow: {
@@ -66,14 +66,14 @@ chart.render();
 var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
 if(chartPieBasicColors2){
 var options = {
-    series: [34, 50, 23, 43, 42],
+    series: [20, 10, 30, 40],
     chart: {
-        height: 300,
+        height: 192,
         type: 'pie',
     },
-    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    labels: ['>18 years', '18-24 years', '25-40 years', '40 years Over'],
     legend: {
-        position: 'bottom'
+        position: 'right'
     },
     dataLabels: {
         dropShadow: {

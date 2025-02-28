@@ -14,7 +14,7 @@
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
             <span class="logo-sm">
-                <img src="<?php echo e(URL::asset('build/images/logo-sm.png')); ?>" alt="" height="22">
+                <img src="<?php echo e(URL::asset('build/images/logo-sm.png')); ?>" alt="" height="30">
             </span>
             <span class="logo-lg">
                 <img src="<?php echo e(URL::asset('build/images/logo-light.png')); ?>" alt="" height="17">
