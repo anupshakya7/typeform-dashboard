@@ -31,9 +31,9 @@ return new class extends Migration
             $table->string('acceptance_rights');
             $table->string('positive_peace');
             $table->string('negative_peace');
-            $table->string('extra_ans1');
-            $table->string('extra_ans2');
-            $table->string('extra_ans3');
+            $table->string('extra_ans1')->nullable();
+            $table->string('extra_ans2')->nullable();
+            $table->string('extra_ans3')->nullable();
             $table->timestamps();
         });
     }
