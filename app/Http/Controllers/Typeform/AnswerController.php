@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Typeform;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -43,10 +44,8 @@ class AnswerController extends Controller
             $answersDBData[$labelDBData[$key]] = $ans;
         }
         
-        return $answersDBData;
+        $answerCreated = Answer::create($answersDBData);
         
-        
-        
-        return ans;
+        return $answerCreated;
     }
 }
