@@ -4,3 +4,10 @@
 .trend-red {
     color: rgb(235, 48, 48);
 }
+.footer {
+    background-color: #f3f3f9;
+}
+.trend-icon {
+    height: 14px;
+    width: 14px;
+}

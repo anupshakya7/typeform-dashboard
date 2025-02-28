@@ -225,7 +225,7 @@
                 <div class="col-sm-8">
                 <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Basic Radar Chart</h4>
+                    <h4 class="card-title mb-0">Mean Results</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
@@ -282,20 +282,14 @@
 <div class="col-sm-6">
 <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Sales Forecast</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Positive Peace</h4>
                     <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold text-uppercase fs-12">Sort by: </span><span class="text-muted">Nov 2021<i class="mdi mdi-chevron-down ms-1"></i></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Oct 2021</a>
-                                <a class="dropdown-item" href="#">Nov 2021</a>
-                                <a class="dropdown-item" href="#">Dec 2021</a>
-                                <a class="dropdown-item" href="#">Jan 2022</a>
-                            </div>
-                        </div>
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <!--info here-->
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/download.svg')}}"></object>
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/info.svg')}}"></object>
                     </div>
+                </div>
                 </div><!-- end card header -->
                 <div class="card-body pb-0">
                     <div id="sales-forecast-chart-2" data-colors='["--vz-primary", "--vz-success", "--vz-warning"]' class="apex-charts" dir="ltr"></div>
@@ -310,20 +304,14 @@
 <div class="col-sm-6">
 <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Sales Forecast</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Negative Peace</h4>
                     <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fw-semibold text-uppercase fs-12">Sort by: </span><span class="text-muted">Nov 2021<i class="mdi mdi-chevron-down ms-1"></i></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Oct 2021</a>
-                                <a class="dropdown-item" href="#">Nov 2021</a>
-                                <a class="dropdown-item" href="#">Dec 2021</a>
-                                <a class="dropdown-item" href="#">Jan 2022</a>
-                            </div>
-                        </div>
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <!--info here-->
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/download.svg')}}"></object>
+                        <object type="image/svg+xml" data="{{ URL::asset('build/icons/info.svg')}}"></object>
                     </div>
+                </div>
                 </div><!-- end card header -->
                 <div class="card-body pb-0">
                     <div id="sales-forecast-chart-3" data-colors='["--vz-primary", "--vz-success", "--vz-warning"]' class="apex-charts" dir="ltr"></div>
@@ -362,7 +350,7 @@
 
 <div class="row">
     <div class="col-xl-12">
-        <div class="card">
+        <div class="card mb-0">
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
                 <div class="flex-shrink-0">
@@ -394,7 +382,7 @@
                                     <td><a href="#" class="fw-medium">Well-Functioning Government</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    <td><span class="trend-blue">3.8%<img class="trend-icon" src="{{ URL::asset('build/icons/trend-blue.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 <tr>
@@ -402,7 +390,7 @@
                                     <td><a href="#" class="fw-medium">Low Levels of Corruption</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon" src="{{ URL::asset('build/icons/trend-blue.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 <tr>
@@ -410,7 +398,7 @@
                                     <td><a href="#" class="fw-medium">Equitable Distribution Of Resource</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-red">3.8%</span><i class="fa-solid fa-arrow-trend-down trend-red"></i></td>
+                                    <td><span class="trend-red">3.8%</span><img class="trend-icon" src="{{ URL::asset('build/icons/trend-red.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 <tr>
@@ -418,7 +406,7 @@
                                     <td><a href="#" class="fw-medium">Good Relations With Neighbours</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    <td><span class="trend-blue">3.8%<img class="trend-icon" src="{{ URL::asset('build/icons/trend-blue.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 <tr>
@@ -426,7 +414,7 @@
                                     <td><a href="#" class="fw-medium">Free Flow Of Information</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon" src="{{ URL::asset('build/icons/trend-blue.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 <tr>
@@ -434,7 +422,7 @@
                                     <td><a href="#" class="fw-medium">High Levels Of Human Capital</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-red">3.8%</span><i class="fa-solid fa-arrow-trend-down trend-red"></i></td>
+                                    <td><span class="trend-red">3.8%</span><img class="trend-icon" src="{{ URL::asset('build/icons/trend-red.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 <tr>
@@ -442,7 +430,7 @@
                                     <td><a href="#" class="fw-medium">Sound Business Environment</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon" src="{{ URL::asset('build/icons/trend-blue.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 <tr>
@@ -450,7 +438,7 @@
                                     <td><a href="#" class="fw-medium">Acceptance Of The Rights Of Others</a></td>
                                     <td>3.8</td>
                                     <td>3.8</td>
-                                    <td><span class="trend-blue">3.8%</span><i class="fa-solid fa-arrow-trend-up trend-blue "></i></td>
+                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon" src="{{ URL::asset('build/icons/trend-blue.svg')}}" alt="ArrowExternalRight"></td>
                                     
                                 </tr>
                                 

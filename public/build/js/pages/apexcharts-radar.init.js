@@ -42,20 +42,22 @@ var chartRadarBasicColors = getChartColorsArray("basic_radar");
 if(chartRadarBasicColors){
 var options = {
     series: [{
-        name: 'Series 1',
-        data: [80, 50, 30, 40, 100, 20],
+        name: 'Mean',
+        data: [80, 50, 30, 40, 100, 20, 40,60],
     }],
     chart: {
-        height: 350,
+        height: 550,
         type: 'radar',
         toolbar: {
             show: false
-        }
+        },
+       
     },
     colors: chartRadarBasicColors,
     xaxis: {
-        categories: ['January', 'February', 'March', 'April', 'May', 'June']
-    }
+        categories: ['Well-functioning Government', 'Low Levels Of Corruption', 'Equitable Distribution Of Resources', 'Good Relations With Neighbors', 'Free Flow Of Information', 'High Levels Of Human Capital', 'Sound Business Environment','Acceptance Of The Rights Of Others']
+    },
+   
 };
 
 var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
@@ -81,7 +83,7 @@ if (chartRadarMultiColors) {
             }
         ],
         chart: {
-            height: 550,
+            height: 650,
             type: 'radar',
             dropShadow: {
                 enabled: true,
