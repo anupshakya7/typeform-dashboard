@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Typeform\AnswerController;
 use App\Http\Controllers\Typeform\IndexController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -29,4 +30,7 @@ Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('typeform')->group(function(){
     Route::get('/index',[IndexController::class,'index'])->name('home.index');
+
+    //Answer
+    Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
 });
