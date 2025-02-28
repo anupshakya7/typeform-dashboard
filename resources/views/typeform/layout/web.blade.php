@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ URL::asset('build/css/style.css')}}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
 </head>
 

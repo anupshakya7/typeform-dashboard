@@ -1,5 +1,7 @@
 body{
     background-color: #F4F4F4 ;
+    font-family: 'Inter', sans-serif;
+
 }
 .stat-card {
     background-color: #537CF0;
@@ -32,7 +34,7 @@ body{
 .counter-value {
     font-size: 32px !important;
     color: white;
-    font-weight: 500;
+    font-weight: 600;
     
 }
 .icon-frame {
@@ -51,8 +53,25 @@ body{
   }
 h1,h2,h3,h4,h5,h6 {
     color: black;
+    font-family: 'Inter', sans-serif !important;
+}
+p {
+    font-size: 15px;
 }
 
 .card-title {
     color: #333;
+    font-family: 'Inter', sans-serif;
+
+}
+.form-select {
+    font-size: 15px;
+}
+.navbar-header .user-name-text {
+    font-size: 14px;
+    color: #222;
+}
+.apexcharts-legend-text {
+    color: #505050 !important;
+    font-family: 'Inter', sans-serif !important;
 }

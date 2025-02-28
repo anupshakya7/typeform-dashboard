@@ -93,7 +93,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div class="d-flex align-items-end justify-content-between mt-3">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                         data-target="320">0</span>
@@ -119,7 +119,7 @@
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div class="d-flex align-items-end justify-content-between mt-3">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
                                         data-target="150">0</span>
@@ -145,7 +145,7 @@
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div class="d-flex align-items-end justify-content-between mt-3">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                         data-target="57">0</span>
@@ -170,7 +170,7 @@
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div class="d-flex align-items-end justify-content-between mt-3">
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                         data-target="1520">0</span>
                                 </h4>
