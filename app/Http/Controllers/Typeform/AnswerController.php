@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Log;
 
 class AnswerController extends Controller
 {
+    public function index(){
+        return view('typeform.survey.index');
+    }
+
     public function getAnswer(Request $request){
         $allData = $request->all();
         
@@ -33,6 +37,7 @@ class AnswerController extends Controller
             'extra_ans2',
             'extra_ans3',
             ];
+
         $answersDBData = [];
         
         foreach($answers as $key => $answer){

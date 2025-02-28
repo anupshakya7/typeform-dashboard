@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Typeform\AnswerController;
+use App\Http\Controllers\Typeform\FormController;
 use App\Http\Controllers\Typeform\IndexController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -25,12 +26,18 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'root'])->
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('dashboard/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 
 Route::get('/',[IndexController::class,'index'])->name('home.index');
 
 Route::prefix('typeform')->group(function(){
-    //Answer
+    //Form
+    Route::resource('form',FormController::class);
+
+    //Survey
+    Route::resource('survey',AnswerController::class);
+
+    //Get Answer WebHook
     Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
 });

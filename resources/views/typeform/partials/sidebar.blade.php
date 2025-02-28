@@ -32,69 +32,45 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                <li class="menu-title"><span>@lang('translation.menu')</span></li>
+                {{-- Dashboard --}}
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{route('home.index')}}">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.dashboards')</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarDashboards">
+                </li>
+                {{-- Dashboard --}}
+
+                {{-- User Management --}}
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarUser">
+                        <i class="ri-dashboard-2-line"></i> <span>User Management</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarUser">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="dashboard-analytics" class="nav-link">@lang('translation.analytics')</a>
                             </li>
                         </ul>
                     </div>
-                </li> <!-- end Dashboard Menu -->
-
-
-                <li class="menu-title"><i class="ri-more-fill"></i> <span>@lang('translation.pages')</span></li>
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarAuth">
-                        <i class="ri-account-circle-line"></i> <span>@lang('translation.authentication')</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarAuth">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="#sidebarSignIn" class="nav-link" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebarSignIn">@lang('translation.signin')
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarSignIn">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-signin-basic" class="nav-link">@lang('translation.basic')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-signin-cover" class="nav-link">@lang('translation.cover')</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
+                {{-- User Management --}}
 
-                <li class="menu-title"><i class="ri-more-fill"></i> <span>@lang('translation.components')</span></li>
-
+                {{-- Form Management --}}
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarUI">
-                        <i class="ri-pencil-ruler-2-line"></i> <span>@lang('translation.base-ui')</span>
+                    <a class="nav-link menu-link" href="{{route('form.index')}}">
+                        <i class="ri-dashboard-2-line"></i> <span>Form Management</span>
                     </a>
-                    <div class="collapse menu-dropdown mega-dropdown-menu" id="sidebarUI">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="ui-alerts" class="nav-link">@lang('translation.alerts')</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </li>
+                {{-- Form Management --}}
+
+                {{-- Survey Management --}}
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('survey.index')}}">
+                        <i class="ri-dashboard-2-line"></i> <span>Survey Lists</span>
+                    </a>
+                </li>
+                {{-- Survey Management --}}
 
             </ul>
         </div>

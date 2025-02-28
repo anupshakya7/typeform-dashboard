@@ -10,4 +10,7 @@ class FormController extends Controller
     // public function settings(){
     //     return view('')
     // }
+    public function index(){
+        return view('typeform.form.index');
+    }
 }
