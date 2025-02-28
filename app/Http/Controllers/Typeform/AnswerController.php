@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Typeform;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AnswerController extends Controller
 {
@@ -44,7 +45,13 @@ class AnswerController extends Controller
             $answersDBData[$labelDBData[$key]] = $ans;
         }
         
-        $answerCreated = Answer::create($answersDBData);
+        try{
+            $answerCreated = Answer::create($answersDBData);
+        }catch(\Exception $e){
+            Log::error('Error creating answer: '.$e->getMessage());
+            return $e->getMessage();
+        }
+       
         
         return $answerCreated;
     }
