@@ -1,16 +1,16 @@
-@extends('typeform.layout.web')
-@section('title') @lang('translation.crm') @endsection
-@section('css')
-<link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+<link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet">
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <!--datatable responsive css-->
 <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet"
     type="text/css" />
 <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <!--greeting section -->
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
@@ -41,11 +41,11 @@
 
                 <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/download.svg')}}"></img>
+                    <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                 </a>
                 <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg')}}"></img>
+                    <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                 </a>
             </div>
@@ -139,7 +139,7 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-3.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -158,14 +158,14 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-4.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-4.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-4.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-5.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-5.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -184,21 +184,21 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-6.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-6.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-7.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-7.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-8.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-8.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -217,14 +217,14 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-6.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-6.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-7.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-7.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -243,7 +243,7 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-2.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-2.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -262,28 +262,28 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-5.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-5.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-6.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-6.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-7.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-7.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-8.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-8.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -302,14 +302,14 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-4.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-4.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-4.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-5.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-5.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -328,21 +328,21 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-3.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-10.jpg" data-bs-toggle="tooltip"
                                                 data-bs-trigger="hover" data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-10.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-10.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-9.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-9.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-9.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -361,21 +361,21 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-5.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-5.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-9.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-9.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-9.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-10.jpg" data-bs-toggle="tooltip"
                                                 data-bs-trigger="hover" data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-10.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-10.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -394,7 +394,7 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-2.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-2.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -413,21 +413,21 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-6.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-6.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-7.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-7.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-8.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-8.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -446,14 +446,14 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-6.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-6.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-7.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-7.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -472,7 +472,7 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-2.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-2.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -491,28 +491,28 @@
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-5.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-5.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-6.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-6.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-6.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-7.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-7.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
 
                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                 data-img="avatar-8.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Username">
-                                                <img src="{{URL::asset('build/images/users/avatar-8.jpg')}}" alt=""
+                                                <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" alt=""
                                                     class="rounded-circle avatar-xxs">
                                             </a>
                                         </div>
@@ -593,7 +593,7 @@
                                             </div>
                                             <div class="avatar-lg p-1">
                                                 <div class="avatar-title bg-light rounded-circle">
-                                                    <img src="{{URL::asset('build/images/users/multi-user.jpg')}}"
+                                                    <img src="<?php echo e(URL::asset('build/images/users/multi-user.jpg')); ?>"
                                                         id="companylogo-img"
                                                         class="avatar-md h-auto rounded-circle object-fit-cover" />
                                                 </div>
@@ -658,7 +658,7 @@
                                         <button type="button" class="btn btn-light"
                                             data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-success" id="add-btn">Add</button>
-                                        {{-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> --}}
+                                        
                                     </div>
                                 </div>
                             </form>
@@ -701,27 +701,27 @@
 
 
 
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
 <!-- list.js min js -->
-<script src="{{URL::asset('build/libs/list.js/list.min.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/libs/list.js/list.min.js')); ?>"></script>
 
 <!--list pagination js-->
-<script src="{{URL::asset('build/libs/list.pagination.js/list.pagination.min.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/libs/list.pagination.js/list.pagination.min.js')); ?>"></script>
 
 <!-- ecommerce-order init js -->
-<script src="{{URL::asset('build/js/pages/job-application.init.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/job-application.init.js')); ?>"></script>
 
 <!-- Sweet Alerts js -->
-<script src="{{URL::asset('build/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
 <!-- App js -->
-<script src="{{URL::asset('build/js/app.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
@@ -729,12 +729,13 @@
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> -->
 
-<script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
 
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/form/index.blade.php ENDPATH**/ ?>
