@@ -3,7 +3,7 @@
 
 
 @section('content')
-<h3>Form Page</h3>
+<a href="{{route('form.create')}}" class="btn btn-primary">Create</a>
 @endsection
 
 

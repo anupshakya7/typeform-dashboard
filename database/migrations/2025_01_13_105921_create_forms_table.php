@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('form_id');
             $table->string('form_title');
             $table->string('country');
+            $table->string('organization');
             $table->string('before');
             $table->string('during');
             $table->string('after');
