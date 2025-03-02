@@ -58,19 +58,19 @@
 
                 {{-- Organization Management --}}
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('form.index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span>Organization Management</span>
+                    <a class="nav-link menu-link" href="{{route('organization.index')}}">
+                        <i class="ri-dashboard-2-line"></i> <span>Organization</span>
                     </a>
                 </li>
                 {{-- Organization Management --}}
 
-                  {{-- Form Management --}}
+                  {{-- Branch Management --}}
                   <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('form.index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span>Form Management</span>
+                    <a class="nav-link menu-link" href="{{route('branch.index')}}">
+                        <i class="ri-dashboard-2-line"></i> <span>Branch</span>
                     </a>
                 </li>
-                {{-- Form Management --}}
+                {{-- Branch Management --}}
 
                 {{-- Form Management --}}
                 <li class="nav-item">

@@ -1,0 +1,1 @@
+<?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform/resources/views/typeform/branch/index.blade.php ENDPATH**/ ?>

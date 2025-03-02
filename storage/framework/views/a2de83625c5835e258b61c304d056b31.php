@@ -58,16 +58,16 @@
 
                 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
-                        <i class="ri-dashboard-2-line"></i> <span>Organization Management</span>
+                    <a class="nav-link menu-link" href="<?php echo e(route('organization.index')); ?>">
+                        <i class="ri-dashboard-2-line"></i> <span>Organization</span>
                     </a>
                 </li>
                 
 
                   
                   <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
-                        <i class="ri-dashboard-2-line"></i> <span>Form Management</span>
+                    <a class="nav-link menu-link" href="<?php echo e(route('branch.index')); ?>">
+                        <i class="ri-dashboard-2-line"></i> <span>Branch</span>
                     </a>
                 </li>
                 
