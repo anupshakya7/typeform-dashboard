@@ -222,9 +222,28 @@
 
         $('#organization').change(function(){
             var organizationVal = $('#organization').val();
-            console.log(organizationVal);
+
             if(organization !== ''){
-                alert('test');
+                $.ajax({
+                    url:"{{route('branch.get')}}",
+                    method:'GET',
+                    data:{
+                        organization_id:organizationVal
+                    },
+                    success:function(response){
+                       $('#branch').prop('disabled',false);
+                       $('#branch').html('');
+                       $('#branch').append('<option selected>Choose Branch</option>');
+                        response.branches.forEach(function(branch){
+                            $('#branch').append(new Option(branch.name,branch.id));
+                        })
+                    },
+                    error:function(xhr,status,error){
+                        $('#branch').prop('disabled',true);
+                        $('#branch').html('');
+                        $('#branch').append('<option selected>Choose Branch</option>');
+                    }
+                })
             }
         });
        

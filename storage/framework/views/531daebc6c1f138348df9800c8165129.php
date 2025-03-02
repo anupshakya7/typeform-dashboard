@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -5,13 +6,14 @@
     <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css')); ?>" /> <!-- 'classic' theme -->
     <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css')); ?>" /> <!-- 'monolith' theme -->
     <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css')); ?>" /> <!-- 'nano' theme -->
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <div class="card">
     <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Form Sync</h4>
     </div><!-- end card header -->
-
     <div class="card-body">
         <div class="live-preview">
             <form id="formSync">
@@ -39,7 +41,6 @@
     <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Form</h4>
     </div><!-- end card header -->
-
     <div class="card-body">
         <div class="live-preview">
             <form id="mainForm" action="<?php echo e(route('form.store')); ?>" method="POST">
@@ -62,12 +63,13 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="country" class="form-label">Country</label>
+                            
                             <select id="country" name="country" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Country</option>
-                                <option value="Nepal">Nepal</option>
-                                <option value="UK">UK</option>
-                                <option value="Australia">Australia</option>
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div><!--end col-->
@@ -77,8 +79,18 @@
                             <select id="organization" name="organization" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Organization</option>
-                                <option value="WorldVision">WorldVision</option>
-                                <option value="ATI">ATI</option>
+                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                    </div><!--end col-->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="branch" class="form-label">Branch</label>
+                            <select id="branch" name="branch" class="form-select" data-choices
+                                data-choices-sorting="true" disabled>
+                                <option selected>Choose Branch</option>
                             </select>
                         </div>
                     </div><!--end col-->
@@ -88,21 +100,21 @@
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">Before Date [From - To] </label>
-                            <input type="date" name="beforedate" class="form-control mt-2" data-provider="flatpickr"
+                            <input type="text" name="beforedate" class="form-control mt-2" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Before Date [From - To]">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">During Date [From - To] </label>
-                            <input type="date" name="duringdate" class="form-control mt-2" data-provider="flatpickr"
+                            <input type="text" name="duringdate" class="form-control mt-2" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Before Date [From - To]">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">After Date [From - To] </label>
-                            <input type="date" name="afterdate" class="form-control mt-2" data-provider="flatpickr"
+                            <input type="text" name="afterdate" class="form-control mt-2" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Before Date [From - To]">
                         </div>
                     </div>
@@ -136,10 +148,20 @@
 <script src="<?php echo e(URL::asset('build/libs/@simonwep/pickr/pickr.min.js')); ?>"></script>
 <script src="<?php echo e(URL::asset('build/js/pages/form-pickers.init.js')); ?>"></script>
 
-<script>
-    $(document).ready(function(){
-       
 
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+     document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Flatpickr
+        flatpickr('[data-provider="flatpickr"]', {
+            dateFormat: 'd M, Y',
+            enableTime: false, 
+            mode: 'range', 
+        });
+    });
+    $(document).ready(function(){
         $('#formSync').submit(function(e){
             e.preventDefault();
             var formId = $('#form_id').val();
@@ -167,8 +189,10 @@
 
                     $('#formId').val(formId);
                     $('#form_name').val(response.data.title);
+                    
+                    const filteredQuestions = response.data.fields.filter(item => item.type !== 'statement');
 
-                    response.data.fields.forEach(function(question){
+                    filteredQuestions.forEach(function(question){
                         var questionInput = $('<input>')
                             .attr('type','hidden')
                             .attr('name','questions[]')
@@ -195,6 +219,34 @@
                 }
             })
         })
+
+        $('#organization').change(function(){
+            var organizationVal = $('#organization').val();
+
+            if(organization !== ''){
+                $.ajax({
+                    url:"<?php echo e(route('branch.get')); ?>",
+                    method:'GET',
+                    data:{
+                        organization_id:organizationVal
+                    },
+                    success:function(response){
+                       $('#branch').prop('disabled',false);
+                       $('#branch').html('');
+                       $('#branch').append('<option selected>Choose Branch</option>');
+                        response.branches.forEach(function(branch){
+                            $('#branch').append(new Option(branch.name,branch.id));
+                        })
+                    },
+                    error:function(xhr,status,error){
+                        $('#branch').prop('disabled',true);
+                        $('#branch').html('');
+                        $('#branch').append('<option selected>Choose Branch</option>');
+                    }
+                })
+            }
+        });
+       
     })
 </script>
 <?php $__env->stopSection(); ?>

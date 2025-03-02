@@ -21,7 +21,9 @@ class FormController extends Controller
     // }
     public function index()
     {
-        return view('typeform.form.index');
+        $forms = Form::with('organization','branches')->get();
+
+        return view('typeform.form.index',compact('forms'));
     }
 
     public function create()
@@ -51,8 +53,8 @@ class FormController extends Controller
             'formId' => 'required|unique:forms,form_id',
             'form_name' => 'required|string',
             'country' => 'required|string',
-            'organization_id' => 'required|integer',
-            'branch_id' => 'nullable|integer',
+            'organization' => 'required|integer',
+            'branch' => 'nullable|integer',
             'beforedate' => 'required|string',
             'duringdate' => 'required|string',
             'afterdate' => 'required|string',
@@ -74,12 +76,13 @@ class FormController extends Controller
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
-                    'organization' => $validatedData['organization'],
+                    'organization_id' => $validatedData['organization'],
+                    'branch_id' => $validatedData['branch'],
                     'before' => $beforedate_start.' to '.$beforedate_end,
                     'during' => $duringdate_start.' to '.$duringdate_end,
                     'after' => $enddate_start.' to '.$enddate_end,
                 ];
-    
+                
                 Form::create($formData);
     
                 //Question Data
@@ -170,15 +173,15 @@ class FormController extends Controller
         $branches = Branch::where('organization_id',$validatedData['organization_id'])->get();
         
         if($branches){
-            return redirect()->json([
+            return response()->json([
                 'status'=>true,
                 'branches'=>$branches
-            ]);
+            ],200);
         }else{
-            return redirect()->json([
+            return response()->json([
                 'status'=>false,
                 'message'=>'Branch Not Found'
-            ]);
+            ],404);
         }
     }
 }

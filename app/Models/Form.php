@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Organization;
 
 class Form extends Model
 {
@@ -19,4 +20,12 @@ class Form extends Model
         'during',
         'after'
     ];
+
+    public function organization(){
+        return $this->hasOne(Organization::class,'id','organization_id');
+    }
+
+    public function branches(){
+        return $this->hasOne(Branch::class,'id','branch_id');
+    }
 }
