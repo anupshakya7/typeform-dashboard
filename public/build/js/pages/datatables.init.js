@@ -7,7 +7,12 @@ File: datatables init js
 */
 
 function initializeTables() {
-    let example = new DataTable('#example',);
+    // let example = new DataTable('#example',);
+    let example = new DataTable('#example', {
+        searching: false, 
+        paging: false, 
+        info: false
+    });
 
     let scrollVertical = new DataTable('#scroll-vertical', {
         "scrollY": "210px",
@@ -16,7 +21,11 @@ function initializeTables() {
     });
 
     let scrollHorizontal = new DataTable('#scroll-horizontal', {
-        "scrollX": true
+        "scrollX": true,
+        "ordering": true,
+        "info": false,
+        "searching": false,
+        "paging": false
     });
 
     let alternativePagination = new DataTable('#alternative-pagination', {
