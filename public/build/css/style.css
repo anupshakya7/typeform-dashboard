@@ -70,3 +70,36 @@ table th, table td {
 .table-head {
     background-color: #F6F6F6;
 }
+.participants-name {
+
+    white-space: wrap;
+    max-width: 350px; 
+}
+
+.show-more-less {
+    color: white !important; 
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 3px 5px;
+    background-color: #007bff;
+    border-radius: 5px;
+    font-size: 10px;
+    transition: all 0.1s ease;
+}
+
+.show-more-less:hover {
+    background-color: #0f70d8;
+}
+#scroll-horizontal {
+    table-layout: fixed; 
+    width: 100%; 
+}
+
+#scroll-horizontal th,
+#scroll-horizontal td {
+    width: auto; 
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
