@@ -56,6 +56,22 @@
                 </li>
                 {{-- User Management --}}
 
+                {{-- Organization Management --}}
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('form.index')}}">
+                        <i class="ri-dashboard-2-line"></i> <span>Organization Management</span>
+                    </a>
+                </li>
+                {{-- Organization Management --}}
+
+                  {{-- Form Management --}}
+                  <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('form.index')}}">
+                        <i class="ri-dashboard-2-line"></i> <span>Form Management</span>
+                    </a>
+                </li>
+                {{-- Form Management --}}
+
                 {{-- Form Management --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('form.index')}}">

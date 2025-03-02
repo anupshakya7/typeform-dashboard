@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Typeform\AnswerController;
+use App\Http\Controllers\Typeform\BranchController;
 use App\Http\Controllers\Typeform\FormController;
 use App\Http\Controllers\Typeform\IndexController;
+use App\Http\Controllers\Typeform\OrganizationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -32,6 +34,12 @@ Route::get('dashboard/{any}', [App\Http\Controllers\HomeController::class, 'inde
 Route::get('/',[IndexController::class,'index'])->name('home.index');
 
 Route::prefix('typeform')->group(function(){
+    //Organization
+    Route::resource('organization',OrganizationController::class);
+
+    //Branch
+    Route::resource('branch',BranchController::class);
+    
     //Form
     Route::resource('form',FormController::class);
 

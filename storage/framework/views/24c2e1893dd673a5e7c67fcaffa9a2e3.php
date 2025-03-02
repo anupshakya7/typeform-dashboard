@@ -2,7 +2,7 @@
 
 
 <?php $__env->startSection('content'); ?>
-<h3>Form Page</h3>
+<a href="<?php echo e(route('form.create')); ?>" class="btn btn-primary">Create</a>
 <?php $__env->stopSection(); ?>
 
 
