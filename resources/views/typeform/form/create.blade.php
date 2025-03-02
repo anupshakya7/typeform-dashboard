@@ -79,19 +79,18 @@
                             <select id="organization" name="organization" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Organization</option>
-                                <option value="WorldVision">WorldVision</option>
-                                <option value="ATI">ATI</option>
+                                @foreach($organizations as $organization)
+                                <option value="{{$organization->id}}">{{$organization->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div><!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="branch" class="form-label">Branch</label>
-                            <select id="branch" name="organization" class="form-select" data-choices
-                                data-choices-sorting="true">
+                            <select id="branch" name="branch" class="form-select" data-choices
+                                data-choices-sorting="true" disabled>
                                 <option selected>Choose Branch</option>
-                                <option value="Nepal Branch">Nepal Branch</option>
-                                <option value="UK Branch">UK Branch</option>
                             </select>
                         </div>
                     </div><!--end col-->
@@ -220,6 +219,15 @@
                 }
             })
         })
+
+        $('#organization').change(function(){
+            var organizationVal = $('#organization').val();
+            console.log(organizationVal);
+            if(organization !== ''){
+                alert('test');
+            }
+        });
+       
     })
 </script>
 @endsection

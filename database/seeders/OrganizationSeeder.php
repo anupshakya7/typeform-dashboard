@@ -14,11 +14,11 @@ class OrganizationSeeder extends Seeder
     public function run(): void
     {
         Organization::create([
-            'name'=>'WorldVision'
+            'name'=>'IEP'
         ]);
 
         Organization::create([
-            'name'=>'ATI'
+            'name'=>'GTI'
         ]);
     }
 }

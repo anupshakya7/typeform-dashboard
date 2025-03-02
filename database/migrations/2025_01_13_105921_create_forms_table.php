@@ -18,11 +18,15 @@ return new class extends Migration
             $table->string('form_id');
             $table->string('form_title');
             $table->string('country');
-            $table->string('organization');
+            $table->unsignedBigInteger('organization_id');
+            $table->unsignedBigInteger('branch_id');
             $table->string('before');
             $table->string('during');
             $table->string('after');
             $table->timestamps();
+
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
         });
     }
 

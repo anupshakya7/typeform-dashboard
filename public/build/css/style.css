@@ -56,3 +56,48 @@ h1,h2,h3,h4,h5,h6 {
 .card-title {
     color: #333;
 }
+
+.form-top-bar {
+    background-color: white;
+    padding: 12px;
+    /* box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); */
+    border-radius: 5px;
+}
+table th, table td {
+    font-size: 14px !important;
+    text-wrap: nowrap;
+}
+.table-head {
+    background-color: #F6F6F6;
+}
+.participants-name {
+    white-space: wrap;
+    max-width: 350px; 
+}
+
+.show-more-less {
+    color: white !important; 
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 3px 5px;
+    background-color: #007bff;
+    border-radius: 5px;
+    font-size: 10px;
+    transition: all 0.1s ease;
+}
+
+.show-more-less:hover {
+    background-color: #0f70d8;
+}
+#scroll-horizontal {
+    table-layout: fixed; 
+    width: 100%; 
+}
+
+#scroll-horizontal th,
+#scroll-horizontal td {
+    width: auto; 
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+}

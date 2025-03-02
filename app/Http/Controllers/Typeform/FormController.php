@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Typeform;
 
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Form;
+use App\Models\Organization;
 use App\Models\Question;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +28,10 @@ class FormController extends Controller
     {
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
-        return view('typeform.form.create',compact('countries'));
+
+        $organizations = Organization::all();
+
+        return view('typeform.form.create',compact('countries','organizations'));
     }
 
     public function reformatDate($dateString){
@@ -46,7 +51,8 @@ class FormController extends Controller
             'formId' => 'required|unique:forms,form_id',
             'form_name' => 'required|string',
             'country' => 'required|string',
-            'organization' => 'required|string',
+            'organization_id' => 'required|integer',
+            'branch_id' => 'nullable|integer',
             'beforedate' => 'required|string',
             'duringdate' => 'required|string',
             'afterdate' => 'required|string',
@@ -153,6 +159,26 @@ class FormController extends Controller
                 'status' => false,
                 'message' => 'Form Not Found'
             ], 404);
+        }
+    }
+
+    public function filterBranch(Request $request){
+        $validatedData = $request->validate([
+            'organization_id' => 'required|integer'
+        ]);
+
+        $branches = Branch::where('organization_id',$validatedData['organization_id'])->get();
+        
+        if($branches){
+            return redirect()->json([
+                'status'=>true,
+                'branches'=>$branches
+            ]);
+        }else{
+            return redirect()->json([
+                'status'=>false,
+                'message'=>'Branch Not Found'
+            ]);
         }
     }
 }

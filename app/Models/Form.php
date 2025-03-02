@@ -13,7 +13,8 @@ class Form extends Model
         'form_id',
         'form_title',
         'country',
-        'organization',
+        'organization_id',
+        'branch_id',
         'before',
         'during',
         'after'
