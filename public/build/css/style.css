@@ -109,39 +109,30 @@ table th, table td {
     
 }
 .loader-container{
-    display: none;
+    display: none !important;
     position:absolute;
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(68, 64, 64, 0.144);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 0.25em;
 }
 /* HTML: <div class="loader"></div> */
 .loader {
-    width: 50px;
+    width: 45px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 8px solid #514b82;
-    animation:
-      l20-1 0.8s infinite linear alternate,
-      l20-2 1.6s infinite linear;
+    background: 
+      radial-gradient(farthest-side,#a7a7a7 94%,#0000) top/8px 8px no-repeat,
+      conic-gradient(#0000 30%,#a7a7a7);
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+    animation: l13 0.6s infinite linear;
   }
-  @keyframes l20-1{
-     0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
-     12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
-     25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
-     50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-     62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-     75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
-     100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+  @keyframes l13{ 
+    100%{transform: rotate(1turn)}
   }
-  @keyframes l20-2{ 
-    0%    {transform:scaleY(1)  rotate(0deg)}
-    49.99%{transform:scaleY(1)  rotate(135deg)}
-    50%   {transform:scaleY(-1) rotate(0deg)}
-    100%  {transform:scaleY(-1) rotate(-135deg)}
-  }
+  
+
 /*loader css starts here*/
