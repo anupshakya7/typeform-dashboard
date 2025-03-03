@@ -64,8 +64,8 @@
                 </li>
                 {{-- Organization Management --}}
 
-                  {{-- Branch Management --}}
-                  <li class="nav-item">
+                {{-- Branch Management --}}
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('branch.index')}}">
                         <i class="ri-dashboard-2-line"></i> <span>Branch</span>
                     </a>

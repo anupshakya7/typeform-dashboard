@@ -21,7 +21,7 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Branch Management</h4>
+        <h4 class="fs-16 mb-1">Organization Management</h4>
     </div>
 </div>
 
@@ -32,8 +32,8 @@
         <div class="flex-shrink-0">
             <div class="d-flex gap-1 flex-wrap">
 
-                <a href="<?php echo e(route('branch.create')); ?>" class="btn btn-info add-btn"><i class="ri-add-line align-bottom me-1"></i> Create
-                    Branch</a>
+                <a href="<?php echo e(route('organization.create')); ?>" class="btn btn-info add-btn"><i class="ri-add-line align-bottom me-1"></i> Create
+                    Organization</a>
             </div>
         </div>
         <div class="flex-shrink-0">
@@ -63,7 +63,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Branch Lists</h5>
+                <h5 class="card-title mb-0">Organization Lists</h5>
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
@@ -84,18 +84,18 @@
                         <thead class="table-head">
                             <tr>
                                 <th>S.No.</th>
-                                <th>Organization</th>
-                                <th>Branch Name</th>
+                                <th>Name</th>
+                                <th>Logo</th>
                                 <th>Action</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><?php echo e($key+1); ?></td>
-                                <td><?php echo e(optional($branch->organization)->name); ?></td>
-                                <td><?php echo e($branch->name); ?></td>
+                                <td><?php echo e($organization->name); ?></td>
+                                <td><img src="<?php echo e($organization->logo); ?>" alt="Logo"></td>
                                 <td>
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -193,4 +193,4 @@
 <?php $__env->startSection('script'); ?>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/branch/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/organization/index.blade.php ENDPATH**/ ?>

@@ -1,4 +1,5 @@
 @extends('typeform.layout.web')
+
 @section('title') @lang('translation.crm') @endsection
 @section('css')
 <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
@@ -536,8 +537,7 @@
 <!-- Sweet Alerts js -->
 <script src="{{URL::asset('build/libs/sweetalert2/sweetalert2.min.js')}}"></script>
 
-<!-- App js -->
-<script src="{{URL::asset('build/js/app.js')}}"></script>
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -556,7 +556,7 @@
 <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
 
 
-
-@section('script')
+<!-- App js -->
+<script src="{{URL::asset('build/js/app.js')}}"></script>
 
 @endsection

@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet">
@@ -111,14 +112,15 @@
                                 <th>Form Name</th>
                                 <th>Country</th>
                                 <th>Organization</th>
+                                <th>Branch</th>
                                 <th>Before Survey</th>
                                 <th>During Survey</th>
                                 <th>After Survey</th>
                                 <th>Action</th>
-
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $__currentLoopData = $forms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $form): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <th scope="row">
                                     <div class="form-check">
@@ -126,14 +128,14 @@
                                             value="option1">
                                     </div>
                                 </th>
-                                <td>F012</td>
-                                <td>Governance</td>
-                                <td>Australia</td>
-                                <td>CSB</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-
+                                <td><?php echo e($form->form_id); ?></td>
+                                <td><?php echo e($form->form_title); ?></td>
+                                <td><?php echo e($form->country); ?></td>
+                                <td><?php echo e(optional($form->organization)->name); ?></td>
+                                <td><?php echo e(optional($form->branches)->name); ?></td>
+                                <td><?php echo e($form->before); ?> </td>
+                                <td><?php echo e($form->during); ?></td>
+                                <td><?php echo e($form->after); ?></td>
                                 <td>
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -158,203 +160,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>F012</td>
-                                <td>Governance</td>
-                                <td>Australia</td>
-                                <td>CSB</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>F012</td>
-                                <td>Governance</td>
-                                <td>Australia</td>
-                                <td>CSB</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>F012</td>
-                                <td>Governance</td>
-                                <td>Australia</td>
-                                <td>CSB</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>F012</td>
-                                <td>Governance</td>
-                                <td>Australia</td>
-                                <td>CSB</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>F012</td>
-                                <td>Governance</td>
-                                <td>Australia</td>
-                                <td>CSB</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-                                <td>05 Mar, 2025 <span class="fw-bold">to</span> 06 Mar, 2025</td>
-
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-
-
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
@@ -554,4 +360,4 @@
 <?php $__env->startSection('script'); ?>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform/resources/views/typeform/form/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/form/index.blade.php ENDPATH**/ ?>

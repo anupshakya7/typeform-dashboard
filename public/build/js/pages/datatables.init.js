@@ -16,7 +16,11 @@ function initializeTables() {
     });
 
     let scrollHorizontal = new DataTable('#scroll-horizontal', {
-        "scrollX": true
+        "scrollX": true,
+        "paging": false,
+        "info": false,
+        "searching": false,
+
     });
 
     let alternativePagination = new DataTable('#alternative-pagination', {

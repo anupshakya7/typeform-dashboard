@@ -64,8 +64,8 @@
                 </li>
                 
 
-                  
-                  <li class="nav-item">
+                
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('branch.index')); ?>">
                         <i class="ri-dashboard-2-line"></i> <span>Branch</span>
                     </a>
@@ -96,5 +96,4 @@
 </div>
 <!-- Left Sidebar End -->
 <!-- Vertical Overlay-->
-<div class="vertical-overlay"></div>
-<?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/partials/sidebar.blade.php ENDPATH**/ ?>
+<div class="vertical-overlay"></div><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/partials/sidebar.blade.php ENDPATH**/ ?>

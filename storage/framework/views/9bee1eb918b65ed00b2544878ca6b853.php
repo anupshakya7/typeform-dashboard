@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet">
@@ -535,8 +537,7 @@
 <!-- Sweet Alerts js -->
 <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
-<!-- App js -->
-<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -555,8 +556,8 @@
 <script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
 
 
-
-<?php $__env->startSection('script'); ?>
+<!-- App js -->
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform/resources/views/typeform/survey/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/survey/index.blade.php ENDPATH**/ ?>
