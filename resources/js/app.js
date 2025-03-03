@@ -758,10 +758,12 @@ File: Main Js File
 
         if (windowSize > 767)
             document.querySelector(".hamburger-icon").classList.toggle("open");
-
+        
         //For collapse horizontal menu
         if (document.documentElement.getAttribute("data-layout") === "horizontal") {
             document.body.classList.contains("menu") ? document.body.classList.remove("menu") : document.body.classList.add("menu");
+          
+    
         }
 
         //For collapse vertical menu

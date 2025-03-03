@@ -179,6 +179,7 @@
                     </ul>
                 </div>
             </div>
+           
         </div>
     </div>
     <!--end col-->
@@ -356,8 +357,6 @@
 <script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
 
 
-
-<?php $__env->startSection('script'); ?>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/form/index.blade.php ENDPATH**/ ?>

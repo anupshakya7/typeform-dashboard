@@ -106,7 +106,6 @@ table th, table td {
 /*loader css starts here*/
 .card{
     position: relative;
-    
 }
 .loader-container{
     display: none !important;
@@ -136,3 +135,99 @@ table th, table td {
   
 
 /*loader css starts here*/
+
+.btn-blue {
+    background-color: #299CDB;
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+.btn-blue:hover {
+    background-color: #1886c2;
+    color: white;
+}
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotate360 2s linear;
+}
+
+.note-tag {
+    padding: 1px 10px;
+    background-color: #949494;
+    color: white;
+    border-radius: 5px;
+    font-size: 13px;
+    display: inline-block;
+    margin: 12px 0px 10px 0px; 
+}
+.btn-submit-container {
+    padding: 10px;
+  
+}
+.btn-submit {
+    width: 100%;
+    font-size: 14px;
+}
+.navbar-menu {
+    background-color: white;
+    border: none;
+    box-shadow: 0px 0px 10px rgba(179, 179, 179, 0.25);
+}
+.navbar-brand-box {
+    /* padding: .625rem 1.5rem; */
+    border-bottom: 1px solid #f3f3f3;
+    text-align: left;
+}
+.aside-tag {
+    padding: 0.5rem 1.5rem;
+    font-size: 9px;
+    font-family: 'inter',sans-serif;
+    color: #727272;
+}
+
+
+.nav-item.active {
+    background-color: #F4F4F4 !important;  
+    border-radius: 5px;
+}
+
+.nav-item:hover {
+    background-color: #F4F4F4;  
+}
+
+.nav-item {
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+
+
+.navbar-menu .navbar-nav .nav-link {
+    padding: 7px 10px;
+    margin-bottom: 5px;
+    border-radius: 7px !important;
+    overflow: hidden !important;
+    color: #333;
+    font-family: 'Roboto',sans-serif;
+}
+.navbar-nav {
+    margin: 0px 10px;
+}
+.navbar-menu .navbar-nav .nav-link:hover,  .navbar-menu .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true]:after{
+    color: #333 !important;
+}
+.navbar-menu .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true] {
+    color: #333 !important;
+}
+.nav-link:before {
+    background-color: #333 !important;
+}
+.nav-link:hover:before {
+    background-color: #333 !important; 
+}

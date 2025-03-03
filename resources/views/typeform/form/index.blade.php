@@ -358,6 +358,4 @@
 
 
 
-@section('script')
-
 @endsection

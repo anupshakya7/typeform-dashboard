@@ -190,6 +190,4 @@
 
 
 
-@section('script')
-
 @endsection

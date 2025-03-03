@@ -43,3 +43,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+document.getElementById("syncFormBtn").addEventListener("click", function () {
+    let inputField = document.getElementById("form_id");
+    let icon = this.querySelector("i");
+
+    if (inputField.value.trim() === "") {
+        return; 
+    }
+
+    icon.classList.add("rotate");
+
+    setTimeout(() => {
+        icon.classList.remove("rotate");
+    }, 2000);
+});
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".nav-item").forEach(link => {
+        link.addEventListener("click", () => {
+            // Remove 'active' class from all nav-items
+            document.querySelectorAll(".nav-item").forEach(item => item.classList.remove('active'));
+
+            // Add 'active' class to the clicked nav-item
+            link.classList.add('active');
+        });
+    });
+});
+
+

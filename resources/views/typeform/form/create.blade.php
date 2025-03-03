@@ -15,6 +15,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 @section('content')
+<!--greeting section -->
+
+<div class="mb-3 pb-1 d-flex align-items-center flex-row">
+    <div class="flex-grow-1">
+        <h4 class="fs-16 mb-1">Create Survey Form</h4>
+        <p class="text-muted mb-0">Note: Please sync the form ID to create the form.</p>
+    </div>
+</div>
+
+<!--end greeting section-->
 <div class="card">
     <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Form Sync</h4>
@@ -26,20 +36,17 @@
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="form_id" class="form-label">Form Id</label>
-                            <input type="text" class="form-control" placeholder="Form Id" id="form_id">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Form Id" id="form_id">
+                                <button type="submit" id="syncFormBtn" class="btn btn-blue"><i
+                                        class="fa-solid fa-arrows-rotate me-2"></i><span>Sync</span></button>
+                            </div>
                             <span class="ms-1" id="formIdMessage" style="display:none;margin-top:5px;"></span>
                         </div>
                     </div>
-                    <!--end col-->
-                    <div class="col-lg-12">
-                        <div class="text-end">
-                            <button type="submit" id="syncFormBtn" class="btn btn-primary">Sync</button>
-                        </div>
-                    </div>
-                    <!--end col-->
                 </div>
-                <!--end row-->
             </form>
+
 
         </div>
     </div>
@@ -49,7 +56,7 @@
 
 </div>
 
-<div class="card" id="formForm" style="display:none;">
+<div class="card" id="formForm" style="display:flex;">
     <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Form</h4>
     </div><!-- end card header -->
@@ -112,35 +119,38 @@
                     </div>
                     <!--end col-->
                     <div class="card-header align-items-center d-flex mb-3">
-                        <h4 class="card-title mb-0 flex-grow-1">Form Timeline</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
-                            <label class="form-label mb-0">Before Date [From - To] </label>
+                            <label class="form-label mb-0">Before Survey Date [From - To] </label>
                             <input type="text" name="beforedate" class="form-control mt-2" data-provider="flatpickr"
-                                data-date-format="d M, Y" data-range-date="true" placeholder="Before Date [From - To]">
+                                data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
-                            <label class="form-label mb-0">During Date [From - To] </label>
+                            <label class="form-label mb-0">During Survey Date [From - To] </label>
                             <input type="text" name="duringdate" class="form-control mt-2" data-provider="flatpickr"
-                                data-date-format="d M, Y" data-range-date="true" placeholder="Before Date [From - To]">
+                                data-date-format="d M, Y" data-range-date="true" placeholder="Pick during date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
-                            <label class="form-label mb-0">After Date [From - To] </label>
+                            <label class="form-label mb-0">After Survey Date [From - To] </label>
                             <input type="text" name="afterdate" class="form-control mt-2" data-provider="flatpickr"
-                                data-date-format="d M, Y" data-range-date="true" placeholder="Before Date [From - To]">
+                                data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
+                    </div>
+                    <div>
+                        <p class="note-tag">Note: Please pick the starting and ending date for survey.</p>
+                    </div>
+                    <div class="btn-submit-container">
+
+                        <button type="submit" class="btn btn-blue btn-submit">Submit</button>
+
                     </div>
 
-                    <div class="col-lg-12">
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
                     <!--end col-->
                 </div>
                 <!--end row-->
@@ -148,16 +158,16 @@
         </div>
     </div>
     <div class="loader-container">
-    <div class="dot-spinner">
-    <div class="dot-spinner__dot"></div>
-    <div class="dot-spinner__dot"></div>
-    <div class="dot-spinner__dot"></div>
-    <div class="dot-spinner__dot"></div>
-    <div class="dot-spinner__dot"></div>
-    <div class="dot-spinner__dot"></div>
-    <div class="dot-spinner__dot"></div>
-    <div class="dot-spinner__dot"></div>
-</div>
+        <div class="dot-spinner">
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+        </div>
     </div>
 </div>
 
@@ -175,7 +185,7 @@
 <script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
 
-{{-- <script src="{{ URL::asset('build/js/app.js') }}"></script> --}}
+<script src="{{ URL::asset('build/js/app.js') }}"></script>
 <script src="{{ URL::asset('build/libs/@simonwep/pickr/pickr.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/form-pickers.init.js') }}"></script>
 

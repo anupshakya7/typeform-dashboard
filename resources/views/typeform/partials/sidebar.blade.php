@@ -5,19 +5,19 @@
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('build/images/logo-dark.png') }}" alt="" height="17">
+                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="" height="17">
+                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -25,7 +25,9 @@
             <i class="ri-record-circle-line"></i>
         </button>
     </div>
-
+    <div>
+        <p class="aside-tag">Community Strength Barometer</p>
+    </div>
     <div id="scrollbar">
         <div class="container-fluid">
 
@@ -33,9 +35,9 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 {{-- Dashboard --}}
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link menu-link" href="{{route('home.index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span>@lang('translation.dashboards')</span>
+                    <i class="fa-solid fa-gauge"></i> <span>@lang('translation.dashboards')</span>
                     </a>
                 </li>
                 {{-- Dashboard --}}
@@ -44,7 +46,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarUser">
-                        <i class="ri-dashboard-2-line"></i> <span>User Management</span>
+                        <i class="fa-solid fa-user"></i> <span>User Management</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarUser">
                         <ul class="nav nav-sm flex-column">
@@ -59,7 +61,7 @@
                 {{-- Organization Management --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('organization.index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span>Organization</span>
+                    <i class="fa-solid fa-building-columns"></i> <span>Organization</span>
                     </a>
                 </li>
                 {{-- Organization Management --}}
@@ -67,7 +69,7 @@
                 {{-- Branch Management --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('branch.index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span>Branch</span>
+                    <i class="fa-solid fa-landmark-flag"></i> <span>Branch</span>
                     </a>
                 </li>
                 {{-- Branch Management --}}
@@ -75,7 +77,7 @@
                 {{-- Form Management --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('form.index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span>Form Management</span>
+                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
                     </a>
                 </li>
                 {{-- Form Management --}}
@@ -83,7 +85,7 @@
                 {{-- Survey Management --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('survey.index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span>Survey Lists</span>
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
                     </a>
                 </li>
                 {{-- Survey Management --}}
