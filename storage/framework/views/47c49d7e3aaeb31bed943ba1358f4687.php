@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table id="scroll-horizontal" class="table nowrap align-middle table-bordered " style="width:100%">
+                    <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center" style="width:100%">
                         <thead class="table-head">
                             <tr>
                                 <th>S.No.</th>
@@ -94,7 +94,12 @@
                             <tr>
                                 <td><?php echo e($key+1); ?></td>
                                 <td><?php echo e($organization->name); ?></td>
-                                <td><img src="<?php echo e($organization->logo); ?>" alt="Logo"></td>
+                                <td>
+                                    <?php if($organization->logo): ?>
+
+                                        <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" alt="Logo" width="80">
+                                    <?php endif; ?>
+                                </td>
                                 <td>
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -105,15 +110,15 @@
                                             <li><a href="#!" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
+                                            <li><a href="<?php echo e(route('organization.edit',$organization)); ?>" class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item remove-item-btn">
+                                                <button class="dropdown-item remove-item-btn" data-organization-id="<?php echo e($organization->id); ?>" data-organization-name="<?php echo e($organization->name); ?>" data-bs-toggle="modal" data-bs-target="#zoomInModal">
                                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                     Delete
-                                                </a>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
@@ -151,9 +156,32 @@
 </div>
 <!--end row-->
 <!--form section ends here-->
-
-
-
+ <!-- Modal Blur -->
+ <div id="zoomInModal" class="modal fade zoomIn" tabindex="-1" aria-labelledby="zoomInModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="zoomInModalLabel">Delete Modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="deleteForm" method="POST">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('DELETE'); ?>
+                <div class="modal-body">
+                    <h5 class="fs-16">
+                        Are you sure you want to delete <span id="delete_item"></span>?
+                    </h5>
+                    <p class="text-muted">Deleting this item will permanently remove it from the system, <span class="text-danger"> along with all associated user details who are part of this company</span></p>
+                    <input type="hidden" name="organization_id" id="delete_item_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger ">Delete</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
 <!-- list.js min js -->
@@ -187,7 +215,25 @@
 
 <script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
 
+<script>
+    document.querySelectorAll('.remove-item-btn').forEach(button=>{
+        button.addEventListener('click',function(){
+            var organizationId = this.getAttribute('data-organization-id');
+            var organizationName = this.getAttribute('data-organization-name');
 
+            //Set the organization Id in the hidden input field
+            document.getElementById('delete_item_id').value = organizationId;
+
+            //Set the organization name
+            document.getElementById('delete_item').textContent = organizationName;
+
+            var deleteForm = document.getElementById('deleteForm');
+            console.log();
+            deleteForm.action = window.location.href+'/'+organizationId;
+            
+        })
+    })
+</script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/organization/index.blade.php ENDPATH**/ ?>

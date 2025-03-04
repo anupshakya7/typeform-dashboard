@@ -28,7 +28,7 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'root'])->
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-Route::get('dashboard/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 
 Route::get('/',[IndexController::class,'index'])->name('home.index');

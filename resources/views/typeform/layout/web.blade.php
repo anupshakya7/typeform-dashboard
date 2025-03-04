@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico')}}">
    
     @include('layouts.head-css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">
     <link rel="stylesheet" href="{{ URL::asset('build/css/style.css')}}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
@@ -45,7 +46,18 @@
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
     <script src="{{ URL::asset('build/js/script.js')}}"></script>
+
+    <script>
+        @if(session::has('success'))
+            toastr.success("{{session::get('success')}}");
+        @endif
+
+        @if(session::has('error'))
+            toastr.error("{{session::get('error')}}");
+        @endif
+    </script>
 </body>
 
 </html>
