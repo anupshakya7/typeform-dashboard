@@ -755,6 +755,7 @@ File: Main Js File
 
     function toggleHamburgerMenu() {
         var windowSize = document.documentElement.clientWidth;
+ 
 
         if (windowSize > 767)
             document.querySelector(".hamburger-icon").classList.toggle("open");
@@ -766,6 +767,7 @@ File: Main Js File
 
         //For collapse vertical menu
         if (document.documentElement.getAttribute("data-layout") === "vertical") {
+
             if (windowSize <= 1025 && windowSize > 767) {
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") == "sm" ?

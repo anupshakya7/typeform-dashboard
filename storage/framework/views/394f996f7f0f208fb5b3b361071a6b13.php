@@ -35,7 +35,7 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('home.index')); ?>">
                     <i class="fa-solid fa-gauge"></i> <span><?php echo app('translator')->get('translation.dashboards'); ?></span>
                     </a>

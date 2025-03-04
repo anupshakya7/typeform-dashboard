@@ -35,7 +35,7 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 {{-- Dashboard --}}
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('home.index')}}">
                     <i class="fa-solid fa-gauge"></i> <span>@lang('translation.dashboards')</span>
                     </a>

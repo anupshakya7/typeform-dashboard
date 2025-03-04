@@ -612,7 +612,7 @@ File: Main Js File
             }
             document.getElementById("scrollbar").setAttribute("data-simplebar", "");
             document.getElementById("navbar-nav").setAttribute("data-simplebar", "");
-            document.getElementById("scrollbar").classList.add("h-100");
+            // document.getElementById("scrollbar").classList.add("h-100");
         }
 
         /**
@@ -620,7 +620,7 @@ File: Main Js File
          */
         if (document.documentElement.getAttribute("data-layout") == "twocolumn") {
             document.getElementById("scrollbar").removeAttribute("data-simplebar");
-            document.getElementById("scrollbar").classList.remove("h-100");
+            // document.getElementById("scrollbar").classList.remove("h-100");
         }
 
         /**
@@ -773,6 +773,7 @@ File: Main Js File
                 document.documentElement.getAttribute("data-sidebar-size") == "sm" ?
                     document.documentElement.setAttribute("data-sidebar-size", "") :
                     document.documentElement.setAttribute("data-sidebar-size", "sm");
+                    
             } else if (windowSize > 1025) {
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
@@ -787,7 +788,7 @@ File: Main Js File
         // semibox menu
         if (document.documentElement.getAttribute("data-layout") === "semibox") {
             if (windowSize > 767) {
-                // (document.querySelector(".hamburger-icon").classList.contains("open")) ? document.documentElement.setAttribute('data-sidebar-visibility', "show"): '';
+                (document.querySelector(".hamburger-icon").classList.contains("open")) ? document.documentElement.setAttribute('data-sidebar-visibility', "show"): '';
                 if (document.documentElement.getAttribute('data-sidebar-visibility') == "show") {
                     document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
                         document.documentElement.setAttribute("data-sidebar-size", "sm") :
@@ -1144,6 +1145,7 @@ File: Main Js File
         document.getElementById("scrollbar").removeAttribute("data-simplebar");
         document.getElementById("navbar-nav").removeAttribute("data-simplebar");
         document.getElementById("scrollbar").classList.remove("h-100");
+        
 
         var splitMenu = horizontalMenuSplit;
         var extraMenuName = "More";

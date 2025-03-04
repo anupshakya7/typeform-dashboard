@@ -43,30 +43,58 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-document.getElementById("syncFormBtn").addEventListener("click", function () {
-    let inputField = document.getElementById("form_id");
-    let icon = this.querySelector("i");
 
-    if (inputField.value.trim() === "") {
-        return; 
-    }
+let syncFormBtn = document.getElementById("syncFormBtn");
 
-    icon.classList.add("rotate");
+if (syncFormBtn) {
+    syncFormBtn.addEventListener("click", function () {
+        let inputField = document.getElementById("form_id");
+        let icon = this.querySelector("i");
 
-    setTimeout(() => {
-        icon.classList.remove("rotate");
-    }, 2000);
-});
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".nav-item").forEach(link => {
-        link.addEventListener("click", () => {
-            // Remove 'active' class from all nav-items
-            document.querySelectorAll(".nav-item").forEach(item => item.classList.remove('active'));
+        if (inputField.value.trim() === "") {
+            return; 
+        }
 
-            // Add 'active' class to the clicked nav-item
-            link.classList.add('active');
-        });
+        icon.classList.add("rotate");
+
+        setTimeout(() => {
+            icon.classList.remove("rotate");
+        }, 2000);
     });
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const navItemsContainer = document.querySelector(".navbar-nav");
+
+    if (navItemsContainer) {
+        const navItems = navItemsContainer.querySelectorAll(".nav-item");
+
+        // Set active class based on URL hash
+        const hash = window.location.hash;
+        if (hash) {
+            const activeNavItem = document.querySelector(`.nav-item a[href="${hash}"]`).parentElement;
+            if (activeNavItem) {
+                activeNavItem.classList.add("active");
+            }
+        } else if (navItems.length > 0) {
+            navItems[0].classList.add("active");
+        }
+
+        navItemsContainer.addEventListener("click", function(event) {
+            const navItem = event.target.closest('.nav-item');
+            if (navItem) {
+                navItems.forEach(function(item) {
+                    item.classList.remove("active");
+                });
+
+                navItem.classList.add("active");
+                console.log('Nav item clicked!');
+
+                // Update URL hash
+                const href = navItem.querySelector('a').getAttribute('href');
+                window.location.hash = href;
+            }
+        });
+    }
 });
-
-
