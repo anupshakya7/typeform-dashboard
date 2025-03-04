@@ -30,4 +30,8 @@ class Answer extends Model
         'extra_ans2',
         'extra_ans3',
     ];
+
+    public function form(){
+        return $this->belongsTo(Form::class,'form_id','form_id');
+    }
 }

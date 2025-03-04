@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Log;
 
 class AnswerController extends Controller
 {
+    public function index(){
+        $answers = Answer::with('form')->select('id','event_id','form_id','name','age','gender','created_at')->paginate(10);
+
+        return view('typeform.survey.index',compact('answers'));
+    }
+
     public function getAnswer(Request $request){
         $allData = $request->all();
         
