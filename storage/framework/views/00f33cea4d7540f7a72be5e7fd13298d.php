@@ -1,20 +1,19 @@
-@extends('typeform.layout.web')
-@section('title') @lang('translation.crm') @endsection
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
     integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css')); ?>" />
 <!-- 'classic' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css')); ?>" />
 <!-- 'monolith' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css')); ?>" />
 <!-- 'nano' theme -->
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!--greeting section -->
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
@@ -62,8 +61,8 @@
     </div><!-- end card header -->
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="{{route('form.store')}}" method="POST">
-                @csrf
+            <form id="mainForm" action="<?php echo e(route('form.store')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -88,9 +87,9 @@
                             <select id="country" name="country" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Country</option>
-                                @foreach ($countries as $country)
-                                <option value="{{$country['name']}}">{{$country['name']}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
@@ -101,9 +100,9 @@
                             <select id="organization" name="organization" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Organization</option>
-                                @foreach($organizations as $organization)
-                                <option value="{{$organization->id}}">{{$organization->name}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
@@ -171,23 +170,23 @@
     </div>
 </div>
 
-{{-- --}}
-@endsection
+
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-<script src="{{ URL::asset('build/js/app.js') }}"></script>
-<script src="{{ URL::asset('build/libs/@simonwep/pickr/pickr.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/form-pickers.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/libs/@simonwep/pickr/pickr.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/form-pickers.init.js')); ?>"></script>
 
 
 <!-- Flatpickr JS -->
@@ -208,8 +207,8 @@ $(document).ready(function() {
         var formId = $('#form_id').val();
         var SyncIcon = $('#syncBtnIcon');
         SyncIcon.addClass("rotate");
-        var url = "{{route('form.get')}}";
-        var apiKey = @json(config('services.api.key'));
+        var url = "<?php echo e(route('form.get')); ?>";
+        var apiKey = <?php echo json_encode(config('services.api.key'), 15, 512) ?>;
         var questions = [];
 
         $.ajax({
@@ -270,7 +269,7 @@ $(document).ready(function() {
 
         if (organization !== '') {
             $.ajax({
-                url: "{{route('branch.get')}}",
+                url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',
                 data: {
                     organization_id: organizationVal
@@ -294,4 +293,5 @@ $(document).ready(function() {
 
 })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/form/create.blade.php ENDPATH**/ ?>

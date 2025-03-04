@@ -155,7 +155,7 @@ table th, table td {
 }
 
 .rotate {
-    animation: rotate360 2s linear;
+    animation: rotate360 0.8s linear;
 }
 
 .note-tag {

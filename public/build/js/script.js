@@ -46,22 +46,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let syncFormBtn = document.getElementById("syncFormBtn");
 
-if (syncFormBtn) {
-    syncFormBtn.addEventListener("click", function () {
-        let inputField = document.getElementById("form_id");
-        let icon = this.querySelector("i");
+// if (syncFormBtn) {
+//     syncFormBtn.addEventListener("click", function () {
+//         let inputField = document.getElementById("form_id");
+//         let icon = this.querySelector("i");
 
-        if (inputField.value.trim() === "") {
-            return; 
-        }
+//         if (inputField.value.trim() === "") {
+//             return; 
+//         }
 
-        icon.classList.add("rotate");
+//         icon.classList.add("rotate");
 
-        setTimeout(() => {
-            icon.classList.remove("rotate");
-        }, 2000);
-    });
-}
+//         setTimeout(() => {
+//             icon.classList.remove("rotate");
+//         }, 2000);
+//     });
+// }
 
 
 document.addEventListener("DOMContentLoaded", function() {
