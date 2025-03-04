@@ -10,6 +10,8 @@ class Answer extends Model
     use HasFactory;
 
     protected $fillable =[
+        'event_id',
+        'form_id',
         'name',
         'age',
         'gender',

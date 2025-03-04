@@ -9,15 +9,18 @@ use Illuminate\Support\Facades\Log;
 
 class AnswerController extends Controller
 {
-    public function index(){
-        return view('typeform.survey.index');
-    }
-
     public function getAnswer(Request $request){
         $allData = $request->all();
         
         $formId = $allData['form_response']['form_id'];
+        $eventId = $allData['event_id'];
         $answers = $allData['form_response']['answers'];
+        
+        $formData = [
+            'event_id'=>$eventId,
+            'form_id'=>$formId
+            ];
+        
         $labelDBData = [
             'name',
             'age',
@@ -37,7 +40,6 @@ class AnswerController extends Controller
             'extra_ans2',
             'extra_ans3',
             ];
-
         $answersDBData = [];
         
         foreach($answers as $key => $answer){
@@ -50,8 +52,10 @@ class AnswerController extends Controller
             $answersDBData[$labelDBData[$key]] = $ans;
         }
         
+        $DBData = array_merge($formData,$answersDBData);
+        
         try{
-            $answerCreated = Answer::create($answersDBData);
+            $answerCreated = Answer::create($DBData);
         }catch(\Exception $e){
             Log::error('Error creating answer: '.$e->getMessage());
             return $e->getMessage();
