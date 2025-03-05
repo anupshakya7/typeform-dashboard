@@ -65,18 +65,7 @@
                 <h5 class="card-title mb-0">Organization Lists</h5>
             </div>
             <div class="card-body">
-                <div class="d-flex flex-row align-items-center justify-content-between pb-3">
-                    <div class="d-flex flex-row align-items-center gap-1"><span>Showing</span> <select
-                            class="form-select" aria-label="Default select example">
-                            <option selected>10</option>
-                            <option value="1">20</option>
-                            <option value="2">50</option>
-                            <option value="3">100</option>
-                        </select> <span>entries</span> </div>
-                    <div class="row">
                 
-                    </div>
-                </div>
 
                 <div class="table-responsive">
                     <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center" style="width:100%">
@@ -92,7 +81,7 @@
                         <tbody>
                             <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><?php echo e($key+1); ?></td>
+                                <td><?php echo e($organization->serial_no); ?></td>
                                 <td><?php echo e($organization->name); ?></td>
                                 <td>
                                     <?php if($organization->logo): ?>
@@ -114,12 +103,14 @@
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a>
                                             </li>
+                                            <?php if(Auth::user()->organization_id !== $organization->id): ?>
                                             <li>
                                                 <button class="dropdown-item remove-item-btn" data-organization-id="<?php echo e($organization->id); ?>" data-organization-name="<?php echo e($organization->name); ?>" data-bs-toggle="modal" data-bs-target="#zoomInModal">
                                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                     Delete
                                                 </button>
                                             </li>
+                                            <?php endif; ?>
                                         </ul>
                                     </div>
                                 </td>
@@ -128,19 +119,33 @@
                         </tbody>
                     </table>
                 </div>
+                
                 <!--tfooter section-->
                 <div class="align-items-center mt-xl-3 mt-4 justify-content-between d-flex">
+                    <?php if($organizations->hasPages()): ?>
                     <div class="flex-shrink-0">
-                        <div class="text-muted">Showing <span class="fw-semibold">5</span> of <span
-                                class="fw-semibold">25</span> Results </div>
+                        <div class="text-muted">Showing <span class="fw-semibold"><?php echo e($organizations->perPage()); ?></span> of <span
+                                class="fw-semibold"><?php echo e($organizations->total()); ?></span> Results </div>
                     </div>
                     <ul class="pagination pagination-separated pagination-sm mb-0">
-                        <li class="page-item disabled"> <a href="#" class="page-link">Previous</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">1</a> </li>
-                        <li class="page-item active"> <a href="#" class="page-link">2</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">3</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">Next</a> </li>
+                        <?php if($organizations->onFirstPage()): ?>
+                            <li class="page-item disabled"> <a href="#" class="page-link">Previous</a> </li>
+                        <?php else: ?>
+                            <li class="page-item"> <a href="<?php echo e($organizations->previousPageUrl()); ?>" class="page-link">Previous</a> </li>
+                        <?php endif; ?>
+                       
+                        <?php $__currentLoopData = $organizations->getUrlRange(1,$organizations->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page=>$url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li class="page-item <?php echo e($page ==$organizations->currentPage() ? 'active' :''); ?>"> <a href="<?php echo e($url); ?>" class="page-link"><?php echo e($page); ?></a> </li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        
+
+                        <?php if($organizations->hasMorePages()): ?>
+                            <li class="page-item"> <a href="<?php echo e($organizations->nextPageUrl()); ?>" class="page-link">Next</a> </li>
+                        <?php else: ?>
+                            <li class="page-item disabled"> <a href="#" class="page-link">Next</a> </li>
+                        <?php endif; ?>
                     </ul>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
