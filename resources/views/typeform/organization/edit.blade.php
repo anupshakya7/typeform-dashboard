@@ -52,15 +52,15 @@
                         <div class="mb-3">
                             <label for="logo" class="form-label">Logo</label>
                             <input type="file" class="form-control" name="logo" id="logo" onchange="getImagePreview(event,'logo_image')">
-                            @if($organization->logo)
-                            <img src="{{asset('storage/'.$organization->logo)}}" id="logo_image" alt="{{$organization->name}}" style="width:100px;height:100px;padding:5px;object-fit:contain;"></div>
-                            @endif
+                            <div id="logo_image">
+                                @if($organization->logo)
+                                <img src="{{asset('storage/'.$organization->logo)}}" alt="{{$organization->name}}" style="width:100px;padding:5px;object-fit:contain;"></div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="btn-submit-container">
-
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-
                     </div>
 
                     <!--end col-->
@@ -107,12 +107,17 @@
 
 <script>
 function getImagePreview(event,divId){
-    console.log(divId);
     var image = URL.createObjectURL(event.target.files[0]);
     var imageDiv = document.getElementById(divId);
-    console.log(imageDiv);
 
-    imageDiv.src = image;
+    imageDiv.innerHTML = '';
+
+    var imageTag = document.createElement('img');
+    imageTag.src = image;
+    imageTag.width = "100";
+    imageTag.style.padding = "5px";
+    imageDiv.appendChild(imageTag);
+  
 }
 </script>
 @endsection

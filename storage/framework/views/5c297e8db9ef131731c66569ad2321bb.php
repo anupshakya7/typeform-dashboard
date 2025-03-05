@@ -5,5 +5,5 @@
 <script src="<?php echo e(URL::asset('build/js/pages/plugins/lord-icon-2.1.0.js')); ?>"></script>
 <script src="<?php echo e(URL::asset('build/js/plugins.js')); ?>"></script>
 <?php echo $__env->yieldContent('script'); ?>
-<?php echo $__env->yieldContent('script-bottom'); ?>
+
 <?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/layouts/vendor-scripts.blade.php ENDPATH**/ ?>

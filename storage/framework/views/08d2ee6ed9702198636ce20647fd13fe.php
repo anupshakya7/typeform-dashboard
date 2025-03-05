@@ -28,7 +28,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Community Strength Barometer</h5>
+                <h5 class="card-title mb-0">Organization</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -40,15 +40,23 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>1</td>
+                                <td><?php echo e($organization->id); ?></td>
                             </tr>
                             <tr>
-                                <th>Permission</th>
-                                <td>user permission</td>
+                                <th>Name</th>
+                                <td><?php echo e($organization->name); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Logo</th>
+                                <td>
+                                    <?php if($organization->logo): ?>
+                                    <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" width="80" alt="Logo">
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td>2024-12-04</td>
+                                <td><?php echo e(Carbon\Carbon::parse($organization->created_at)->format('d M, Y')); ?></td>
                             </tr>
                         </tbody>
                     </table>

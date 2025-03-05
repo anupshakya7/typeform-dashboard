@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Organization Details</h4>
-        <p class="text-muted mb-0">View organization details, including structure, contacts, departments, and roles.</p>
+        <h4 class="fs-16 mb-1">Branch Details</h4>
+        <p class="text-muted mb-0">View branch details, including structure, contacts, departments, and roles.</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Organization</h5>
+                <h5 class="card-title mb-0">Branch</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -41,23 +41,19 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{$organization->id}}</td>
+                                <td>{{$branch->id}}</td>
+                            </tr>
+                            <tr>
+                                <th>Organization</th>
+                                <td>{{optional($branch->organization)->name}}</td>
                             </tr>
                             <tr>
                                 <th>Name</th>
-                                <td>{{$organization->name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Logo</th>
-                                <td>
-                                    @if($organization->logo)
-                                    <img src="{{asset('storage/'.$organization->logo)}}" width="80" alt="Logo">
-                                    @endif
-                                </td>
+                                <td>{{$branch->name}}</td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td>{{Carbon\Carbon::parse($organization->created_at)->format('d M, Y')}}</td>
+                                <td>{{Carbon\Carbon::parse($branch->created_at)->format('d M, Y')}}</td>
                             </tr>
                         </tbody>
                     </table>

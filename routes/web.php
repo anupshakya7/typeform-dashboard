@@ -36,9 +36,11 @@ Route::get('/',[IndexController::class,'index'])->name('home.index');
 Route::prefix('typeform')->group(function(){
     //Organization
     Route::resource('organization',OrganizationController::class);
+    Route::get('organization/generate/csv',[OrganizationController::class,'generateCSV'])->name('organization.csv');
 
     //Branch
     Route::resource('branch',BranchController::class);
+    Route::get('branch/generate/csv',[BranchController::class,'generateCSV'])->name('branch.csv');
     
     //Form
     Route::resource('form',FormController::class);

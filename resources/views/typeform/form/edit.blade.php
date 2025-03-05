@@ -19,48 +19,53 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Create Organization</h4>
-        <p class="text-muted mb-0">Note: Please create Organization.</p>
+        <h4 class="fs-16 mb-1">Update Branch</h4>
+        <p class="text-muted mb-0">Note: Please update Branch.</p>
     </div>
 </div>
 
 
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Organization</h5>
+        <h5 class="card-title mb-0">Branch</h5>
         <a class="btn btn-info" onclick="history.back(); return false;">
                 <i class="ri-arrow-left-line"></i> Back
             </a>
     </div>
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="{{route('organization.store')}}" method="POST" enctype="multipart/form-data">
+            <form id="mainForm" action="{{route('branch.update',$branch)}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" placeholder="Name" id="name">
+                            <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
+                            <select id="organization_id" name="organization_id" class="form-select" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Organization</option>
+                                @foreach($organizations as $organization)
+                                <option value="{{$organization->id}}" {{$branch->organization_id == $organization->id ? 'selected':''}}>{{$organization->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('organization_id')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+                            <input type="text" name="name" value="{{old('name',$branch->name)}}" class="form-control" placeholder="Name" id="name">
                             @error('name')
                                 <span class="text-danger ms-1">{{$message}}</span>
                             @enderror
                         </div>
                     </div>
+                    
                     <!--end col-->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="logo" class="form-label">Logo</label>
-                            <input type="file" class="form-control" name="logo" id="logo" onchange="getImagePreview(event,'logo_image')">
-                            @error('logo')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
-                            <div id="logo_image"></div>
-                        </div>
-                    </div>
                     <div class="btn-submit-container">
-
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-
                     </div>
 
                     <!--end col-->
@@ -104,19 +109,4 @@
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-function getImagePreview(event,divId){
-    var image = URL.createObjectURL(event.target.files[0]);
-    var imageDiv = document.getElementById(divId);
-
-    imageDiv.innerHTML = '';
-
-    var imageTag = document.createElement('img');
-    imageTag.src = image;
-    imageTag.width = "100";
-    imageTag.style.padding = "5px";
-    imageDiv.appendChild(imageTag);
-}
-</script>
 @endsection

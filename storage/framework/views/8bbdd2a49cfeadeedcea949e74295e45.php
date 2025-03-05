@@ -86,9 +86,10 @@
                                         Survey Conducted</p>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <a href="#">
+                                    <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas">
                                         <i class="fa-solid fa-ellipsis"></i>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
@@ -114,23 +115,12 @@
                                         Country Involved</p>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <a href="" class="btn-info" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+
+                                    <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas">
                                         <i class="fa-solid fa-ellipsis"></i>
-                                    </a>
-                                    <div class="customizer-setting d-none d-md-block">
-                                        <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2"
-                                            data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
                                     </div>
-                                    <!-- <div class="customizer-setting d-none d-md-block">
-                                        <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2"
-                                            data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
-                                    </div> -->
+
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
@@ -156,7 +146,10 @@
                                         Organizations</p>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <i class="fa-solid fa-ellipsis"></i>
+                                    <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </div>
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
@@ -181,7 +174,10 @@
                                         People</p>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <i class="fa-solid fa-ellipsis"></i>
+                                    <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </div>
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">

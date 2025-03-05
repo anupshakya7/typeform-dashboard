@@ -19,8 +19,8 @@ class OrganizationController extends Controller
         return view('typeform.organization.index',compact('organizations'));
     }
 
-    public function show(){
-        return view('typeform.organization.view');
+    public function show(Organization $organization){
+        return view('typeform.organization.view',compact('organization'));
     }
 
     public function create(){
@@ -85,10 +85,10 @@ class OrganizationController extends Controller
 
     public function destroy(Request $request){
         $validatedData = $request->validate([
-            'organization_id'=>'required|integer'
+            'item_id'=>'required|integer'
         ]);
 
-        $organizationDelete = Organization::find($validatedData['organization_id']);
+        $organizationDelete = Organization::find($validatedData['item_id']);
 
         if($organizationDelete){
             if($organizationDelete->logo && Storage::disk('public')->exists($organizationDelete->logo)){
@@ -101,5 +101,26 @@ class OrganizationController extends Controller
         }else{
             return redirect()->back()->with('error','Failed to Delete Organization');
         }
+    }
+
+    public function generateCSV(){
+        $organizations = Organization::all();
+        $filename = "organization.csv";
+        $fp = fopen($filename,'w+');
+        fputcsv($fp,array('ID','Name','Created At'));
+
+        foreach($organizations as $row){
+            fputcsv($fp,array(
+                $row->id,
+                $row->name,
+                $row->created_at
+            ));
+        }
+
+        fclose($fp);
+        $headers = array('Content-Type' => 'text/csv');
+
+        return response()->download($filename,'organization.csv',$headers);
+
     }
 }
