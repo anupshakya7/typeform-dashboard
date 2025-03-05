@@ -25,9 +25,12 @@
 
 
 <div class="card" id="formForm">
-    <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Organization</h4>
-    </div><!-- end card header -->
+    <div class="card-header d-flex flex-row justify-content-between align-items-center">
+        <h5 class="card-title mb-0">Organization</h5>
+        <a class="btn btn-info" onclick="history.back(); return false;">
+                <i class="ri-arrow-left-line"></i> Back
+            </a>
+    </div>
     <div class="card-body">
         <div class="live-preview">
             <form id="mainForm" action="<?php echo e(route('organization.update',$organization)); ?>" method="POST" enctype="multipart/form-data">
@@ -110,15 +113,12 @@ unset($__errorArgs, $__bag); ?>
 
 <script>
 function getImagePreview(event,divId){
+    console.log(divId);
     var image = URL.createObjectURL(event.target.files[0]);
     var imageDiv = document.getElementById(divId);
-
-    imageDiv.innerHTML = '';
+    console.log(imageDiv);
 
     imageDiv.src = image;
-    // imageTag.width = "150";
-    // imageTag.style.padding = "5px";
-    // imageDiv.appendChild(imageTag);
 }
 </script>
 <?php $__env->stopSection(); ?>

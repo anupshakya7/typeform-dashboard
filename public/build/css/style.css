@@ -241,6 +241,12 @@ table th, table td {
 :is([data-layout=vertical],[data-layout=semibox])[data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item {
     border-radius: 5px !important;
 }
+.offcanvas {
+    width: 300px !important;
+}
+.bg-offcanvas {
+    background-color: #537cf0 !important;
+}
 .dataTables_scrollBody{
     min-height: 225px;
 }
