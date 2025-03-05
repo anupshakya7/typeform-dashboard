@@ -120,6 +120,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $__currentLoopData = $answers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $answer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <th scope="row">
                                     <div class="form-check">
@@ -127,16 +128,20 @@
                                             value="option1">
                                     </div>
                                 </th>
-                                <td>S012</td>
-                                <td>Global Peace Survey</td>
+                                <td><?php echo e($answer->event_id); ?></td>
+                                <td><?php echo e($answer->form->form_title); ?></td>
                                 <td>
                                     <span class="participants-name">
-                                        James Carter, Olivia Benson, Ethan Wallace, Sophia Mitchell, Liam Anderson
+                                       <?php echo e($answer->name); ?>
+
                                     </span>
                                 </td>
-                                <td>24</td>
-                                <td>Female</td>
-                                <td>05 Mar, 2025</td>
+                                <td> <?php echo e($answer->age); ?></td>
+                                <td> <?php echo e($answer->gender); ?></td>
+                                <?php
+                                    $date = Carbon\Carbon::parse($answer->created_at)->format('d M,Y');
+                                ?>
+                                <td><?php echo e($date); ?></td>
                                 <td>
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -160,208 +165,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>S012</td>
-                                <td>Global Peace Survey</td>
-                                <td>
-                                    <span class="participants-name">
-                                        James Carter, Olivia Benson, Ethan Wallace, Sophia Mitchell, Liam Anderson,
-                                        Sophia Mitchell, Liam Anderson
-                                    </span>
-                                </td>
-                                <td>24</td>
-                                <td>Female</td>
-                                <td>05 Mar, 2025</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a></li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>S012</td>
-                                <td>Global Peace Survey</td>
-                                <td>
-                                    <span class="participants-name">
-                                        James Carter, Olivia Benson, Ethan Wallace, Sophia Mitchell, Liam Anderson
-                                    </span>
-                                </td>
-                                <td>24</td>
-                                <td>Female</td>
-                                <td>05 Mar, 2025</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a></li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>S012</td>
-                                <td>Global Peace Survey</td>
-                                <td>
-                                    <span class="participants-name">
-                                        James Carter, Olivia Benson, Ethan Wallace, Sophia Mitchell, Liam Anderson
-                                    </span>
-                                </td>
-                                <td>24</td>
-                                <td>Female</td>
-                                <td>05 Mar, 2025</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a></li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>S012</td>
-                                <td>Global Peace Survey</td>
-                                <td>
-                                    <span class="participants-name">
-                                        James Carter, Olivia Benson, Ethan Wallace, Sophia Mitchell, Liam Anderson
-                                    </span>
-                                </td>
-                                <td>24</td>
-                                <td>Female</td>
-                                <td>05 Mar, 2025</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a></li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
-                                </th>
-                                <td>S012</td>
-                                <td>Global Peace Survey</td>
-                                <td>
-                                    <span class="participants-name">
-                                        James Carter, Olivia Benson, Ethan Wallace, Sophia Mitchell, Liam Anderson,
-                                        Sophia Mitchell, Liam Anderson
-                                    </span>
-                                </td>
-                                <td>24</td>
-                                <td>Female</td>
-                                <td>05 Mar, 2025</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
-                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                    Edit</a></li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
