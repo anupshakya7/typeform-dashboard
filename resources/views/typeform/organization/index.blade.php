@@ -66,18 +66,23 @@
                 <h5 class="card-title mb-0">Organization Lists</h5>
             </div>
             <div class="card-body">
-                <div class="d-flex flex-row align-items-center justify-content-between pb-3">
-                    <div class="d-flex flex-row align-items-center gap-1"><span>Showing</span> <select
-                            class="form-select" aria-label="Default select example">
-                            <option selected>10</option>
-                            <option value="1">20</option>
-                            <option value="2">50</option>
-                            <option value="3">100</option>
-                        </select> <span>entries</span> </div>
+                {{-- <div class="d-flex flex-row align-items-center justify-content-between pb-3">
+                    <form method="GET" action="{{route('organization.index')}}">
+                    <div class="d-flex flex-row align-items-center gap-1"><span>Showing</span> 
+                        <select
+                            class="form-select" name="items_per_page" id="items_per_page" onchange="this.form.submit()">
+                            <option value="5" {{request('items_per_page') == '5' ? 'selected':''}}>5</option>
+                            <option value="10" {{request('items_per_page') == '10' ? 'selected':''}}>10</option>
+                            <option value="15" {{request('items_per_page') == '15' ? 'selected':''}}>15</option>
+                            <option value="20" {{request('items_per_page') == '20' ? 'selected':''}}>20</option>
+                        </select> 
+                        <span>entries</span> 
+                    </div>
+                    </form>
                     <div class="row">
                 
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="table-responsive">
                     <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center" style="width:100%">
@@ -93,7 +98,7 @@
                         <tbody>
                             @foreach($organizations as $key => $organization)
                             <tr>
-                                <td>{{$key+1}}</td>
+                                <td>{{$organization->serial_no}}</td>
                                 <td>{{$organization->name}}</td>
                                 <td>
                                     @if($organization->logo)
@@ -115,12 +120,14 @@
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a>
                                             </li>
+                                            @if(Auth::user()->organization_id !== $organization->id)
                                             <li>
                                                 <button class="dropdown-item remove-item-btn" data-organization-id="{{$organization->id}}" data-organization-name="{{$organization->name}}" data-bs-toggle="modal" data-bs-target="#zoomInModal">
                                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                     Delete
                                                 </button>
                                             </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </td>
@@ -129,19 +136,34 @@
                         </tbody>
                     </table>
                 </div>
+                {{-- @dd($organizations) --}}
                 <!--tfooter section-->
                 <div class="align-items-center mt-xl-3 mt-4 justify-content-between d-flex">
+                    @if($organizations->hasPages())
                     <div class="flex-shrink-0">
-                        <div class="text-muted">Showing <span class="fw-semibold">5</span> of <span
-                                class="fw-semibold">25</span> Results </div>
+                        <div class="text-muted">Showing <span class="fw-semibold">{{$organizations->perPage()}}</span> of <span
+                                class="fw-semibold">{{$organizations->total()}}</span> Results </div>
                     </div>
                     <ul class="pagination pagination-separated pagination-sm mb-0">
-                        <li class="page-item disabled"> <a href="#" class="page-link">Previous</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">1</a> </li>
-                        <li class="page-item active"> <a href="#" class="page-link">2</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">3</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">Next</a> </li>
+                        @if($organizations->onFirstPage())
+                            <li class="page-item disabled"> <a href="#" class="page-link">Previous</a> </li>
+                        @else
+                            <li class="page-item"> <a href="{{$organizations->previousPageUrl()}}" class="page-link">Previous</a> </li>
+                        @endif
+                       
+                        @foreach($organizations->getUrlRange(1,$organizations->lastPage()) as $page=>$url)
+                        <li class="page-item {{$page ==$organizations->currentPage() ? 'active' :'' }}"> <a href="{{$url}}" class="page-link">{{$page}}</a> </li>
+                        @endforeach
+                        {{-- <li class="page-item active"> <a href="#" class="page-link">2</a> </li>
+                        <li class="page-item"> <a href="#" class="page-link">3</a> </li> --}}
+
+                        @if($organizations->hasMorePages())
+                            <li class="page-item"> <a href="{{$organizations->nextPageUrl()}}" class="page-link">Next</a> </li>
+                        @else
+                            <li class="page-item disabled"> <a href="#" class="page-link">Next</a> </li>
+                        @endif
                     </ul>
+                    @endif
                 </div>
             </div>
         </div>

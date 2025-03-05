@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Typeform;
 
+use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -11,7 +13,8 @@ use Illuminate\Support\Str;
 class OrganizationController extends Controller
 {
     public function index(){
-        $organizations = Organization::all();
+        $organizations = Organization::paginate(10);
+        $organizations = PaginationHelper::addSerialNo($organizations);
 
         return view('typeform.organization.index',compact('organizations'));
     }
