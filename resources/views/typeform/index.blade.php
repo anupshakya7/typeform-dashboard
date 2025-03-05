@@ -64,8 +64,7 @@
                 <a class="icon-frame bg-white ms-sm-3" style="border: 1px solid #BABABA;" href="#"
                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                    <img class="svg-icon" type="image/svg+xml"
-                        src="{{ URL::asset('build/icons/download.svg')}}"></img>
+                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/download.svg')}}"></img>
 
                 </a>
 
@@ -116,7 +115,23 @@
                                         Country Involved</p>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <i class="fa-solid fa-ellipsis"></i>
+                                    <a href="" class="btn-info" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </a>
+                                    <div class="customizer-setting d-none d-md-block">
+                                        <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2"
+                                            data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                            aria-controls="theme-settings-offcanvas">
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="customizer-setting d-none d-md-block">
+                                        <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2"
+                                            data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                            aria-controls="theme-settings-offcanvas">
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">

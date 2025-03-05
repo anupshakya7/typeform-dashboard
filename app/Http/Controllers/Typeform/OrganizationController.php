@@ -16,6 +16,10 @@ class OrganizationController extends Controller
         return view('typeform.organization.index',compact('organizations'));
     }
 
+    public function show(){
+        return view('typeform.organization.view');
+    }
+
     public function create(){
         return view('typeform.organization.create');
     }
