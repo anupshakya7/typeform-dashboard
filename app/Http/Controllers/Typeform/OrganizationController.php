@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Typeform;
 
+use App\Helpers\DownloadCSV;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
@@ -106,21 +107,9 @@ class OrganizationController extends Controller
     public function generateCSV(){
         $organizations = Organization::all();
         $filename = "organization.csv";
-        $fp = fopen($filename,'w+');
-        fputcsv($fp,array('ID','Name','Created At'));
+    
 
-        foreach($organizations as $row){
-            fputcsv($fp,array(
-                $row->id,
-                $row->name,
-                $row->created_at
-            ));
-        }
-
-        fclose($fp);
-        $headers = array('Content-Type' => 'text/csv');
-
-        return response()->download($filename,'organization.csv',$headers);
+        return DownloadCSV::downloadCSV($organizations,$filename);
 
     }
 }

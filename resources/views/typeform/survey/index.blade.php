@@ -45,14 +45,8 @@
                                 class="ri-file-download-line align-bottom me-1"></i>
 
                             Export</button>
-
-                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                            <img class="svg-icon" type="image/svg+xml"
-                                src="{{ URL::asset('build/icons/download.svg')}}"></img>
-                        </a>
-                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
-
+                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                        aria-controls="theme-settings-offcanvas">
                             <img class="svg-icon" type="image/svg+xml"
                                 src="{{ URL::asset('build/icons/info.svg')}}"></img>
 
@@ -62,13 +56,16 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
-                    <div class="d-flex flex-row align-items-center gap-1"><span>Showing</span> <select
+                    <div class="d-flex flex-row align-items-center gap-1">
+                        {{-- <span>Showing</span>  --}}
+                        {{-- <select
                             class="form-select" aria-label="Default select example">
                             <option selected>10</option>
                             <option value="1">20</option>
                             <option value="2">50</option>
                             <option value="3">100</option>
-                        </select> <span>entries</span> </div>
+                        </select> <span>entries</span>  --}}
+                    </div>
                     <div class="row">
                         <div class="col-auto d-flex justify-content-sm-end">
                             <div class="search-box"> <input type="text" class="form-control" id="searchProductList"
@@ -105,10 +102,7 @@
                         <thead class="table-head">
                             <tr>
                                 <th scope="col">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll"
-                                            value="option">
-                                    </div>
+                                    S.No.
                                 </th>
                                 <th>Survey ID</th>
                                 <th>Survey Name</th>

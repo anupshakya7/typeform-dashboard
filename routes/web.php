@@ -44,6 +44,7 @@ Route::prefix('typeform')->group(function(){
     
     //Form
     Route::resource('form',FormController::class);
+    Route::get('form/generate/csv',[FormController::class,'generateCSV'])->name('form.csv');
 
     //Survey
     Route::resource('survey',AnswerController::class);
