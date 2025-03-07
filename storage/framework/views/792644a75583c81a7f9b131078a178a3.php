@@ -39,7 +39,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Form Id" id="form_id">
                                 <button type="submit" id="syncFormBtn" class="btn btn-blue"><i
-                                        class="fa-solid fa-arrows-rotate me-2"></i><span>Sync</span></button>
+                                        class="fa-solid fa-arrows-rotate me-2" id="syncBtnIcon"></i><span>Sync</span></button>
                             </div>
                             <span class="ms-1" id="formIdMessage" style="display:none;margin-top:5px;"></span>
                         </div>
@@ -56,7 +56,7 @@
 
 </div>
 
-<div class="card" id="formForm" style="display:flex;">
+<div class="card" id="formForm" style="display:none;">
     <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Form</h4>
     </div><!-- end card header -->
@@ -206,6 +206,8 @@ $(document).ready(function() {
     $('#formSync').submit(function(e) {
         e.preventDefault();
         var formId = $('#form_id').val();
+        var SyncIcon = $('#syncBtnIcon');
+        SyncIcon.addClass("rotate");
         var url = "<?php echo e(route('form.get')); ?>";
         var apiKey = <?php echo json_encode(config('services.api.key'), 15, 512) ?>;
         var questions = [];
@@ -241,7 +243,8 @@ $(document).ready(function() {
                         .val(question.title)
 
                     $('#mainForm').append(questionInput);
-                })
+                });
+                SyncIcon.removeClass("rotate");
             },
             error: function(xhr, status, error) {
                 $('#form_id').val('');
@@ -252,7 +255,7 @@ $(document).ready(function() {
 
                 $('#formIdMessage').text(xhr.responseJSON.message);
                 $('#formIdMessage').css('display', 'flex');
-
+                SyncIcon.removeClass("rotate");
                 // toastr.error('The form with this ID was not found.', 'Error', {
                 //     closeButton: true, 
                 //     progressBar: true, 
