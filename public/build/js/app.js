@@ -766,20 +766,35 @@ File: Main Js File - TEMPLATE
 
         //For collapse vertical menu
         if (document.documentElement.getAttribute("data-layout") === "vertical") {
+            const tagline = document.querySelector('.aside-tag');
+            const asidemenu = document.querySelector('.navbar-menu');
+
+            if (tagline.style.padding === '3px 0px') {
+                tagline.style.padding = '';  // Reset to default
+                tagline.style.textAlign = '';  // Reset text alignment
+            } else {
+                tagline.style.padding = '3px 0px';
+                tagline.style.textAlign = 'center';
+            }
+        
+           asidemenu.style.position = 'fixed';
 
             if (windowSize <= 1025 && windowSize > 767) {
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") == "sm" ?
                     document.documentElement.setAttribute("data-sidebar-size", "") :
                     document.documentElement.setAttribute("data-sidebar-size", "sm");
+                    
             } else if (windowSize > 1025) {
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
                     document.documentElement.setAttribute("data-sidebar-size", "sm") :
                     document.documentElement.setAttribute("data-sidebar-size", "lg");
+                    
             } else if (windowSize <= 767) {
                 document.body.classList.add("vertical-sidebar-enable");
                 document.documentElement.setAttribute("data-sidebar-size", "lg");
+                
             }
         }
 
