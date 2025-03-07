@@ -831,14 +831,14 @@ File: Main Js File - TEMPLATE
             feather.replace();
         });
 
-        window.addEventListener("resize", windowResizeHover);
-        windowResizeHover();
+        // window.addEventListener("resize", windowResizeHover);
+        // windowResizeHover();
 
-        Waves.init();
+        // Waves.init();
 
-        document.addEventListener("scroll", function () {
-            windowScroll();
-        });
+        // document.addEventListener("scroll", function () {
+        //     windowScroll();
+        // });
 
         window.addEventListener("load", function () {
             var isTwoColumn = document.documentElement.getAttribute("data-layout");
@@ -867,13 +867,13 @@ File: Main Js File - TEMPLATE
         }
     }
 
-    // page topbar class added
-    function windowScroll() {
-        var pageTopbar = document.getElementById("page-topbar");
-        if (pageTopbar) {
-            document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add("topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
-        }
-    }
+    // // page topbar class added
+    // function windowScroll() {
+    //     var pageTopbar = document.getElementById("page-topbar");
+    //     if (pageTopbar) {
+    //         document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add("topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
+    //     }
+    // }
 
     // Two-column menu activation
     function initTwoColumnActiveMenu() {

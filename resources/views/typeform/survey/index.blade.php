@@ -132,13 +132,13 @@
                                 <td>{{$answer->form->form_title}}</td>
                                 <td>
                                     <span class="participants-name">
-                                       {{$answer->name}}
+                                        {{$answer->name}}
                                     </span>
                                 </td>
                                 <td> {{$answer->age}}</td>
                                 <td> {{$answer->gender}}</td>
                                 @php
-                                    $date = Carbon\Carbon::parse($answer->created_at)->format('d M,Y');
+                                $date = Carbon\Carbon::parse($answer->created_at)->format('d M,Y');
                                 @endphp
                                 <td>{{$date}}</td>
                                 <td>

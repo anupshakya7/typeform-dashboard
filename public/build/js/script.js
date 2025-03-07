@@ -64,37 +64,72 @@ let syncFormBtn = document.getElementById("syncFormBtn");
 // }
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    const navItemsContainer = document.querySelector(".navbar-nav");
-
-    if (navItemsContainer) {
-        const navItems = navItemsContainer.querySelectorAll(".nav-item");
-
-        // Set active class based on URL hash
-        const hash = window.location.hash;
-        if (hash) {
-            const activeNavItem = document.querySelector(`.nav-item a[href="${hash}"]`).parentElement;
-            if (activeNavItem) {
-                activeNavItem.classList.add("active");
+document.addEventListener("DOMContentLoaded", function () {
+    const currentUrl = window.location.href;
+    const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+    
+    // Add active-nav to the current URL nav-item
+    navLinks.forEach(link => {
+        if (link.href === currentUrl) {
+            link.classList.add("active-nav");
+            let parent = link.closest(".nav-item");
+            if (parent) {
+                parent.classList.add("active-nav");
             }
-        } else if (navItems.length > 0) {
-            navItems[0].classList.add("active");
+            
+            // If inside a dropdown, make sure it's expanded
+            let collapseParent = link.closest(".collapse.menu-dropdown");
+            if (collapseParent && collapseParent.classList.contains("show")) {
+                collapseParent.classList.add("show");
+                let mainParent = collapseParent.closest(".nav-item");
+                if (mainParent) {
+                    mainParent.classList.add("active-nav");
+                }
+            }
         }
+    });
 
-        navItemsContainer.addEventListener("click", function(event) {
-            const navItem = event.target.closest('.nav-item');
-            if (navItem) {
-                navItems.forEach(function(item) {
-                    item.classList.remove("active");
-                });
+    // Add click event to dropdown links
+    const dropdownLinks = document.querySelectorAll(".menu-link");
+    dropdownLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            // Remove active class from all nav-items except the current one
+            const allNavItems = document.querySelectorAll(".navbar-nav .nav-item");
+            allNavItems.forEach(item => {
+                const itemLink = item.querySelector('.nav-link');
+                if (itemLink && itemLink.href !== currentUrl) {
+                    item.classList.remove("active-nav");
+                }
+            });
 
-                navItem.classList.add("active");
-                console.log('Nav item clicked!');
-
-                // Update URL hash
-                const href = navItem.querySelector('a').getAttribute('href');
-                window.location.hash = href;
+            let parentNavItem = this.closest(".nav-item");
+            if (parentNavItem) {
+                // Toggle active-nav class on the parent nav-item based on dropdown open/close
+                const collapse = parentNavItem.querySelector(".collapse.menu-dropdown");
+                if (collapse && collapse.classList.contains("show")) {
+                    parentNavItem.classList.add("active-nav");
+                } else {
+                    parentNavItem.classList.remove("active-nav");
+                }
             }
         });
-    }
+    });
+
+    // Detect state change on dropdowns (open/close)
+    const dropdownMenus = document.querySelectorAll('.collapse.menu-dropdown');
+    dropdownMenus.forEach(menu => {
+        menu.addEventListener('shown.bs.collapse', function () {
+            let parentNavItem = menu.closest(".nav-item");
+            if (parentNavItem) {
+                parentNavItem.classList.add("active-nav");
+            }
+        });
+        
+        menu.addEventListener('hidden.bs.collapse', function () {
+            let parentNavItem = menu.closest(".nav-item");
+            if (parentNavItem) {
+                parentNavItem.classList.remove("active-nav");
+            }
+        });
+    });
 });

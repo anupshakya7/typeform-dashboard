@@ -193,7 +193,7 @@ table th, table td {
 }
 
 
-.nav-item.active {
+.nav-item.active-nav {
     background-color: #F4F4F4 !important;  
     border-radius: 5px !important;
 }
@@ -214,6 +214,7 @@ table th, table td {
     border-radius: 7px !important;
     overflow: hidden !important;
     color: #333;
+    gap: 7px;
     font-family: 'Roboto',sans-serif;
 }
 .navbar-nav {
@@ -249,4 +250,10 @@ table th, table td {
 }
 .dataTables_scrollBody{
     min-height: 225px;
+}
+.navbar-menu .navbar-nav .nav-link i {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
