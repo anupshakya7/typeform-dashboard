@@ -4,9 +4,8 @@ Author: Themesbrand
 Version: 4.3.0
 Website: https://themesbrand.com/
 Contact: Themesbrand@gmail.com
-File: Main Js File
+File: Main Js File - TEMPLATE
 */
-
 (function () {
     ("use strict");
 
@@ -854,6 +853,7 @@ File: Main Js File
         if (document.getElementById("topnav-hamburger-icon")) {
             document.getElementById("topnav-hamburger-icon").addEventListener("click", toggleHamburgerMenu);
         }
+      
         var isValues = sessionStorage.getItem("defaultAttribute");
         var defaultValues = JSON.parse(isValues);
         var windowSize = document.documentElement.clientWidth;
@@ -1181,17 +1181,17 @@ File: Main Js File
             if (document.querySelector(".navbar-menu")) {
                 document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
             }
-            if (document.getElementById("theme-settings-offcanvas")) {
-                document.getElementById("sidebar-size").style.display = "block";
-                document.getElementById("sidebar-view").style.display = "block";
-                document.getElementById("sidebar-color").style.display = "block";
-                if (document.getElementById("sidebar-img")) {
-                    document.getElementById("sidebar-img").style.display = "block";
-                }
-                document.getElementById("layout-position").style.display = "block";
-                document.getElementById("layout-width").style.display = "block";
-                document.getElementById("sidebar-visibility").style.display = "none";
-            }
+            // if (document.getElementById("theme-settings-offcanvas")) {
+            //     document.getElementById("sidebar-size").style.display = "block";
+            //     document.getElementById("sidebar-view").style.display = "block";
+            //     document.getElementById("sidebar-color").style.display = "block";
+            //     if (document.getElementById("sidebar-img")) {
+            //         document.getElementById("sidebar-img").style.display = "block";
+            //     }
+            //     document.getElementById("layout-position").style.display = "block";
+            //     document.getElementById("layout-width").style.display = "block";
+            //     document.getElementById("sidebar-visibility").style.display = "none";
+            // }
             initLeftMenuCollapse();
             initActiveMenu();
             addEventListenerOnSmHoverMenu();
