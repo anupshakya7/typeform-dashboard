@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use App\Helpers\PaginationHelper;
 
 class FormController extends Controller
 {
@@ -21,9 +22,15 @@ class FormController extends Controller
     // }
     public function index()
     {
-        $forms = Form::with('organization','branches')->get();
+        $forms = Form::with('organization','branches')->paginate(10);
+        $forms = PaginationHelper::addSerialNo($forms);
 
         return view('typeform.form.index',compact('forms'));
+    }
+
+    public function show(Form $form){
+        dd($form);
+        return view('typeform.form.view',compact('organization'));
     }
 
     public function create()

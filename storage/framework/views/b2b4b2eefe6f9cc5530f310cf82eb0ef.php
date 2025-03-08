@@ -1,7 +1,7 @@
-@extends('typeform.layout.web')
-@section('title') @lang('translation.crm') @endsection
-@section('css')
-<link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+<link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet">
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <!--datatable responsive css-->
@@ -15,8 +15,8 @@
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!--greeting section -->
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
@@ -33,7 +33,7 @@
         <div class="flex-shrink-0">
             <div class="d-flex gap-1 flex-wrap">
 
-                <a href="{{route('form.create')}}" class="btn btn-info add-btn"><i class="ri-add-line align-bottom me-1"></i> Create
+                <a href="<?php echo e(route('form.create')); ?>" class="btn btn-info add-btn"><i class="ri-add-line align-bottom me-1"></i> Create
                     Form</a>
             </div>
         </div>
@@ -46,7 +46,7 @@
                 <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                 aria-controls="theme-settings-offcanvas">
 
-                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg')}}"></img>
+                    <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                 </a>
             </div>
@@ -65,15 +65,7 @@
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
                     <div class="d-flex flex-row align-items-center gap-1">
-                        {{-- <span>Showing</span> 
-                        <select
-                            class="form-select" aria-label="Default select example">
-                            <option selected>10</option>
-                            <option value="1">20</option>
-                            <option value="2">50</option>
-                            <option value="3">100</option>
-                        </select> 
-                        <span>entries</span>  --}}
+                        
                     </div>
                     <div class="row">
                         <div class="col-auto d-flex justify-content-sm-end">
@@ -117,19 +109,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($forms as $key=>$form)
+                            <?php $__currentLoopData = $forms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$form): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <th scope="row">
-                                    {{$form->serial_no}}
+                                    <?php echo e($form->serial_no); ?>
+
                                 </th>
-                                <td>{{$form->form_id}}</td>
-                                <td>{{$form->form_title}}</td>
-                                <td>{{$form->country}}</td>
-                                <td>{{optional($form->organization)->name}}</td>
-                                <td>{{optional($form->branches)->name}}</td>
-                                <td>{{$form->before}} </td>
-                                <td>{{$form->during}}</td>
-                                <td>{{$form->after}}</td>
+                                <td><?php echo e($form->form_id); ?></td>
+                                <td><?php echo e($form->form_title); ?></td>
+                                <td><?php echo e($form->country); ?></td>
+                                <td><?php echo e(optional($form->organization)->name); ?></td>
+                                <td><?php echo e(optional($form->branches)->name); ?></td>
+                                <td><?php echo e($form->before); ?> </td>
+                                <td><?php echo e($form->during); ?></td>
+                                <td><?php echo e($form->after); ?></td>
                                 <td>
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -154,7 +147,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
@@ -215,7 +208,7 @@
                             </div>
                             <div class="avatar-lg p-1">
                                 <div class="avatar-title bg-light rounded-circle">
-                                    <img src="{{URL::asset('build/images/users/multi-user.jpg')}}" id="companylogo-img"
+                                    <img src="<?php echo e(URL::asset('build/images/users/multi-user.jpg')); ?>" id="companylogo-img"
                                         class="avatar-md h-auto rounded-circle object-fit-cover" />
                                 </div>
                             </div>
@@ -275,7 +268,7 @@
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success" id="add-btn">Add</button>
-                        {{-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> --}}
+                        
                     </div>
                 </div>
             </form>
@@ -317,22 +310,22 @@
 
 
 
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
 <!-- list.js min js -->
-<script src="{{URL::asset('build/libs/list.js/list.min.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/libs/list.js/list.min.js')); ?>"></script>
 
 <!--list pagination js-->
-<script src="{{URL::asset('build/libs/list.pagination.js/list.pagination.min.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/libs/list.pagination.js/list.pagination.min.js')); ?>"></script>
 
 <!-- ecommerce-order init js -->
-<script src="{{URL::asset('build/js/pages/job-application.init.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/job-application.init.js')); ?>"></script>
 
 <!-- Sweet Alerts js -->
-<script src="{{URL::asset('build/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
 <!-- App js -->
-<script src="{{URL::asset('build/js/app.js')}}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -348,8 +341,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-<script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/form/index.blade.php ENDPATH**/ ?>
