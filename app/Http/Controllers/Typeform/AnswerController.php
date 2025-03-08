@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Helpers\PaginationHelper;
 
 class AnswerController extends Controller
 {
     public function index(){
         $answers = Answer::with('form')->select('id','event_id','form_id','name','age','gender','created_at')->paginate(10);
+        $answers = PaginationHelper::addSerialNo($answers);
 
         return view('typeform.survey.index',compact('answers'));
     }
@@ -69,5 +71,17 @@ class AnswerController extends Controller
        
         
         return $answerCreated;
+    }
+
+    public function show($answer){
+       $answer = Answer::find($answer);
+
+       return view('typeform.survey.view',compact('answer'));
+    }
+
+    public function QA(Answer $answer){
+        $answer->load('form','form.question');
+
+        return view('typeform.survey.QA',compact('answer'));
     }
 }

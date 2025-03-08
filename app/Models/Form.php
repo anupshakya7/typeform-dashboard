@@ -28,4 +28,8 @@ class Form extends Model
     public function branches(){
         return $this->hasOne(Branch::class,'id','branch_id');
     }
+
+    public function question(){
+        return $this->hasOne(Question::class,'form_id','form_id');
+    }
 }

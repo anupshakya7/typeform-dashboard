@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Form Details</h4>
-        <p class="text-muted mb-0">View form details, including organization, branch, and date.</p>
+        <h4 class="fs-16 mb-1">Survey QA Details</h4>
+        <p class="text-muted mb-0">View survey QA details, including structure, contacts, departments, and roles.</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Form</h5>
+                <h5 class="card-title mb-0">Survey QA</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -41,46 +41,82 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{$form->id}}</td>
+                                <td>{{$answer->id}}</td>
                             </tr>
                             <tr>
-                                <th>Form ID</th>
-                                <td>{{$form->form_id}}</td>
+                                <th>Form</th>
+                                <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
                             </tr>
                             <tr>
-                                <th>Form Name</th>
-                                <td>{{$form->form_title}}</td>
+                                <th>Name</th>
+                                <td>{{$answer->name}}</td>
                             </tr>
                             <tr>
-                                <th>Country</th>
-                                <td>{{$form->country}}</td>
+                                <th>{{$answer->form->question->well_functioning_government}}</th>
+                                <td>{{$answer->well_functioning_government}}</td>
                             </tr>
                             <tr>
-                                <th>Organization</th>
-                                <td>{{optional($form->organization)->name}}</td>
+                                <th>{{$answer->form->question->low_level_corruption}}</th>
+                                <td>{{$answer->low_level_corruption}}</td>
                             </tr>
                             <tr>
-                                <th>Branch</th>
-                                <td>{{optional($form->branches)->name}}</td>
+                                <th>{{$answer->form->question->equitable_distribution}}</th>
+                                <td>{{$answer->equitable_distribution}}</td>
                             </tr>
                             <tr>
-                                <th>Before Date</th>
-                                <td>{{$form->before}}</td>
+                                <th>{{$answer->form->question->good_relations}}</th>
+                                <td>{{$answer->good_relations}}</td>
                             </tr>
                             <tr>
-                                <th>During Date</th>
-                                <td>{{$form->during}}</td>
+                                <th>{{$answer->form->question->free_flow}}</th>
+                                <td>{{$answer->free_flow}}</td>
                             </tr>
                             <tr>
-                                <th>After Date</th>
-                                <td>{{$form->after}}</td>
+                                <th>{{$answer->form->question->high_levels}}</th>
+                                <td>{{$answer->high_levels}}</td>
                             </tr>
+                            <tr>
+                                <th>{{$answer->form->question->sound_business}}</th>
+                                <td>{{$answer->sound_business}}</td>
+                            </tr>
+                            <tr>
+                                <th>{{$answer->form->question->acceptance_rights}}</th>
+                                <td>{{$answer->acceptance_rights}}</td>
+                            </tr>
+                            <tr>
+                                <th>{{$answer->form->question->positive_peace}}</th>
+                                <td>{{$answer->positive_peace}}</td>
+                            </tr>
+                            <tr>
+                                <th>{{$answer->form->question->negative_peace}}</th>
+                                <td>{{$answer->negative_peace}}</td>
+                            </tr>
+                            @if($answer->extra_ans1)
+                            <tr>
+                                <th>{{$answer->form->question->extra_ques1}}</th>
+                                <td>{{$answer->extra_ans1}}</td>
+                            </tr>
+                            @endif
+                            @if($answer->extra_ans2)
+                            <tr>
+                                <th>{{$answer->form->question->extra_ques2}}</th>
+                                <td>{{$answer->extra_ans2}}</td>
+                            </tr>
+                            @endif
+                            @if($answer->extra_ans3)
+                            <tr>
+                                <th>{{$answer->form->question->extra_ques3}}</th>
+                                <td>{{$answer->extra_ans3}}</td>
+                            </tr>
+                            @endif
                             <tr>
                                 <th>Created At</th>
-                                <td>{{Carbon\Carbon::parse($form->created_at)->format('d M, Y')}}</td>
+                                <td>{{Carbon\Carbon::parse($answer->created_at)->format('d M, Y')}}</td>
                             </tr>
                         </tbody>
                     </table>
+                    
+
                 </div>
 
                 <nav class="mb-3">
@@ -116,19 +152,4 @@
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-function getImagePreview(event, divId) {
-    var image = URL.createObjectURL(event.target.files[0]);
-    var imageDiv = document.getElementById(divId);
-
-    imageDiv.innerHTML = '';
-
-    var imageTag = document.createElement('img');
-    imageTag.src = image;
-    imageTag.width = "150";
-    imageTag.style.padding = "5px";
-    imageDiv.appendChild(imageTag);
-}
-</script>
 @endsection

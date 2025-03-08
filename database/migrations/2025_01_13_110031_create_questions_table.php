@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->string('form_id');
-             $table->string('name');
+            $table->string('name');
             $table->string('age');
             $table->string('gender');
             $table->string('village-town-city');
@@ -34,6 +34,8 @@ return new class extends Migration
             $table->string('extra_ques2')->nullable();
             $table->string('extra_ques3')->nullable();
             $table->timestamps();
+
+            $table->foreign('form_id')->references('form_id')->on('forms')->onDelete('cascade');
         });
     }
 

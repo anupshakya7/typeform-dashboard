@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Form Details</h4>
-        <p class="text-muted mb-0">View form details, including organization, branch, and date.</p>
+        <h4 class="fs-16 mb-1">Survey Details</h4>
+        <p class="text-muted mb-0">View survey details, including structure, contacts, departments, and roles.</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Form</h5>
+                <h5 class="card-title mb-0">Survey</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -41,46 +41,40 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{$form->id}}</td>
+                                <td>{{$answer->id}}</td>
                             </tr>
                             <tr>
-                                <th>Form ID</th>
-                                <td>{{$form->form_id}}</td>
+                                <th>Event Id</th>
+                                <td>{{$answer->event_id}}</td>
                             </tr>
                             <tr>
-                                <th>Form Name</th>
-                                <td>{{$form->form_title}}</td>
+                                <th>Form</th>
+                                <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
                             </tr>
                             <tr>
-                                <th>Country</th>
-                                <td>{{$form->country}}</td>
+                                <th>Name</th>
+                                <td>{{$answer->name}}</td>
                             </tr>
                             <tr>
-                                <th>Organization</th>
-                                <td>{{optional($form->organization)->name}}</td>
+                                <th>Age</th>
+                                <td>{{$answer->age}}</td>
                             </tr>
                             <tr>
-                                <th>Branch</th>
-                                <td>{{optional($form->branches)->name}}</td>
+                                <th>Gender</th>
+                                <td>{{$answer->gender}}</td>
                             </tr>
                             <tr>
-                                <th>Before Date</th>
-                                <td>{{$form->before}}</td>
-                            </tr>
-                            <tr>
-                                <th>During Date</th>
-                                <td>{{$form->during}}</td>
-                            </tr>
-                            <tr>
-                                <th>After Date</th>
-                                <td>{{$form->after}}</td>
+                                <th>City</th>
+                                <td>{{$answer->{'village-town-city'} }}</td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td>{{Carbon\Carbon::parse($form->created_at)->format('d M, Y')}}</td>
+                                <td>{{Carbon\Carbon::parse($answer->created_at)->format('d M, Y')}}</td>
                             </tr>
                         </tbody>
                     </table>
+                    
+
                 </div>
 
                 <nav class="mb-3">
@@ -116,19 +110,4 @@
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-function getImagePreview(event, divId) {
-    var image = URL.createObjectURL(event.target.files[0]);
-    var imageDiv = document.getElementById(divId);
-
-    imageDiv.innerHTML = '';
-
-    var imageTag = document.createElement('img');
-    imageTag.src = image;
-    imageTag.width = "150";
-    imageTag.style.padding = "5px";
-    imageDiv.appendChild(imageTag);
-}
-</script>
 @endsection
