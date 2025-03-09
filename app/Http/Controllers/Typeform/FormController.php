@@ -288,6 +288,11 @@ class FormController extends Controller
         }
     }
 
+    public function formQuestion(Form $form){
+        $form->load('question');
+        return view('typeform.form.questions',compact('form'));
+    }
+
     public function generateCSV(){
         $forms = Form::all();
         $filename = "form.csv";

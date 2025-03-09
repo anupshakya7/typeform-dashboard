@@ -142,6 +142,8 @@
                                             <li><a href="{{route('form.show',$form)}}" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
+                                            <li><a href="{{route('form.question',$form)}}" class="dropdown-item"><i class="fa-solid fa-question align-bottom me-2 mb-1 text-muted"></i>Questions</a>
+                                            </li>
                                             <li><a href="{{route('form.edit',$form)}}" class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a>
