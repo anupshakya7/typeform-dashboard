@@ -62,32 +62,34 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
+                    <form action="<?php echo e(route('form.index')); ?>" method="GET" id="form_search" style="display: inline-block">
                     <div class="d-flex flex-row align-items-center gap-1">
                         
                     </div>
                     <div class="row">
-                        <div class="col-auto d-flex justify-content-sm-end">
-                            <div class="search-box"> <input type="text" class="form-control" id="searchProductList"
-                                    placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
-                        </div>
-                        <div class="col-auto"> <select class="form-select " aria-label="Default select example">
-                                <option selected>Country </option>
-                                <option value="1">Australia</option>
-                                <option value="2">USA</option>
-                                <option value="3">India</option>
-                                <option value="4">Nepal</option>
-                            </select> </div>
-                        <div class="col-auto">
-                            <div class="col-auto"> <select class="form-select" aria-label="Default select example">
-                                    <option selected>Project</option>
-                                    <option value="1">Project1</option>
-                                    <option value="2">Project2</option>
-                                    <option value="3">Project3</option>
+                            <div class="col-auto d-flex justify-content-sm-end">
+                                <div class="search-box"> <input type="text" class="form-control" value="<?php echo e(request('search_title')); ?>" name="search_title" onkeyup="debounceSearch()" id="searchProductList"
+                                        placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
+                            </div>
+                            <div class="col-auto"> 
+                                <select class="form-select" name="country" aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Country </option>
+                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select> </div>
-                        </div>
+                            <div class="col-auto">
+                                <div class="col-auto"> <select class="form-select" name="organization" aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Organization</option>
+                                        <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($organization->id); ?>" <?php echo e(request('organization') == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select> </div>
+                            </div>
                     </div>
+                </form>
                 </div>
-
+            
                 <div class="table-responsive">
                     <table id="scroll-horizontal" class="table nowrap align-middle table-bordered " style="width:100%">
                         <thead class="table-head">
@@ -239,7 +241,17 @@
                 deleteForm.action = window.location.href + '/' + itemId;
 
             })
-        })
+        });
+
+        let debounceTimeout;
+
+        function debounceSearch(){
+            clearTimeout(debounceTimeout);
+
+            debounceTimeout = setTimeout(function(){
+                document.getElementById('form_search').submit();
+            },800);
+        }
 </script>
 
 <?php $__env->stopSection(); ?>

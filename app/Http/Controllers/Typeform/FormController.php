@@ -21,12 +21,30 @@ class FormController extends Controller
     // public function settings(){
     //     return view('')
     // }
-    public function index()
+    public function index(Request $request)
     {
-        $forms = Form::with('organization','branches')->paginate(10);
+        $formsQuery = Form::with('organization','branches');
+
+        if($request->filled('search_title')){
+            $formsQuery->where('form_title','like','%'.$request->search_title.'%');
+        }
+
+        if($request->filled('country')){
+            $formsQuery->where('country',$request->country);
+        }
+        if($request->filled('organization')){
+            $formsQuery->where('organization_id',$request->organization);
+        }
+
+        $forms = $formsQuery->paginate(10);
+        
         $forms = PaginationHelper::addSerialNo($forms);
 
-        return view('typeform.form.index',compact('forms'));
+        $countriesPath = public_path('build/js/countries/countries.json');
+        $countries = json_decode(File::get($countriesPath),true);
+        $organizations = Organization::all();
+
+        return view('typeform.form.index',compact('forms','countries','organizations'));
     }
 
     public function show(Form $form)

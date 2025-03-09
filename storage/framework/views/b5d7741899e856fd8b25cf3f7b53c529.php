@@ -109,13 +109,11 @@
                             <?php $__currentLoopData = $answers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $answer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
+                                    <?php echo e($answer->serial_no); ?>
+
                                 </th>
                                 <td><?php echo e($answer->event_id); ?></td>
-                                <td><?php echo e($answer->form->form_title); ?></td>
+                                <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
                                 <td>
                                     <span class="participants-name">
                                        <?php echo e($answer->name); ?>
@@ -135,10 +133,13 @@
                                             <i class="ri-more-fill align-middle"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
+                                            <li><a href="<?php echo e(route('survey.show',$answer)); ?>" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
+                                            <li><a href="<?php echo e(route('survey.qa',$answer)); ?>" class="dropdown-item"><i
+                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> QA</a>
+                                            </li>
+                                            <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a></li>
                                             <li>
@@ -146,7 +147,7 @@
                                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                     Delete
                                                 </a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </td>
@@ -156,7 +157,8 @@
                     </table>
                 </div>
                 <!--tfooter section-->
-                <div class="align-items-center mt-xl-3 mt-4 justify-content-between d-flex">
+                <?php echo $__env->make('typeform.partials.pagination',['paginator'=>$answers], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <!-- <div class="align-items-center mt-xl-3 mt-4 justify-content-between d-flex">
                     <div class="flex-shrink-0">
                         <div class="text-muted">Showing <span class="fw-semibold">5</span> of <span
                                 class="fw-semibold">25</span> Results </div>
@@ -168,7 +170,7 @@
                         <li class="page-item"> <a href="#" class="page-link">3</a> </li>
                         <li class="page-item"> <a href="#" class="page-link">Next</a> </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
