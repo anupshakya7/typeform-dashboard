@@ -81,14 +81,15 @@
                                         placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
                             </div>
                             <div class="col-auto"> 
-                                <select class="form-select" name="country" aria-label="Default select example" onchange="this.form.submit()">
+                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Country </option>
                                     @foreach($countries as $country)
                                         <option value="{{$country['name']}}" {{request('country') == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
                                     @endforeach
                                 </select> </div>
                             <div class="col-auto">
-                                <div class="col-auto"> <select class="form-select" name="organization" aria-label="Default select example" onchange="this.form.submit()">
+                                <div class="col-auto"> 
+                                    <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
                                         <option value="" selected>Organization</option>
                                         @foreach($organizations as $organization)
                                         <option value="{{$organization->id}}" {{request('organization') == $organization->id ? 'selected':''}}>{{$organization->name}}</option>
@@ -363,8 +364,14 @@
                     'Deleting this item will permanently remove it from the system, <span class="text-danger"> along with all questions which are part of this form</span';
 
                 var deleteForm = document.getElementById('deleteForm');
+                
+                var currentUrl = window.location.href;
+                        
+                var url = new URL(currentUrl);
 
-                deleteForm.action = window.location.href + '/' + itemId;
+                var baseUrl = url.origin+url.pathname;
+
+                deleteForm.action = baseUrl + '/' + itemId;
 
             })
         });

@@ -12,6 +12,8 @@
    
     @include('layouts.head-css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
     <link rel="stylesheet" href="{{ URL::asset('build/css/style.css')}}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
@@ -47,6 +49,7 @@
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
     <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{ URL::asset('build/js/script.js')}}"></script>
 
     <script>
@@ -57,6 +60,10 @@
         @if(session::has('error'))
             toastr.error("{{session::get('error')}}");
         @endif
+
+        $(document).ready(function(){
+            $('.select2').select2();
+        });
     </script>
 </body>
 

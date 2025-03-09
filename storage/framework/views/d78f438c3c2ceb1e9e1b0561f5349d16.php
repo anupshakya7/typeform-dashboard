@@ -72,14 +72,15 @@
                                         placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
                             </div>
                             <div class="col-auto"> 
-                                <select class="form-select" name="country" aria-label="Default select example" onchange="this.form.submit()">
+                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Country </option>
                                     <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select> </div>
                             <div class="col-auto">
-                                <div class="col-auto"> <select class="form-select" name="organization" aria-label="Default select example" onchange="this.form.submit()">
+                                <div class="col-auto"> 
+                                    <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
                                         <option value="" selected>Organization</option>
                                         <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($organization->id); ?>" <?php echo e(request('organization') == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
@@ -237,8 +238,14 @@
                     'Deleting this item will permanently remove it from the system, <span class="text-danger"> along with all questions which are part of this form</span';
 
                 var deleteForm = document.getElementById('deleteForm');
+                
+                var currentUrl = window.location.href;
+                        
+                var url = new URL(currentUrl);
 
-                deleteForm.action = window.location.href + '/' + itemId;
+                var baseUrl = url.origin+url.pathname;
+
+                deleteForm.action = baseUrl + '/' + itemId;
 
             })
         });
