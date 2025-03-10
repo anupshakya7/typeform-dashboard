@@ -183,8 +183,11 @@ table th, table td {
 .navbar-brand-box {
     /* padding: .625rem 1.5rem; */
     border-bottom: 1px solid #f3f3f3;
-    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .aside-tag {
     padding: 0.5rem 1.5rem;
     font-size: 9px;
@@ -193,7 +196,7 @@ table th, table td {
 }
 
 
-.nav-item.active {
+.nav-item.active-nav {
     background-color: #F4F4F4 !important;  
     border-radius: 5px !important;
 }
@@ -213,23 +216,24 @@ table th, table td {
     margin-bottom: 5px;
     border-radius: 7px !important;
     overflow: hidden !important;
-    color: #333;
+    color: #222;
+    gap: 7px;
     font-family: 'Roboto',sans-serif;
 }
 .navbar-nav {
     margin: 0px 10px;
 }
 .navbar-menu .navbar-nav .nav-link:hover,  .navbar-menu .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true]:after{
-    color: #333 !important;
+    color: #222222 !important;
 }
 .navbar-menu .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true] {
-    color: #333 !important;
+    color: #222 !important;
 }
 .nav-link:before {
-    background-color: #333 !important;
+    background-color: #222 !important;
 }
 .nav-link:hover:before {
-    background-color: #333 !important; 
+    background-color: #222 !important; 
 }
 :is([data-layout=vertical],[data-layout=semibox])[data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item:hover>.menu-dropdown {
     border-radius: 5px;
@@ -249,4 +253,13 @@ table th, table td {
 }
 .dataTables_scrollBody{
     min-height: 225px;
+}
+.navbar-menu .navbar-nav .nav-link i {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-content {
+    background-color: #F4F4F4;
 }

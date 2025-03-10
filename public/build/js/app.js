@@ -4,9 +4,8 @@ Author: Themesbrand
 Version: 4.3.0
 Website: https://themesbrand.com/
 Contact: Themesbrand@gmail.com
-File: Main Js File
+File: Main Js File - TEMPLATE
 */
-
 (function () {
     ("use strict");
 
@@ -755,7 +754,9 @@ File: Main Js File
 
     function toggleHamburgerMenu() {
         var windowSize = document.documentElement.clientWidth;
- 
+        
+        const tagline = document.querySelector('.aside-tag');
+        const asidemenu = document.querySelector('.navbar-menu');
 
         if (windowSize > 767)
             document.querySelector(".hamburger-icon").classList.toggle("open");
@@ -767,20 +768,34 @@ File: Main Js File
 
         //For collapse vertical menu
         if (document.documentElement.getAttribute("data-layout") === "vertical") {
+            
+
+            if (tagline.style.padding === '3px 0px') {
+                tagline.style.padding = '';  // Reset to default
+                tagline.style.textAlign = '';  // Reset text alignment
+            } else {
+                tagline.style.padding = '10px 0px';
+                tagline.style.textAlign = 'center';
+            }
+        
+           asidemenu.style.position = 'fixed';
 
             if (windowSize <= 1025 && windowSize > 767) {
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") == "sm" ?
                     document.documentElement.setAttribute("data-sidebar-size", "") :
                     document.documentElement.setAttribute("data-sidebar-size", "sm");
+                    
             } else if (windowSize > 1025) {
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
                     document.documentElement.setAttribute("data-sidebar-size", "sm") :
                     document.documentElement.setAttribute("data-sidebar-size", "lg");
+                    
             } else if (windowSize <= 767) {
                 document.body.classList.add("vertical-sidebar-enable");
                 document.documentElement.setAttribute("data-sidebar-size", "lg");
+                
             }
         }
 
@@ -832,14 +847,14 @@ File: Main Js File
             feather.replace();
         });
 
-        window.addEventListener("resize", windowResizeHover);
-        windowResizeHover();
+        // window.addEventListener("resize", windowResizeHover);
+        // windowResizeHover();
 
-        Waves.init();
+        // Waves.init();
 
-        document.addEventListener("scroll", function () {
-            windowScroll();
-        });
+        // document.addEventListener("scroll", function () {
+        //     windowScroll();
+        // });
 
         window.addEventListener("load", function () {
             var isTwoColumn = document.documentElement.getAttribute("data-layout");
@@ -854,6 +869,7 @@ File: Main Js File
         if (document.getElementById("topnav-hamburger-icon")) {
             document.getElementById("topnav-hamburger-icon").addEventListener("click", toggleHamburgerMenu);
         }
+      
         var isValues = sessionStorage.getItem("defaultAttribute");
         var defaultValues = JSON.parse(isValues);
         var windowSize = document.documentElement.clientWidth;
@@ -867,13 +883,13 @@ File: Main Js File
         }
     }
 
-    // page topbar class added
-    function windowScroll() {
-        var pageTopbar = document.getElementById("page-topbar");
-        if (pageTopbar) {
-            document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add("topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
-        }
-    }
+    // // page topbar class added
+    // function windowScroll() {
+    //     var pageTopbar = document.getElementById("page-topbar");
+    //     if (pageTopbar) {
+    //         document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add("topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
+    //     }
+    // }
 
     // Two-column menu activation
     function initTwoColumnActiveMenu() {
@@ -1181,17 +1197,17 @@ File: Main Js File
             if (document.querySelector(".navbar-menu")) {
                 document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
             }
-            if (document.getElementById("theme-settings-offcanvas")) {
-                document.getElementById("sidebar-size").style.display = "block";
-                document.getElementById("sidebar-view").style.display = "block";
-                document.getElementById("sidebar-color").style.display = "block";
-                if (document.getElementById("sidebar-img")) {
-                    document.getElementById("sidebar-img").style.display = "block";
-                }
-                document.getElementById("layout-position").style.display = "block";
-                document.getElementById("layout-width").style.display = "block";
-                document.getElementById("sidebar-visibility").style.display = "none";
-            }
+            // if (document.getElementById("theme-settings-offcanvas")) {
+            //     document.getElementById("sidebar-size").style.display = "block";
+            //     document.getElementById("sidebar-view").style.display = "block";
+            //     document.getElementById("sidebar-color").style.display = "block";
+            //     if (document.getElementById("sidebar-img")) {
+            //         document.getElementById("sidebar-img").style.display = "block";
+            //     }
+            //     document.getElementById("layout-position").style.display = "block";
+            //     document.getElementById("layout-width").style.display = "block";
+            //     document.getElementById("sidebar-visibility").style.display = "none";
+            // }
             initLeftMenuCollapse();
             initActiveMenu();
             addEventListenerOnSmHoverMenu();

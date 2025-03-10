@@ -118,14 +118,14 @@
                                 <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
                                 <td>
                                     <span class="participants-name">
-                                       <?php echo e($answer->name); ?>
+                                        <?php echo e($answer->name); ?>
 
                                     </span>
                                 </td>
                                 <td> <?php echo e($answer->age); ?></td>
                                 <td> <?php echo e($answer->gender); ?></td>
                                 <?php
-                                    $date = Carbon\Carbon::parse($answer->created_at)->format('d M,Y');
+                                $date = Carbon\Carbon::parse($answer->created_at)->format('d M,Y');
                                 ?>
                                 <td><?php echo e($date); ?></td>
                                 <td>
