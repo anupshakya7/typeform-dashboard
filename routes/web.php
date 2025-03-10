@@ -44,9 +44,13 @@ Route::prefix('typeform')->group(function(){
     
     //Form
     Route::resource('form',FormController::class);
+    Route::get('form/question/{form}',[FormController::class,'formQuestion'])->name('form.question');
+    Route::get('form/generate/csv',[FormController::class,'generateCSV'])->name('form.csv');
 
     //Survey
     Route::resource('survey',AnswerController::class);
+    Route::get('/survey/QA/{answer}',[AnswerController::class,'QA'])->name('survey.qa');
+    Route::get('/survey/generate/csv',[AnswerController::class,'generateCSV'])->name('survey.csv');
 
     //Get Answer WebHook
     Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');

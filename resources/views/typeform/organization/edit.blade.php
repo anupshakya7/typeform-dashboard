@@ -54,10 +54,29 @@
                             <input type="file" class="form-control" name="logo" id="logo" onchange="getImagePreview(event,'logo_image')">
                             <div id="logo_image">
                                 @if($organization->logo)
-                                <img src="{{asset('storage/'.$organization->logo)}}" alt="{{$organization->name}}" style="width:100px;padding:5px;object-fit:contain;"></div>
+                                <img src="{{asset('storage/'.$organization->logo)}}" alt="{{$organization->name}}" style="width:100px;padding:5px;object-fit:contain;">
                                 @endif
                             </div>
+                            @error('logo')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <select id="country" name="country" class="form-select select2" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Country</option>
+                                @foreach ($countries as $country)
+                                <option value="{{$country['name']}}" {{$organization->country == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
+                                @endforeach
+                            </select>
+                            @error('country')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
                     </div>
                     <div class="btn-submit-container">
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>

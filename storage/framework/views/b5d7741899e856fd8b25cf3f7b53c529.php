@@ -39,18 +39,12 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <button type="button" class="btn btn-success"><i
+                        <a href="<?php echo e(route('survey.csv')); ?>" type="button" class="btn btn-success"><i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
                             Export</button>
-
-                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                            <img class="svg-icon" type="image/svg+xml"
-                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                        </a>
-                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
-
+                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                        aria-controls="theme-settings-offcanvas">
                             <img class="svg-icon" type="image/svg+xml"
                                 src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
@@ -60,13 +54,10 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
-                    <div class="d-flex flex-row align-items-center gap-1"><span>Showing</span> <select
-                            class="form-select" aria-label="Default select example">
-                            <option selected>10</option>
-                            <option value="1">20</option>
-                            <option value="2">50</option>
-                            <option value="3">100</option>
-                        </select> <span>entries</span> </div>
+                    <div class="d-flex flex-row align-items-center gap-1">
+                        
+                        
+                    </div>
                     <div class="row">
                         <div class="col-auto d-flex justify-content-sm-end">
                             <div class="search-box"> <input type="text" class="form-control" id="searchProductList"
@@ -103,10 +94,7 @@
                         <thead class="table-head">
                             <tr>
                                 <th scope="col">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" id="checkAll"
-                                            value="option">
-                                    </div>
+                                    S.No.
                                 </th>
                                 <th>Survey ID</th>
                                 <th>Survey Name</th>
@@ -121,13 +109,11 @@
                             <?php $__currentLoopData = $answers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $answer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                            value="option1">
-                                    </div>
+                                    <?php echo e($answer->serial_no); ?>
+
                                 </th>
                                 <td><?php echo e($answer->event_id); ?></td>
-                                <td><?php echo e($answer->form->form_title); ?></td>
+                                <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
                                 <td>
                                     <span class="participants-name">
                                        <?php echo e($answer->name); ?>
@@ -147,10 +133,13 @@
                                             <i class="ri-more-fill align-middle"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
+                                            <li><a href="<?php echo e(route('survey.show',$answer)); ?>" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
+                                            <li><a href="<?php echo e(route('survey.qa',$answer)); ?>" class="dropdown-item"><i
+                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> QA</a>
+                                            </li>
+                                            <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a></li>
                                             <li>
@@ -158,7 +147,7 @@
                                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                     Delete
                                                 </a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </td>
@@ -168,7 +157,8 @@
                     </table>
                 </div>
                 <!--tfooter section-->
-                <div class="align-items-center mt-xl-3 mt-4 justify-content-between d-flex">
+                <?php echo $__env->make('typeform.partials.pagination',['paginator'=>$answers], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <!-- <div class="align-items-center mt-xl-3 mt-4 justify-content-between d-flex">
                     <div class="flex-shrink-0">
                         <div class="text-muted">Showing <span class="fw-semibold">5</span> of <span
                                 class="fw-semibold">25</span> Results </div>
@@ -180,7 +170,7 @@
                         <li class="page-item"> <a href="#" class="page-link">3</a> </li>
                         <li class="page-item"> <a href="#" class="page-link">Next</a> </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

@@ -87,7 +87,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country</label>
 
-                            <select id="country" name="country" class="form-select" data-choices
+                            <select id="country" name="country" class="form-select select2" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -100,8 +100,8 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization</label>
-                            <select id="organization" name="organization" class="form-select" data-choices
-                                data-choices-sorting="true">
+                            <select id="organization" name="organization" class="form-select select2" data-choices
+                                data-choices-sorting="true" disabled>
                                 <option selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
@@ -113,7 +113,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="branch" class="form-label">Branch</label>
-                            <select id="branch" name="branch" class="form-select" data-choices
+                            <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true" disabled>
                                 <option selected>Choose Branch</option>
                             </select>
@@ -267,10 +267,40 @@ $(document).ready(function() {
         })
     })
 
+     //Filter Organizations
+    $('#country').change(function() {
+        var countryVal = $('#country').val();
+
+        if (countryVal !== '') {
+            $.ajax({
+                url: "<?php echo e(route('organization.get')); ?>",
+                method: 'GET',
+                data: {
+                    country: countryVal
+                },
+                success: function(response) {
+                    console.log(response);
+                    $('#organization').prop('disabled', false);
+                    $('#organization').html('');
+                    $('#organization').append('<option selected>Choose Organization</option>');
+                    response.organizations.forEach(function(organization) {
+                        $('#organization').append(new Option(organization.name, organization.id));
+                    })
+                },
+                error: function(xhr, status, error) {
+                    $('#organization').prop('disabled', true);
+                    $('#organization').html('');
+                    $('#organization').append('<option selected>Choose Organization</option>');
+                }
+            })
+        }
+    });
+
+    //Filter Branches
     $('#organization').change(function() {
         var organizationVal = $('#organization').val();
 
-        if (organization !== '') {
+        if (organizationVal !== '') {
             $.ajax({
                 url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',

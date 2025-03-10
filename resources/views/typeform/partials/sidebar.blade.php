@@ -82,6 +82,14 @@
                 </li>
                 {{-- Form Management --}}
 
+                 {{-- Answer Management --}}
+                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('survey.index')}}">
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
+                    </a>
+                </li>
+                {{-- Survey Management --}}
+
                 {{-- Questions Management --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('form.index')}}">
@@ -98,13 +106,7 @@
                 </li>
                 {{-- Form Management --}}
 
-                {{-- Answer Management --}}
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('survey.index')}}">
-                    <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
-                    </a>
-                </li>
-                {{-- Survey Management --}}
+               
 
             </ul>
         </div>

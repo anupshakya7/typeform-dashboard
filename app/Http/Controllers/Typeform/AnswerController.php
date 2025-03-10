@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Helpers\PaginationHelper;
+use Carbon\Carbon;
 
 class AnswerController extends Controller
 {
     public function index(){
         $answers = Answer::with('form')->select('id','event_id','form_id','name','age','gender','created_at')->paginate(10);
+        $answers = PaginationHelper::addSerialNo($answers);
 
         return view('typeform.survey.index',compact('answers'));
     }
@@ -69,5 +72,76 @@ class AnswerController extends Controller
        
         
         return $answerCreated;
+    }
+
+    public function show($answer){
+       $answer = Answer::find($answer);
+
+       return view('typeform.survey.view',compact('answer'));
+    }
+
+    public function QA(Answer $answer){
+        $answer->load('form','form.question');
+
+        return view('typeform.survey.QA',compact('answer'));
+    }
+
+    public function generateCSV(){
+        $survey = Answer::with('form')->get();
+
+        $filename = 'survey.csv';
+        $fp = fopen($filename,'w+');
+        fputcsv($fp,array(
+            'ID',
+            'Form',
+            'Participant',
+            'Age',
+            'Gender',
+            'Address',
+            'Well-Functioning Government',
+            'Low Levels of Corruption',
+            'Equitable Distribution of Resources',
+            'Good Relations with Neighbours',
+            'Free Flow of Information',
+            'High Levels of Human Capital',
+            'Sound Business Environment',
+            'Acceptance of the Rights of Others',
+            'Positive Peace',
+            'Negative Peace',
+            'Extra Question 1',
+            'Extra Question 2',
+            'Extra Question 3',
+            'Survey Date'
+        ));
+
+        foreach($survey as $row){
+            fputcsv($fp,array(
+                $row->id,
+                $row->form->form_title,
+                $row->name,
+                $row->age,
+                $row->gender,
+                $row->{'village-town-city'},
+                $row->well_functioning_government,
+                $row->low_level_corruption,
+                $row->equitable_distribution,
+                $row->good_relations,
+                $row->free_flow,
+                $row->high_levels,
+                $row->sound_business,
+                $row->acceptance_rights,
+                $row->positive_peace,
+                $row->negative_peace,
+                $row->extra_ans1,
+                $row->extra_ans2,
+                $row->extra_ans3,
+                Carbon::parse($row->created_at)->format('d M, Y'),
+            ));
+        }
+
+        fclose($fp);
+        $headers = array('Content-Type'=>'text/csv');
+
+        return response()->download($filename,'survey.csv',$headers);
     }
 }

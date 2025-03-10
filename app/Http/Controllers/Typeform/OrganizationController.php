@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Typeform;
 
+use App\Helpers\DownloadCSV;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -24,13 +26,18 @@ class OrganizationController extends Controller
     }
 
     public function create(){
-        return view('typeform.organization.create');
+        $countriesPath = public_path('build/js/countries/countries.json');
+        $countries = json_decode(File::get($countriesPath),true);
+
+
+        return view('typeform.organization.create',compact('countries'));
     }
 
     public function store(Request $request){
         $validatedData = $request->validate([
             'name'=>'required|string|min:2',
-            'logo'=>'nullable|mimes:png,jpg,jpeg|max:2048'
+            'logo'=>'nullable|mimes:png,jpg,jpeg|max:2048',
+            'country'=>'required|string'
         ]);
 
         if($request->hasFile('logo') && $request->file('logo')->isValid()){
@@ -53,13 +60,17 @@ class OrganizationController extends Controller
     }
 
     public function edit(Organization $organization){
-        return view('typeform.organization.edit',compact('organization'));
+        $countriesPath = public_path('build/js/countries/countries.json');
+        $countries = json_decode(File::get($countriesPath),true);
+
+        return view('typeform.organization.edit',compact('organization','countries'));
     }
 
     public function update(Request $request,Organization $organization){
         $validatedData = $request->validate([
             'name'=>'required|string|min:2',
-            'logo'=>'nullable|mimes:png,jpg,jpeg|max:2048'
+            'logo'=>'nullable|mimes:png,jpg,jpeg|max:2048',
+            'country'=>'required|string'
         ]);
 
         if($request->hasFile('logo') && $request->file('logo')->isValid()){
@@ -106,21 +117,9 @@ class OrganizationController extends Controller
     public function generateCSV(){
         $organizations = Organization::all();
         $filename = "organization.csv";
-        $fp = fopen($filename,'w+');
-        fputcsv($fp,array('ID','Name','Created At'));
+    
 
-        foreach($organizations as $row){
-            fputcsv($fp,array(
-                $row->id,
-                $row->name,
-                $row->created_at
-            ));
-        }
-
-        fclose($fp);
-        $headers = array('Content-Type' => 'text/csv');
-
-        return response()->download($filename,'organization.csv',$headers);
+        return DownloadCSV::downloadCSV($organizations,$filename);
 
     }
 }

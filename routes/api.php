@@ -22,5 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Get Single Form Data
 Route::get('typeform/form/getData',[FormController::class,'getForm'])->name('form.get');
 
+//Get Filter Organizations according to Country
+Route::get('typeform/form/getOrganization',[FormController::class,'filterOrganization'])->name('organization.get');
+
 //Get Filter Branches according to Organization
 Route::get('typeform/form/getBranch',[FormController::class,'filterBranch'])->name('branch.get');

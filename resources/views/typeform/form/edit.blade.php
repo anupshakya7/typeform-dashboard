@@ -17,55 +17,117 @@
 @section('content')
 <!--greeting section -->
 
-<div class="mb-3 pb-1 d-flex align-items-center flex-row">
-    <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Update Branch</h4>
-        <p class="text-muted mb-0">Note: Please update Branch.</p>
-    </div>
-</div>
-
-
 <div class="card" id="formForm">
-    <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Branch</h5>
+    <div class="card-header align-items-center d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">Update Form</h5>
         <a class="btn btn-info" onclick="history.back(); return false;">
                 <i class="ri-arrow-left-line"></i> Back
             </a>
-    </div>
+    </div><!-- end card header -->
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="{{route('branch.update',$branch)}}" method="POST" enctype="multipart/form-data">
+            <form id="mainForm" action="{{route('form.update',$form)}}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
-                            <select id="organization_id" name="organization_id" class="form-select" data-choices
+                            <label for="formId" class="form-label">Form Id</label>
+                            <input type="text" name="formId" value="{{old('formId',$form->form_id)}}" class="form-control" placeholder="Form Id" id="formId"
+                                readonly>
+                        </div>
+                    </div>
+                    <!--end col-->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="form_name" class="form-label">Form Name</label>
+                            <input type="text" name="form_name" value="{{old('form_name',$form->form_title)}}" class="form-control" placeholder="Form Name"
+                                id="form_name">
+                        </div>
+                    </div>
+                    <!--end col-->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+
+                            <select id="country" name="country" class="form-select" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Country</option>
+                                @foreach ($countries as $country)
+                                <option value="{{$country['name']}}" {{$form->country == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <!--end col-->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="organization" class="form-label">Organization</label>
+                            <select id="organization" name="organization" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Organization</option>
                                 @foreach($organizations as $organization)
-                                <option value="{{$organization->id}}" {{$branch->organization_id == $organization->id ? 'selected':''}}>{{$organization->name}}</option>
+                                <option value="{{$organization->id}}" {{$organization->id == $form->organization_id ? 'selected':''}}>{{$organization->name}}</option>
                                 @endforeach
                             </select>
-                            @error('organization_id')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
                         </div>
                     </div>
+                    <!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" value="{{old('name',$branch->name)}}" class="form-control" placeholder="Name" id="name">
-                            @error('name')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            <label for="branch" class="form-label">Branch</label>
+                            @if($form->branch_id)
+                            @php
+                                $organization_id = $form->branches->organization->id;
+                                $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
+                            @endphp
+                            <select id="branch" name="branch" class="form-select" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Branch</option>
+                                @foreach($branches as $branch)
+                                <option value="{{$branch->id}}" {{$branch->id == $form->branch_id ? 'selected':''}}>{{$branch->name}}</option>
+                                @endforeach
+                            </select>
+                            @else
+                            <select id="branch" name="branch" class="form-select" data-choices
+                                data-choices-sorting="true" disabled>
+                                <option selected>Choose Branch</option>
+                            </select>
+                            @endif
                         </div>
                     </div>
-                    
                     <!--end col-->
+                    <div class="card-header align-items-center d-flex mb-3">
+                        <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mt-3">
+                            <label class="form-label mb-0">Before Survey Date [From - To] </label>
+                            <input type="text" name="beforedate" class="form-control mt-2" value="{{old('beforedate',$form->before)}}" data-provider="flatpickr"
+                                data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mt-3">
+                            <label class="form-label mb-0">During Survey Date [From - To] </label>
+                            <input type="text" name="duringdate" class="form-control mt-2" value="{{old('beforedate',$form->during)}}" data-provider="flatpickr"
+                                data-date-format="d M, Y" data-range-date="true" placeholder="Pick during date range">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mt-3">
+                            <label class="form-label mb-0">After Survey Date [From - To] </label>
+                            <input type="text" name="afterdate" class="form-control mt-2" value="{{old('beforedate',$form->after)}}" data-provider="flatpickr"
+                                data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
+                        </div>
+                    </div>
+                    <div>
+                        <p class="note-tag">Note: Please pick the starting and ending date for survey.</p>
+                    </div>
                     <div class="btn-submit-container">
+
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>
+
                     </div>
 
                     <!--end col-->
@@ -109,4 +171,106 @@
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Flatpickr
+    flatpickr('[data-provider="flatpickr"]', {
+        dateFormat: 'd M, Y',
+        enableTime: false,
+        mode: 'range',
+    });
+});
+$(document).ready(function() {
+    // $('#formSync').submit(function(e) {
+    //     e.preventDefault();
+    //     var formId = $('#form_id').val();
+    //     var SyncIcon = $('#syncBtnIcon');
+    //     SyncIcon.addClass("rotate");
+    //     var url = "{{route('form.get')}}";
+    //     var apiKey = @json(config('services.api.key'));
+    //     var questions = [];
+
+    //     $.ajax({
+    //         url: url,
+    //         type: 'GET',
+    //         data: {
+    //             form_id: formId
+    //         },
+    //         headers: {
+    //             'Authorization': 'Bearer ' + apiKey
+    //         },
+    //         success: function(response) {
+    //             $('#form_id').val(formId);
+    //             $('#form_id').prop('readonly', true);
+    //             $('#formForm').css('display', 'flex');
+    //             $('#formIdMessage').removeClass('text-danger');
+    //             $('#formIdMessage').addClass('text-success');
+    //             $('#formIdMessage').text('Form Sync Successfully!!!');
+    //             $('#formIdMessage').css('display', 'flex');
+
+    //             $('#formId').val(formId);
+    //             $('#form_name').val(response.data.title);
+
+    //             const filteredQuestions = response.data.fields.filter(item => item.type !==
+    //                 'statement');
+
+    //             filteredQuestions.forEach(function(question) {
+    //                 var questionInput = $('<input>')
+    //                     .attr('type', 'hidden')
+    //                     .attr('name', 'questions[]')
+    //                     .val(question.title)
+
+    //                 $('#mainForm').append(questionInput);
+    //             });
+    //             SyncIcon.removeClass("rotate");
+    //         },
+    //         error: function(xhr, status, error) {
+    //             $('#form_id').val('');
+    //             $('#formForm').css('display', 'none');
+
+    //             $('#formIdMessage').removeClass('text-success');
+    //             $('#formIdMessage').addClass('text-danger');
+
+    //             $('#formIdMessage').text(xhr.responseJSON.message);
+    //             $('#formIdMessage').css('display', 'flex');
+    //             SyncIcon.removeClass("rotate");
+    //             // toastr.error('The form with this ID was not found.', 'Error', {
+    //             //     closeButton: true, 
+    //             //     progressBar: true, 
+    //             //     timeOut: 5000
+    //             // });
+    //         }
+    //     })
+    // })
+
+    $('#organization').change(function() {
+        var organizationVal = $('#organization').val();
+
+        if (organization !== '') {
+            $.ajax({
+                url: "{{route('branch.get')}}",
+                method: 'GET',
+                data: {
+                    organization_id: organizationVal
+                },
+                success: function(response) {
+                    $('#branch').prop('disabled', false);
+                    $('#branch').html('');
+                    $('#branch').append('<option selected>Choose Branch</option>');
+                    response.branches.forEach(function(branch) {
+                        $('#branch').append(new Option(branch.name, branch.id));
+                    })
+                },
+                error: function(xhr, status, error) {
+                    $('#branch').prop('disabled', true);
+                    $('#branch').html('');
+                    $('#branch').append('<option selected>Choose Branch</option>');
+                }
+            })
+        }
+    });
+
+})
+</script>
 @endsection

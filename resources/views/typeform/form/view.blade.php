@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Branch Details</h4>
-        <p class="text-muted mb-0">View branch details, including structure, contacts, departments, and roles.</p>
+        <h4 class="fs-16 mb-1">Form Details</h4>
+        <p class="text-muted mb-0">View form details, including organization, branch, and date.</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Branch</h5>
+                <h5 class="card-title mb-0">Form</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -41,24 +41,46 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{$branch->id}}</td>
+                                <td>{{$form->id}}</td>
+                            </tr>
+                            <tr>
+                                <th>Form ID</th>
+                                <td>{{$form->form_id}}</td>
+                            </tr>
+                            <tr>
+                                <th>Form Name</th>
+                                <td>{{$form->form_title}}</td>
+                            </tr>
+                            <tr>
+                                <th>Country</th>
+                                <td>{{$form->country}}</td>
                             </tr>
                             <tr>
                                 <th>Organization</th>
-                                <td>{{optional($branch->organization)->name}}</td>
+                                <td>{{optional($form->organization)->name}}</td>
                             </tr>
                             <tr>
-                                <th>Name</th>
-                                <td>{{$branch->name}}</td>
+                                <th>Branch</th>
+                                <td>{{optional($form->branches)->name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Before Date</th>
+                                <td>{{$form->before}}</td>
+                            </tr>
+                            <tr>
+                                <th>During Date</th>
+                                <td>{{$form->during}}</td>
+                            </tr>
+                            <tr>
+                                <th>After Date</th>
+                                <td>{{$form->after}}</td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td>{{Carbon\Carbon::parse($branch->created_at)->format('d M, Y')}}</td>
+                                <td>{{Carbon\Carbon::parse($form->created_at)->format('d M, Y')}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    
-
                 </div>
 
                 <nav class="mb-3">

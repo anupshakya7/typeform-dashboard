@@ -11,7 +11,8 @@ class Organization extends Model
 
     protected $fillable = [
         'name',
-        'logo'
+        'logo',
+        'country'
     ];
 
     public function branches(){

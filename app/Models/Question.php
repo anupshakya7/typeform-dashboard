@@ -29,4 +29,8 @@ class Question extends Model
         'extra_ques2',
         'extra_ques3',
     ];
+
+    public function form(){
+        return $this->belongTo(Form::class,'form_id','form_id');
+    }
 }

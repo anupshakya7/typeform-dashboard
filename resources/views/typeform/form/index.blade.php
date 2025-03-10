@@ -40,9 +40,8 @@
         <div class="flex-shrink-0">
             <div class="d-flex flex-row gap-2 align-items-center">
                 <!--info here-->
-                <button type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
-
-                    Export</button>
+                <a href="{{route('form.csv')}}" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
+                    Export</a>
                 <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                 aria-controls="theme-settings-offcanvas">
 
@@ -64,6 +63,7 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
+                    <form action="{{route('form.index')}}" method="GET" id="form_search" style="display: inline-block">
                     <div class="d-flex flex-row align-items-center gap-1">
                         {{-- <span>Showing</span> 
                         <select
@@ -76,28 +76,30 @@
                         <span>entries</span>  --}}
                     </div>
                     <div class="row">
-                        <div class="col-auto d-flex justify-content-sm-end">
-                            <div class="search-box"> <input type="text" class="form-control" id="searchProductList"
-                                    placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
-                        </div>
-                        <div class="col-auto"> <select class="form-select " aria-label="Default select example">
-                                <option selected>Country </option>
-                                <option value="1">Australia</option>
-                                <option value="2">USA</option>
-                                <option value="3">India</option>
-                                <option value="4">Nepal</option>
-                            </select> </div>
-                        <div class="col-auto">
-                            <div class="col-auto"> <select class="form-select" aria-label="Default select example">
-                                    <option selected>Project</option>
-                                    <option value="1">Project1</option>
-                                    <option value="2">Project2</option>
-                                    <option value="3">Project3</option>
+                            <div class="col-auto d-flex justify-content-sm-end">
+                                <div class="search-box"> <input type="text" class="form-control" value="{{request('search_title')}}" name="search_title" onkeyup="debounceSearch()" id="searchProductList"
+                                        placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
+                            </div>
+                            <div class="col-auto"> 
+                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Country </option>
+                                    @foreach($countries as $country)
+                                        <option value="{{$country['name']}}" {{request('country') == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
+                                    @endforeach
                                 </select> </div>
-                        </div>
+                            <div class="col-auto">
+                                <div class="col-auto"> 
+                                    <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Organization</option>
+                                        @foreach($organizations as $organization)
+                                        <option value="{{$organization->id}}" {{request('organization') == $organization->id ? 'selected':''}}>{{$organization->name}}</option>
+                                        @endforeach
+                                    </select> </div>
+                            </div>
                     </div>
+                </form>
                 </div>
-
+            
                 <div class="table-responsive">
                     <table id="scroll-horizontal" class="table nowrap align-middle table-bordered " style="width:100%">
                         <thead class="table-head">
@@ -120,7 +122,7 @@
                             @foreach($forms as $key=>$form)
                             <tr>
                                 <th scope="row">
-                                    {{$key+1}}
+                                    {{$form->serial_no}}
                                 </th>
                                 <td>{{$form->form_id}}</td>
                                 <td>{{$form->form_title}}</td>
@@ -137,18 +139,24 @@
                                             <i class="ri-more-fill align-middle"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#!" class="dropdown-item"><i
+                                            <li><a href="{{route('form.show',$form)}}" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
-                                            <li><a class="dropdown-item edit-item-btn"><i
+                                            <li><a href="{{route('form.question',$form)}}" class="dropdown-item"><i class="fa-solid fa-question align-bottom me-2 mb-1 text-muted"></i>Questions</a>
+                                            </li>
+                                            <li><a href="{{route('form.edit',$form)}}" class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                                <button class="dropdown-item remove-item-btn"
+                                                    data-item-id="{{ $form->id }}"
+                                                    data-item-name="{{ $form->form_title }}"
+                                                    data-bs-toggle="modal" data-bs-target="#zoomInModal">
+                                                    <i
+                                                        class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                     Delete
-                                                </a>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
@@ -159,19 +167,7 @@
                     </table>
                 </div>
                 <!--tfooter section-->
-                <div class="align-items-center mt-xl-3 mt-4 justify-content-between d-flex">
-                    <div class="flex-shrink-0">
-                        <div class="text-muted">Showing <span class="fw-semibold">5</span> of <span
-                                class="fw-semibold">25</span> Results </div>
-                    </div>
-                    <ul class="pagination pagination-separated pagination-sm mb-0">
-                        <li class="page-item disabled"> <a href="#" class="page-link">Previous</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">1</a> </li>
-                        <li class="page-item active"> <a href="#" class="page-link">2</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">3</a> </li>
-                        <li class="page-item"> <a href="#" class="page-link">Next</a> </li>
-                    </ul>
-                </div>
+                @include('typeform.partials.pagination',['paginator' => $forms])
             </div>
            
         </div>
@@ -181,8 +177,11 @@
 <!--form section ends here-->
 
 
+ <!-- Modal Blur -->
+ @include('typeform.partials.deleteModal')
 
-<div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+{{-- <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-light p-3">
@@ -276,15 +275,15 @@
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success" id="add-btn">Add</button>
                         {{-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> --}}
-                    </div>
+                    {{-- </div>
                 </div>
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Modal -->
-<div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-hidden="true">
+{{-- <div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body p-5 text-center">
@@ -304,7 +303,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>  --}}
 <!--end modal -->
 </div>
 </div>
@@ -350,6 +349,44 @@
 
 <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
 
+<script>
+     document.querySelectorAll('.remove-item-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                var itemId = this.getAttribute('data-item-id');
+                var itemName = this.getAttribute('data-item-name');
 
+                //Set the organization Id in the hidden input field
+                document.getElementById('delete_item_id').value = itemId;
+
+                //Set the organization name
+                document.getElementById('delete_item').textContent = itemName;
+
+                //Set Item Description
+                document.getElementById('delete_item_description').innerHTML =
+                    'Deleting this item will permanently remove it from the system, <span class="text-danger"> along with all questions which are part of this form</span';
+
+                var deleteForm = document.getElementById('deleteForm');
+                
+                var currentUrl = window.location.href;
+                        
+                var url = new URL(currentUrl);
+
+                var baseUrl = url.origin+url.pathname;
+
+                deleteForm.action = baseUrl + '/' + itemId;
+
+            })
+        });
+
+        let debounceTimeout;
+
+        function debounceSearch(){
+            clearTimeout(debounceTimeout);
+
+            debounceTimeout = setTimeout(function(){
+                document.getElementById('form_search').submit();
+            },800);
+        }
+</script>
 
 @endsection

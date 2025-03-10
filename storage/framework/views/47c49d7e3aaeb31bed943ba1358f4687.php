@@ -74,6 +74,7 @@
                                     <th>S.No.</th>
                                     <th>Name</th>
                                     <th>Logo</th>
+                                    <th>Country</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -89,6 +90,7 @@
                                                     width="80">
                                             <?php endif; ?>
                                         </td>
+                                        <td><?php echo e($organization->country); ?></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

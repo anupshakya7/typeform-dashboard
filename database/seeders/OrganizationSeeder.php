@@ -14,11 +14,13 @@ class OrganizationSeeder extends Seeder
     public function run(): void
     {
         Organization::create([
-            'name'=>'IEP'
+            'name'=>'IEP',
+            'country'=>'Nepal'
         ]);
 
         Organization::create([
-            'name'=>'GTI'
+            'name'=>'GTI',
+            'country'=>'UK'
         ]);
     }
 }
