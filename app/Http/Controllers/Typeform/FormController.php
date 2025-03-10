@@ -232,6 +232,26 @@ class FormController extends Controller
         }
     }
 
+    public function filterSurvey(Request $request){
+        $validatedData = $request->validate([
+            'organization_id' => 'required|integer'
+        ]);
+
+        $forms = Form::where('organization_id',$validatedData['organization_id'])->get();
+        
+        if($forms){
+            return response()->json([
+                'status'=>true,
+                'forms'=>$forms
+            ],200);
+        }else{
+            return response()->json([
+                'status'=>false,
+                'message'=>'Form Not Found'
+            ],404);
+        }
+    }
+
     public function edit(Form $form)
     {
         $form->load('branches','branches.organization');

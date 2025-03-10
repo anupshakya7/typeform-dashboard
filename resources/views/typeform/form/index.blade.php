@@ -63,7 +63,6 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
-                    <form action="{{route('form.index')}}" method="GET" id="form_search" style="display: inline-block">
                     <div class="d-flex flex-row align-items-center gap-1">
                         {{-- <span>Showing</span> 
                         <select
@@ -75,6 +74,7 @@
                         </select> 
                         <span>entries</span>  --}}
                     </div>
+                    <form action="{{route('form.index')}}" method="GET" id="form_search" style="display: inline-block">
                     <div class="row">
                             <div class="col-auto d-flex justify-content-sm-end">
                                 <div class="search-box"> <input type="text" class="form-control" value="{{request('search_title')}}" name="search_title" onkeyup="debounceSearch()" id="searchProductList"

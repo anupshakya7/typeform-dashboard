@@ -57,44 +57,42 @@
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
                     <div class="d-flex flex-row align-items-center gap-1">
-                        {{-- <span>Showing</span>  --}}
-                        {{-- <select
-                            class="form-select" aria-label="Default select example">
-                            <option selected>10</option>
-                            <option value="1">20</option>
-                            <option value="2">50</option>
-                            <option value="3">100</option>
-                        </select> <span>entries</span>  --}}
+
                     </div>
-                    <div class="row">
-                        <div class="col-auto d-flex justify-content-sm-end">
-                            <div class="search-box"> <input type="text" class="form-control" id="searchProductList"
-                                    placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
+                    <form action="{{route('survey.index')}}" method="GET" id="survey_search">
+                        <div class="row">
+                            <div class="col-auto d-flex justify-content-sm-end">
+                                <div class="search-box"> <input type="text" class="form-control" id="searchProductList" name="search_participant" value="{{request('search_participant')}}" onkeyup="debounceSeach()"
+                                        placeholder="Search Participants"> <i class="ri-search-line search-icon"></i> </div>
+                            </div>
+                            <div class="col-auto"> 
+                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Country </option>
+                                    @foreach($countries as $country)
+                                        <option value="{{$country['name']}}" {{request('country') == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto"> 
+                                <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Organization</option>
+                                    @foreach($organizations as $organization)
+                                    <option value="{{$organization->id}}" {{request('organization') == $organization->id ? 'selected':''}}>{{$organization->name}}</option>
+                                    @endforeach
+                                </select> 
+                            </div>
+                            <div class="col-auto">
+                                <div class="col-auto"> <select class="form-select select2" name="survey_form" onchange="this.form.submit()" aria-label="Default select example">
+                                        <option value="" selected>Survey</option>
+                                        @foreach($surveyForms as $surveyForm)
+                                        <option value="{{$surveyForm->form_title}}" {{request('survey_form') == $surveyForm->form_title ? 'selected':''}}>{{$surveyForm->form_title}}</option>
+                                        @endforeach
+                                    </select> </div>
+                            </div>
                         </div>
-                        <div class="col-auto"> <select class="form-select " aria-label="Default select example">
-                                <option selected>Country </option>
-                                <option value="1">Australia</option>
-                                <option value="2">USA</option>
-                                <option value="3">India</option>
-                                <option value="4">Nepal</option>
-                            </select> </div>
-                        <div class="col-auto"> <select class="form-select" aria-label="Default select example">
-                                <option selected>Organization </option>
-                                <option value="1">IEP</option>
-                                <option value="2">World Vision</option>
-                                <option value="3">Global Peace</option>
-                                <option value="4">CSB</option>
-                                <option value="5">ATI</option>
-                            </select> </div>
-                        <div class="col-auto">
-                            <div class="col-auto"> <select class="form-select" aria-label="Default select example">
-                                    <option selected>Project</option>
-                                    <option value="1">Project1</option>
-                                    <option value="2">Project2</option>
-                                    <option value="3">Project3</option>
-                                </select> </div>
-                        </div>
-                    </div>
+                    </form>
+                   
+                   
                 </div>
 
                 <div class="table-responsive">
@@ -106,6 +104,8 @@
                                 </th>
                                 <th>Survey ID</th>
                                 <th>Survey Name</th>
+                                <th>Survey Country</th>
+                                <th>Survey Organization</th>
                                 <th>Participants Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>
@@ -121,6 +121,8 @@
                                 </th>
                                 <td>{{$answer->event_id}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
+                                <td>{{$answer->form ? optional($answer->form)->country : 'No Country'}}</td>
+                                <td>{{$answer->form ? optional($answer->form)->organization->name : 'No Organization'}}</td>
                                 <td>
                                     <span class="participants-name">
                                         {{$answer->name}}
@@ -356,5 +358,16 @@
 
 <!-- App js -->
 <script src="{{URL::asset('build/js/app.js')}}"></script>
+
+<script>
+    let debouceTimeout;
+    function debounceSeach(){
+        clearTimeout(debouceTimeout);
+
+        debouceTimeout = setTimeout(()=>{
+            document.getElementById('survey_search').submit();
+        },800);
+    }
+</script>
 
 @endsection

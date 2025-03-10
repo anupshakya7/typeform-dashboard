@@ -25,5 +25,8 @@ Route::get('typeform/form/getData',[FormController::class,'getForm'])->name('for
 //Get Filter Organizations according to Country
 Route::get('typeform/form/getOrganization',[FormController::class,'filterOrganization'])->name('organization.get');
 
+//Get Filter Survey according to Organization
+Route::get('typeform/form/getSurvey',[FormController::class,'filterSurvey'])->name('survey.get');
+
 //Get Filter Branches according to Organization
 Route::get('typeform/form/getBranch',[FormController::class,'filterBranch'])->name('branch.get');

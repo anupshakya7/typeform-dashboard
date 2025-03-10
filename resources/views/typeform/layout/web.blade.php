@@ -48,8 +48,7 @@
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
-    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+   
     <script src="{{ URL::asset('build/js/script.js')}}"></script>
 
     <script>
