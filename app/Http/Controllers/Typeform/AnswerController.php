@@ -7,6 +7,7 @@ use App\Models\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Helpers\PaginationHelper;
+use Carbon\Carbon;
 
 class AnswerController extends Controller
 {
@@ -83,5 +84,64 @@ class AnswerController extends Controller
         $answer->load('form','form.question');
 
         return view('typeform.survey.QA',compact('answer'));
+    }
+
+    public function generateCSV(){
+        $survey = Answer::with('form')->get();
+
+        $filename = 'survey.csv';
+        $fp = fopen($filename,'w+');
+        fputcsv($fp,array(
+            'ID',
+            'Form',
+            'Participant',
+            'Age',
+            'Gender',
+            'Address',
+            'Well-Functioning Government',
+            'Low Levels of Corruption',
+            'Equitable Distribution of Resources',
+            'Good Relations with Neighbours',
+            'Free Flow of Information',
+            'High Levels of Human Capital',
+            'Sound Business Environment',
+            'Acceptance of the Rights of Others',
+            'Positive Peace',
+            'Negative Peace',
+            'Extra Question 1',
+            'Extra Question 2',
+            'Extra Question 3',
+            'Survey Date'
+        ));
+
+        foreach($survey as $row){
+            fputcsv($fp,array(
+                $row->id,
+                $row->form->form_title,
+                $row->name,
+                $row->age,
+                $row->gender,
+                $row->{'village-town-city'},
+                $row->well_functioning_government,
+                $row->low_level_corruption,
+                $row->equitable_distribution,
+                $row->good_relations,
+                $row->free_flow,
+                $row->high_levels,
+                $row->sound_business,
+                $row->acceptance_rights,
+                $row->positive_peace,
+                $row->negative_peace,
+                $row->extra_ans1,
+                $row->extra_ans2,
+                $row->extra_ans3,
+                Carbon::parse($row->created_at)->format('d M, Y'),
+            ));
+        }
+
+        fclose($fp);
+        $headers = array('Content-Type'=>'text/csv');
+
+        return response()->download($filename,'survey.csv',$headers);
     }
 }

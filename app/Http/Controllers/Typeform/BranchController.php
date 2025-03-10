@@ -80,7 +80,7 @@ class BranchController extends Controller
     }
 
     public function generateCSV(){
-        $branches = Branch::all();
+        $branches = Branch::with('organization')->get();
         $filename = "branch.csv";
         $fp = fopen($filename,'w+');
         fputcsv($fp,array('ID','Organization','Name','Created At'));

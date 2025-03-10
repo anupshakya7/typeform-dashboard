@@ -41,7 +41,7 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <button type="button" class="btn btn-success"><i
+                        <a href="{{route('survey.csv')}}" type="button" class="btn btn-success"><i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
                             Export</button>
