@@ -90,22 +90,6 @@
                 </li>
                 {{-- Survey Management --}}
 
-                {{-- Questions Management --}}
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('form.index')}}">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
-                    </a>
-                </li>
-                {{-- Questions Management --}}
-
-                {{-- Answer Management --}}
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('form.index')}}">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
-                    </a>
-                </li>
-                {{-- Form Management --}}
-
                
 
             </ul>
