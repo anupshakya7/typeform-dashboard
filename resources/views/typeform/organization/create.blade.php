@@ -57,6 +57,19 @@
                             <div id="logo_image"></div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+
+                            <select id="country" name="country" class="form-select select2" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Country</option>
+                                @foreach ($countries as $country)
+                                <option value="{{$country['name']}}">{{$country['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="btn-submit-container">
 
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>

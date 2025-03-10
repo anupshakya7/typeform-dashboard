@@ -192,6 +192,26 @@ class FormController extends Controller
         }
     }
 
+    public function filterOrganization(Request $request){
+        $validatedData = $request->validate([
+            'country' => 'required|string'
+        ]);
+
+        $organizations = Organization::where('country',$validatedData['country'])->get();
+        
+        if($organizations){
+            return response()->json([
+                'status'=>true,
+                'organizations'=>$organizations
+            ],200);
+        }else{
+            return response()->json([
+                'status'=>false,
+                'message'=>'Organization Not Found'
+            ],404);
+        }
+    }
+
     public function filterBranch(Request $request){
         $validatedData = $request->validate([
             'organization_id' => 'required|integer'

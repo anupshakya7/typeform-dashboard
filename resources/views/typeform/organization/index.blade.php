@@ -75,6 +75,7 @@
                                     <th>S.No.</th>
                                     <th>Name</th>
                                     <th>Logo</th>
+                                    <th>Country</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -90,6 +91,7 @@
                                                     width="80">
                                             @endif
                                         </td>
+                                        <td>{{ $organization->country }}</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

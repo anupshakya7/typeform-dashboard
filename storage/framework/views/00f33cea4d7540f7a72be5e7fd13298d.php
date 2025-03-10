@@ -101,7 +101,7 @@
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization</label>
                             <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                                data-choices-sorting="true" disabled>
                                 <option selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
@@ -267,10 +267,40 @@ $(document).ready(function() {
         })
     })
 
+     //Filter Organizations
+    $('#country').change(function() {
+        var countryVal = $('#country').val();
+
+        if (countryVal !== '') {
+            $.ajax({
+                url: "<?php echo e(route('organization.get')); ?>",
+                method: 'GET',
+                data: {
+                    country: countryVal
+                },
+                success: function(response) {
+                    console.log(response);
+                    $('#organization').prop('disabled', false);
+                    $('#organization').html('');
+                    $('#organization').append('<option selected>Choose Organization</option>');
+                    response.organizations.forEach(function(organization) {
+                        $('#organization').append(new Option(organization.name, organization.id));
+                    })
+                },
+                error: function(xhr, status, error) {
+                    $('#organization').prop('disabled', true);
+                    $('#organization').html('');
+                    $('#organization').append('<option selected>Choose Organization</option>');
+                }
+            })
+        }
+    });
+
+    //Filter Branches
     $('#organization').change(function() {
         var organizationVal = $('#organization').val();
 
-        if (organization !== '') {
+        if (organizationVal !== '') {
             $.ajax({
                 url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',

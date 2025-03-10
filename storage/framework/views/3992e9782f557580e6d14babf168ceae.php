@@ -60,10 +60,43 @@ unset($__errorArgs, $__bag); ?>
                             <input type="file" class="form-control" name="logo" id="logo" onchange="getImagePreview(event,'logo_image')">
                             <div id="logo_image">
                                 <?php if($organization->logo): ?>
-                                <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" alt="<?php echo e($organization->name); ?>" style="width:100px;padding:5px;object-fit:contain;"></div>
+                                <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" alt="<?php echo e($organization->name); ?>" style="width:100px;padding:5px;object-fit:contain;">
                                 <?php endif; ?>
                             </div>
+                            <?php $__errorArgs = ['logo'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <select id="country" name="country" class="form-select select2" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Country</option>
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country['name']); ?>" <?php echo e($organization->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['country'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+                    </div>
                     </div>
                     <div class="btn-submit-container">
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>
