@@ -61,7 +61,7 @@
                             </tr>
                             <tr>
                                 <th>Branch</th>
-                                <td>{{optional($form->branches)->name}}</td>
+                                <td>{{$form->branches ? optional($form->branches)->name : 'Main Branch'}}</td>
                             </tr>
                             <tr>
                                 <th>Before Date</th>
@@ -100,7 +100,6 @@
 </div>
 @endsection
 @section('script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->

@@ -62,7 +62,21 @@
                             @enderror
                         </div>
                     </div>
-                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <select id="country" name="country" class="form-select select2" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Country</option>
+                                @foreach ($countries as $country)
+                                <option value="{{$country['name']}}" {{$branch->country == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
+                                @endforeach
+                            </select>
+                            @error('country')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
                     <!--end col-->
                     <div class="btn-submit-container">
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>
@@ -93,7 +107,6 @@
 
 
 @section('script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->

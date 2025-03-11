@@ -96,7 +96,15 @@ class FormController extends Controller
                 $duringdate_start = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[0]);
                 $duringdate_end = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[1]);
                 $enddate_start = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[0]);
-                $enddate_end = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[1]);
+                $enddate_end = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[1]); 
+
+                if(isset($validatedData['branch'])){
+                    $branch_id =$validatedData['branch'];
+                    $branchLevel = 1;
+                }else{
+                    $branch_id=null;
+                    $branchLevel = 0;
+                }
 
                 //Form Data
                 $formData = [
@@ -104,10 +112,11 @@ class FormController extends Controller
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
                     'organization_id' => $validatedData['organization'],
-                    'branch_id' => $validatedData['branch'],
+                    'branch_id' => $branch_id,
+                    'branch_level'=>$branchLevel,
                     'before' => $beforedate_start.' to '.$beforedate_end,
                     'during' => $duringdate_start.' to '.$duringdate_end,
-                    'after' => $enddate_start.' to '.$enddate_end,
+                    'after' => $enddate_start.' to '.$enddate_end
                 ];
 
                 Form::create($formData);
@@ -288,13 +297,22 @@ class FormController extends Controller
                 $enddate_start = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[0]);
                 $enddate_end = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[1]);
 
+                if(isset($validatedData['branch'])){
+                    $branch_id =$validatedData['branch'];
+                    $branchLevel = 1;
+                }else{
+                    $branch_id=null;
+                    $branchLevel = 0;
+                }
+
                 //Form Data
                 $formData = [
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
                     'organization_id' => $validatedData['organization'],
-                    'branch_id' => $validatedData['branch'],
+                    'branch_id' => $branch_id,
+                    'branch_level'=>$branchLevel,
                     'before' => $beforedate_start.' to '.$beforedate_end,
                     'during' => $duringdate_start.' to '.$duringdate_end,
                     'after' => $enddate_start.' to '.$enddate_end,
@@ -334,10 +352,30 @@ class FormController extends Controller
     }
 
     public function generateCSV(){
-        $forms = Form::all();
+        $forms = Form::with('organization','branches')->get();
         $filename = "form.csv";
+        $fp = fopen($filename,'w+');
+        fputcsv($fp,array('ID','Form Id','Form Title','Country','Organization','Branch','Branch Level','Before','During','After','Created At'));
 
-        return DownloadCSV::downloadCSV($forms,$filename);
+        foreach($forms as $row){
+            fputcsv($fp,array(
+                $row->id,
+                $row->form_id,
+                $row->form_title,
+                $row->country,
+                $row->organization->name,
+                $row->branches ? $row->branches->name : 'Main Branch',
+                $row->branches ? 'Branch':'Main Branch',
+                $row->before,
+                $row->during,
+                $row->after,
+                $row->created_at,
+            ));
+        }
+
+        fclose($fp);
+        $headers = array('Content-Type'=>'text/csv');
+        return response()->download($filename,'form.csv',$headers);
     }
     
 }

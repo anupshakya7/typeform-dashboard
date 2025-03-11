@@ -70,6 +70,7 @@
                                     <th>S.No.</th>
                                     <th>Organization</th>
                                     <th>Branch Name</th>
+                                    <th>Country</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -80,6 +81,7 @@
                                         <td>{{ $branch->serial_no }}</td>
                                         <td>{{ optional($branch->organization)->name }}</td>
                                         <td>{{ $branch->name }}</td>
+                                        <td>{{ $branch->country }}</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -149,8 +151,6 @@
 
     <!-- App js -->
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
-
-
 
 
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

@@ -89,7 +89,7 @@
 
                             <select id="country" name="country" class="form-select select2" data-choices
                                 data-choices-sorting="true">
-                                <option selected>Choose Country</option>
+                                <option value="" selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -102,7 +102,7 @@
                             <label for="organization" class="form-label">Organization</label>
                             <select id="organization" name="organization" class="form-select select2" data-choices
                                 data-choices-sorting="true" disabled>
-                                <option selected>Choose Organization</option>
+                                <option value="" selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -110,12 +110,18 @@
                         </div>
                     </div>
                     <!--end col-->
-                    <div class="col-md-6">
+                    <div class="col-md-12" id="setBranchDiv" style="display: none;">
+                        <div class="my-3">
+                            <label for="setBranch" class="form-label">Would you like to set this form to the branch of this organization?</label>
+                            <input type="checkbox" class="ms-2" id="setBranch"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
                             <label for="branch" class="form-label">Branch</label>
                             <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true" disabled>
-                                <option selected>Choose Branch</option>
+                                <option value="" selected>Choose Branch</option>
                             </select>
                         </div>
                     </div>
@@ -178,7 +184,6 @@
 
 
 <?php $__env->startSection('script'); ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
@@ -282,7 +287,7 @@ $(document).ready(function() {
                     console.log(response);
                     $('#organization').prop('disabled', false);
                     $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
+                    $('#organization').append('<option value="" selected>Choose Organization</option>');
                     response.organizations.forEach(function(organization) {
                         $('#organization').append(new Option(organization.name, organization.id));
                     })
@@ -290,18 +295,33 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#organization').prop('disabled', true);
                     $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
+                    $('#organization').append('<option value="" selected>Choose Organization</option>');
                 }
             })
         }
     });
 
     //Filter Branches
-    $('#organization').change(function() {
+    $('#organization,#setBranch').change(function() {
         var organizationVal = $('#organization').val();
-
+        console.log(organizationVal);
         if (organizationVal !== '') {
-            $.ajax({
+           $('#setBranchDiv').css('display','block');
+
+           if($('#setBranch').prop('checked')){
+                $('#branchDiv').css('display','block');
+                branch(organizationVal)
+           }else{
+                $('#branchDiv').css('display','none');
+           }
+           
+        }else{
+            $('#setBranchDiv').css('display','none');
+        }
+    });
+
+    function branch(organizationVal){
+        $.ajax({
                 url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',
                 data: {
@@ -310,7 +330,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Branch</option>');
                     response.branches.forEach(function(branch) {
                         $('#branch').append(new Option(branch.name, branch.id));
                     })
@@ -318,11 +338,10 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Branch</option>');
                 }
             })
-        }
-    });
+    }
 
 })
 </script>

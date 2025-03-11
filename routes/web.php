@@ -5,6 +5,7 @@ use App\Http\Controllers\Typeform\BranchController;
 use App\Http\Controllers\Typeform\FormController;
 use App\Http\Controllers\Typeform\IndexController;
 use App\Http\Controllers\Typeform\OrganizationController;
+use App\Http\Controllers\Typeform\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -34,6 +35,13 @@ Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->nam
 Route::get('/',[IndexController::class,'index'])->name('home.index');
 
 Route::prefix('typeform')->group(function(){
+    //User
+    Route::resource('user',UserController::class);
+    
+    //Reset Password
+    Route::get('change-password',[UserController::class,'changePassword'])->name('user.password-change');
+    Route::post('change-password',[UserController::class,'changePasswordSubmit'])->name('user.password-change.submit');
+
     //Organization
     Route::resource('organization',OrganizationController::class);
     Route::get('organization/generate/csv',[OrganizationController::class,'generateCSV'])->name('organization.csv');

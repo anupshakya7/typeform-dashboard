@@ -11,7 +11,8 @@ class Branch extends Model
 
     protected $fillable=[
         'organization_id',
-        'name'
+        'name',
+        'country'
     ];
 
     public function organization(){

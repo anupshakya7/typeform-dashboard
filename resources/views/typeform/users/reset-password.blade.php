@@ -19,64 +19,55 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Create Organization</h4>
-        <p class="text-muted mb-0">Note: Please create Organization.</p>
+        <h4 class="fs-16 mb-1">Change Password</h4>
+        <p class="text-muted mb-0">Note: Please reset User Password.</p>
     </div>
 </div>
 
 
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Organization</h5>
+        <h5 class="card-title mb-0">Change Password</h5>
         <a class="btn btn-info" onclick="history.back(); return false;">
                 <i class="ri-arrow-left-line"></i> Back
             </a>
     </div>
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="{{route('organization.store')}}" method="POST" enctype="multipart/form-data">
+            <form id="mainForm" action="{{route('user.password-change.submit')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" placeholder="Name" id="name">
-                            @error('name')
+                            <label for="current_password" class="form-label">Current Password<span class="text-danger">*</span></label>
+                            <input type="password" name="current_password" class="form-control" placeholder="Current Password" id="current_password">
+                            @error('current_password')
                                 <span class="text-danger ms-1">{{$message}}</span>
                             @enderror
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">New Password<span class="text-danger">*</span></label>
+                            <input type="password" name="password" class="form-control" placeholder="Password" id="password">
+                            @error('password')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">New Confirm Password<span class="text-danger">*</span></label>
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" id="password_confirmation">
+                            @error('password_confirmation')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    
                     <!--end col-->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="logo" class="form-label">Logo</label>
-                            <input type="file" class="form-control" name="logo" id="logo" onchange="getImagePreview(event,'logo_image')">
-                            @error('logo')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
-                            <div id="logo_image"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
-
-                            <select id="country" name="country" class="form-select select2" data-choices
-                                data-choices-sorting="true">
-                                <option selected>Choose Country</option>
-                                @foreach ($countries as $country)
-                                <option value="{{$country['name']}}">{{$country['name']}}</option>
-                                @endforeach
-                            </select>
-                            @error('country')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
                     <div class="btn-submit-container">
-
-                        <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-
+                        <button type="submit" class="btn btn-blue btn-submit">Update Password</button>
                     </div>
 
                     <!--end col-->
@@ -119,19 +110,4 @@
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-function getImagePreview(event,divId){
-    var image = URL.createObjectURL(event.target.files[0]);
-    var imageDiv = document.getElementById(divId);
-
-    imageDiv.innerHTML = '';
-
-    var imageTag = document.createElement('img');
-    imageTag.src = image;
-    imageTag.width = "100";
-    imageTag.style.padding = "5px";
-    imageDiv.appendChild(imageTag);
-}
-</script>
 @endsection

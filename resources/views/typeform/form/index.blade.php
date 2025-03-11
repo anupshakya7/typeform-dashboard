@@ -128,7 +128,7 @@
                                 <td>{{$form->form_title}}</td>
                                 <td>{{$form->country}}</td>
                                 <td>{{optional($form->organization)->name}}</td>
-                                <td>{{optional($form->branches)->name}}</td>
+                                <td>{{$form->branches ? optional($form->branches)->name : 'Main Branch'}}</td>
                                 <td>{{$form->before}} </td>
                                 <td>{{$form->during}}</td>
                                 <td>{{$form->after}}</td>

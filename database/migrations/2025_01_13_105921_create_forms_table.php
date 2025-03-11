@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('form_title');
             $table->string('country');
             $table->unsignedBigInteger('organization_id');
-            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->integer('branch_level')->default(0)->comment('0 => Main Branch, 1 = Sub Branch');
             $table->string('before');
             $table->string('during');
             $table->string('after');
