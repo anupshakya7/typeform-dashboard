@@ -59,7 +59,7 @@
         @if(session::has('error'))
             toastr.error("{{session::get('error')}}");
         @endif
-
+        var $=jQuery;
         $(document).ready(function(){
             $('.select2').select2();
         });
