@@ -37,63 +37,63 @@ function getChartColorsArray(chartId) {
 }
 
 // Basic Radar Chart
-var chartRadarBasicColors = getChartColorsArray("basic_radar");
-if (chartRadarBasicColors) {
-    var options = {
-        series: [
-            {
-                name: 'Mean',
-                data: [80, 50, 30, 40, 100, 20, 40, 60],
-            }
-        ],
-        chart: {
-            height: 500,
-            type: 'radar',
-            toolbar: {
-                show: false
-            }
-        },
-        colors: chartRadarBasicColors,
-        xaxis: {
-            categories: [
-                'Well-functioning Government', 
-                'Low Levels Of Corruption', 
-                'Equitable Distribution Of Resources', 
-                'Good Relations With Neighbors', 
-                'Free Flow Of Information', 
-                'High Levels Of Human Capital', 
-                'Sound Business Environment',
-                'Acceptance Of The Rights Of Others'
-            ]
-        },
-        tooltip: {
-            enabled: true,
-            shared: false, // Set to false to ensure visibility
-            followCursor: true, // Follows the mouse for better positioning
-            theme: 'dark', // Ensures the tooltip is visible
-            y: {
-                formatter: function (val) {
-                    return val.toFixed(2) + " points";
-                }
-            }
-        },
-        stroke: {
-            width: 2 // Increases line thickness to improve interaction
-        },
-        fill: {
-            opacity: 0.2 // Ensures data is visible while keeping tooltip accessible
-        },
-        markers: {
-            size: 5, // Makes data points larger for better hover detection
-            hover: {
-                size: 8 // Ensures tooltip appears when hovering over points
-            }
-        }
-    };
+// var chartRadarBasicColors = getChartColorsArray("basic_radar");
+// if (chartRadarBasicColors) {
+//     var options = {
+//         series: [
+//             {
+//                 name: 'Mean',
+//                 data: [80, 50, 30, 40, 100, 20, 40, 60],
+//             }
+//         ],
+//         chart: {
+//             height: 500,
+//             type: 'radar',
+//             toolbar: {
+//                 show: false
+//             }
+//         },
+//         colors: chartRadarBasicColors,
+//         xaxis: {
+//             categories: [
+//                 'Well-functioning Government', 
+//                 'Low Levels Of Corruption', 
+//                 'Equitable Distribution Of Resources', 
+//                 'Good Relations With Neighbors', 
+//                 'Free Flow Of Information', 
+//                 'High Levels Of Human Capital', 
+//                 'Sound Business Environment',
+//                 'Acceptance Of The Rights Of Others'
+//             ]
+//         },
+//         tooltip: {
+//             enabled: true,
+//             shared: false, // Set to false to ensure visibility
+//             followCursor: true, // Follows the mouse for better positioning
+//             theme: 'dark', // Ensures the tooltip is visible
+//             y: {
+//                 formatter: function (val) {
+//                     return val.toFixed(2) + " points";
+//                 }
+//             }
+//         },
+//         stroke: {
+//             width: 2 // Increases line thickness to improve interaction
+//         },
+//         fill: {
+//             opacity: 0.2 // Ensures data is visible while keeping tooltip accessible
+//         },
+//         markers: {
+//             size: 5, // Makes data points larger for better hover detection
+//             hover: {
+//                 size: 8 // Ensures tooltip appears when hovering over points
+//             }
+//         }
+//     };
 
-    var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
-    chart.render();
-}
+//     var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
+//     chart.render();
+// }
 
 // Radar Chart - Multi series
 var chartRadarMultiColors = getChartColorsArray("multi_radar");

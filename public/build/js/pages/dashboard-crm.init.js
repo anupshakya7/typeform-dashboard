@@ -44,110 +44,110 @@ var revenueExpensesCharts = "";
 
 function loadCharts() {
     // Sales forecast charts
-    var areachartSalesColors = "";
-    areachartSalesColors = getChartColorsArray("sales-forecast-chart");
-    if (areachartSalesColors) {
-        var options = {
-            series: [{
-                name: 'Well Functioning Government',
-                data: [7]
-            }, {
-                name: 'Low Levels of corruption',
-                data: [4]
-            }, 
-            {
-                name: 'Equitable distribution of resources',
-                data: [8]
-            },{
-                name: 'Good relations with neighbours',
-                data: [5]
-            }, {
-                name: 'Free Flow Of Information',
-                data: [7]
-            },{
-                name: 'High Levels Of Human Capital',
-                data: [4]
-            }, {
-                name: 'Sound Business Environment',
-                data: [6]
-            },{
-                name: 'Acceptance Of The Rights Of Others',
-                data: [3]
-            }],
+    // var areachartSalesColors = "";
+    // areachartSalesColors = getChartColorsArray("sales-forecast-chart");
+    // if (areachartSalesColors) {
+    //     var options = {
+    //         series: [{
+    //             name: 'Well Functioning Government',
+    //             data: [7]
+    //         }, {
+    //             name: 'Low Levels of corruption',
+    //             data: [4]
+    //         }, 
+    //         {
+    //             name: 'Equitable distribution of resources',
+    //             data: [8]
+    //         },{
+    //             name: 'Good relations with neighbours',
+    //             data: [5]
+    //         }, {
+    //             name: 'Free Flow Of Information',
+    //             data: [7]
+    //         },{
+    //             name: 'High Levels Of Human Capital',
+    //             data: [4]
+    //         }, {
+    //             name: 'Sound Business Environment',
+    //             data: [6]
+    //         },{
+    //             name: 'Acceptance Of The Rights Of Others',
+    //             data: [3]
+    //         }],
             
-            chart: {
-                type: 'bar',
-                height: 341,
-                toolbar: {
-                    show: false,
-                },
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '70%',
-                }
-            },
-            stroke: {
-                show: true,
-                width: 5,
-                colors: ['transparent']
-            },
-            xaxis: {
-                categories:  ['' ],
-                axisTicks: {
-                    show: false,
-                    borderType: 'solid',
-                    color: '#78909C',
-                    height: 6,
-                    offsetX: 0,
-                    offsetY: 0
-                },
-                title: {
-                    offsetX: 0,
-                    offsetY: -30,
-                    style: {
-                        color: '#78909C',
-                        fontSize: '12px',
-                        fontWeight: 400,
-                    },
-                },
-            },
-            yaxis: {
-                labels: {
-                    formatter: function (value) {
-                        return value;
-                    }
-                },
-                tickAmount: 4,
-                min: 0
-            },
-            fill: {
-                opacity: 1
-            },
-            legend: {
-                show: true,
-                position: 'bottom',
-                horizontalAlign: 'center',
-                fontWeight: 500,
-                offsetX: 0,
-                offsetY: -14,
-                itemMargin: {
-                    horizontal: 8,
-                    vertical: 0
-                },
-                markers: {
-                    width: 10,
-                    height: 10,
-                }
-            },
-            colors: areachartSalesColors
-        };
-        if (salesForecastChart != "")
-            salesForecastChart.destroy();
-        salesForecastChart = new ApexCharts(document.querySelector("#sales-forecast-chart"), options);
-        salesForecastChart.render();
-    }
+    //         chart: {
+    //             type: 'bar',
+    //             height: 341,
+    //             toolbar: {
+    //                 show: false,
+    //             },
+    //         },
+    //         plotOptions: {
+    //             bar: {
+    //                 horizontal: false,
+    //                 columnWidth: '70%',
+    //             }
+    //         },
+    //         stroke: {
+    //             show: true,
+    //             width: 5,
+    //             colors: ['transparent']
+    //         },
+    //         xaxis: {
+    //             categories:  ['' ],
+    //             axisTicks: {
+    //                 show: false,
+    //                 borderType: 'solid',
+    //                 color: '#78909C',
+    //                 height: 6,
+    //                 offsetX: 0,
+    //                 offsetY: 0
+    //             },
+    //             title: {
+    //                 offsetX: 0,
+    //                 offsetY: -30,
+    //                 style: {
+    //                     color: '#78909C',
+    //                     fontSize: '12px',
+    //                     fontWeight: 400,
+    //                 },
+    //             },
+    //         },
+    //         yaxis: {
+    //             labels: {
+    //                 formatter: function (value) {
+    //                     return value;
+    //                 }
+    //             },
+    //             tickAmount: 4,
+    //             min: 0
+    //         },
+    //         fill: {
+    //             opacity: 1
+    //         },
+    //         legend: {
+    //             show: true,
+    //             position: 'bottom',
+    //             horizontalAlign: 'center',
+    //             fontWeight: 500,
+    //             offsetX: 0,
+    //             offsetY: -14,
+    //             itemMargin: {
+    //                 horizontal: 8,
+    //                 vertical: 0
+    //             },
+    //             markers: {
+    //                 width: 10,
+    //                 height: 10,
+    //             }
+    //         },
+    //         colors: areachartSalesColors
+    //     };
+    //     if (salesForecastChart != "")
+    //         salesForecastChart.destroy();
+    //     salesForecastChart = new ApexCharts(document.querySelector("#sales-forecast-chart"), options);
+    //     salesForecastChart.render();
+    // }
     
      // Sales forecast charts==============2
      var areachartSalesColorst = "";

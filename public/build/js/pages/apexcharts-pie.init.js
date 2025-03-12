@@ -39,53 +39,53 @@ function getChartColorsArray(chartId) {
 
 //  Simple Pie Charts
 
-var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
-if(chartPieBasicColors){
-var options = {
-    series: [40, 60],
-    chart: {
-        height: 192,
-        type: 'pie',
-    },
-    labels: ['Male', 'Female'],
-    legend: {
-        position: 'right'
-    },
-    dataLabels: {
-        dropShadow: {
-            enabled: false,
-        }
-    },
-    colors: chartPieBasicColors
-};
+// var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
+// if(chartPieBasicColors){
+// var options = {
+//     series: [40, 60],
+//     chart: {
+//         height: 192,
+//         type: 'pie',
+//     },
+//     labels: ['Male', 'Female'],
+//     legend: {
+//         position: 'right'
+//     },
+//     dataLabels: {
+//         dropShadow: {
+//             enabled: false,
+//         }
+//     },
+//     colors: chartPieBasicColors
+// };
 
-var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
-chart.render();
-}
+// var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
+// chart.render();
+// }
 
-var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
-if(chartPieBasicColors2){
-var options = {
-    series: [20, 10, 30, 40],
-    chart: {
-        height: 192,
-        type: 'pie',
-    },
-    labels: ['>18 years', '18-24 years', '25-40 years', '40 years Over'],
-    legend: {
-        position: 'right'
-    },
-    dataLabels: {
-        dropShadow: {
-            enabled: false,
-        }
-    },
-    colors: chartPieBasicColors2
-};
+// var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
+// if(chartPieBasicColors2){
+// var options = {
+//     series: [20, 10, 30, 40],
+//     chart: {
+//         height: 192,
+//         type: 'pie',
+//     },
+//     labels: ['>18 years', '18-24 years', '25-40 years', '40 years Over'],
+//     legend: {
+//         position: 'right'
+//     },
+//     dataLabels: {
+//         dropShadow: {
+//             enabled: false,
+//         }
+//     },
+//     colors: chartPieBasicColors2
+// };
 
-var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
-chart2.render();
-}
+// var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
+// chart2.render();
+// }
 
 // Simple Donut Charts
 var chartDonutBasicColors = getChartColorsArray("simple_dount_chart");
