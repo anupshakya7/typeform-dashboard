@@ -313,6 +313,7 @@ table th, table td {
     background-color: #F4F4F4;
 }
 
+<<<<<<< HEAD
 .select2-container--default .select2-selection--single {
     height: 38px;
     width: 200px !important;
@@ -344,3 +345,8 @@ table th, table td {
 .pillar-text {
     color: #4b73bf;
 }
+=======
+.top-26{
+    top:26px !important;
+}
+>>>>>>> master

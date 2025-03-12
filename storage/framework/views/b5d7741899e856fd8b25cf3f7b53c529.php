@@ -144,9 +144,12 @@
                                             <li><a href="<?php echo e(route('survey.show',$answer)); ?>" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
+                                            <?php if($answer->form): ?>
                                             <li><a href="<?php echo e(route('survey.qa',$answer)); ?>" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> QA</a>
                                             </li>
+                                            <?php endif; ?>
+                                            
                                             <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a></li>

@@ -243,10 +243,17 @@ class FormController extends Controller
 
     public function filterSurvey(Request $request){
         $validatedData = $request->validate([
-            'organization_id' => 'required|integer'
+            'organization_id' => 'required|integer',
+            'branch_id'=>'nullable|integer'
         ]);
 
-        $forms = Form::where('organization_id',$validatedData['organization_id'])->get();
+        $formQuery = Form::where('organization_id',$validatedData['organization_id']);
+        
+        if($request->filled('branch_id')){
+            $formQuery->where('branch_id',$validatedData['branch_id']);
+        }
+        
+        $forms = $formQuery->get();
         
         if($forms){
             return response()->json([
