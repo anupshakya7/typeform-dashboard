@@ -313,6 +313,7 @@ $(document).ready(function() {
                 branch(organizationVal)
            }else{
                 $('#branchDiv').css('display','none');
+                $('#branch').val('');
            }
            
         }else{
