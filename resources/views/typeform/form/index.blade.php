@@ -63,7 +63,6 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
-                    <form action="{{route('form.index')}}" method="GET" id="form_search" style="display: inline-block">
                     <div class="d-flex flex-row align-items-center gap-1">
                         {{-- <span>Showing</span> 
                         <select
@@ -75,6 +74,7 @@
                         </select> 
                         <span>entries</span>  --}}
                     </div>
+                    <form action="{{route('form.index')}}" method="GET" id="form_search" style="display: inline-block">
                     <div class="row">
                             <div class="col-auto d-flex justify-content-sm-end">
                                 <div class="search-box"> <input type="text" class="form-control" value="{{request('search_title')}}" name="search_title" onkeyup="debounceSearch()" id="searchProductList"
@@ -128,7 +128,7 @@
                                 <td>{{$form->form_title}}</td>
                                 <td>{{$form->country}}</td>
                                 <td>{{optional($form->organization)->name}}</td>
-                                <td>{{optional($form->branches)->name}}</td>
+                                <td>{{$form->branches ? optional($form->branches)->name : 'Main Branch'}}</td>
                                 <td>{{$form->before}} </td>
                                 <td>{{$form->during}}</td>
                                 <td>{{$form->after}}</td>
@@ -333,9 +333,6 @@
 <!-- App js -->
 <script src="{{URL::asset('build/js/app.js')}}"></script>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class BranchController extends Controller
@@ -24,14 +25,17 @@ class BranchController extends Controller
 
     public function create(){
         $organizations = Organization::all();
+        $countriesPath = public_path('build/js/countries/countries.json');
+        $countries = json_decode(File::get($countriesPath),true);
 
-        return view('typeform.branch.create',compact('organizations'));
+        return view('typeform.branch.create',compact('organizations','countries'));
     }
 
     public function store(Request $request){
         $validatedData = $request->validate([
             'organization_id'=>'required|integer|exists:organizations,id',
-            'name'=>'required|string|min:2'
+            'name'=>'required|string|min:2',
+            'country'=>'required|string'
         ]);
 
         $branch = Branch::create($validatedData);
@@ -45,13 +49,17 @@ class BranchController extends Controller
 
     public function edit(Branch $branch){
         $organizations = Organization::all();
-        return view('typeform.branch.edit',compact('branch','organizations'));
+        $countriesPath = public_path('build/js/countries/countries.json');
+        $countries = json_decode(File::get($countriesPath),true);
+
+        return view('typeform.branch.edit',compact('branch','organizations','countries'));
     }
 
     public function update(Request $request,Branch $branch){
         $validatedData = $request->validate([
             'organization_id'=>'required|integer|exists:organizations,id',
-            'name'=>'required|string|min:2'
+            'name'=>'required|string|min:2',
+            'country'=>'required|string'
         ]);
 
         $branchUpdated = $branch->update($validatedData);

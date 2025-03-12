@@ -68,6 +68,9 @@
                                 <option value="{{$country['name']}}">{{$country['name']}}</option>
                                 @endforeach
                             </select>
+                            @error('country')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="btn-submit-container">
@@ -101,7 +104,6 @@
 
 
 @section('script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->

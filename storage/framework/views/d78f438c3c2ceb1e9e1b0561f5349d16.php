@@ -62,10 +62,10 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
-                    <form action="<?php echo e(route('form.index')); ?>" method="GET" id="form_search" style="display: inline-block">
                     <div class="d-flex flex-row align-items-center gap-1">
                         
                     </div>
+                    <form action="<?php echo e(route('form.index')); ?>" method="GET" id="form_search" style="display: inline-block">
                     <div class="row">
                             <div class="col-auto d-flex justify-content-sm-end">
                                 <div class="search-box"> <input type="text" class="form-control" value="<?php echo e(request('search_title')); ?>" name="search_title" onkeyup="debounceSearch()" id="searchProductList"
@@ -120,7 +120,7 @@
                                 <td><?php echo e($form->form_title); ?></td>
                                 <td><?php echo e($form->country); ?></td>
                                 <td><?php echo e(optional($form->organization)->name); ?></td>
-                                <td><?php echo e(optional($form->branches)->name); ?></td>
+                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Main Branch'); ?></td>
                                 <td><?php echo e($form->before); ?> </td>
                                 <td><?php echo e($form->during); ?></td>
                                 <td><?php echo e($form->after); ?></td>
@@ -207,9 +207,6 @@
 <!-- App js -->
 <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>

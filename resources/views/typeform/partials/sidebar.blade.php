@@ -51,7 +51,10 @@
                     <div class="collapse menu-dropdown" id="sidebarUser">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="dashboard-analytics" class="nav-link">@lang('translation.analytics')</a>
+                                <a href="{{route('user.index')}}" class="nav-link">User</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('user.password-change')}}" class="nav-link">Reset Password</a>
                             </li>
                         </ul>
                     </div>
@@ -89,22 +92,6 @@
                     </a>
                 </li>
                 {{-- Survey Management --}}
-
-                {{-- Questions Management --}}
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('form.index')}}">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
-                    </a>
-                </li>
-                {{-- Questions Management --}}
-
-                {{-- Answer Management --}}
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('form.index')}}">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
-                    </a>
-                </li>
-                {{-- Form Management --}}
 
                
 

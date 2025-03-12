@@ -73,10 +73,16 @@
                         </div>
                     </div>
                     <!--end col-->
-                    <div class="col-md-6">
+                    <div class="col-md-12" id="setBranchDiv">
+                        <div class="my-3">
+                            <label for="setBranch" class="form-label">Would you like to set this form to the branch of this organization?</label>
+                            <input type="checkbox" {{$form->branch_id ? 'checked':''}} class="ms-2" id="setBranch"/>
+                        </div>
+                    </div>
+                    @if($form->branch_id)
+                    <div class="col-md-6" id="branchDiv">
                         <div class="mb-3">
                             <label for="branch" class="form-label">Branch</label>
-                            @if($form->branch_id)
                             @php
                                 $organization_id = $form->branches->organization->id;
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
@@ -88,14 +94,19 @@
                                 <option value="{{$branch->id}}" {{$branch->id == $form->branch_id ? 'selected':''}}>{{$branch->name}}</option>
                                 @endforeach
                             </select>
-                            @else
-                            <select id="branch" name="branch" class="form-select" data-choices
-                                data-choices-sorting="true" disabled>
-                                <option selected>Choose Branch</option>
-                            </select>
-                            @endif
                         </div>
                     </div>
+                    @else
+                    <div class="col-md-6" id="branchDiv" style="display: none">
+                        <div class="mb-3">
+                            <label for="branch" class="form-label">Branch</label>
+                            <select id="branch" name="branch" class="form-select select2" data-choices
+                                data-choices-sorting="true" disabled>
+                                <option value="" selected>Choose Branch</option>
+                            </select>
+                        </div>
+                    </div>
+                    @endif
                     <!--end col-->
                     <div class="card-header align-items-center d-flex mb-3">
                         <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
@@ -155,7 +166,6 @@
 
 
 @section('script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
@@ -244,11 +254,34 @@ $(document).ready(function() {
     //     })
     // })
 
-    $('#organization').change(function() {
+    $('#organization,#setBranch').change(function() {
         var organizationVal = $('#organization').val();
+        console.log(organizationVal);
+        if (organizationVal !== '') {
+           $('#setBranchDiv').css('display','block');
 
-        if (organization !== '') {
-            $.ajax({
+           if($('#setBranch').prop('checked')){
+                $('#branchDiv').css('display','block');
+                branch(organizationVal)
+           }else{
+                $('#branchDiv').css('display','none');
+                $('#branch').val('');
+           }
+           
+        }else{
+            $('#setBranchDiv').css('display','none');
+        }
+    });
+    // $('#organization').change(function() {
+    //     var organizationVal = $('#organization').val();
+
+    //     if (organization !== '') {
+           
+    //     }
+    // });
+
+    function branch(organizationVal){
+        $.ajax({
                 url: "{{route('branch.get')}}",
                 method: 'GET',
                 data: {
@@ -268,8 +301,7 @@ $(document).ready(function() {
                     $('#branch').append('<option selected>Choose Branch</option>');
                 }
             })
-        }
-    });
+    }
 
 })
 </script>

@@ -7,15 +7,49 @@ use App\Models\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Helpers\PaginationHelper;
+use App\Models\Form;
+use App\Models\Organization;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class AnswerController extends Controller
 {
-    public function index(){
-        $answers = Answer::with('form')->select('id','event_id','form_id','name','age','gender','created_at')->paginate(10);
+    public function index(Request $request){
+        $answersQuery = Answer::with('form','form.organization')->select('id','event_id','form_id','name','age','gender','created_at');
+        
+        if($request->filled('search_participant')){
+            $answersQuery->where('name','like','%'.$request->search_participant.'%');
+        }
+
+        if($request->filled('country')){
+            $answersQuery->whereHas('form',function($query) use($request){
+                $query->where('country',$request->country);
+            });
+        }
+
+        if($request->filled('organization')){
+            $answersQuery->whereHas('form',function($query) use($request){
+                $query->where('organization_id',$request->organization);
+            });
+        }
+
+        if($request->filled('survey_form')){
+            $answersQuery->whereHas('form',function($query) use($request){
+                $query->where('form_title',$request->survey_form);
+            });
+        }
+        
+        $answers = $answersQuery->paginate(10);
+        
+        
         $answers = PaginationHelper::addSerialNo($answers);
 
-        return view('typeform.survey.index',compact('answers'));
+        $countriesPath = public_path('build/js/countries/countries.json');
+        $countries = json_decode(File::get($countriesPath),true);
+        $organizations = Organization::all();
+        $surveyForms = Form::all();
+
+        return view('typeform.survey.index',compact('answers','countries','organizations','surveyForms'));
     }
 
     public function getAnswer(Request $request){
@@ -87,13 +121,15 @@ class AnswerController extends Controller
     }
 
     public function generateCSV(){
-        $survey = Answer::with('form')->get();
+        $survey = Answer::with('form','form.organization')->get();
 
         $filename = 'survey.csv';
         $fp = fopen($filename,'w+');
         fputcsv($fp,array(
             'ID',
             'Form',
+            'Country (Form)',
+            'Organization (Form)',
             'Participant',
             'Age',
             'Gender',
@@ -118,6 +154,8 @@ class AnswerController extends Controller
             fputcsv($fp,array(
                 $row->id,
                 $row->form->form_title,
+                $row->form->country,
+                $row->form->organization->name,
                 $row->name,
                 $row->age,
                 $row->gender,

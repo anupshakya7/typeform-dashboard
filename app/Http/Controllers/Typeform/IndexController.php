@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Typeform;
 
 use App\Http\Controllers\Controller;
+use App\Models\Form;
+use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class IndexController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('typeform.index');
+        //Dropdown
+        $countriesPath = public_path('build/js/countries/countries.json');
+        $countries = json_decode(File::get($countriesPath),true);
+        $organizations = Organization::all();
+        $surveyForms = Form::all();
+
+        $resultByPillar = [];
+
+        return view('typeform.index',compact('countries','organizations','surveyForms'));
     }
 
     /**
