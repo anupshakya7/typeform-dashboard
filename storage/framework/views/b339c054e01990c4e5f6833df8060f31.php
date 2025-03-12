@@ -38,50 +38,90 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="current_password" class="form-label">Current Password<span class="text-danger">*</span></label>
-                            <input type="password" name="current_password" class="form-control" placeholder="Current Password" id="current_password">
-                            <?php $__errorArgs = ['current_password'];
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <label for="current_password" class="form-label">Current Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control password-input pe-5 <?php $__errorArgs = ['current_password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="current_password" placeholder="Enter Current Password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                <?php $__errorArgs = ['current_password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
-                            <?php unset($message);
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($message); ?></strong>
+                                    </span>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                            </div>
+                            
+                            
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="password" class="form-label">New Password<span class="text-danger">*</span></label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" id="password">
-                            <?php $__errorArgs = ['password'];
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <label for="password" class="form-label">New Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control password-input pe-5 <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="password" placeholder="Enter New Password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
-                            <?php unset($message);
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($message); ?></strong>
+                                    </span>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                            </div>
+                            
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">New Confirm Password<span class="text-danger">*</span></label>
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" id="password_confirmation">
-                            <?php $__errorArgs = ['password_confirmation'];
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <label for="password_confirmation" class="form-label">New Confirm Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control password-input pe-5 <?php $__errorArgs = ['password_confirmation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="password_confirmation" placeholder="Enter New Confirmation Password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                <?php $__errorArgs = ['password_confirmation'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
-                            <?php unset($message);
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($message); ?></strong>
+                                    </span>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                            </div>
+                            
                         </div>
                     </div>
                     
@@ -118,6 +158,7 @@ unset($__errorArgs, $__bag); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
+<script src="<?php echo e(URL::asset('build/js/pages/password-addon.init.js')); ?>"></script>
 <script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
 <script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
 <script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>

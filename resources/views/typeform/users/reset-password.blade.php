@@ -39,29 +39,59 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="current_password" class="form-label">Current Password<span class="text-danger">*</span></label>
-                            <input type="password" name="current_password" class="form-control" placeholder="Current Password" id="current_password">
-                            @error('current_password')
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <label for="current_password" class="form-label">Current Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control password-input pe-5 @error('current_password') is-invalid @enderror" name="current_password" placeholder="Enter Current Password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                @error('current_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            {{-- <label for="current_password" class="form-label">Current Password<span class="text-danger">*</span></label>
+                            <input type="password" name="current_password" class="form-control" placeholder="Current Password" id="current_password"> --}}
+                            {{-- @error('current_password')
                                 <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            @enderror --}}
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="password" class="form-label">New Password<span class="text-danger">*</span></label>
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <label for="password" class="form-label">New Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control password-input pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Enter New Password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            {{-- <label for="password" class="form-label">New Password<span class="text-danger">*</span></label>
                             <input type="password" name="password" class="form-control" placeholder="Password" id="password">
                             @error('password')
                                 <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            @enderror --}}
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">New Confirm Password<span class="text-danger">*</span></label>
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <label for="password_confirmation" class="form-label">New Confirm Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control password-input pe-5 @error('password_confirmation') is-invalid @enderror" name="password_confirmation" placeholder="Enter New Confirmation Password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            {{-- <label for="password_confirmation" class="form-label">New Confirm Password<span class="text-danger">*</span></label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" id="password_confirmation">
                             @error('password_confirmation')
                                 <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            @enderror --}}
                         </div>
                     </div>
                     
@@ -98,6 +128,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
+<script src="{{ URL::asset('build/js/pages/password-addon.init.js') }}"></script>
 <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>

@@ -42,16 +42,18 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
-    
+
+                                <div class="col-auto col-4">
+                                    <select class="form-select select2" id="branch" name="branch"
+                                        aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                        <option value="" selected>Branch</option>
+                                    </select>
+                                </div>
                                 <div class="col-auto col-4">
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example" onchange="this.form.submit()" disabled>
                                         <option value="" selected>Survey</option>
-                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($surveyForm->form_title); ?>"
-                                                <?php echo e(request('survey_form') == $surveyForm->form_title ? 'selected' : ''); ?>>
-                                                <?php echo e($surveyForm->form_title); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -94,7 +96,7 @@
                                 <div class="d-flex align-items-end justify-content-between mt-4">
 
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                            data-target="320">0</span>
+                                            data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                                     </h4>
 
 
@@ -125,7 +127,7 @@
                                 <div class="d-flex align-items-end justify-content-between mt-4">
 
                                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
-                                            data-target="150">0</span>
+                                            data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
                                     </h4>
 
 
@@ -154,7 +156,7 @@
                                 <div class="d-flex align-items-end justify-content-between mt-4">
 
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                            data-target="57">0</span>
+                                            data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
                                     </h4>
 
 
@@ -181,7 +183,7 @@
                                 </div>
                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                            data-target="1520">0</span>
+                                            data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                                     </h4>
 
 
@@ -769,7 +771,16 @@
 
     <script>
         $(document).ready(function() {
+            //Parameters
+            var country = getQueryParams('country');
+            var organization = getQueryParams('organization');
+            var branch = getQueryParams('branch');
+            var survey = getQueryParams('survey');
+
             filterOrganization();
+            filterSurvey();
+            filterBranch();
+            
             //Filter Organizations
             $('#country').change(function() {
                 filterOrganization();
@@ -777,25 +788,18 @@
             
             $('#organization').change(function() {
                 filterSurvey();
+                filterBranch();
             });
 
-
-            var country = getQueryParams('country');
-            var organization = getQueryParams('organization');
-            console.log(organization);
-            if(country){
-                $('#country').val(country);
-            }
-            
-            if(organization){
-                $('#organization').val(organization);
-            }
+            $('#branch').change(function() {
+                filterSurvey();
+            });
             
 
             function filterOrganization() {
                 var countryVal = $('#country').val();
 
-                if (countryVal !== '') {
+                if (countryVal !== '') {     
                     $.ajax({
                         url: "<?php echo e(route('organization.get')); ?>",
                         method: 'GET',
@@ -807,9 +811,15 @@
                             $('#organization').prop('disabled', false);
                             $('#organization').html('');
                             $('#organization').append('<option selected>Choose Organization</option>');
-                            response.organizations.forEach(function(organization) {
-                                $('#organization').append(new Option(organization.name,
-                                    organization.id));
+                            response.organizations.forEach(function(organizationItem) {
+                                // $('#organization').append(new Option(organization.name,
+                                //     organization.id));
+                                var option = new Option(organizationItem.name,organizationItem.id);
+                                $('#organization').append(option);
+
+                                if(organization && organization == organizationItem.id){
+                                    $(option).prop('selected',true);
+                                }
                             })
                         },
                         error: function(xhr, status, error) {
@@ -821,30 +831,73 @@
                 }
             }
 
-            function filterSurvey() {
+            function filterBranch() {
                 var organizationVal = $('#organization').val();
 
                 if (organizationVal !== '') {
                     $.ajax({
-                        url: "<?php echo e(route('survey.get')); ?>",
+                        url: "<?php echo e(route('branch.get')); ?>",
                         method: 'GET',
                         data: {
                             organization_id: organizationVal
                         },
                         success: function(response) {
                             console.log(response);
+                            $('#branch').prop('disabled', false);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                            response.branches.forEach(function(branchItem) {
+                                // $('#branch').append(new Option(branch.name,
+                                // branch.id));
+                                var option = new Option(branchItem.name,branchItem.id);
+                                $('#branch').append(option);
+
+                                if(branch && branch == branchItem.id){
+                                    $(option).prop('selected',true);
+                                }
+                            })
+                        },
+                        error: function(xhr, status, error) {
+                            $('#branch').prop('disabled', true);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                        }
+                    })
+                }
+            } 
+
+            function filterSurvey() {
+                var organizationVal = $('#organization').val();
+                var branchVal = $('#branch').val();
+
+                if (organizationVal !== '') {
+                    $.ajax({
+                        url: "<?php echo e(route('survey.get')); ?>",
+                        method: 'GET',
+                        data: {
+                            organization_id: organizationVal,
+                            branch_id:branchVal
+                        },
+                        success: function(response) {
+                            console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option selected>Choose Survey</option>');
-                            response.forms.forEach(function(form) {
-                                $('#survey').append(new Option(form.form_title,
-                                form.id));
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            response.forms.forEach(function(formItem) {
+                                // $('#survey').append(new Option(form.form_title,
+                                // form.id));
+                                var option = new Option(formItem.form_title,formItem.form_id);
+                                $('#survey').append(option);
+
+                                if(survey && survey == formItem.form_id){
+                                    $(option).prop('selected',true);
+                                }
                             })
                         },
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option selected>Choose Organization</option>');
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
                         }
                     })
                 }
@@ -854,7 +907,6 @@
                 var urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
             }
-            
             
         });
     </script>

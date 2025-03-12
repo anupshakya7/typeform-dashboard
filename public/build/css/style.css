@@ -263,3 +263,7 @@ table th, table td {
 .page-content {
     background-color: #F4F4F4;
 }
+
+.top-26{
+    top:26px !important;
+}
