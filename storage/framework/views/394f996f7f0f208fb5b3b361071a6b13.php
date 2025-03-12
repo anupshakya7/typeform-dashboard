@@ -51,7 +51,10 @@
                     <div class="collapse menu-dropdown" id="sidebarUser">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="dashboard-analytics" class="nav-link"><?php echo app('translator')->get('translation.analytics'); ?></a>
+                                <a href="<?php echo e(route('user.index')); ?>" class="nav-link">User</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('user.password-change')); ?>" class="nav-link">Reset Password</a>
                             </li>
                         </ul>
                     </div>
@@ -86,22 +89,6 @@
                  <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('survey.index')); ?>">
                     <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
-                    </a>
-                </li>
-                
-
-                
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
-                    </a>
-                </li>
-                
-
-                
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
                     </a>
                 </li>
                 

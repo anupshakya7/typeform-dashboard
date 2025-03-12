@@ -57,38 +57,42 @@
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
                     <div class="d-flex flex-row align-items-center gap-1">
-                        
-                        
+
                     </div>
-                    <div class="row">
-                        <div class="col-auto d-flex justify-content-sm-end">
-                            <div class="search-box"> <input type="text" class="form-control" id="searchProductList"
-                                    placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
+                    <form action="<?php echo e(route('survey.index')); ?>" method="GET" id="survey_search">
+                        <div class="row">
+                            <div class="col-auto d-flex justify-content-sm-end">
+                                <div class="search-box"> <input type="text" class="form-control" id="searchProductList" name="search_participant" value="<?php echo e(request('search_participant')); ?>" onkeyup="debounceSeach()"
+                                        placeholder="Search Participants"> <i class="ri-search-line search-icon"></i> </div>
+                            </div>
+                            <div class="col-auto"> 
+                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Country </option>
+                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                            <div class="col-auto"> 
+                                <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Organization</option>
+                                    <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($organization->id); ?>" <?php echo e(request('organization') == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select> 
+                            </div>
+                            <div class="col-auto">
+                                <div class="col-auto"> <select class="form-select select2" name="survey_form" onchange="this.form.submit()" aria-label="Default select example">
+                                        <option value="" selected>Survey</option>
+                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($surveyForm->form_title); ?>" <?php echo e(request('survey_form') == $surveyForm->form_title ? 'selected':''); ?>><?php echo e($surveyForm->form_title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select> </div>
+                            </div>
                         </div>
-                        <div class="col-auto"> <select class="form-select " aria-label="Default select example">
-                                <option selected>Country </option>
-                                <option value="1">Australia</option>
-                                <option value="2">USA</option>
-                                <option value="3">India</option>
-                                <option value="4">Nepal</option>
-                            </select> </div>
-                        <div class="col-auto"> <select class="form-select" aria-label="Default select example">
-                                <option selected>Organization </option>
-                                <option value="1">IEP</option>
-                                <option value="2">World Vision</option>
-                                <option value="3">Global Peace</option>
-                                <option value="4">CSB</option>
-                                <option value="5">ATI</option>
-                            </select> </div>
-                        <div class="col-auto">
-                            <div class="col-auto"> <select class="form-select" aria-label="Default select example">
-                                    <option selected>Project</option>
-                                    <option value="1">Project1</option>
-                                    <option value="2">Project2</option>
-                                    <option value="3">Project3</option>
-                                </select> </div>
-                        </div>
-                    </div>
+                    </form>
+                   
+                   
                 </div>
 
                 <div class="table-responsive">
@@ -100,6 +104,8 @@
                                 </th>
                                 <th>Survey ID</th>
                                 <th>Survey Name</th>
+                                <th>Survey Country</th>
+                                <th>Survey Organization</th>
                                 <th>Participants Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>
@@ -116,6 +122,8 @@
                                 </th>
                                 <td><?php echo e($answer->event_id); ?></td>
                                 <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
+                                <td><?php echo e($answer->form ? optional($answer->form)->country : 'No Country'); ?></td>
+                                <td><?php echo e($answer->form ? optional($answer->form)->organization->name : 'No Organization'); ?></td>
                                 <td>
                                     <span class="participants-name">
                                         <?php echo e($answer->name); ?>
@@ -331,12 +339,6 @@
 <!-- Sweet Alerts js -->
 <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
@@ -352,6 +354,17 @@
 
 <!-- App js -->
 <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+
+<script>
+    let debouceTimeout;
+    function debounceSeach(){
+        clearTimeout(debouceTimeout);
+
+        debouceTimeout = setTimeout(()=>{
+            document.getElementById('survey_search').submit();
+        },800);
+    }
+</script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/survey/index.blade.php ENDPATH**/ ?>
