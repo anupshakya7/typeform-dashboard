@@ -23,4 +23,4 @@ Homestead.json
 .phpunit.result.cache
 
 # Icon Css
-# public/build/css/icons.min.css
+public/build/css/icons.min.css
