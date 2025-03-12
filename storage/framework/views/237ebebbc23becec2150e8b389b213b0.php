@@ -22,7 +22,7 @@
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">Branch Management</h4>
+            <h4 class="fs-16 mb-1">Organization Management</h4>
         </div>
     </div>
 
@@ -33,21 +33,25 @@
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
-                    <a href="<?php echo e(route('branch.create')); ?>" class="btn btn-info add-btn"><i
+                    <a href="<?php echo e(route('organization.create')); ?>" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
-                        Branch</a>
+                        Organization</a>
                 </div>
             </div>
             <div class="flex-shrink-0">
                 <div class="d-flex flex-row gap-2 align-items-center">
                     <!--info here-->
-                    <a href="<?php echo e(route('branch.csv')); ?>" class="btn btn-success"><i
+                    <a href="<?php echo e(route('organization.csv')); ?>" class="btn btn-success"><i
                             class="ri-file-download-line align-bottom me-1"></i>
+
                         Export</a>
+
                     <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
                         data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                         aria-controls="theme-settings-offcanvas">
+
                         <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+
                     </a>
                 </div>
             </div>
@@ -60,28 +64,34 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Branch Lists</h5>
+                    <h5 class="card-title mb-0">Organization Lists</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered " style="width:100%">
+                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center"
+                            style="width:100%">
                             <thead class="table-head">
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Organization</th>
-                                    <th>Branch Name</th>
+                                    <th>Name</th>
+                                    <th>Logo</th>
                                     <th>Country</th>
                                     <th>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($branch->serial_no); ?></td>
-                                        <td><?php echo e(optional($branch->organization)->name); ?></td>
-                                        <td><?php echo e($branch->name); ?></td>
-                                        <td><?php echo e($branch->country); ?></td>
+                                        <td><?php echo e($organization->serial_no); ?></td>
+                                        <td><?php echo e($organization->name); ?></td>
+                                        <td>
+                                            <?php if($organization->logo): ?>
+                                                <img src="<?php echo e(asset('storage/' . $organization->logo)); ?>" alt="Logo"
+                                                    width="80">
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?php echo e($organization->country); ?></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -89,24 +99,28 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="<?php echo e(route('branch.show', $branch)); ?>"
+                                                    <li><a href="<?php echo e(route('organization.show', $organization)); ?>"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <li><a href="<?php echo e(route('branch.edit',$branch)); ?>" class="dropdown-item edit-item-btn"><i
+                                                    <li><a href="<?php echo e(route('organization.edit', $organization)); ?>"
+                                                            class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    <li>
-                                                        <button class="dropdown-item remove-item-btn"
-                                                            data-item-id="<?php echo e($branch->id); ?>"
-                                                            data-item-name="<?php echo e($branch->name); ?>" data-bs-toggle="modal"
-                                                            data-bs-target="#zoomInModal">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </button>
-                                                    </li>
+                                                    <?php if(Auth::user()->organization_id !== $organization->id): ?>
+                                                        <li>
+                                                            <button class="dropdown-item remove-item-btn"
+                                                                data-item-id="<?php echo e($organization->id); ?>"
+                                                                data-item-name="<?php echo e($organization->name); ?>"
+                                                                data-bs-toggle="modal" data-bs-target="#zoomInModal">
+                                                                <i
+                                                                    class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                                                Delete
+                                                            </button>
+                                                        </li>
+                                                    <?php endif; ?>
                                                 </ul>
                                             </div>
                                         </td>
@@ -116,7 +130,10 @@
                         </table>
                     </div>
                     <!--tfooter section-->
-                    <?php echo $__env->make('typeform.partials.pagination', ['paginator' => $branches], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+                    <!--Pagination Section -->
+                    <?php echo $__env->make('typeform.partials.pagination', ['paginator' => $organizations], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    <!--Pagination Section -->
                 </div>
             </div>
         </div>
@@ -131,10 +148,10 @@
     </div>
     <!--end row-->
     <!--form section ends here-->
-
     <!-- Modal Blur -->
     <?php echo $__env->make('typeform.partials.deleteModal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
+    
+    
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <!-- list.js min js -->
@@ -151,7 +168,6 @@
 
     <!-- App js -->
     <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
-
 
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -178,7 +194,8 @@
                 document.getElementById('delete_item').textContent = itemName;
 
                 //Set Item Description
-                document.getElementById('delete_item_description').innerHTML = 'Deleting this item will permanently remove it from the system.';
+                document.getElementById('delete_item_description').innerHTML =
+                    'Deleting this item will permanently remove it from the system, <span class="text-danger"> along with all associated user details who are part of this company</span';
 
                 var deleteForm = document.getElementById('deleteForm');
 
@@ -189,4 +206,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/branch/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/organization/index.blade.php ENDPATH**/ ?>
