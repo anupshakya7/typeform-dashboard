@@ -492,8 +492,8 @@
                                                 <tbody>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Well-Functioning
-                                                                Government</a>
+                                                        <td><span class="fw-medium pillar-text">Well-Functioning
+                                                                Government</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -504,8 +504,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Low Levels of
-                                                                Corruption</a></td>
+                                                        <td><span class="fw-medium pillar-text">Low Levels of
+                                                                Corruption</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -515,8 +515,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Equitable Distribution Of
-                                                                Resource</a></td>
+                                                        <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                                                Resource</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-red">3.8%</span><img class="trend-icon"
@@ -526,8 +526,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Good Relations With
-                                                                Neighbours</a>
+                                                        <td><span class="fw-medium pillar-text">Good Relations With
+                                                                Neighbours</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -538,8 +538,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Free Flow Of
-                                                                Information</a></td>
+                                                        <td><span class="fw-medium pillar-text">Free Flow Of
+                                                                Information</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -549,8 +549,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">High Levels Of Human
-                                                                Capital</a>
+                                                        <td><span class="fw-medium pillar-text">High Levels Of Human
+                                                                Capital</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -561,8 +561,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Sound Business
-                                                                Environment</a>
+                                                        <td><span class="fw-medium pillar-text">Sound Business
+                                                                Environment</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -573,9 +573,9 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Acceptance Of The Rights
+                                                        <td><span class="fw-medium pillar-text">Acceptance Of The Rights
                                                                 Of
-                                                                Others</a></td>
+                                                                Others</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -641,8 +641,8 @@
                                                 <tbody>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Well-Functioning
-                                                                Government</a>
+                                                        <td><span class="fw-medium pillar-text">Well-Functioning
+                                                                Government</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -653,8 +653,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Low Levels of
-                                                                Corruption</a></td>
+                                                        <td><span class="fw-medium pillar-text">Low Levels of
+                                                                Corruption</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -664,8 +664,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Equitable Distribution Of
-                                                                Resource</a></td>
+                                                        <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                                                Resource</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-red">3.8%</span><img class="trend-icon"
@@ -675,8 +675,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Good Relations With
-                                                                Neighbours</a>
+                                                        <td><span class="fw-medium pillar-text">Good Relations With
+                                                                Neighbours</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -687,8 +687,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Free Flow Of
-                                                                Information</a></td>
+                                                        <td><span class="fw-medium pillar-text">Free Flow Of
+                                                                Information</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -698,8 +698,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">High Levels Of Human
-                                                                Capital</a>
+                                                        <td><span class="fw-medium pillar-text">High Levels Of Human
+                                                                Capital</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -710,8 +710,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Sound Business
-                                                                Environment</a>
+                                                        <td><span class="fw-medium pillar-text">Sound Business
+                                                                Environment</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -722,9 +722,9 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Acceptance Of The Rights
+                                                        <td><span class="fw-medium pillar-text">Acceptance Of The Rights
                                                                 Of
-                                                                Others</a></td>
+                                                                Others</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"

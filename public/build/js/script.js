@@ -67,68 +67,62 @@ let syncFormBtn = document.getElementById("syncFormBtn");
 document.addEventListener("DOMContentLoaded", function () {
     const currentUrl = window.location.href;
     const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
-    
-    // Add active-nav to the current URL nav-item
+
     navLinks.forEach(link => {
         if (link.href === currentUrl) {
             link.classList.add("active-nav");
-            let parent = link.closest(".nav-item");
-            if (parent) {
-                parent.classList.add("active-nav");
+            link.style.backgroundColor = "#f0f0f0";
+
+            let parentNavItem = link.closest(".nav-item");
+            if (parentNavItem) {
+                parentNavItem.classList.add("active-nav");
+                parentNavItem.style.backgroundColor = "#f0f0f0";
             }
-            
-            // If inside a dropdown, make sure it's expanded
-            let collapseParent = link.closest(".collapse.menu-dropdown");
-            if (collapseParent && collapseParent.classList.contains("show")) {
-                collapseParent.classList.add("show");
-                let mainParent = collapseParent.closest(".nav-item");
-                if (mainParent) {
-                    mainParent.classList.add("active-nav");
+
+            let collapseMenu = link.closest(".menu-dropdown");
+            if (collapseMenu) {
+                collapseMenu.classList.add("show");
+                let mainParentNavItem = collapseMenu.closest(".nav-item");
+                if (mainParentNavItem) {
+                    mainParentNavItem.classList.add("active-nav");
+                    mainParentNavItem.style.backgroundColor = "#f0f0f0";
                 }
             }
         }
     });
 
-    // Add click event to dropdown links
-    const dropdownLinks = document.querySelectorAll(".menu-link");
-    dropdownLinks.forEach(link => {
-        link.addEventListener("click", function () {
-            // Remove active class from all nav-items except the current one
-            const allNavItems = document.querySelectorAll(".navbar-nav .nav-item");
-            allNavItems.forEach(item => {
-                const itemLink = item.querySelector('.nav-link');
-                if (itemLink && itemLink.href !== currentUrl) {
-                    item.classList.remove("active-nav");
-                }
+    // Handle click event on nav-items to keep the active state
+    const navItems = document.querySelectorAll(".navbar-nav .nav-item");
+    navItems.forEach(item => {
+        item.addEventListener("click", function (event) {
+            event.stopPropagation();
+
+            navItems.forEach(navItem => {
+                navItem.classList.remove("active-nav");
+                navItem.style.backgroundColor = "";
             });
 
-            let parentNavItem = this.closest(".nav-item");
-            if (parentNavItem) {
-                // Toggle active-nav class on the parent nav-item based on dropdown open/close
-                const collapse = parentNavItem.querySelector(".collapse.menu-dropdown");
-                if (collapse && collapse.classList.contains("show")) {
-                    parentNavItem.classList.add("active-nav");
-                } else {
-                    parentNavItem.classList.remove("active-nav");
-                }
-            }
+            this.classList.add("active-nav");
+            this.style.backgroundColor = "#f0f0f0";
         });
     });
 
-    // Detect state change on dropdowns (open/close)
-    const dropdownMenus = document.querySelectorAll('.collapse.menu-dropdown');
+    // Handle dropdown toggle state
+    const dropdownMenus = document.querySelectorAll(".collapse.menu-dropdown");
     dropdownMenus.forEach(menu => {
-        menu.addEventListener('shown.bs.collapse', function () {
+        menu.addEventListener("shown.bs.collapse", function () {
             let parentNavItem = menu.closest(".nav-item");
             if (parentNavItem) {
                 parentNavItem.classList.add("active-nav");
+                parentNavItem.style.backgroundColor = "#f0f0f0";
             }
         });
-        
-        menu.addEventListener('hidden.bs.collapse', function () {
+
+        menu.addEventListener("hidden.bs.collapse", function () {
             let parentNavItem = menu.closest(".nav-item");
-            if (parentNavItem) {
+            if (parentNavItem && !parentNavItem.querySelector(".active-nav")) {
                 parentNavItem.classList.remove("active-nav");
+                parentNavItem.style.backgroundColor = "";
             }
         });
     });

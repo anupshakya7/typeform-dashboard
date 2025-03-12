@@ -85,7 +85,7 @@ function loadCharts() {
             plotOptions: {
                 bar: {
                     horizontal: false,
-                    columnWidth: '40%',
+                    columnWidth: '70%',
                 }
             },
             stroke: {

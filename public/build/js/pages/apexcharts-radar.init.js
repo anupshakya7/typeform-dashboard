@@ -114,7 +114,7 @@ if (chartRadarMultiColors) {
             }
         ],
         chart: {
-            height: 650,
+            height: 600,
             type: 'radar',
             dropShadow: {
                 enabled: true,
@@ -133,7 +133,7 @@ if (chartRadarMultiColors) {
             opacity: 0.2
         },
         markers: {
-            size: 0
+            size: 4
         },
         colors: chartRadarMultiColors,
         xaxis: {

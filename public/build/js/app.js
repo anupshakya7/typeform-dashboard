@@ -757,6 +757,7 @@ File: Main Js File - TEMPLATE
         
         const tagline = document.querySelector('.aside-tag');
         const asidemenu = document.querySelector('.navbar-menu');
+        const logo = document.querySelector('navbar-brand-box');
 
         if (windowSize > 767)
             document.querySelector(".hamburger-icon").classList.toggle("open");
@@ -769,14 +770,10 @@ File: Main Js File - TEMPLATE
         //For collapse vertical menu
         if (document.documentElement.getAttribute("data-layout") === "vertical") {
             
-
-            if (tagline.style.padding === '3px 0px') {
-                tagline.style.padding = '';  // Reset to default
-                tagline.style.textAlign = '';  // Reset text alignment
-            } else {
-                tagline.style.padding = '10px 0px';
-                tagline.style.textAlign = 'center';
-            }
+            document.documentElement.classList.toggle("vertical");
+            // document.documentElement.classList.toggle("horizontal");
+            
+            
         
            asidemenu.style.position = 'fixed';
 
