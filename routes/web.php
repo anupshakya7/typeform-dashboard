@@ -31,35 +31,36 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 
 Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
+Route::middleware('check_auth')->group(function(){
+    Route::get('/',[IndexController::class,'index'])->name('home.index');
 
-Route::get('/',[IndexController::class,'index'])->name('home.index');
+    Route::prefix('typeform')->group(function(){
+        //User
+        Route::resource('user',UserController::class);
+        
+        //Reset Password
+        Route::get('change-password',[UserController::class,'changePassword'])->name('user.password-change');
+        Route::post('change-password',[UserController::class,'changePasswordSubmit'])->name('user.password-change.submit');
 
-Route::prefix('typeform')->group(function(){
-    //User
-    Route::resource('user',UserController::class);
-    
-    //Reset Password
-    Route::get('change-password',[UserController::class,'changePassword'])->name('user.password-change');
-    Route::post('change-password',[UserController::class,'changePasswordSubmit'])->name('user.password-change.submit');
+        //Organization
+        Route::resource('organization',OrganizationController::class);
+        Route::get('organization/generate/csv',[OrganizationController::class,'generateCSV'])->name('organization.csv');
 
-    //Organization
-    Route::resource('organization',OrganizationController::class);
-    Route::get('organization/generate/csv',[OrganizationController::class,'generateCSV'])->name('organization.csv');
+        //Branch
+        Route::resource('branch',BranchController::class);
+        Route::get('branch/generate/csv',[BranchController::class,'generateCSV'])->name('branch.csv');
+        
+        //Form
+        Route::resource('form',FormController::class);
+        Route::get('form/question/{form}',[FormController::class,'formQuestion'])->name('form.question');
+        Route::get('form/generate/csv',[FormController::class,'generateCSV'])->name('form.csv');
 
-    //Branch
-    Route::resource('branch',BranchController::class);
-    Route::get('branch/generate/csv',[BranchController::class,'generateCSV'])->name('branch.csv');
-    
-    //Form
-    Route::resource('form',FormController::class);
-    Route::get('form/question/{form}',[FormController::class,'formQuestion'])->name('form.question');
-    Route::get('form/generate/csv',[FormController::class,'generateCSV'])->name('form.csv');
+        //Survey
+        Route::resource('survey',AnswerController::class);
+        Route::get('/survey/QA/{answer}',[AnswerController::class,'QA'])->name('survey.qa');
+        Route::get('/survey/generate/csv',[AnswerController::class,'generateCSV'])->name('survey.csv');
 
-    //Survey
-    Route::resource('survey',AnswerController::class);
-    Route::get('/survey/QA/{answer}',[AnswerController::class,'QA'])->name('survey.qa');
-    Route::get('/survey/generate/csv',[AnswerController::class,'generateCSV'])->name('survey.csv');
-
-    //Get Answer WebHook
-    Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
+        //Get Answer WebHook
+        Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
+    });
 });
