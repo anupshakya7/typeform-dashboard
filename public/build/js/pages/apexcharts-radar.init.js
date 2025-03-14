@@ -96,53 +96,53 @@ function getChartColorsArray(chartId) {
 // }
 
 // Radar Chart - Multi series
-var chartRadarMultiColors = getChartColorsArray("multi_radar");
-if (chartRadarMultiColors) {
-    var options = {
-        series: [
-            {
-                name: 'Mean',
-                data: [80, 50, 30, 40, 100, 20, 60, 70],
-            },
-            {
-                name: 'Country Mean',
-                data: [20, 30, 40, 80, 20, 80, 50, 90],
-            },
-            {
-                name: 'Global Mean',
-                data: [44, 76, 78, 13, 43, 10, 55, 85],
-            }
-        ],
-        chart: {
-            height: 600,
-            type: 'radar',
-            dropShadow: {
-                enabled: true,
-                blur: 1,
-                left: 1,
-                top: 1
-            },
-            toolbar: {
-                show: false
-            },
-        },
-        stroke: {
-            width: 2
-        },
-        fill: {
-            opacity: 0.2
-        },
-        markers: {
-            size: 4
-        },
-        colors: chartRadarMultiColors,
-        xaxis: {
-            categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government', 'Low Levels of Corruption', 'Equitable Distribution Of Resource', 'Good Relations With Neighbours', 'Free Flow Of Information', 'High Levels Of Human Capital', 'Sound Business Environment']
-        }
-    };
-    var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
-    chart.render();
-}
+// var chartRadarMultiColors = getChartColorsArray("multi_radar");
+// if (chartRadarMultiColors) {
+//     var options = {
+//         series: [
+//             {
+//                 name: 'Mean',
+//                 data: [80, 50, 30, 40, 100, 20, 60, 70],
+//             },
+//             {
+//                 name: 'Country Mean',
+//                 data: [20, 30, 40, 80, 20, 80, 50, 90],
+//             },
+//             {
+//                 name: 'Global Mean',
+//                 data: [44, 76, 78, 13, 43, 10, 55, 85],
+//             }
+//         ],
+//         chart: {
+//             height: 600,
+//             type: 'radar',
+//             dropShadow: {
+//                 enabled: true,
+//                 blur: 1,
+//                 left: 1,
+//                 top: 1
+//             },
+//             toolbar: {
+//                 show: false
+//             },
+//         },
+//         stroke: {
+//             width: 2
+//         },
+//         fill: {
+//             opacity: 0.2
+//         },
+//         markers: {
+//             size: 4
+//         },
+//         colors: chartRadarMultiColors,
+//         xaxis: {
+//             categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government', 'Low Levels of Corruption', 'Equitable Distribution Of Resource', 'Good Relations With Neighbours', 'Free Flow Of Information', 'High Levels Of Human Capital', 'Sound Business Environment']
+//         }
+//     };
+//     var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
+//     chart.render();
+// }
 
 // Polygon - Radar Charts
 var chartRadarPolyradarColors = getChartColorsArray("polygon_radar");

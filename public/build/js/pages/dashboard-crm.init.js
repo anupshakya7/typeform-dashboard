@@ -150,182 +150,182 @@ function loadCharts() {
     // }
     
      // Sales forecast charts==============2
-     var areachartSalesColorst = "";
-     areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
-     if (areachartSalesColorst) {
-         var options = {
-            series: [{
-                name: 'Mean',
-                data: [37]
-            }, {
-                name: 'Country Mean',
-                data: [12]
-            }, {
-                name: 'Global Mean',
-                data: [18]
-            }],
-             chart: {
-                 type: 'bar',
-                 height: 341,
-                 toolbar: {
-                     show: false,
-                 },
-             },
-             plotOptions: {
-                 bar: {
-                     horizontal: false,
-                     columnWidth: '40%',
-                 },
-             },
-             stroke: {
-                 show: true,
-                 width: 5,
-                 colors: ['transparent']
-             },
-             xaxis: {
-                 categories: [''],
-                 axisTicks: {
-                     show: false,
-                     borderType: 'solid',
-                     color: '#78909C',
-                     height: 6,
-                     offsetX: 0,
-                     offsetY: 0
-                 },
-                 title: {
-                     offsetX: 0,
-                     offsetY: -30,
-                     style: {
-                         color: '#78909C',
-                         fontSize: '12px',
-                         fontWeight: 400,
-                     },
-                 },
-             },
-             yaxis: {
-                 labels: {
-                     formatter: function (value) {
-                         return value;
-                     }
-                 },
-                 tickAmount: 4,
-                 min: 0
-             },
-             fill: {
-                 opacity: 1
-             },
-             legend: {
-                 show: true,
-                 position: 'bottom',
-                 horizontalAlign: 'center',
-                 fontWeight: 500,
-                 offsetX: 0,
-                 offsetY: -14,
-                 itemMargin: {
-                     horizontal: 8,
-                     vertical: 0
-                 },
-                 markers: {
-                     width: 10,
-                     height: 10,
-                 }
-             },
-             colors: areachartSalesColorst
-         };
-         if (salesForecastChart2 != "")
-             salesForecastChart2.destroy();
-         salesForecastChart2 = new ApexCharts(document.querySelector("#sales-forecast-chart-2"), options);
-         salesForecastChart2.render();
-     }
+    //  var areachartSalesColorst = "";
+    //  areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
+    //  if (areachartSalesColorst) {
+    //      var options = {
+    //         series: [{
+    //             name: 'Mean',
+    //             data: [37]
+    //         }, {
+    //             name: 'Country Mean',
+    //             data: [12]
+    //         }, {
+    //             name: 'Global Mean',
+    //             data: [18]
+    //         }],
+    //          chart: {
+    //              type: 'bar',
+    //              height: 341,
+    //              toolbar: {
+    //                  show: false,
+    //              },
+    //          },
+    //          plotOptions: {
+    //              bar: {
+    //                  horizontal: false,
+    //                  columnWidth: '40%',
+    //              },
+    //          },
+    //          stroke: {
+    //              show: true,
+    //              width: 5,
+    //              colors: ['transparent']
+    //          },
+    //          xaxis: {
+    //              categories: [''],
+    //              axisTicks: {
+    //                  show: false,
+    //                  borderType: 'solid',
+    //                  color: '#78909C',
+    //                  height: 6,
+    //                  offsetX: 0,
+    //                  offsetY: 0
+    //              },
+    //              title: {
+    //                  offsetX: 0,
+    //                  offsetY: -30,
+    //                  style: {
+    //                      color: '#78909C',
+    //                      fontSize: '12px',
+    //                      fontWeight: 400,
+    //                  },
+    //              },
+    //          },
+    //          yaxis: {
+    //              labels: {
+    //                  formatter: function (value) {
+    //                      return value;
+    //                  }
+    //              },
+    //              tickAmount: 4,
+    //              min: 0
+    //          },
+    //          fill: {
+    //              opacity: 1
+    //          },
+    //          legend: {
+    //              show: true,
+    //              position: 'bottom',
+    //              horizontalAlign: 'center',
+    //              fontWeight: 500,
+    //              offsetX: 0,
+    //              offsetY: -14,
+    //              itemMargin: {
+    //                  horizontal: 8,
+    //                  vertical: 0
+    //              },
+    //              markers: {
+    //                  width: 10,
+    //                  height: 10,
+    //              }
+    //          },
+    //          colors: areachartSalesColorst
+    //      };
+    //      if (salesForecastChart2 != "")
+    //          salesForecastChart2.destroy();
+    //      salesForecastChart2 = new ApexCharts(document.querySelector("#sales-forecast-chart-2"), options);
+    //      salesForecastChart2.render();
+    //  }
     
      // Sales forecast charts==============3
-     var areachartSalesColorsth = "";
-     areachartSalesColorsth = getChartColorsArray("sales-forecast-chart-3");
-     if (areachartSalesColorsth) {
-         var options = {
-             series: [{
-                 name: 'Mean',
-                 data: [37]
-             }, {
-                 name: 'Country Mean',
-                 data: [12]
-             }, {
-                 name: 'Global Mean',
-                 data: [18]
-             }],
-             chart: {
-                 type: 'bar',
-                 height: 341,
-                 toolbar: {
-                     show: false,
-                 },
-             },
-             plotOptions: {
-                 bar: {
-                     horizontal: false,
-                     columnWidth: '40%',
-                 },
-             },
-             stroke: {
-                 show: true,
-                 width: 5,
-                 colors: ['transparent']
-             },
-             xaxis: {
-                 categories: [''],
-                 axisTicks: {
-                     show: false,
-                     borderType: 'solid',
-                     color: '#78909C',
-                     height: 6,
-                     offsetX: 0,
-                     offsetY: 0
-                 },
-                 title: {
-                     offsetX: 0,
-                     offsetY: -30,
-                     style: {
-                         color: '#78909C',
-                         fontSize: '12px',
-                         fontWeight: 400,
-                     },
-                 },
-             },
-             yaxis: {
-                 labels: {
-                     formatter: function (value) {
-                         return value;
-                     }
-                 },
-                 tickAmount: 4,
-                 min: 0
-             },
-             fill: {
-                 opacity: 1
-             },
-             legend: {
-                 show: true,
-                 position: 'bottom',
-                 horizontalAlign: 'center',
-                 fontWeight: 500,
-                 offsetX: 0,
-                 offsetY: -14,
-                 itemMargin: {
-                     horizontal: 8,
-                     vertical: 0
-                 },
-                 markers: {
-                     width: 10,
-                     height: 10,
-                 }
-             },
-             colors: areachartSalesColorsth
-         };
-         if (salesForecastChart3 != "")
-             salesForecastChart3.destroy();
-         salesForecastChart3 = new ApexCharts(document.querySelector("#sales-forecast-chart-3"), options);
-         salesForecastChart3.render();
-     }
+    //  var areachartSalesColorsth = "";
+    //  areachartSalesColorsth = getChartColorsArray("sales-forecast-chart-3");
+    //  if (areachartSalesColorsth) {
+    //      var options = {
+    //          series: [{
+    //              name: 'Mean',
+    //              data: [37]
+    //          }, {
+    //              name: 'Country Mean',
+    //              data: [12]
+    //          }, {
+    //              name: 'Global Mean',
+    //              data: [18]
+    //          }],
+    //          chart: {
+    //              type: 'bar',
+    //              height: 341,
+    //              toolbar: {
+    //                  show: false,
+    //              },
+    //          },
+    //          plotOptions: {
+    //              bar: {
+    //                  horizontal: false,
+    //                  columnWidth: '40%',
+    //              },
+    //          },
+    //          stroke: {
+    //              show: true,
+    //              width: 5,
+    //              colors: ['transparent']
+    //          },
+    //          xaxis: {
+    //              categories: [''],
+    //              axisTicks: {
+    //                  show: false,
+    //                  borderType: 'solid',
+    //                  color: '#78909C',
+    //                  height: 6,
+    //                  offsetX: 0,
+    //                  offsetY: 0
+    //              },
+    //              title: {
+    //                  offsetX: 0,
+    //                  offsetY: -30,
+    //                  style: {
+    //                      color: '#78909C',
+    //                      fontSize: '12px',
+    //                      fontWeight: 400,
+    //                  },
+    //              },
+    //          },
+    //          yaxis: {
+    //              labels: {
+    //                  formatter: function (value) {
+    //                      return value;
+    //                  }
+    //              },
+    //              tickAmount: 4,
+    //              min: 0
+    //          },
+    //          fill: {
+    //              opacity: 1
+    //          },
+    //          legend: {
+    //              show: true,
+    //              position: 'bottom',
+    //              horizontalAlign: 'center',
+    //              fontWeight: 500,
+    //              offsetX: 0,
+    //              offsetY: -14,
+    //              itemMargin: {
+    //                  horizontal: 8,
+    //                  vertical: 0
+    //              },
+    //              markers: {
+    //                  width: 10,
+    //                  height: 10,
+    //              }
+    //          },
+    //          colors: areachartSalesColorsth
+    //      };
+    //      if (salesForecastChart3 != "")
+    //          salesForecastChart3.destroy();
+    //      salesForecastChart3 = new ApexCharts(document.querySelector("#sales-forecast-chart-3"), options);
+    //      salesForecastChart3.render();
+    //  }
     
      
     // Deal Type Charts

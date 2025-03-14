@@ -29,16 +29,18 @@ class IndexController extends Controller
         $topBox = $this->topBoxData();
         $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
         $participantDetails = $this->participantDetails($survey_id);
-        $positiveNegative = $this->positiveNegative($country,$survey_id);
+        $positivePeace = $this->positiveNegative($country,$survey_id,'positive_peace');
+        $negativePeace = $this->positiveNegative($country,$survey_id,'negative_peace');
+        $pillarMeanScore = $this->pillarsMeanScore($country,$survey_id);
 
         $resultByPillar = [];
 
-        return view('typeform.index',compact('countries','organizations','surveyForms','topBox','meanScore','participantDetails'));
+        return view('typeform.index',compact('countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore'));
     }
 
     public function topBoxData(){
         $surveys = Form::count();
-        $countries = Form::select('country')->distinct()->count();
+        $countries = Form::select('country')->distinct()->get()->count();
         $organizations = Organization::count();
         $people = Answer::count();
 
@@ -108,28 +110,76 @@ class IndexController extends Controller
         ];
     }
 
-    public function positiveNegative($country,$survey_id){
-        $survey = Form::query();
+    public function positiveNegative($country,$survey_id,$flag){
+        $types = ['mean','countryMean','globalMean'];
+        $positiveMeanCal = [];
 
-        $surveySum = Answer::where('form_id',$survey_id)->sum('positive_peace');
-        $surveyCount = Answer::select('positive_peace')->where('form_id',$survey_id)->count();
-       
-        $surveyCount = $surveyCount ? $surveyCount : 1;
+        foreach($types as $type){
+            $query = Form::with('answer');
 
-        $meanCal = $surveySum / $surveyCount;
+            if($type === "mean"){
+                $query->where('form_id',$survey_id);
+            }elseif($type === "countryMean"){
+                $query->where('country',$country);
+            }
 
-
-        
-
-        // foreach($surveys as $survey){
+            $formsCountry = $query->get();
+          
+            $sum = $formsCountry->flatMap(function($form) use($flag){
+                return $form->answer->pluck($flag);
+            })->sum();
             
-        // }
+            $count= $formsCountry->sum(function($form){
+                return $form->answer->count();
+            });
+    
+            $positiveMeanCal[$type] = $count > 0 ? round($sum/$count,2) : 0;
+        }
+        
+        return $positiveMeanCal;
+    }
 
-        // $type = ['positive_peace','negative_peace'];
+    public function pillarsMeanScore($country,$survey_id){
+        $types = ['mean','countryMean','globalMean'];
+        $pillars = [
+            'well_functioning_government',
+            'low_level_corruption',
+            'equitable_distribution',
+            'good_relations',
+            'free_flow',
+            'high_levels',
+            'sound_business',
+            'acceptance_rights'
+        ];
+        $pillarMeanCal = [];
+        $singlePillarMeanCal = [];
 
+        foreach($types as $type){
+            $query = Form::with('answer');
 
+            if($type === "mean"){
+                $query->where('form_id',$survey_id);
+            }elseif($type === "countryMean"){
+                $query->where('country',$country);
+            }
 
-        // $ = Form::where()
+            $formsCountry = $query->get();
+          
+            foreach($pillars as $pillar){
+                $sum = $formsCountry->flatMap(function($form) use($pillar){
+                    return $form->answer->pluck($pillar);
+                })->sum();
+                
+                $count= $formsCountry->sum(function($form){
+                    return $form->answer->count();
+                });
+                $singlePillarMeanCal[$pillar] = $count > 0 ? round($sum/$count,2) : 0;
+            }
+
+            $pillarMeanCal[$type] = $singlePillarMeanCal;
+        }
+
+        return $pillarMeanCal;
     }
 
     /**

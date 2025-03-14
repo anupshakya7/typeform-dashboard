@@ -431,7 +431,7 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="card-title mb-0">Results by pillars of Positive Peace</h4>
+                        <h4 class="card-title mb-0">Results by Pillars</h4>
                         <div class="flex-shrink-0">
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <!--info here-->
@@ -500,99 +500,27 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @php
+                                                    $pillars = [
+                                                        'well_functioning_government'=>'Well-Functioning Government',
+                                                        'low_level_corruption'=>'Low Levels of Corruption',
+                                                        'equitable_distribution'=>'Equitable Distribution of Resources',
+                                                        'good_relations'=>'Good Relations with Neighbours',
+                                                        'free_flow'=>'Free Flow of Information',
+                                                        'high_levels'=>'High Levels of Human Capital',
+                                                        'sound_business'=>'Sound Business Environment',
+                                                        'acceptance_rights'=>'Acceptance of the Rights of Others'
+                                                    ]
+                                                @endphp
+                                                @foreach($pillarMeanScore['mean'] as $key=>$pillar)
                                                 <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Well-Functioning
-                                                            Government</span>
+                                                    <td><span class="fw-medium pillar-text">{{$pillars[$key]}}</span>
                                                     </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%<img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                                alt="ArrowExternalRight"></td>
-
+                                                    <td>{{$pillar}}</td>
+                                                    <td>{{$pillarMeanScore['countryMean'][$key]}}</td>
+                                                    <td>{{$pillarMeanScore['globalMean'][$key]}}</td>
                                                 </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Low Levels of
-                                                            Corruption</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                                            Resource</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-red">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Good Relations With
-                                                            Neighbours</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%<img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                                alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Free Flow Of
-                                                            Information</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
-                                                            Capital</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-red">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Sound Business
-                                                            Environment</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                                            Of
-                                                            Others</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
+                                                @endforeach
 
                                             </tbody>
 
@@ -609,7 +537,7 @@
 
                 <!--table section starts here -->
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
@@ -754,7 +682,8 @@
                             </div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
-                </div><!-- end col -->
+                </div> --}}
+                <!-- end col -->
             </div>
             <!--end row-->
 
@@ -927,61 +856,29 @@ $(document).ready(function() {
         var options = {
             series: [{
                     name: 'Well Functioning Government',
-                    data: [{
-                        {
-                            $meanScore['well_functioning_government']
-                        }
-                    }]
+                    data: ["{{$meanScore['well_functioning_government']}}"]
                 }, {
                     name: 'Low Levels of corruption',
-                    data: [{
-                        {
-                            $meanScore['low_level_corruption']
-                        }
-                    }]
+                    data: ["{{$meanScore['low_level_corruption']}}"]
                 },
                 {
                     name: 'Equitable distribution of resources',
-                    data: [{
-                        {
-                            $meanScore['equitable_distribution']
-                        }
-                    }]
+                    data: ["{{$meanScore['equitable_distribution']}}"]
                 }, {
                     name: 'Good relations with neighbours',
-                    data: [{
-                        {
-                            $meanScore['good_relations']
-                        }
-                    }]
+                    data: ["{{$meanScore['good_relations']}}"]
                 }, {
                     name: 'Free Flow Of Information',
-                    data: [{
-                        {
-                            $meanScore['free_flow']
-                        }
-                    }]
+                    data: ["{{$meanScore['free_flow']}}"]
                 }, {
                     name: 'High Levels Of Human Capital',
-                    data: [{
-                        {
-                            $meanScore['high_levels']
-                        }
-                    }]
+                    data: ["{{$meanScore['high_levels']}}"]
                 }, {
                     name: 'Sound Business Environment',
-                    data: [{
-                        {
-                            $meanScore['sound_business']
-                        }
-                    }]
+                    data: ["{{$meanScore['sound_business']}}"]
                 }, {
                     name: 'Acceptance Of The Rights Of Others',
-                    data: [{
-                        {
-                            $meanScore['acceptance_rights']
-                        }
-                    }]
+                    data: ["{{$meanScore['acceptance_rights']}}"]
                 }
             ],
 
@@ -1065,46 +962,15 @@ $(document).ready(function() {
         var options = {
             series: [{
                 name: 'Mean',
-                data: [{
-                        {
-                            $meanScore['well_functioning_government']
-                        }
-                    },
-                    {
-                        {
-                            $meanScore['low_level_corruption']
-                        }
-                    },
-                    {
-                        {
-                            $meanScore['equitable_distribution']
-                        }
-                    },
-                    {
-                        {
-                            $meanScore['good_relations']
-                        }
-                    },
-                    {
-                        {
-                            $meanScore['free_flow']
-                        }
-                    },
-                    {
-                        {
-                            $meanScore['high_levels']
-                        }
-                    },
-                    {
-                        {
-                            $meanScore['sound_business']
-                        }
-                    },
-                    {
-                        {
-                            $meanScore['acceptance_rights']
-                        }
-                    }
+                data: 
+                ["{{$meanScore['well_functioning_government']}}",
+                    "{{$meanScore['low_level_corruption']}}",
+                    " {{$meanScore['equitable_distribution']}}",
+                    "{{$meanScore['good_relations']}}",
+                    "{{$meanScore['free_flow']}}",
+                    "{{$meanScore['high_levels']}}",
+                    "{{$meanScore['sound_business']}}",
+                    "{{$meanScore['acceptance_rights']}}"
                 ],
             }],
             chart: {
@@ -1160,16 +1026,8 @@ $(document).ready(function() {
     var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
     if (chartPieBasicColors) {
         var options = {
-            series: [{
-                    {
-                        $participantDetails['genderWise']['male']
-                    }
-                },
-                {
-                    {
-                        $participantDetails['genderWise']['female']
-                    }
-                }
+            series: ["{{$participantDetails['genderWise']['male']}}",
+                "{{$participantDetails['genderWise']['female']}}"
             ],
             chart: {
                 height: 192,
@@ -1191,35 +1049,278 @@ $(document).ready(function() {
         chart.render();
     }
 
-            //Piechart Age
-            var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
-            if(chartPieBasicColors2){
-            var options = {
-                series: [
-                    {{$participantDetails['ageWise']['18 to 24']}}, 
-                    {{$participantDetails['ageWise']['25 to 44']}}, 
-                    {{$participantDetails['ageWise']['45 to 64']}}, 
-                    {{$participantDetails['ageWise']['65 or over']}}
-                ],
-                chart: {
-                    height: 192,
-                    type: 'pie',
-                },
-                labels: ['18 to 24 years', '25 to 44 years', '45 to 64 years', '65 or over'],
-                legend: {
-                    position: 'right'
-                },
-                dataLabels: {
-                    dropShadow: {
-                        enabled: false,
-                    }
-                },
-                colors: chartPieBasicColors2
-            };
+    //Piechart Age
+    var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
+    if(chartPieBasicColors2){
+        var options = {
+            series: [
+                {{$participantDetails['ageWise']['18 to 24']}}, 
+                {{$participantDetails['ageWise']['25 to 44']}}, 
+                {{$participantDetails['ageWise']['45 to 64']}}, 
+                {{$participantDetails['ageWise']['65 or over']}}
+            ],
+            chart: {
+                height: 192,
+                type: 'pie',
+            },
+            labels: ['18 to 24 years', '25 to 44 years', '45 to 64 years', '65 or over'],
+            legend: {
+                position: 'right'
+            },
+            dataLabels: {
+                dropShadow: {
+                    enabled: false,
+                }
+            },
+            colors: chartPieBasicColors2
+        };
 
         var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
         chart2.render();
     }
+
+    //Positive Peace Bar
+    var areachartSalesColorst = "";
+     areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
+     if (areachartSalesColorst) {
+         var options = {
+            series: [{
+                name: 'Mean',
+                data: ["{{$positivePeace['mean']}}"]
+            }, {
+                name: 'Country Mean',
+                data: ["{{$positivePeace['countryMean']}}"]
+            }, {
+                name: 'Global Mean',
+                data: ["{{$positivePeace['globalMean']}}"]
+            }],
+             chart: {
+                 type: 'bar',
+                 height: 341,
+                 toolbar: {
+                     show: false,
+                 },
+             },
+             plotOptions: {
+                 bar: {
+                     horizontal: false,
+                     columnWidth: '40%',
+                 },
+             },
+             stroke: {
+                 show: true,
+                 width: 5,
+                 colors: ['transparent']
+             },
+             xaxis: {
+                 categories: [''],
+                 axisTicks: {
+                     show: false,
+                     borderType: 'solid',
+                     color: '#78909C',
+                     height: 6,
+                     offsetX: 0,
+                     offsetY: 0
+                 },
+                 title: {
+                     offsetX: 0,
+                     offsetY: -30,
+                     style: {
+                         color: '#78909C',
+                         fontSize: '12px',
+                         fontWeight: 400,
+                     },
+                 },
+             },
+             yaxis: {
+                 labels: {
+                     formatter: function (value) {
+                         return value;
+                     }
+                 },
+                 tickAmount: 4,
+                 min: 0
+             },
+             fill: {
+                 opacity: 1
+             },
+             legend: {
+                 show: true,
+                 position: 'bottom',
+                 horizontalAlign: 'center',
+                 fontWeight: 500,
+                 offsetX: 0,
+                 offsetY: -14,
+                 itemMargin: {
+                     horizontal: 8,
+                     vertical: 0
+                 },
+                 markers: {
+                     width: 10,
+                     height: 10,
+                 }
+             },
+             colors: areachartSalesColorst
+         };
+         if (salesForecastChart2 != "")
+             salesForecastChart2.destroy();
+         salesForecastChart2 = new ApexCharts(document.querySelector("#sales-forecast-chart-2"), options);
+         salesForecastChart2.render();
+     }
+
+
+     //Negative Peace Bar
+     var areachartSalesColorsth = "";
+     areachartSalesColorsth = getChartColorsArray("sales-forecast-chart-3");
+     if (areachartSalesColorsth) {
+         var options = {
+            series: [{
+                name: 'Mean',
+                data: ["{{$negativePeace['mean']}}"]
+            }, {
+                name: 'Country Mean',
+                data: ["{{$negativePeace['countryMean']}}"]
+            }, {
+                name: 'Global Mean',
+                data: ["{{$negativePeace['globalMean']}}"]
+            }],
+             chart: {
+                 type: 'bar',
+                 height: 341,
+                 toolbar: {
+                     show: false,
+                 },
+             },
+             plotOptions: {
+                 bar: {
+                     horizontal: false,
+                     columnWidth: '40%',
+                 },
+             },
+             stroke: {
+                 show: true,
+                 width: 5,
+                 colors: ['transparent']
+             },
+             xaxis: {
+                 categories: [''],
+                 axisTicks: {
+                     show: false,
+                     borderType: 'solid',
+                     color: '#78909C',
+                     height: 6,
+                     offsetX: 0,
+                     offsetY: 0
+                 },
+                 title: {
+                     offsetX: 0,
+                     offsetY: -30,
+                     style: {
+                         color: '#78909C',
+                         fontSize: '12px',
+                         fontWeight: 400,
+                     },
+                 },
+             },
+             yaxis: {
+                 labels: {
+                     formatter: function (value) {
+                         return value;
+                     }
+                 },
+                 tickAmount: 4,
+                 min: 0
+             },
+             fill: {
+                 opacity: 1
+             },
+             legend: {
+                 show: true,
+                 position: 'bottom',
+                 horizontalAlign: 'center',
+                 fontWeight: 500,
+                 offsetX: 0,
+                 offsetY: -14,
+                 itemMargin: {
+                     horizontal: 8,
+                     vertical: 0
+                 },
+                 markers: {
+                     width: 10,
+                     height: 10,
+                 }
+             },
+             colors: areachartSalesColorsth
+         };
+         if (salesForecastChart3 != "")
+             salesForecastChart3.destroy();
+         salesForecastChart3 = new ApexCharts(document.querySelector("#sales-forecast-chart-3"), options);
+         salesForecastChart3.render();
+     }
+
+   
+    //Pillars Result Radar Chart
+    var chartRadarMultiColors = getChartColorsArray("multi_radar");
+    if (chartRadarMultiColors) {
+        var options = {
+            series: [
+                {
+                    name: 'Mean',
+                    data: [
+                        @foreach($pillarMeanScore['mean'] as $key=>$means)
+                            {{$means}},
+                        @endforeach
+                    ],
+                },
+                {
+                    name: 'Country Mean',
+                    data: [
+                        @foreach($pillarMeanScore['countryMean'] as $key=>$means)
+                            {{$means}},
+                        @endforeach
+                    ],
+                },
+                {
+                    name: 'Global Mean',
+                    data: [
+                        @foreach($pillarMeanScore['globalMean'] as $key=>$means)
+                            {{$means}},
+                        @endforeach
+                    ],
+                }
+            ],
+            chart: {
+                height: 600,
+                type: 'radar',
+                dropShadow: {
+                    enabled: true,
+                    blur: 1,
+                    left: 1,
+                    top: 1
+                },
+                toolbar: {
+                    show: false
+                },
+            },
+            stroke: {
+                width: 2
+            },
+            fill: {
+                opacity: 0.2
+            },
+            markers: {
+                size: 4
+            },
+            colors: chartRadarMultiColors,
+            xaxis: {
+                categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government', 'Low Levels of Corruption', 'Equitable Distribution Of Resource', 'Good Relations With Neighbours', 'Free Flow Of Information', 'High Levels Of Human Capital', 'Sound Business Environment']
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
+        chart.render();
+    }
+
+
 
     //Chart Js Code End
 
