@@ -49,7 +49,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country</label>
 
-                            <select id="country" name="country" class="form-select" data-choices
+                            <select id="country" name="country" class="form-select select2" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -62,12 +62,10 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization</label>
-                            <select id="organization" name="organization" class="form-select" data-choices
+                            <select id="organization" name="organization" class="form-select select2" data-choices
                                 data-choices-sorting="true">
-                                <option selected>Choose Organization</option>
-                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($organization->id); ?>" <?php echo e($organization->id == $form->organization_id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <option value="" selected>Choose Organization</option>
+                                
                             </select>
                         </div>
                     </div>
@@ -86,12 +84,10 @@
                                 $organization_id = $form->branches->organization->id;
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
                             ?>
-                            <select id="branch" name="branch" class="form-select" data-choices
+                            <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true">
-                                <option selected>Choose Branch</option>
-                                <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($branch->id); ?>" <?php echo e($branch->id == $form->branch_id ? 'selected':''); ?>><?php echo e($branch->name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <option value="" selected>Choose Branch</option>
+                                
                             </select>
                         </div>
                     </div>
@@ -252,35 +248,104 @@ $(document).ready(function() {
     //         }
     //     })
     // })
+    var countryVal = $('#country').val();
+    // var organizationVal = $('#organization').val();
+
+    if (countryVal !== '') {
+        organization(countryVal);
+    }
+    
+    var organizationVals = <?php echo json_encode($form->organization->id, 15, 512) ?>;
+
+    if (organizationVals !== '') {
+        $('#setBranchDiv').css('display','block');
+
+        if($('#setBranch').prop('checked')){
+            $('#branchDiv').css('display','block');
+            branch(organizationVals)
+        }else{
+            $('#branchDiv').css('display','none');
+            $('#branch').val('');
+        }
+        
+    }else{
+        $('#setBranchDiv').css('display','none');
+        $('#branch').prop('disabled', true);
+        $('#branch').html('');
+        $('#branch').append('<option value="" selected>Choose Branch</option>');
+    }
+
+
+    $('#country').change(function() {
+        var countryVal = $('#country').val();
+
+        if (countryVal !== '') {
+            organization(countryVal);
+            handleBranch();
+        }
+    });
 
     $('#organization,#setBranch').change(function() {
+       handleBranch();
+    });
+
+    function handleBranch(){
         var organizationVal = $('#organization').val();
         console.log(organizationVal);
         if (organizationVal !== '') {
-           $('#setBranchDiv').css('display','block');
+        $('#setBranchDiv').css('display','block');
 
-           if($('#setBranch').prop('checked')){
+        if($('#setBranch').prop('checked')){
                 $('#branchDiv').css('display','block');
                 branch(organizationVal)
-           }else{
+        }else{
                 $('#branchDiv').css('display','none');
                 $('#branch').val('');
-           }
-           
-        }else{
-            $('#setBranchDiv').css('display','none');
         }
-    });
-    // $('#organization').change(function() {
-    //     var organizationVal = $('#organization').val();
+        
+        }else{
+            $('#setBranch').prop('checked',false);
+            $('#setBranchDiv').css('display','none');
+            $('#branchDiv').css('display','none');
+            branch(organizationVal);
+        }
+    }
 
-    //     if (organization !== '') {
-           
-    //     }
-    // });
+    function organization(countryVal){
+        $.ajax({
+                url: "<?php echo e(route('organization.get')); ?>",
+                method: 'GET',
+                data: {
+                    country: countryVal
+                },
+                success: function(response) {
+                    console.log(response);
+                    $('#organization').prop('disabled', false);
+                    $('#organization').html('');
+                    $('#organization').append('<option value="" selected>Choose Organization</option>');
+                    var selectedItem = <?php echo json_encode($form->organization->id, 15, 512) ?>;
+                    response.organizations.forEach(function(organization) {
+                        // $('#organization').append(new Option(organization.name, organization.id));
+                        var option = new Option(organization.name,organization.id);
+                        
+                        $('#organization').append(option);
+
+                        if(selectedItem && selectedItem == organization.id){
+                            $(option).prop('selected',true);
+                        }
+                    })
+                },
+                error: function(xhr, status, error) {
+                    $('#organization').prop('disabled', true);
+                    $('#organization').html('');
+                    $('#organization').append('<option value="" selected>Choose Organization</option>');
+                }
+            })
+    }
 
     function branch(organizationVal){
-        $.ajax({
+        if(organizationVal){
+            $.ajax({
                 url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',
                 data: {
@@ -289,18 +354,121 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+
+                    var selectedItem = <?php echo json_encode($form->branches->id, 15, 512) ?>;
                     response.branches.forEach(function(branch) {
-                        $('#branch').append(new Option(branch.name, branch.id));
+                        // $('#organization').append(new Option(organization.name, organization.id));
+                        var option = new Option(branch.name,branch.id);
+                        
+                        $('#branch').append(option);
+
+                        if(selectedItem && selectedItem == branch.id){
+                            $(option).prop('selected',true);
+                        }
                     })
                 },
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Branch</option>');
                 }
             })
+        }else{
+            $('#branch').prop('disabled', true);
+            $('#branch').html('');
+            $('#branch').append('<option value="" selected>Choose Branch</option>');
+        }
+        
     }
+
+    // $('#country').change(function(){
+    //     const countryVal = $(this).val();
+    //     countryVal ? organization(countryVal);
+    // });
+
+    // function organization(countryVal){
+    //     $.ajax({
+    //         url:"<?php echo e(route('organization.get')); ?>",
+    //         method:'GET',
+    //         data:{
+    //             country:countryVal
+    //         },
+    //         success:function(response){
+    //             console.log('Organizations: ',response);
+    //             populateBranchSelect(response.organizations);
+    //         },
+    //         error: function(xhr){
+    //             console.log('Organization Error:',xhr.responseText);
+    //             resetOrganization();
+    //         }
+    //     })
+    // }
+
+    // function branch(organizationVal){
+    //     $.ajax({
+    //         url:"<?php echo e(route('branch.get')); ?>",
+    //         method:'GET',
+    //         data:{organization_id:organizationVal},
+    //         success:function(response){
+    //             console.log('Branches: ',response);
+    //             populateBranchSelect(response.branches);
+    //         },
+    //         error:function(xhr){
+    //             console.log('Branch Error: ',xhr.responseText);
+    //             resetBranch();
+    //         }
+    //     })
+    // }
+
+    // function populateOrganizationSelect(organizations){
+    //     const select = $('#organization').prop('disabled',false).html('');
+    //     select.append('<option value="">Choose Organization</option>');
+        
+    //     organizations.forEach(org=>{
+    //         const option = new Option(org.name,org.id);
+    //         const selectedItems = <?php echo json_encode($form->organization->id ?? null, 15, 512) ?>;
+    //         if(selectedItems && selectedItems == org.id) option.selected == true;
+    //         select.append(option);
+    //     }); 
+    // }
+
+    // function handleOrganizationChange(organizationVal){
+    //     if(organizationVal){
+    //         $('#setBranchDiv').show();
+        
+    //     }else{
+    //         $('#setBranchDiv').hide();
+    //         $('#branchDiv').hide().find('#branch').val('');
+    //     }
+    // }
+
+    // function handleBranchToggle(organizationVal){
+    //     if($('#setBranch').prop('checked')){
+    //         $('#branchDiv').show();
+    //         branch(organizationVal);
+    //     }else{
+    //         $('#branchDiv').hide().find('#branch').val('');
+    //     }
+    // }
+
+    // function populateBranchSelect($branches){
+    //     const select = $('#branch').prop('disabled',false).html('');
+    //     select.append('<option value="">Choose Branch</option>');
+    //     branches.forEach(br=>select.append(new Option(br.name,br.id)));
+    // }
+
+    // function resetOrganization(){
+    //     $('#organization').prop('disabled',true)
+    //         .html('<option value="">Choose Organization</option>');
+    //     $('#setBranchDiv','#branchDiv').hide();
+    //     resetBranch();
+    // }
+
+    // function resetBranch(){
+    //     $('#branch').prop('disabled',true)
+    //         .html('<option value="">Choose Branch</option>');
+    // }
 
 })
 </script>

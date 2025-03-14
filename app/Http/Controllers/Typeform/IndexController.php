@@ -113,10 +113,13 @@ class IndexController extends Controller
 
         $surveySum = Answer::where('form_id',$survey_id)->sum('positive_peace');
         $surveyCount = Answer::select('positive_peace')->where('form_id',$survey_id)->count();
+       
+        $surveyCount = $surveyCount ? $surveyCount : 1;
 
         $meanCal = $surveySum / $surveyCount;
 
-        dd($country);
+
+        
 
         // foreach($surveys as $survey){
             
