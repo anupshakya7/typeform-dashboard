@@ -770,10 +770,9 @@ File: Main Js File - TEMPLATE
         //For collapse vertical menu
         if (document.documentElement.getAttribute("data-layout") === "vertical") {
             
-            document.documentElement.classList.toggle("vertical");
             // document.documentElement.classList.toggle("horizontal");
             
-            
+
         
            asidemenu.style.position = 'fixed';
 
@@ -782,12 +781,16 @@ File: Main Js File - TEMPLATE
                 document.documentElement.getAttribute("data-sidebar-size") == "sm" ?
                     document.documentElement.setAttribute("data-sidebar-size", "") :
                     document.documentElement.setAttribute("data-sidebar-size", "sm");
+                    document.documentElement.classList.toggle("vertical");
+
                     
             } else if (windowSize > 1025) {
                 document.body.classList.remove("vertical-sidebar-enable");
                 document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
                     document.documentElement.setAttribute("data-sidebar-size", "sm") :
                     document.documentElement.setAttribute("data-sidebar-size", "lg");
+                    document.documentElement.classList.toggle("vertical");
+
                     
             } else if (windowSize <= 767) {
                 document.body.classList.add("vertical-sidebar-enable");
@@ -2006,9 +2009,9 @@ File: Main Js File - TEMPLATE
             sessionStorage.setItem("defaultAttribute", JSON.stringify(isLayoutAttributes));
             layoutSwitch(isLayoutAttributes);
 
-            // open right sidebar on first time load
-            var offCanvas = document.querySelector('.btn[data-bs-target="#theme-settings-offcanvas"]');
-            offCanvas ? offCanvas.click() : "";
+            // // open right sidebar on first time load
+            // var offCanvas = document.querySelector('.btn[data-bs-target="#theme-settings-offcanvas"]');
+            // offCanvas ? offCanvas.click() : "";
         } else {
             var isLayoutAttributes = {};
             isLayoutAttributes["data-layout"] = sessionStorage.getItem("data-layout");

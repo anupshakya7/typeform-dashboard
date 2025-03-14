@@ -67,7 +67,7 @@
                         
                     </div>
                     <form action="<?php echo e(route('form.index')); ?>" method="GET" id="form_search" style="display: inline-block">
-                    <div class="row">
+                    <div class="row dashboard g-3">
                             <div class="col-auto d-flex justify-content-sm-end">
                                 <div class="search-box"> <input type="text" class="form-control" value="<?php echo e(request('search_title')); ?>" name="search_title" onkeyup="debounceSearch()" id="searchProductList"
                                         placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>

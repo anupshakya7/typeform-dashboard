@@ -12,16 +12,16 @@
 
             <!--greeting section -->
 
-            <div class="mb-3 pb-1 d-flex align-items-center flex-row">
-                <div class="flex-grow-1">
+            <div class="mb-3 pb-1 d-block d-sm-flex align-items-center flex-row gap-3">
+                <div>
                     <h4 class="fs-16 mb-1">Welcome back, {{auth()->user()->name}}</h4>
                     <p class="text-muted mb-0">Get insights, track trends, compare data, manage.</p>
                 </div>
-                <div class="mt-3 mt-lg-0">
+                <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
                     <form action="{{route('home.index')}}" method="GET">
-                        <div class="row">
+                        <div class="row gap-3 m-0 p-0 dashboard">
 
-                            <div class="col-auto col-4">
+                            <div class="col-auto p-0">
                                 <select class="form-select select2" name="country" id="country"
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     @foreach ($countries as $country)
@@ -31,7 +31,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-auto col-4">
+                            <div class="col-auto p-0">
 
                                 <select class="form-select select2" id="organization" name="organization"
                                     aria-label="Default select example" onchange="this.form.submit()" disabled>
@@ -44,13 +44,13 @@
                                 </select>
                             </div>
 
-                            <div class="col-auto col-4">
+                            <div class="col-auto p-0">
                                 <select class="form-select select2" id="branch" name="branch"
                                     aria-label="Default select example" onchange="this.form.submit()" disabled>
                                     <option value="" selected>Branch</option>
                                 </select>
                             </div>
-                            <div class="col-auto col-4">
+                            <div class="col-auto p-0">
                                 <select class="form-select select2" name="survey" id="survey"
                                     aria-label="Default select example" onchange="this.form.submit()" disabled>
                                     <option value="" selected>Survey</option>
@@ -61,17 +61,21 @@
                                     @endforeach --}}
                                 </select>
                             </div>
+                            <div class="col-auto p-0">
+                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
+
+                                </a>
+
+                            </div>
                         </div>
                     </form>
 
                 </div>
 
-                <a class="icon-frame bg-white ms-sm-3" style="border: 1px solid #BABABA;" href="#"
-                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/download.svg') }}"></img>
-
-                </a>
 
             </div>
 
@@ -908,248 +912,332 @@ $(document).ready(function() {
         }
     }
 
-            function getQueryParams(param){
-                var urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(param);
-            }
+    function getQueryParams(param) {
+        var urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
 
-            //Chart Js Code Start
+    //Chart Js Code Start
 
-            // Mean Scores Value Line Charts
-            var areachartSalesColors = "";
-            areachartSalesColors = getChartColorsArray("sales-forecast-chart");
-            if (areachartSalesColors) {
-                var options = {
-                    series: [{
-                        name: 'Well Functioning Government',
-                        data: [{{$meanScore['well_functioning_government']}}]
-                    }, {
-                        name: 'Low Levels of corruption',
-                        data: [{{$meanScore['low_level_corruption']}}]
-                    }, 
-                    {
-                        name: 'Equitable distribution of resources',
-                        data: [{{$meanScore['equitable_distribution']}}]
-                    },{
-                        name: 'Good relations with neighbours',
-                        data: [{{$meanScore['good_relations']}}]
-                    }, {
-                        name: 'Free Flow Of Information',
-                        data: [{{$meanScore['free_flow']}}]
-                    },{
-                        name: 'High Levels Of Human Capital',
-                        data: [{{$meanScore['high_levels']}}]
-                    }, {
-                        name: 'Sound Business Environment',
-                        data: [{{$meanScore['sound_business']}}]
-                    },{
-                        name: 'Acceptance Of The Rights Of Others',
-                        data: [{{$meanScore['acceptance_rights']}}]
-                    }],
-                    
-                    chart: {
-                        type: 'bar',
-                        height: 341,
-                        toolbar: {
-                            show: false,
-                        },
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: false,
-                            columnWidth: '70%',
-                        }
-                    },
-                    stroke: {
-                        show: true,
-                        width: 5,
-                        colors: ['transparent']
-                    },
-                    xaxis: {
-                        categories:  ['' ],
-                        axisTicks: {
-                            show: false,
-                            borderType: 'solid',
-                            color: '#78909C',
-                            height: 6,
-                            offsetX: 0,
-                            offsetY: 0
-                        },
-                        title: {
-                            offsetX: 0,
-                            offsetY: -30,
-                            style: {
-                                color: '#78909C',
-                                fontSize: '12px',
-                                fontWeight: 400,
-                            },
-                        },
-                    },
-                    yaxis: {
-                        labels: {
-                            formatter: function (value) {
-                                return value;
-                            }
-                        },
-                        tickAmount: 4,
-                        min: 0
-                    },
-                    fill: {
-                        opacity: 1
-                    },
-                    legend: {
-                        show: true,
-                        position: 'bottom',
-                        horizontalAlign: 'center',
-                        fontWeight: 500,
-                        offsetX: 0,
-                        offsetY: -14,
-                        itemMargin: {
-                            horizontal: 8,
-                            vertical: 0
-                        },
-                        markers: {
-                            width: 10,
-                            height: 10,
-                        }
-                    },
-                    colors: areachartSalesColors
-                };
-                if (salesForecastChart != "")
-                    salesForecastChart.destroy();
-                    salesForecastChart = new ApexCharts(document.querySelector("#sales-forecast-chart"), options);
-                    salesForecastChart.render();
-            }
-
-            // Mean Radar Chart
-            var chartRadarBasicColors = getChartColorsArray("basic_radar");
-            if (chartRadarBasicColors) {
-                var options = {
-                    series: [
+    // Mean Scores Value Line Charts
+    var areachartSalesColors = "";
+    areachartSalesColors = getChartColorsArray("sales-forecast-chart");
+    if (areachartSalesColors) {
+        var options = {
+            series: [{
+                    name: 'Well Functioning Government',
+                    data: [{
                         {
-                            name: 'Mean',
-                            data: [
-                                {{$meanScore['well_functioning_government']}},
-                                {{$meanScore['low_level_corruption']}},
-                                {{$meanScore['equitable_distribution']}},
-                                {{$meanScore['good_relations']}},
-                                {{$meanScore['free_flow']}},
-                                {{$meanScore['high_levels']}},
-                                {{$meanScore['sound_business']}},
-                                {{$meanScore['acceptance_rights']}}
-                            ],
+                            $meanScore['well_functioning_government']
                         }
-                    ],
-                    chart: {
-                        height: 500,
-                        type: 'radar',
-                        toolbar: {
-                            show: false
+                    }]
+                }, {
+                    name: 'Low Levels of corruption',
+                    data: [{
+                        {
+                            $meanScore['low_level_corruption']
+                        }
+                    }]
+                },
+                {
+                    name: 'Equitable distribution of resources',
+                    data: [{
+                        {
+                            $meanScore['equitable_distribution']
+                        }
+                    }]
+                }, {
+                    name: 'Good relations with neighbours',
+                    data: [{
+                        {
+                            $meanScore['good_relations']
+                        }
+                    }]
+                }, {
+                    name: 'Free Flow Of Information',
+                    data: [{
+                        {
+                            $meanScore['free_flow']
+                        }
+                    }]
+                }, {
+                    name: 'High Levels Of Human Capital',
+                    data: [{
+                        {
+                            $meanScore['high_levels']
+                        }
+                    }]
+                }, {
+                    name: 'Sound Business Environment',
+                    data: [{
+                        {
+                            $meanScore['sound_business']
+                        }
+                    }]
+                }, {
+                    name: 'Acceptance Of The Rights Of Others',
+                    data: [{
+                        {
+                            $meanScore['acceptance_rights']
+                        }
+                    }]
+                }
+            ],
+
+            chart: {
+                type: 'bar',
+                height: 341,
+                toolbar: {
+                    show: false,
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '70%',
+                }
+            },
+            stroke: {
+                show: true,
+                width: 5,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: [''],
+                axisTicks: {
+                    show: false,
+                    borderType: 'solid',
+                    color: '#78909C',
+                    height: 6,
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                title: {
+                    offsetX: 0,
+                    offsetY: -30,
+                    style: {
+                        color: '#78909C',
+                        fontSize: '12px',
+                        fontWeight: 400,
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: function(value) {
+                        return value;
+                    }
+                },
+                tickAmount: 4,
+                min: 0
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontWeight: 500,
+                offsetX: 0,
+                offsetY: -14,
+                itemMargin: {
+                    horizontal: 8,
+                    vertical: 0
+                },
+                markers: {
+                    width: 10,
+                    height: 10,
+                }
+            },
+            colors: areachartSalesColors
+        };
+        if (salesForecastChart != "")
+            salesForecastChart.destroy();
+        salesForecastChart = new ApexCharts(document.querySelector("#sales-forecast-chart"), options);
+        salesForecastChart.render();
+    }
+
+    // Mean Radar Chart
+    var chartRadarBasicColors = getChartColorsArray("basic_radar");
+    if (chartRadarBasicColors) {
+        var options = {
+            series: [{
+                name: 'Mean',
+                data: [{
+                        {
+                            $meanScore['well_functioning_government']
                         }
                     },
-                    colors: chartRadarBasicColors,
-                    xaxis: {
-                        categories: [
-                            'Well-functioning Government', 
-                            'Low Levels Of Corruption', 
-                            'Equitable Distribution Of Resources', 
-                            'Good Relations With Neighbors', 
-                            'Free Flow Of Information', 
-                            'High Levels Of Human Capital', 
-                            'Sound Business Environment',
-                            'Acceptance Of The Rights Of Others'
-                        ]
-                    },
-                    tooltip: {
-                        enabled: true,
-                        shared: false, // Set to false to ensure visibility
-                        followCursor: true, // Follows the mouse for better positioning
-                        theme: 'dark', // Ensures the tooltip is visible
-                        y: {
-                            formatter: function (val) {
-                                return val.toFixed(2) + " points";
-                            }
+                    {
+                        {
+                            $meanScore['low_level_corruption']
                         }
                     },
-                    stroke: {
-                        width: 2 // Increases line thickness to improve interaction
+                    {
+                        {
+                            $meanScore['equitable_distribution']
+                        }
                     },
-                    fill: {
-                        opacity: 0.2 // Ensures data is visible while keeping tooltip accessible
+                    {
+                        {
+                            $meanScore['good_relations']
+                        }
                     },
-                    markers: {
-                        size: 5, // Makes data points larger for better hover detection
-                        hover: {
-                            size: 8 // Ensures tooltip appears when hovering over points
+                    {
+                        {
+                            $meanScore['free_flow']
+                        }
+                    },
+                    {
+                        {
+                            $meanScore['high_levels']
+                        }
+                    },
+                    {
+                        {
+                            $meanScore['sound_business']
+                        }
+                    },
+                    {
+                        {
+                            $meanScore['acceptance_rights']
                         }
                     }
-                };
-
-                var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
-                chart.render();
-            }
-            
-            //Piechart Gender
-            var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
-            if(chartPieBasicColors){
-                var options = {
-                    series: [
-                        {{$participantDetails['genderWise']['male']}},
-                        {{$participantDetails['genderWise']['female']}}
-                    ],
-                    chart: {
-                        height: 192,
-                        type: 'pie',
-                    },
-                    labels: ['Male', 'Female'],
-                    legend: {
-                        position: 'right'
-                    },
-                    dataLabels: {
-                        dropShadow: {
-                            enabled: false,
-                        }
-                    },
-                    colors: chartPieBasicColors
-                };
-
-                var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
-                chart.render();
-            }
-
-            //Piechart Age
-            var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
-            if(chartPieBasicColors2){
-            var options = {
-                series: [
-                    {{$participantDetails['ageWise']['Less than 18']}}, 
-                    {{$participantDetails['ageWise']['18 to 25']}}, 
-                    {{$participantDetails['ageWise']['26 to 40']}}, 
-                    {{$participantDetails['ageWise']['41 to 60']}}
                 ],
-                chart: {
-                    height: 192,
-                    type: 'pie',
-                },
-                labels: ['>18 years', '18-24 years', '25-40 years', '40 years Over'],
-                legend: {
-                    position: 'right'
-                },
-                dataLabels: {
-                    dropShadow: {
-                        enabled: false,
+            }],
+            chart: {
+                height: 500,
+                type: 'radar',
+                toolbar: {
+                    show: false
+                }
+            },
+            colors: chartRadarBasicColors,
+            xaxis: {
+                categories: [
+                    'Well-functioning Government',
+                    'Low Levels Of Corruption',
+                    'Equitable Distribution Of Resources',
+                    'Good Relations With Neighbors',
+                    'Free Flow Of Information',
+                    'High Levels Of Human Capital',
+                    'Sound Business Environment',
+                    'Acceptance Of The Rights Of Others'
+                ]
+            },
+            tooltip: {
+                enabled: true,
+                shared: false, // Set to false to ensure visibility
+                followCursor: true, // Follows the mouse for better positioning
+                theme: 'dark', // Ensures the tooltip is visible
+                y: {
+                    formatter: function(val) {
+                        return val.toFixed(2) + " points";
+                    }
+                }
+            },
+            stroke: {
+                width: 2 // Increases line thickness to improve interaction
+            },
+            fill: {
+                opacity: 0.2 // Ensures data is visible while keeping tooltip accessible
+            },
+            markers: {
+                size: 5, // Makes data points larger for better hover detection
+                hover: {
+                    size: 8 // Ensures tooltip appears when hovering over points
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
+        chart.render();
+    }
+
+    //Piechart Gender
+    var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
+    if (chartPieBasicColors) {
+        var options = {
+            series: [{
+                    {
+                        $participantDetails['genderWise']['male']
                     }
                 },
-                colors: chartPieBasicColors2
-            };
+                {
+                    {
+                        $participantDetails['genderWise']['female']
+                    }
+                }
+            ],
+            chart: {
+                height: 192,
+                type: 'pie',
+            },
+            labels: ['Male', 'Female'],
+            legend: {
+                position: 'right'
+            },
+            dataLabels: {
+                dropShadow: {
+                    enabled: false,
+                }
+            },
+            colors: chartPieBasicColors
+        };
 
-            var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
-            chart2.render();
-            }
+        var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
+        chart.render();
+    }
 
-            //Chart Js Code End
-            
-        });
-    </script>
+    //Piechart Age
+    var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
+    if (chartPieBasicColors2) {
+        var options = {
+            series: [{
+                    {
+                        $participantDetails['ageWise']['Less than 18']
+                    }
+                },
+                {
+                    {
+                        $participantDetails['ageWise']['18 to 25']
+                    }
+                },
+                {
+                    {
+                        $participantDetails['ageWise']['26 to 40']
+                    }
+                },
+                {
+                    {
+                        $participantDetails['ageWise']['41 to 60']
+                    }
+                }
+            ],
+            chart: {
+                height: 192,
+                type: 'pie',
+            },
+            labels: ['>18 years', '18-24 years', '25-40 years', '40 years Over'],
+            legend: {
+                position: 'right'
+            },
+            dataLabels: {
+                dropShadow: {
+                    enabled: false,
+                }
+            },
+            colors: chartPieBasicColors2
+        };
+
+        var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
+        chart2.render();
+    }
+
+    //Chart Js Code End
+
+});
+</script>
 @endsection

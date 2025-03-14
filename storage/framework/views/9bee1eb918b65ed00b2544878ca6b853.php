@@ -60,7 +60,7 @@
 
                     </div>
                     <form action="<?php echo e(route('survey.index')); ?>" method="GET" id="survey_search">
-                        <div class="row">
+                        <div class="row dashboard g-3">
                             <div class="col-auto d-flex justify-content-sm-end">
                                 <div class="search-box"> <input type="text" class="form-control" id="searchProductList" name="search_participant" value="<?php echo e(request('search_participant')); ?>" onkeyup="debounceSeach()"
                                         placeholder="Search Participants"> <i class="ri-search-line search-icon"></i> </div>
