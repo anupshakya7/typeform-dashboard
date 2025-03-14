@@ -103,9 +103,10 @@
                                     S.No.
                                 </th>
                                 <th>Survey ID</th>
-                                <th>Survey Name</th>
-                                <th>Survey Country</th>
-                                <th>Survey Organization</th>
+                                <th>Form ID</th>
+                                <th>Form Name</th>
+                                <th>Form Country</th>
+                                <th>Form Organization</th>
                                 <th>Participants Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>
@@ -120,6 +121,7 @@
                                     {{$answer->serial_no}}
                                 </th>
                                 <td>{{$answer->event_id}}</td>
+                                <td>{{$answer->form_id}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->country : 'No Country'}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->organization->name : 'No Organization'}}</td>

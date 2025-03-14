@@ -29,7 +29,7 @@ class IndexController extends Controller
         $topBox = $this->topBoxData();
         $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
         $participantDetails = $this->participantDetails($survey_id);
-        // $positiveNegative = $this->positiveNegative($country,$survey_id);
+        $positiveNegative = $this->positiveNegative($country,$survey_id);
 
         $resultByPillar = [];
 
@@ -93,7 +93,7 @@ class IndexController extends Controller
 
         //Age Wise
         $participants = Answer::where('form_id',$survey_id);
-        $ages = ['Less than 18','18 to 25','26 to 40','41 to 60'];
+        $ages = ['18 to 24','25 to 44','45 to 64','65 or over'];
 
         foreach($ages as $age){
             $participantsClone = clone $participants;
@@ -108,14 +108,26 @@ class IndexController extends Controller
         ];
     }
 
-    // public function positiveNegative($country,$survey_id){
-    //     $survey = Form::query();
+    public function positiveNegative($country,$survey_id){
+        $survey = Form::query();
 
-    //     $surveys = Answer::where('form_id',$survey_id)->get();
-    //     $type = ['positive_peace','negative_peace'];
+        $surveySum = Answer::where('form_id',$survey_id)->sum('positive_peace');
+        $surveyCount = Answer::select('positive_peace')->where('form_id',$survey_id)->count();
 
-    //     // $ = Form::where()
-    // }
+        $meanCal = $surveySum / $surveyCount;
+
+        dd($country);
+
+        // foreach($surveys as $survey){
+            
+        // }
+
+        // $type = ['positive_peace','negative_peace'];
+
+
+
+        // $ = Form::where()
+    }
 
     /**
      * Show the form for creating a new resource.

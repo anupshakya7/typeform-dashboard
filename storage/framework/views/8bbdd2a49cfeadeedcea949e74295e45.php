@@ -493,8 +493,8 @@
                                                 <tbody>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Well-Functioning
-                                                                Government</a>
+                                                        <td><span class="fw-medium pillar-text">Well-Functioning
+                                                                Government</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -505,8 +505,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Low Levels of
-                                                                Corruption</a></td>
+                                                        <td><span class="fw-medium pillar-text">Low Levels of
+                                                                Corruption</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -516,8 +516,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Equitable Distribution Of
-                                                                Resource</a></td>
+                                                        <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                                                Resource</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-red">3.8%</span><img class="trend-icon"
@@ -527,8 +527,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Good Relations With
-                                                                Neighbours</a>
+                                                        <td><span class="fw-medium pillar-text">Good Relations With
+                                                                Neighbours</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -539,8 +539,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Free Flow Of
-                                                                Information</a></td>
+                                                        <td><span class="fw-medium pillar-text">Free Flow Of
+                                                                Information</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -550,8 +550,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">High Levels Of Human
-                                                                Capital</a>
+                                                        <td><span class="fw-medium pillar-text">High Levels Of Human
+                                                                Capital</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -562,8 +562,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Sound Business
-                                                                Environment</a>
+                                                        <td><span class="fw-medium pillar-text">Sound Business
+                                                                Environment</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -574,9 +574,9 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Acceptance Of The Rights
+                                                        <td><span class="fw-medium pillar-text">Acceptance Of The Rights
                                                                 Of
-                                                                Others</a></td>
+                                                                Others</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -642,8 +642,8 @@
                                                 <tbody>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Well-Functioning
-                                                                Government</a>
+                                                        <td><span class="fw-medium pillar-text">Well-Functioning
+                                                                Government</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -654,8 +654,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Low Levels of
-                                                                Corruption</a></td>
+                                                        <td><span class="fw-medium pillar-text">Low Levels of
+                                                                Corruption</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -665,8 +665,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Equitable Distribution Of
-                                                                Resource</a></td>
+                                                        <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                                                Resource</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-red">3.8%</span><img class="trend-icon"
@@ -676,8 +676,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Good Relations With
-                                                                Neighbours</a>
+                                                        <td><span class="fw-medium pillar-text">Good Relations With
+                                                                Neighbours</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -688,8 +688,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Free Flow Of
-                                                                Information</a></td>
+                                                        <td><span class="fw-medium pillar-text">Free Flow Of
+                                                                Information</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -699,8 +699,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">High Levels Of Human
-                                                                Capital</a>
+                                                        <td><span class="fw-medium pillar-text">High Levels Of Human
+                                                                Capital</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -711,8 +711,8 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Sound Business
-                                                                Environment</a>
+                                                        <td><span class="fw-medium pillar-text">Sound Business
+                                                                Environment</span>
                                                         </td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
@@ -723,9 +723,9 @@
                                                     </tr>
                                                     <tr>
 
-                                                        <td><a href="#" class="fw-medium">Acceptance Of The Rights
+                                                        <td><span class="fw-medium pillar-text">Acceptance Of The Rights
                                                                 Of
-                                                                Others</a></td>
+                                                                Others</span></td>
                                                         <td>3.8</td>
                                                         <td>3.8</td>
                                                         <td><span class="trend-blue">3.8%</span><img class="trend-icon"
@@ -907,6 +907,246 @@
                 var urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
             }
+
+
+            //Chart Js Code Start
+
+            // Mean Scores Value Line Charts
+            var areachartSalesColors = "";
+            areachartSalesColors = getChartColorsArray("sales-forecast-chart");
+            if (areachartSalesColors) {
+                var options = {
+                    series: [{
+                        name: 'Well Functioning Government',
+                        data: [<?php echo e($meanScore['well_functioning_government']); ?>]
+                    }, {
+                        name: 'Low Levels of corruption',
+                        data: [<?php echo e($meanScore['low_level_corruption']); ?>]
+                    }, 
+                    {
+                        name: 'Equitable distribution of resources',
+                        data: [<?php echo e($meanScore['equitable_distribution']); ?>]
+                    },{
+                        name: 'Good relations with neighbours',
+                        data: [<?php echo e($meanScore['good_relations']); ?>]
+                    }, {
+                        name: 'Free Flow Of Information',
+                        data: [<?php echo e($meanScore['free_flow']); ?>]
+                    },{
+                        name: 'High Levels Of Human Capital',
+                        data: [<?php echo e($meanScore['high_levels']); ?>]
+                    }, {
+                        name: 'Sound Business Environment',
+                        data: [<?php echo e($meanScore['sound_business']); ?>]
+                    },{
+                        name: 'Acceptance Of The Rights Of Others',
+                        data: [<?php echo e($meanScore['acceptance_rights']); ?>]
+                    }],
+                    
+                    chart: {
+                        type: 'bar',
+                        height: 341,
+                        toolbar: {
+                            show: false,
+                        },
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '70%',
+                        }
+                    },
+                    stroke: {
+                        show: true,
+                        width: 5,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories:  ['' ],
+                        axisTicks: {
+                            show: false,
+                            borderType: 'solid',
+                            color: '#78909C',
+                            height: 6,
+                            offsetX: 0,
+                            offsetY: 0
+                        },
+                        title: {
+                            offsetX: 0,
+                            offsetY: -30,
+                            style: {
+                                color: '#78909C',
+                                fontSize: '12px',
+                                fontWeight: 400,
+                            },
+                        },
+                    },
+                    yaxis: {
+                        labels: {
+                            formatter: function (value) {
+                                return value;
+                            }
+                        },
+                        tickAmount: 4,
+                        min: 0
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    legend: {
+                        show: true,
+                        position: 'bottom',
+                        horizontalAlign: 'center',
+                        fontWeight: 500,
+                        offsetX: 0,
+                        offsetY: -14,
+                        itemMargin: {
+                            horizontal: 8,
+                            vertical: 0
+                        },
+                        markers: {
+                            width: 10,
+                            height: 10,
+                        }
+                    },
+                    colors: areachartSalesColors
+                };
+                if (salesForecastChart != "")
+                    salesForecastChart.destroy();
+                    salesForecastChart = new ApexCharts(document.querySelector("#sales-forecast-chart"), options);
+                    salesForecastChart.render();
+            }
+
+            // Mean Radar Chart
+            var chartRadarBasicColors = getChartColorsArray("basic_radar");
+            if (chartRadarBasicColors) {
+                var options = {
+                    series: [
+                        {
+                            name: 'Mean',
+                            data: [
+                                <?php echo e($meanScore['well_functioning_government']); ?>,
+                                <?php echo e($meanScore['low_level_corruption']); ?>,
+                                <?php echo e($meanScore['equitable_distribution']); ?>,
+                                <?php echo e($meanScore['good_relations']); ?>,
+                                <?php echo e($meanScore['free_flow']); ?>,
+                                <?php echo e($meanScore['high_levels']); ?>,
+                                <?php echo e($meanScore['sound_business']); ?>,
+                                <?php echo e($meanScore['acceptance_rights']); ?>
+
+                            ],
+                        }
+                    ],
+                    chart: {
+                        height: 500,
+                        type: 'radar',
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    colors: chartRadarBasicColors,
+                    xaxis: {
+                        categories: [
+                            'Well-functioning Government', 
+                            'Low Levels Of Corruption', 
+                            'Equitable Distribution Of Resources', 
+                            'Good Relations With Neighbors', 
+                            'Free Flow Of Information', 
+                            'High Levels Of Human Capital', 
+                            'Sound Business Environment',
+                            'Acceptance Of The Rights Of Others'
+                        ]
+                    },
+                    tooltip: {
+                        enabled: true,
+                        shared: false, // Set to false to ensure visibility
+                        followCursor: true, // Follows the mouse for better positioning
+                        theme: 'dark', // Ensures the tooltip is visible
+                        y: {
+                            formatter: function (val) {
+                                return val.toFixed(2) + " points";
+                            }
+                        }
+                    },
+                    stroke: {
+                        width: 2 // Increases line thickness to improve interaction
+                    },
+                    fill: {
+                        opacity: 0.2 // Ensures data is visible while keeping tooltip accessible
+                    },
+                    markers: {
+                        size: 5, // Makes data points larger for better hover detection
+                        hover: {
+                            size: 8 // Ensures tooltip appears when hovering over points
+                        }
+                    }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
+                chart.render();
+            }
+            
+            //Piechart Gender
+            var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
+            if(chartPieBasicColors){
+                var options = {
+                    series: [
+                        <?php echo e($participantDetails['genderWise']['male']); ?>,
+                        <?php echo e($participantDetails['genderWise']['female']); ?>
+
+                    ],
+                    chart: {
+                        height: 192,
+                        type: 'pie',
+                    },
+                    labels: ['Male', 'Female'],
+                    legend: {
+                        position: 'right'
+                    },
+                    dataLabels: {
+                        dropShadow: {
+                            enabled: false,
+                        }
+                    },
+                    colors: chartPieBasicColors
+                };
+
+                var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
+                chart.render();
+            }
+
+            //Piechart Age
+            var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
+            if(chartPieBasicColors2){
+            var options = {
+                series: [
+                    <?php echo e($participantDetails['ageWise']['18 to 24']); ?>, 
+                    <?php echo e($participantDetails['ageWise']['25 to 44']); ?>, 
+                    <?php echo e($participantDetails['ageWise']['45 to 64']); ?>, 
+                    <?php echo e($participantDetails['ageWise']['65 or over']); ?>
+
+                ],
+                chart: {
+                    height: 192,
+                    type: 'pie',
+                },
+                labels: ['18 to 24 years', '25 to 44 years', '45 to 64 years', '65 or over'],
+                legend: {
+                    position: 'right'
+                },
+                dataLabels: {
+                    dropShadow: {
+                        enabled: false,
+                    }
+                },
+                colors: chartPieBasicColors2
+            };
+
+            var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
+            chart2.render();
+            }
+
+            //Chart Js Code End
             
         });
     </script>

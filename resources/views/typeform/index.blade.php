@@ -1123,16 +1123,16 @@
             if(chartPieBasicColors2){
             var options = {
                 series: [
-                    {{$participantDetails['ageWise']['Less than 18']}}, 
-                    {{$participantDetails['ageWise']['18 to 25']}}, 
-                    {{$participantDetails['ageWise']['26 to 40']}}, 
-                    {{$participantDetails['ageWise']['41 to 60']}}
+                    {{$participantDetails['ageWise']['18 to 24']}}, 
+                    {{$participantDetails['ageWise']['25 to 44']}}, 
+                    {{$participantDetails['ageWise']['45 to 64']}}, 
+                    {{$participantDetails['ageWise']['65 or over']}}
                 ],
                 chart: {
                     height: 192,
                     type: 'pie',
                 },
-                labels: ['>18 years', '18-24 years', '25-40 years', '40 years Over'],
+                labels: ['18 to 24 years', '25 to 44 years', '45 to 64 years', '65 or over'],
                 legend: {
                     position: 'right'
                 },

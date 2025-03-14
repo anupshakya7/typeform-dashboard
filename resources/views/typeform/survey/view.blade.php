@@ -48,6 +48,10 @@
                                 <td>{{$answer->event_id}}</td>
                             </tr>
                             <tr>
+                                <th>Form Id</th>
+                                <td>{{$answer->form_id}}</td>
+                            </tr>
+                            <tr>
                                 <th>Form</th>
                                 <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
                             </tr>
