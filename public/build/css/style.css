@@ -194,6 +194,7 @@ table th, table td {
 }
 
 
+
 .aside-tag {
     padding: 0.5rem 1.5rem;
     font-size: 9px;
@@ -313,10 +314,13 @@ table th, table td {
     background-color: #F4F4F4;
 }
 
-<<<<<<< HEAD
 .select2-container--default .select2-selection--single {
     height: 38px;
-    width: 200px !important;
+    /* width: 150px !important; */
+}
+.dashboard .select2-container--default .select2-selection--single {
+    height: 38px;
+    width: 150px !important;
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 36px !important;
@@ -345,8 +349,6 @@ table th, table td {
 .pillar-text {
     color: #4b73bf;
 }
-=======
-.top-26{
-    top:26px !important;
+#password-addon {
+    top: 27px !important;
 }
->>>>>>> master

@@ -60,7 +60,7 @@
 
                     </div>
                     <form action="<?php echo e(route('survey.index')); ?>" method="GET" id="survey_search">
-                        <div class="row">
+                        <div class="row dashboard g-3">
                             <div class="col-auto d-flex justify-content-sm-end">
                                 <div class="search-box"> <input type="text" class="form-control" id="searchProductList" name="search_participant" value="<?php echo e(request('search_participant')); ?>" onkeyup="debounceSeach()"
                                         placeholder="Search Participants"> <i class="ri-search-line search-icon"></i> </div>
@@ -146,9 +146,12 @@
                                             <li><a href="<?php echo e(route('survey.show',$answer)); ?>" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
+                                            <?php if($answer->form): ?>
                                             <li><a href="<?php echo e(route('survey.qa',$answer)); ?>" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> QA</a>
                                             </li>
+                                            <?php endif; ?>
+                                            
                                             <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                     Edit</a></li>

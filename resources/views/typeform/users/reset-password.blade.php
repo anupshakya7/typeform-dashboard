@@ -42,7 +42,7 @@
                             <div class="position-relative auth-pass-inputgroup mb-3">
                                 <label for="current_password" class="form-label">Current Password<span class="text-danger">*</span></label>
                                 <input type="password" class="form-control password-input pe-5 @error('current_password') is-invalid @enderror" name="current_password" placeholder="Enter Current Password" id="password-input">
-                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                <button class="btn btn-link position-absolute end-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                 @error('current_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -61,7 +61,7 @@
                             <div class="position-relative auth-pass-inputgroup mb-3">
                                 <label for="password" class="form-label">New Password<span class="text-danger">*</span></label>
                                 <input type="password" class="form-control password-input pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Enter New Password" id="password-input">
-                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                <button class="btn btn-link position-absolute end-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -80,7 +80,7 @@
                             <div class="position-relative auth-pass-inputgroup mb-3">
                                 <label for="password_confirmation" class="form-label">New Confirm Password<span class="text-danger">*</span></label>
                                 <input type="password" class="form-control password-input pe-5 @error('password_confirmation') is-invalid @enderror" name="password_confirmation" placeholder="Enter New Confirmation Password" id="password-input">
-                                <button class="btn btn-link position-absolute end-0 top-26 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                <button class="btn btn-link position-absolute end-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                 @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
