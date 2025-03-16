@@ -361,7 +361,12 @@ $(document).ready(function() {
                     $('#branch').html('');
                     $('#branch').append('<option value="" selected>Choose Branch</option>');
 
-                    var selectedItem = @json($form->branches->id);
+                    @php
+                        $selectedBranchId = $form->branches !== null ? json_encode($form->branches->id) : 'null';
+                    @endphp
+
+                    
+                    var selectedItem = {!! $selectedBranchId !!};
                     response.branches.forEach(function(branch) {
                         // $('#organization').append(new Option(organization.name, organization.id));
                         var option = new Option(branch.name,branch.id);
