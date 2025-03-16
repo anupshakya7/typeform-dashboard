@@ -54,6 +54,12 @@
                                 <a href="{{route('user.index')}}" class="nav-link">User</a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('role.index')}}" class="nav-link">Role</a>
+                            </li>
+                            {{-- <li class="nav-item">
+                                <a href="{{route('permission.index')}}" class="nav-link">Permission</a>
+                            </li> --}}
+                            <li class="nav-item">
                                 <a href="{{route('user.password-change')}}" class="nav-link">Reset Password</a>
                             </li>
                         </ul>

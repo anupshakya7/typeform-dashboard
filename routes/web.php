@@ -5,6 +5,7 @@ use App\Http\Controllers\Typeform\BranchController;
 use App\Http\Controllers\Typeform\FormController;
 use App\Http\Controllers\Typeform\IndexController;
 use App\Http\Controllers\Typeform\OrganizationController;
+use App\Http\Controllers\Typeform\RoleController;
 use App\Http\Controllers\Typeform\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,9 @@ Route::middleware('check_auth')->group(function(){
     Route::prefix('typeform')->group(function(){
         //User
         Route::resource('user',UserController::class);
+
+        //Roles
+        Route::resource('role',RoleController::class);
         
         //Reset Password
         Route::get('change-password',[UserController::class,'changePassword'])->name('user.password-change');
