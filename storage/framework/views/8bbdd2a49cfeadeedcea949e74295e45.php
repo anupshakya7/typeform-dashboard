@@ -1253,7 +1253,6 @@ $(document).ready(function() {
          salesForecastChart3.render();
      }
 
-   
     //Pillars Result Radar Chart
     var chartRadarMultiColors = getChartColorsArray("multi_radar");
     if (chartRadarMultiColors) {

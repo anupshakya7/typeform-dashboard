@@ -537,7 +537,7 @@
 
                 <!--table section starts here -->
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
@@ -681,7 +681,7 @@
                             </div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
-                </div>
+                </div> --}}
                 <!-- end col -->
             </div>
             <!--end row-->
