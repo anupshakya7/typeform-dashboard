@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Typeform;
 
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(10);
+        $roles = Role::with('permissions')->paginate(10);
         $roles = PaginationHelper::addSerialNo($roles);
         return view('typeform.roles.index',compact('roles'));
     }
@@ -32,9 +33,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-       $validatedData = $request->validate([
-        'name'=>'required|string'
-       ]);
+        $validatedData = $request->validate([
+            'name'=>'required|string'
+        ]);
 
         $role = Role::create($validatedData);
 
@@ -97,6 +98,26 @@ class RoleController extends Controller
             return redirect()->route('role.index')->with('success','Deleted Role Successfully!!!');
         }else{
             return redirect()->back()->with('error','Failed to Delete Role');
+        }
+    }
+
+    public function assignPermission(Role $role){
+        $role->load('permissions');
+        $permissions = Permission::all();
+        return view('typeform.roles.assignPermission',compact('role','permissions'));
+    }
+
+    public function assignPermissionSubmit(Request $request,Role $role){
+        $validatedData = $request->validate([
+            'permission' =>  'required|array'
+        ]);
+
+        $assignPermission = $role->permissions()->sync($validatedData['permission']);
+
+        if($assignPermission){
+            return redirect()->route('role.index')->with('success','Assign Permission Successfully!!!');
+        }else{
+            return redirect()->back()->with('error','Failed to Assign Permission');
         }
     }
 }

@@ -57,4 +57,20 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class,'role_id');
     }
+
+    public function hasPermissionToRoute($route){
+        if($this->role == 'iep'){
+            return true;
+        }
+
+        $permissions = $this->role->permissions;
+
+        foreach($permissions as $permission){
+            if($permission->routes->contains('router',$route)){
+                return true;
+            }   
+        }
+
+        return false;
+    }
 }

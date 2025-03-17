@@ -22,7 +22,7 @@
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">Role Management</h4>
+            <h4 class="fs-16 mb-1">Permission Management</h4>
         </div>
     </div>
 
@@ -33,9 +33,9 @@
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
-                    <a href="{{ route('role.create') }}" class="btn btn-info add-btn"><i
+                    <a href="{{ route('permission.create') }}" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
-                        Role</a>
+                        Permission</a>
                 </div>
             </div>
             <div class="flex-shrink-0">
@@ -57,34 +57,34 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Role Lists</h5>
+                    <h5 class="card-title mb-0">Permission Lists</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center" style="width:100%">
+                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered " style="width:100%">
                             <thead class="table-head">
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Name</th>
-                                    <th>Permissions</th>
+                                    <th>Route</th>
                                     <th>Authorize</th>
                                     <th>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($roles as $key => $role)
+                                @foreach ($permissions as $key => $permission)
                                     <tr>
-                                        <td>{{ $role->serial_no }}</td>
-                                        <td>{{ $role->name }}</td>
+                                        <td>{{ $permission->serial_no }}</td>
+                                        <td>{{ $permission->name }}</td>
                                         <td>
-                                            @foreach($role->permissions as $permission)
-                                                <span class="btn btn-sm btn-primary">{{ $permission->name }}</span>
+                                            @foreach($permission->routes as $route)
+                                                <span class="btn btn-sm btn-primary">{{$route->route}}</span>
                                             @endforeach
                                         </td>
-                                        <td><a href="{{ route('role.assignPermission',$role) }}"
+                                        <td><a href="{{ route('permission.assignRoute',$permission) }}"
                                             class="btn btn-danger"></i>
-                                            Assign Permission</a></td>
+                                            Assign Route</a></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -92,26 +92,24 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="{{ route('role.show', $role) }}"
+                                                    <li><a href="{{ route('permission.show', $permission) }}"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <li><a href="{{route('role.edit',$role)}}" class="dropdown-item edit-item-btn"><i
+                                                    <li><a href="{{route('permission.edit',$permission)}}" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    @if($role->name !== 'iep')
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
-                                                            data-item-id="{{ $role->id }}"
-                                                            data-item-name="{{ $role->name }}" data-bs-toggle="modal"
+                                                            data-item-id="{{ $permission->id }}"
+                                                            data-item-name="{{ $permission->name }}" data-bs-toggle="modal"
                                                             data-bs-target="#zoomInModal">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                             Delete
                                                         </button>
                                                     </li>
-                                                    @endif
                                                 </ul>
                                             </div>
                                         </td>
@@ -121,7 +119,7 @@
                         </table>
                     </div>
                     <!--tfooter section-->
-                    @include('typeform.partials.pagination', ['paginator' => $roles])
+                    @include('typeform.partials.pagination', ['paginator' => $permissions])
                 </div>
             </div>
         </div>

@@ -5,19 +5,19 @@
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
+                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
+                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
+                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('build/images/logo.png') }}" alt="">
+                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -34,15 +34,15 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                {{-- Dashboard --}}
+                
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('home.index')}}">
-                    <i class="fa-solid fa-gauge"></i> <span>@lang('translation.dashboards')</span>
+                    <a class="nav-link menu-link" href="<?php echo e(route('home.index')); ?>">
+                    <i class="fa-solid fa-gauge"></i> <span><?php echo app('translator')->get('translation.dashboards'); ?></span>
                     </a>
                 </li>
-                {{-- Dashboard --}}
+                
 
-                {{-- User Management --}}
+                
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarUser">
@@ -51,55 +51,55 @@
                     <div class="collapse menu-dropdown" id="sidebarUser">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{route('user.index')}}" class="nav-link">User</a>
+                                <a href="<?php echo e(route('user.index')); ?>" class="nav-link">User</a>
                             </li>
-                            @if(auth()->user()->hasPermissionToRoute('role.index'))
+                            <?php if(auth()->user()->hasPermissionToRoute('role.index')): ?>
                             <li class="nav-item">
-                                <a href="{{route('role.index')}}" class="nav-link">Role</a>
+                                <a href="<?php echo e(route('role.index')); ?>" class="nav-link">Role</a>
                             </li>
-                            @endif
+                            <?php endif; ?>
                             <li class="nav-item">
-                                <a href="{{route('permission.index')}}" class="nav-link">Permission</a>
+                                <a href="<?php echo e(route('permission.index')); ?>" class="nav-link">Permission</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('user.password-change')}}" class="nav-link">Reset Password</a>
+                                <a href="<?php echo e(route('user.password-change')); ?>" class="nav-link">Reset Password</a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                {{-- User Management --}}
+                
 
-                {{-- Organization Management --}}
+                
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('organization.index')}}">
+                    <a class="nav-link menu-link" href="<?php echo e(route('organization.index')); ?>">
                     <i class="fa-solid fa-building-columns"></i> <span>Organization</span>
                     </a>
                 </li>
-                {{-- Organization Management --}}
+                
 
-                {{-- Branch Management --}}
+                
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('branch.index')}}">
+                    <a class="nav-link menu-link" href="<?php echo e(route('branch.index')); ?>">
                     <i class="fa-solid fa-landmark-flag"></i> <span>Branch</span>
                     </a>
                 </li>
-                {{-- Branch Management --}}
+                
 
-                {{-- Form Management --}}
+                
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('form.index')}}">
+                    <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
                     <i class="fa-solid fa-file"></i> <span>Form Management</span>
                     </a>
                 </li>
-                {{-- Form Management --}}
+                
 
-                 {{-- Answer Management --}}
+                 
                  <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('survey.index')}}">
+                    <a class="nav-link menu-link" href="<?php echo e(route('survey.index')); ?>">
                     <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
                     </a>
                 </li>
-                {{-- Survey Management --}}
+                
 
                
 
@@ -111,4 +111,4 @@
 </div>
 <!-- Left Sidebar End -->
 <!-- Vertical Overlay-->
-<div class="vertical-overlay"></div>
+<div class="vertical-overlay"></div><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/partials/sidebar.blade.php ENDPATH**/ ?>

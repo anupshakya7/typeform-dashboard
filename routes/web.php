@@ -6,6 +6,7 @@ use App\Http\Controllers\Typeform\BranchController;
 use App\Http\Controllers\Typeform\FormController;
 use App\Http\Controllers\Typeform\IndexController;
 use App\Http\Controllers\Typeform\OrganizationController;
+use App\Http\Controllers\Typeform\PermissionController;
 use App\Http\Controllers\Typeform\RoleController;
 use App\Http\Controllers\Typeform\UserController;
 use Illuminate\Support\Facades\Route;
@@ -51,8 +52,16 @@ Route::middleware('check_auth')->group(function(){
         //Roles
         Route::resource('role',RoleController::class);
 
+        //Assign Permission to Role
+        Route::get('role/{role}/assign-permission',[RoleController::class,'assignPermission'])->name('role.assignPermission');
+        Route::post('role/{role}/assign-permission',[RoleController::class,'assignPermissionSubmit'])->name('role.assignPermission.submit');
+
         //Permissions
-        // Route::resource('permission',PermissionController::class);
+        Route::resource('permission',PermissionController::class);
+
+        //Assign Route to Permission
+        Route::get('permission/{permission}/assign-route',[PermissionController::class,'assignRoute'])->name('permission.assignRoute');
+        Route::post('permission/{permission}/assign-route',[PermissionController::class,'assignRouteSubmit'])->name('permission.assignRoute.submit');
         
         //Reset Password
         Route::get('change-password',[UserController::class,'changePassword'])->name('user.password-change');
