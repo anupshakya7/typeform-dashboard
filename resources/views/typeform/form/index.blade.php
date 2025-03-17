@@ -115,6 +115,7 @@
                                 <th>Before Survey</th>
                                 <th>During Survey</th>
                                 <th>After Survey</th>
+                                <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -132,6 +133,7 @@
                                 <td>{{$form->before}} </td>
                                 <td>{{$form->during}}</td>
                                 <td>{{$form->after}}</td>
+                                <td>{{Carbon\Carbon::parse($form->created_at)->format('d M, Y')}}</td>
                                 <td>
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

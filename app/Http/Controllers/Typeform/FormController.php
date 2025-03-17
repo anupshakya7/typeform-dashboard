@@ -36,7 +36,7 @@ class FormController extends Controller
             $formsQuery->where('organization_id',$request->organization);
         }
 
-        $forms = $formsQuery->paginate(10);
+        $forms = $formsQuery->latest()->paginate(10);
         
         $forms = PaginationHelper::addSerialNo($forms);
 

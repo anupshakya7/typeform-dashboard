@@ -106,6 +106,7 @@
                                 <th>Before Survey</th>
                                 <th>During Survey</th>
                                 <th>After Survey</th>
+                                <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -124,6 +125,7 @@
                                 <td><?php echo e($form->before); ?> </td>
                                 <td><?php echo e($form->during); ?></td>
                                 <td><?php echo e($form->after); ?></td>
+                                <td><?php echo e(Carbon\Carbon::parse($form->created_at)->format('d M, Y')); ?></td>
                                 <td>
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

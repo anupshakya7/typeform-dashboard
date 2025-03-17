@@ -53,9 +53,7 @@
                             <li class="nav-item">
                                 <a href="<?php echo e(route('user.index')); ?>" class="nav-link">User</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="<?php echo e(route('role.index')); ?>" class="nav-link">Role</a>
-                            </li>
+                            
                             
                             <li class="nav-item">
                                 <a href="<?php echo e(route('user.password-change')); ?>" class="nav-link">Reset Password</a>
