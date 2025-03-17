@@ -44,8 +44,15 @@ Route::middleware('check_auth')->group(function(){
         //User
         Route::resource('user',UserController::class);
 
+        //Assign Role to User
+        Route::get('user/{user}/assign-role',[UserController::class,'assignRole'])->name('user.assignRole');
+        Route::post('user/{user}/assign-role',[UserController::class,'assignRoleSubmit'])->name('user.assignRole.submit');
+
         //Roles
         Route::resource('role',RoleController::class);
+
+        //Permissions
+        // Route::resource('permission',PermissionController::class);
         
         //Reset Password
         Route::get('change-password',[UserController::class,'changePassword'])->name('user.password-change');

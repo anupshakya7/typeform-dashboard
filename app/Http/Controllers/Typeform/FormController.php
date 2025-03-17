@@ -295,8 +295,8 @@ class FormController extends Controller
             'organization' => 'required|integer',
             'branch' => 'nullable|integer',
             'beforedate' => 'required|string',
-            'duringdate' => 'required|string',
-            'afterdate' => 'required|string',
+            'duringdate' => 'nullable|string',
+            'afterdate' => 'nullable|string',
         ]);
         
         DB::transaction(function() use($validatedData,$form){
@@ -304,10 +304,14 @@ class FormController extends Controller
                 //Formatting Date
                 $beforedate_start = $this->reformatDate(explode(' to ',$validatedData['beforedate'])[0]);
                 $beforedate_end = $this->reformatDate(explode(' to ',$validatedData['beforedate'])[1]);
-                $duringdate_start = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[0]);
-                $duringdate_end = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[1]);
-                $enddate_start = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[0]);
-                $enddate_end = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[1]);
+                if($validatedData['duringdate']){
+                    $duringdate_start = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[0]);
+                    $duringdate_end = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[1]);
+                }
+                if($validatedData['afterdate']){
+                    $enddate_start = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[0]);
+                    $enddate_end = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[1]); 
+                }
 
                 if(isset($validatedData['branch'])){
                     $branch_id =$validatedData['branch'];
@@ -326,8 +330,8 @@ class FormController extends Controller
                     'branch_id' => $branch_id,
                     'branch_level'=>$branchLevel,
                     'before' => $beforedate_start.' to '.$beforedate_end,
-                    'during' => $duringdate_start.' to '.$duringdate_end,
-                    'after' => $enddate_start.' to '.$enddate_end,
+                    'during' => $validatedData['duringdate'] !== null ? $duringdate_start.' to '.$duringdate_end : null,
+                    'after' => $validatedData['afterdate'] !== null ? $enddate_start.' to '.$enddate_end : null
                 ];
 
                 $form->update($formData);

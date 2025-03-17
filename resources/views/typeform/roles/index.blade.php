@@ -33,7 +33,7 @@
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
-                    <a href="{{ route('user.create') }}" class="btn btn-info add-btn"><i
+                    <a href="{{ route('role.create') }}" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
                         Role</a>
                 </div>
@@ -73,14 +73,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $key => $user)
+                                @foreach ($roles as $key => $role)
                                     <tr>
-                                        <td>{{ $user->serial_no }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ optional($user->organization)->name }}</td>
-                                        <td>{{ optional($user->role)->name }}</td>
+                                        <td>{{ $role->serial_no }}</td>
+                                        <td>{{ $role->name }}</td>
+                                        <td></td>
                                         <td><a href="#"
-                                            class="dropdown-item"></i>
+                                            class="btn btn-danger"></i>
                                             Permission</a></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
@@ -89,20 +88,20 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="{{ route('user.show', $user) }}"
+                                                    <li><a href="{{ route('role.show', $role) }}"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <li><a href="{{route('user.edit',$user)}}" class="dropdown-item edit-item-btn"><i
+                                                    <li><a href="{{route('role.edit',$role)}}" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    @if($user->role->name !== 'iep')
+                                                    @if($role->name !== 'iep')
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
-                                                            data-item-id="{{ $user->id }}"
-                                                            data-item-name="{{ $user->name }}" data-bs-toggle="modal"
+                                                            data-item-id="{{ $role->id }}"
+                                                            data-item-name="{{ $role->name }}" data-bs-toggle="modal"
                                                             data-bs-target="#zoomInModal">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                             Delete
@@ -118,7 +117,7 @@
                         </table>
                     </div>
                     <!--tfooter section-->
-                    @include('typeform.partials.pagination', ['paginator' => $users])
+                    @include('typeform.partials.pagination', ['paginator' => $roles])
                 </div>
             </div>
         </div>

@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Role Details</h4>
-        <p class="text-muted mb-0">View role details.</p>
+        <h4 class="fs-16 mb-1">User Details</h4>
+        <p class="text-muted mb-0">View user details, including organization and role.</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Role</h5>
+                <h5 class="card-title mb-0">User</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -41,33 +41,52 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{$role->id}}</td>
+                                <td>{{$user->id}}</td>
                             </tr>
                             <tr>
                                 <th>Name</th>
-                                <td>{{$role->name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Permissions</th>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>Created At</th>
-                                <td>{{Carbon\Carbon::parse($role->created_at)->format('d M, Y')}}</td>
+                                <td>{{$user->name}}</td>
                             </tr>
                         </tbody>
                     </table>
                     
 
                 </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Assign User Role</h5>
+            </div>
 
-                <nav class="mb-3">
-                    <div class="nav nav-tabs">
-
-                    </div>
-                </nav>
-                <div class="tab-content">
-
+            <div class="card-body">
+                <div class="tab-content mt-4">
+                    <form action="{{route('user.assignRole.submit',$user)}}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">Role<span class="text-danger">*</span></label>
+                                    <select id="role" name="role" class="form-select" data-choices
+                                        data-choices-sorting="true">
+                                        <option selected>Choose Role</option>
+                                        @foreach($roles as $role)
+                                        <option value="{{$role->id}}" {{$role->id == $user->role_id ? 'selected':''}}>{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
+                                        <span class="text-danger ms-1">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <div></div>
+                                <button type="submit" class="btn btn-info">
+                                       Assign Role
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -93,19 +112,4 @@
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-function getImagePreview(event, divId) {
-    var image = URL.createObjectURL(event.target.files[0]);
-    var imageDiv = document.getElementById(divId);
-
-    imageDiv.innerHTML = '';
-
-    var imageTag = document.createElement('img');
-    imageTag.src = image;
-    imageTag.width = "150";
-    imageTag.style.padding = "5px";
-    imageDiv.appendChild(imageTag);
-}
-</script>
 @endsection

@@ -1,9 +1,8 @@
-@extends('typeform.layout.web')
-@section('title')
-    @lang('translation.crm')
-@endsection
-@section('css')
-    <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.crm'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet">
     <!--datatable css-->
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
     <!--datatable responsive css-->
@@ -16,8 +15,8 @@
 
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <!--greeting section -->
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
@@ -33,7 +32,7 @@
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
-                    <a href="{{ route('user.create') }}" class="btn btn-info add-btn"><i
+                    <a href="<?php echo e(route('user.create')); ?>" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
                         User</a>
                 </div>
@@ -44,7 +43,7 @@
                     <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
                         data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                         aria-controls="theme-settings-offcanvas">
-                        <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
                     </a>
                 </div>
             </div>
@@ -75,14 +74,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $key => $user)
+                                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{ $user->serial_no }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ optional($user->organization)->name }}</td>
-                                        <td><span class="btn btn-sm btn-danger">{{ optional($user->role)->name }}</span></td>
-                                        <td><a href="{{route('user.assignRole',$user)}}"
+                                        <td><?php echo e($user->serial_no); ?></td>
+                                        <td><?php echo e($user->name); ?></td>
+                                        <td><?php echo e($user->email); ?></td>
+                                        <td><?php echo e(optional($user->organization)->name); ?></td>
+                                        <td><span class="btn btn-sm btn-danger"><?php echo e(optional($user->role)->name); ?></span></td>
+                                        <td><a href="<?php echo e(route('user.assignRole',$user)); ?>"
                                             class="btn btn-info"></i>
                                             Role</a></td>
                                         <td>
@@ -92,36 +91,36 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="{{ route('user.show', $user) }}"
+                                                    <li><a href="<?php echo e(route('user.show', $user)); ?>"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <li><a href="{{route('user.edit',$user)}}" class="dropdown-item edit-item-btn"><i
+                                                    <li><a href="<?php echo e(route('user.edit',$user)); ?>" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    @if($user->role->name !== 'iep')
+                                                    <?php if($user->role->name !== 'iep'): ?>
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
-                                                            data-item-id="{{ $user->id }}"
-                                                            data-item-name="{{ $user->name }}" data-bs-toggle="modal"
+                                                            data-item-id="<?php echo e($user->id); ?>"
+                                                            data-item-name="<?php echo e($user->name); ?>" data-bs-toggle="modal"
                                                             data-bs-target="#zoomInModal">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                             Delete
                                                         </button>
                                                     </li>
-                                                    @endif
+                                                    <?php endif; ?>
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
                     <!--tfooter section-->
-                    @include('typeform.partials.pagination', ['paginator' => $users])
+                    <?php echo $__env->make('typeform.partials.pagination', ['paginator' => $users], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
             </div>
         </div>
@@ -138,24 +137,24 @@
     <!--form section ends here-->
 
     <!-- Modal Blur -->
-    @include('typeform.partials.deleteModal')
+    <?php echo $__env->make('typeform.partials.deleteModal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <!-- list.js min js -->
-    <script src="{{ URL::asset('build/libs/list.js/list.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/list.js/list.min.js')); ?>"></script>
 
     <!--list pagination js-->
-    <script src="{{ URL::asset('build/libs/list.pagination.js/list.pagination.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/list.pagination.js/list.pagination.min.js')); ?>"></script>
 
     <!-- ecommerce-order init js -->
-    <script src="{{ URL::asset('build/js/pages/job-application.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/job-application.init.js')); ?>"></script>
 
     <!-- Sweet Alerts js -->
-    <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
     <!-- App js -->
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
 
 
@@ -170,7 +169,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-    <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
 
     <script>
         document.querySelectorAll('.remove-item-btn').forEach(button => {
@@ -194,4 +193,6 @@
             })
         })
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/users/index.blade.php ENDPATH**/ ?>
