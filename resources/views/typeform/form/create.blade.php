@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="form_id" class="form-label">Form Id</label>
+                            <label for="form_id" class="form-label">Form Id<span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Form Id" id="form_id">
                                 <button type="submit" id="syncFormBtn" class="btn btn-blue"><i
@@ -102,7 +102,7 @@
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization</label>
                             <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true" disabled>
+                                data-choices-sorting="true">
                                 <option value="" selected>Choose Organization</option>
                                 @foreach($organizations as $organization)
                                 <option value="{{$organization->id}}">{{$organization->name}}</option>
@@ -274,38 +274,38 @@ $(document).ready(function() {
     })
 
      //Filter Organizations
-    $('#country').change(function() {
-        var countryVal = $('#country').val();
+    // $('#country').change(function() {
+    //     var countryVal = $('#country').val();
 
-        if (countryVal !== '') {
-            $.ajax({
-                url: "{{route('organization.get')}}",
-                method: 'GET',
-                data: {
-                    country: countryVal
-                },
-                success: function(response) {
-                    console.log(response);
-                    $('#organization').prop('disabled', false);
-                    $('#organization').html('');
-                    $('#organization').append('<option value="" selected>Choose Organization</option>');
-                    response.organizations.forEach(function(organization) {
-                        $('#organization').append(new Option(organization.name, organization.id));
-                    })
-                },
-                error: function(xhr, status, error) {
-                    $('#organization').prop('disabled', true);
-                    $('#organization').html('');
-                    $('#organization').append('<option value="" selected>Choose Organization</option>');
-                }
-            })
-        }
-    });
+    //     if (countryVal !== '') {
+    //         $.ajax({
+    //             url: "{{route('organization.get')}}",
+    //             method: 'GET',
+    //             data: {
+    //                 country: countryVal
+    //             },
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('#organization').prop('disabled', false);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option value="" selected>Choose Organization</option>');
+    //                 response.organizations.forEach(function(organization) {
+    //                     $('#organization').append(new Option(organization.name, organization.id));
+    //                 })
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 $('#organization').prop('disabled', true);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option value="" selected>Choose Organization</option>');
+    //             }
+    //         })
+    //     }
+    // });
 
     //Filter Branches
     $('#organization,#setBranch').change(function() {
         var organizationVal = $('#organization').val();
-        console.log(organizationVal);
+        
         if (organizationVal !== '') {
            $('#setBranchDiv').css('display','block');
 

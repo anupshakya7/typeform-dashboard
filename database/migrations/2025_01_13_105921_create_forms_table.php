@@ -22,8 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->integer('branch_level')->default(0)->comment('0 => Main Branch, 1 = Sub Branch');
             $table->string('before');
-            $table->string('during');
-            $table->string('after');
+            $table->string('during')->nullable();
+            $table->string('after')->nullable();
             $table->timestamps();
 
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');

@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
+                            <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" data-choices
                                 data-choices-sorting="true">

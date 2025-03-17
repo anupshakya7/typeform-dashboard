@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Typeform\AnswerController;
+use App\Http\Controllers\Typeform\Auth\LoginController;
 use App\Http\Controllers\Typeform\BranchController;
 use App\Http\Controllers\Typeform\FormController;
 use App\Http\Controllers\Typeform\IndexController;
@@ -31,6 +32,10 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
+
+//Custom Auth
+Route::post('/loginSubmit',[LoginController::class,'login'])->name('login.submit');
 
 Route::middleware('check_auth')->group(function(){
     Route::get('/',[IndexController::class,'index'])->name('home.index');

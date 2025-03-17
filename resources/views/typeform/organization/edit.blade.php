@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control" value="{{old('name',$organization->name)}}" placeholder="Name" id="name">
                             @error('name')
                                 <span class="text-danger ms-1">{{$message}}</span>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
+                            <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
                             <select id="country" name="country" class="form-select select2" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Country</option>
