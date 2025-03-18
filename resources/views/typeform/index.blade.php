@@ -12,68 +12,9 @@
 
             <!--greeting section -->
 
-            <div class="mb-3 pb-1 d-block d-sm-flex align-items-center flex-row gap-3">
+            <div class="mb-3 pb-1">
                 <div>
-                    <h4 class="fs-16 mb-1">Welcome back, {{auth()->user()->name}}</h4>
-                    <p class="text-muted mb-0">Get insights, track trends, compare data, manage.</p>
-                </div>
-                <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
-                    <form action="{{route('home.index')}}" method="GET">
-                        <div class="row gap-3 m-0 p-0 dashboard">
-
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" name="country" id="country"
-                                    aria-label="Default select example" onchange="this.form.submit()">
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country['name'] }}"
-                                        {{ request('country') == $country['name'] ? 'selected' : '' }}>
-                                        {{ $country['name'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-
-                                <select class="form-select select2" id="organization" name="organization"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Organization</option>
-                                    @foreach ($organizations as $organization)
-                                    <option value="{{ $organization->id }}"
-                                        {{ request('organization') == $organization->id ? 'selected' : '' }}>
-                                        {{ $organization->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" id="branch" name="branch"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Branch</option>
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" name="survey" id="survey"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Survey</option>
-                                    {{-- @foreach ($surveyForms as $surveyForm)
-                                            <option value="{{ $surveyForm->form_title }}"
-                                    {{ request('survey_form') == $surveyForm->form_title ? 'selected' : '' }}>
-                                    {{ $surveyForm->form_title }}</option>
-                                    @endforeach --}}
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
-
-                                </a>
-
-                            </div>
-                        </div>
-                    </form>
-
+                    <h4 class="mb-1">Welcome back, {{auth()->user()->name}}</h4>
                 </div>
 
 
@@ -207,6 +148,71 @@
 
             <!--greeting section ends here -->
 
+            <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
+            <div>
+            <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
+            </div>
+
+                <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
+                    <form action="{{route('home.index')}}" method="GET">
+                        <div class="row gap-3 m-0 p-0 dashboard">
+
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" name="country" id="country"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country['name'] }}"
+                                        {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                        {{ $country['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+
+                                <select class="form-select select2" id="organization" name="organization"
+                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    <option value="" selected>Organization</option>
+                                    @foreach ($organizations as $organization)
+                                    <option value="{{ $organization->id }}"
+                                        {{ request('organization') == $organization->id ? 'selected' : '' }}>
+                                        {{ $organization->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" id="branch" name="branch"
+                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    <option value="" selected>Branch</option>
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" name="survey" id="survey"
+                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    <option value="" selected>Survey</option>
+                                    {{-- @foreach ($surveyForms as $surveyForm)
+                                            <option value="{{ $surveyForm->form_title }}"
+                                    {{ request('survey_form') == $surveyForm->form_title ? 'selected' : '' }}>
+                                    {{ $surveyForm->form_title }}</option>
+                                    @endforeach --}}
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
+
+                                </a>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
 
             <!--bar graph section starts here-->
 
@@ -302,8 +308,7 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                            <div id="simple_pie_chart"
-                                data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
+                            <div id="simple_pie_chart" data-colors='["--vz-primary", "--vz-success"]'
                                 class="apex-charts" dir="ltr"></div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
@@ -337,7 +342,7 @@
 
                         <div class="card-body">
                             <div id="simple_pie_chart2"
-                                data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
+                                data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger"]'
                                 class="apex-charts" dir="ltr"></div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
@@ -492,33 +497,33 @@
                                             <thead class="table-light">
                                                 <tr>
 
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Mean</th>
-                                                    <th scope="col">Country Mean</th>
-                                                    <th scope="col">Global Mean</th>
+                                                    <th scope="col" class="text-center"></th>
+                                                    <th scope="col" class="text-center">Mean</th>
+                                                    <th scope="col" class="text-center">Country Mean</th>
+                                                    <th scope="col" class="text-center">Global Mean</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php
-                                                    $pillars = [
-                                                        'well_functioning_government'=>'Well-Functioning Government',
-                                                        'low_level_corruption'=>'Low Levels of Corruption',
-                                                        'equitable_distribution'=>'Equitable Distribution of Resources',
-                                                        'good_relations'=>'Good Relations with Neighbours',
-                                                        'free_flow'=>'Free Flow of Information',
-                                                        'high_levels'=>'High Levels of Human Capital',
-                                                        'sound_business'=>'Sound Business Environment',
-                                                        'acceptance_rights'=>'Acceptance of the Rights of Others'
-                                                    ]
+                                                $pillars = [
+                                                'well_functioning_government'=>'Well-Functioning Government',
+                                                'low_level_corruption'=>'Low Levels of Corruption',
+                                                'equitable_distribution'=>'Equitable Distribution of Resources',
+                                                'good_relations'=>'Good Relations with Neighbours',
+                                                'free_flow'=>'Free Flow of Information',
+                                                'high_levels'=>'High Levels of Human Capital',
+                                                'sound_business'=>'Sound Business Environment',
+                                                'acceptance_rights'=>'Acceptance of the Rights of Others'
+                                                ]
                                                 @endphp
                                                 @foreach($pillarMeanScore['mean'] as $key=>$pillar)
                                                 <tr>
                                                     <td><span class="fw-medium pillar-text">{{$pillars[$key]}}</span>
                                                     </td>
-                                                    <td>{{$pillar}}</td>
-                                                    <td>{{$pillarMeanScore['countryMean'][$key]}}</td>
-                                                    <td>{{$pillarMeanScore['globalMean'][$key]}}</td>
+                                                    <td class="text-center">{{$pillar}}</td>
+                                                    <td class="text-center">{{$pillarMeanScore['countryMean'][$key]}}</td>
+                                                    <td class="text-center">{{$pillarMeanScore['globalMean'][$key]}}</td>
                                                 </tr>
                                                 @endforeach
 
@@ -550,147 +555,139 @@
 
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+                </a>
+                <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div><!-- end card header -->
-
-                            <div class="card-body">
-                                <div class="live-preview">
-                                    <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap mb-0">
-                                            <thead class="table-light">
-                                                <tr>
-
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Before</th>
-                                                    <th scope="col">During</th>
-                                                    <th scope="col">% Change</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Well-Functioning
-                                                            Government</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%<img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                                alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Low Levels of
-                                                            Corruption</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                                            Resource</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-red">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Good Relations With
-                                                            Neighbours</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%<img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                                alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Free Flow Of
-                                                            Information</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
-                                                            Capital</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-red">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Sound Business
-                                                            Environment</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                                            Of
-                                                            Others</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-
-                                            </tbody>
-
-                                        </table>
-                                        <!-- end table -->
-                                    </div>
-                                    <!-- end table responsive -->
-                                </div>
-
-                            </div>
-                        </div><!-- end card-body -->
-                    </div><!-- end card -->
-                </div> --}}
-                <!-- end col -->
+                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                </a>
             </div>
-            <!--end row-->
+        </div>
+    </div><!-- end card header -->
+
+    <div class="card-body">
+        <div class="live-preview">
+            <div class="table-responsive">
+                <table class="table align-middle table-nowrap mb-0">
+                    <thead class="table-light">
+                        <tr>
+
+                            <th scope="col"></th>
+                            <th scope="col">Before</th>
+                            <th scope="col">During</th>
+                            <th scope="col">% Change</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">Well-Functioning
+                                    Government</span>
+                            </td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-blue">3.8%<img class="trend-icon"
+                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">Low Levels of
+                                    Corruption</span></td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+
+                        </tr>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                    Resource</span></td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-red">3.8%</span><img class="trend-icon"
+                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
+
+                        </tr>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">Good Relations With
+                                    Neighbours</span>
+                            </td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-blue">3.8%<img class="trend-icon"
+                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">Free Flow Of
+                                    Information</span></td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+
+                        </tr>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">High Levels Of Human
+                                    Capital</span>
+                            </td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-red">3.8%</span><img class="trend-icon"
+                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
+
+                        </tr>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">Sound Business
+                                    Environment</span>
+                            </td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+
+                        </tr>
+                        <tr>
+
+                            <td><span class="fw-medium pillar-text">Acceptance Of The Rights
+                                    Of
+                                    Others</span></td>
+                            <td>3.8</td>
+                            <td>3.8</td>
+                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+                <!-- end table -->
+            </div>
+            <!-- end table responsive -->
+        </div>
+
+    </div>
+</div><!-- end card-body -->
+</div><!-- end card -->
+</div> --}}
+<!-- end col -->
+</div>
+<!--end row-->
 
 
-            <!--table section starts here -->
-        </div> <!-- end .h-100-->
+<!--table section starts here -->
+</div> <!-- end .h-100-->
 
-    </div> <!-- end col -->
+</div> <!-- end col -->
 
 
 </div>
@@ -947,7 +944,10 @@ $(document).ready(function() {
                     height: 10,
                 }
             },
-            colors: areachartSalesColors
+            // colors: areachartSalesColors
+            colors: [
+                '#6097CF', '#8B939C', '#67D36E', '#D2D4D7', '#1B68B7', '#A0CFFF', '#E58F87', '#D4DE86'
+            ]
         };
         if (salesForecastChart != "")
             salesForecastChart.destroy();
@@ -961,8 +961,7 @@ $(document).ready(function() {
         var options = {
             series: [{
                 name: 'Mean',
-                data: 
-                ["{{$meanScore['well_functioning_government']}}",
+                data: ["{{$meanScore['well_functioning_government']}}",
                     "{{$meanScore['low_level_corruption']}}",
                     " {{$meanScore['equitable_distribution']}}",
                     "{{$meanScore['good_relations']}}",
@@ -979,7 +978,7 @@ $(document).ready(function() {
                     show: false
                 }
             },
-            colors: chartRadarBasicColors,
+            colors: ['#5DA3E1'],
             xaxis: {
                 categories: [
                     'Well-functioning Government',
@@ -994,13 +993,19 @@ $(document).ready(function() {
             },
             tooltip: {
                 enabled: true,
-                shared: false, // Set to false to ensure visibility
-                followCursor: true, // Follows the mouse for better positioning
-                theme: 'dark', // Ensures the tooltip is visible
-                y: {
-                    formatter: function(val) {
-                        return val.toFixed(2) + " points";
-                    }
+                shared: false,
+                followCursor: true,
+                theme: 'dark',
+                custom: function({
+                    series,
+                    seriesIndex,
+                    dataPointIndex,
+                    w
+                }) {
+                    let value = series[seriesIndex][dataPointIndex].toFixed(2);
+                    return `<div style="background:#222;padding:8px;border-radius:5px;color:white;">
+                            <strong style="color:#007bff;">${value} points</strong>
+                        </div>`;
                 }
             },
             stroke: {
@@ -1015,6 +1020,7 @@ $(document).ready(function() {
                     size: 8 // Ensures tooltip appears when hovering over points
                 }
             }
+
         };
 
         var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
@@ -1025,8 +1031,13 @@ $(document).ready(function() {
     var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
     if (chartPieBasicColors) {
         var options = {
-            series: ["{{$participantDetails['genderWise']['male']}}",
-                "{{$participantDetails['genderWise']['female']}}"
+            @php
+                $malePieChart = $participantDetails['genderWise']['male'];
+                $femalePieChart = $participantDetails['genderWise']['female'];
+               
+            @endphp
+            series: [{{$malePieChart }},
+                {{$femalePieChart }}
             ],
             chart: {
                 height: 192,
@@ -1048,16 +1059,22 @@ $(document).ready(function() {
         chart.render();
     }
 
+    
+
+
     //Piechart Age
     var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
-    if(chartPieBasicColors2){
+    if (chartPieBasicColors2) {
         var options = {
-            series: [
-                {{$participantDetails['ageWise']['18 to 24']}}, 
-                {{$participantDetails['ageWise']['25 to 44']}}, 
-                {{$participantDetails['ageWise']['45 to 64']}}, 
-                {{$participantDetails['ageWise']['65 or over']}}
-            ],
+            @php
+                $level_one = $participantDetails['ageWise']['18 to 24'];
+                $level_two = $participantDetails['ageWise']['25 to 44'];
+                $level_three = $participantDetails['ageWise']['45 to 64'];
+                $level_four = $participantDetails['ageWise']['65 or over'];
+                
+            @endphp
+            series: [{{$level_one }},{{$level_two }},{{$level_three}},{{$level_four}}],
+           
             chart: {
                 height: 192,
                 type: 'pie',
@@ -1078,101 +1095,103 @@ $(document).ready(function() {
         chart2.render();
     }
 
+    
+
     //Positive Peace Bar
     var areachartSalesColorst = "";
-     areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
-     if (areachartSalesColorst) {
-         var options = {
+    areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
+    if (areachartSalesColorst) {
+        var options = {
             series: [{
                 name: 'Mean',
-                data: ["{{$positivePeace['mean']}}"]
+                data: [{{$positivePeace['mean']}}]
             }, {
                 name: 'Country Mean',
-                data: ["{{$positivePeace['countryMean']}}"]
+                data: [{{$positivePeace['countryMean']}}]
             }, {
                 name: 'Global Mean',
-                data: ["{{$positivePeace['globalMean']}}"]
+                data: [{{$positivePeace['globalMean']}}]
             }],
-             chart: {
-                 type: 'bar',
-                 height: 341,
-                 toolbar: {
-                     show: false,
-                 },
-             },
-             plotOptions: {
-                 bar: {
-                     horizontal: false,
-                     columnWidth: '40%',
-                 },
-             },
-             stroke: {
-                 show: true,
-                 width: 5,
-                 colors: ['transparent']
-             },
-             xaxis: {
-                 categories: [''],
-                 axisTicks: {
-                     show: false,
-                     borderType: 'solid',
-                     color: '#78909C',
-                     height: 6,
-                     offsetX: 0,
-                     offsetY: 0
-                 },
-                 title: {
-                     offsetX: 0,
-                     offsetY: -30,
-                     style: {
-                         color: '#78909C',
-                         fontSize: '12px',
-                         fontWeight: 400,
-                     },
-                 },
-             },
-             yaxis: {
-                 labels: {
-                     formatter: function (value) {
-                         return value;
-                     }
-                 },
-                 tickAmount: 4,
-                 min: 0
-             },
-             fill: {
-                 opacity: 1
-             },
-             legend: {
-                 show: true,
-                 position: 'bottom',
-                 horizontalAlign: 'center',
-                 fontWeight: 500,
-                 offsetX: 0,
-                 offsetY: -14,
-                 itemMargin: {
-                     horizontal: 8,
-                     vertical: 0
-                 },
-                 markers: {
-                     width: 10,
-                     height: 10,
-                 }
-             },
-             colors: areachartSalesColorst
-         };
-         if (salesForecastChart2 != "")
-             salesForecastChart2.destroy();
-         salesForecastChart2 = new ApexCharts(document.querySelector("#sales-forecast-chart-2"), options);
-         salesForecastChart2.render();
-     }
+            chart: {
+                type: 'bar',
+                height: 341,
+                toolbar: {
+                    show: false,
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '40%',
+                },
+            },
+            stroke: {
+                show: true,
+                width: 5,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: [''],
+                axisTicks: {
+                    show: false,
+                    borderType: 'solid',
+                    color: '#78909C',
+                    height: 6,
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                title: {
+                    offsetX: 0,
+                    offsetY: -30,
+                    style: {
+                        color: '#78909C',
+                        fontSize: '12px',
+                        fontWeight: 400,
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: function(value) {
+                        return value;
+                    }
+                },
+                tickAmount: 4,
+                min: 0
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontWeight: 500,
+                offsetX: 0,
+                offsetY: -14,
+                itemMargin: {
+                    horizontal: 8,
+                    vertical: 0
+                },
+                markers: {
+                    width: 10,
+                    height: 10,
+                }
+            },
+            colors: areachartSalesColorst
+        };
+        if (salesForecastChart2 != "")
+            salesForecastChart2.destroy();
+        salesForecastChart2 = new ApexCharts(document.querySelector("#sales-forecast-chart-2"), options);
+        salesForecastChart2.render();
+    }
 
 
-     //Negative Peace Bar
-     var areachartSalesColorsth = "";
-     areachartSalesColorsth = getChartColorsArray("sales-forecast-chart-3");
-     if (areachartSalesColorsth) {
-         var options = {
+    //Negative Peace Bar
+    var areachartSalesColorsth = "";
+    areachartSalesColorsth = getChartColorsArray("sales-forecast-chart-3");
+    if (areachartSalesColorsth) {
+        var options = {
             series: [{
                 name: 'Mean',
                 data: ["{{$negativePeace['mean']}}"]
@@ -1183,112 +1202,113 @@ $(document).ready(function() {
                 name: 'Global Mean',
                 data: ["{{$negativePeace['globalMean']}}"]
             }],
-             chart: {
-                 type: 'bar',
-                 height: 341,
-                 toolbar: {
-                     show: false,
-                 },
-             },
-             plotOptions: {
-                 bar: {
-                     horizontal: false,
-                     columnWidth: '40%',
-                 },
-             },
-             stroke: {
-                 show: true,
-                 width: 5,
-                 colors: ['transparent']
-             },
-             xaxis: {
-                 categories: [''],
-                 axisTicks: {
-                     show: false,
-                     borderType: 'solid',
-                     color: '#78909C',
-                     height: 6,
-                     offsetX: 0,
-                     offsetY: 0
-                 },
-                 title: {
-                     offsetX: 0,
-                     offsetY: -30,
-                     style: {
-                         color: '#78909C',
-                         fontSize: '12px',
-                         fontWeight: 400,
-                     },
-                 },
-             },
-             yaxis: {
-                 labels: {
-                     formatter: function (value) {
-                         return value;
-                     }
-                 },
-                 tickAmount: 4,
-                 min: 0
-             },
-             fill: {
-                 opacity: 1
-             },
-             legend: {
-                 show: true,
-                 position: 'bottom',
-                 horizontalAlign: 'center',
-                 fontWeight: 500,
-                 offsetX: 0,
-                 offsetY: -14,
-                 itemMargin: {
-                     horizontal: 8,
-                     vertical: 0
-                 },
-                 markers: {
-                     width: 10,
-                     height: 10,
-                 }
-             },
-             colors: areachartSalesColorsth
-         };
-         if (salesForecastChart3 != "")
-             salesForecastChart3.destroy();
-         salesForecastChart3 = new ApexCharts(document.querySelector("#sales-forecast-chart-3"), options);
-         salesForecastChart3.render();
-     }
+            chart: {
+                type: 'bar',
+                height: 341,
+                toolbar: {
+                    show: false,
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '40%',
+                },
+            },
+            stroke: {
+                show: true,
+                width: 5,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: [''],
+                axisTicks: {
+                    show: false,
+                    borderType: 'solid',
+                    color: '#78909C',
+                    height: 6,
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                title: {
+                    offsetX: 0,
+                    offsetY: -30,
+                    style: {
+                        color: '#78909C',
+                        fontSize: '12px',
+                        fontWeight: 400,
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: function(value) {
+                        return value;
+                    }
+                },
+                tickAmount: 4,
+                min: 0
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontWeight: 500,
+                offsetX: 0,
+                offsetY: -14,
+                itemMargin: {
+                    horizontal: 8,
+                    vertical: 0
+                },
+                markers: {
+                    width: 10,
+                    height: 10,
+                }
+            },
+            colors: areachartSalesColorsth
+        };
+        if (salesForecastChart3 != "")
+            salesForecastChart3.destroy();
+        salesForecastChart3 = new ApexCharts(document.querySelector("#sales-forecast-chart-3"), options);
+        salesForecastChart3.render();
+    }
 
     //Pillars Result Radar Chart
+    var chartHeight = window.innerWidth <= 768 ? 800 : 600;  // 400px for mobile and 600px for desktop
+
     var chartRadarMultiColors = getChartColorsArray("multi_radar");
     if (chartRadarMultiColors) {
         var options = {
-            series: [
-                {
+            series: [{
                     name: 'Mean',
                     data: [
-                        @foreach($pillarMeanScore['mean'] as $key=>$means)
-                            {{$means}},
+                        @foreach($pillarMeanScore['mean'] as $key => $means)
+                        "{{$means}}",
                         @endforeach
                     ],
                 },
                 {
                     name: 'Country Mean',
                     data: [
-                        @foreach($pillarMeanScore['countryMean'] as $key=>$means)
-                            {{$means}},
+                        @foreach($pillarMeanScore['countryMean'] as $key => $means)
+                        "{{$means}}",
                         @endforeach
                     ],
                 },
                 {
                     name: 'Global Mean',
                     data: [
-                        @foreach($pillarMeanScore['globalMean'] as $key=>$means)
-                            {{$means}},
+                        @foreach($pillarMeanScore['globalMean'] as $key => $means)
+                        "{{$means}}",
                         @endforeach
                     ],
                 }
             ],
             chart: {
-                height: 600,
+                height: chartHeight,
                 type: 'radar',
                 dropShadow: {
                     enabled: true,
@@ -1311,7 +1331,11 @@ $(document).ready(function() {
             },
             colors: chartRadarMultiColors,
             xaxis: {
-                categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government', 'Low Levels of Corruption', 'Equitable Distribution Of Resource', 'Good Relations With Neighbours', 'Free Flow Of Information', 'High Levels Of Human Capital', 'Sound Business Environment']
+                categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government',
+                    'Low Levels of Corruption', 'Equitable Distribution Of Resource',
+                    'Good Relations With Neighbours', 'Free Flow Of Information',
+                    'High Levels Of Human Capital', 'Sound Business Environment'
+                ]
             }
         };
         var chart = new ApexCharts(document.querySelector("#multi_radar"), options);

@@ -193,8 +193,6 @@ table th, table td {
 
 }
 
-
-
 .aside-tag {
     padding: 0.5rem 1.5rem;
     font-size: 9px;
@@ -352,3 +350,6 @@ table th, table td {
 #password-addon {
     top: 27px !important;
 }
+.language-top-button {
+    display: none;
+} 

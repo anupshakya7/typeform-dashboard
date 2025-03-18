@@ -30,7 +30,6 @@
                         <span></span>
                     </span>
                 </button>
-                
 
                 <!-- App Search-->
                 <form class="app-search d-none d-md-block">
