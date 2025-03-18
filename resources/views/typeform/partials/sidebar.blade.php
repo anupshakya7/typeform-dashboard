@@ -58,6 +58,7 @@
                                 <a href="{{route('role.index')}}" class="nav-link">Role</a>
                             </li>
                             @endif
+                            {{-- @endif --}}
                             <li class="nav-item">
                                 <a href="{{route('permission.index')}}" class="nav-link">Permission</a>
                             </li>

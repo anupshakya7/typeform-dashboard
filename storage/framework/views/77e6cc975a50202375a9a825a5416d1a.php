@@ -21,7 +21,7 @@
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">Role Management</h4>
+            <h4 class="fs-16 mb-1">Permission Management</h4>
         </div>
     </div>
 
@@ -32,9 +32,9 @@
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
-                    <a href="<?php echo e(route('role.create')); ?>" class="btn btn-info add-btn"><i
+                    <a href="<?php echo e(route('permission.create')); ?>" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
-                        Role</a>
+                        Permission</a>
                 </div>
             </div>
             <div class="flex-shrink-0">
@@ -56,34 +56,34 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Role Lists</h5>
+                    <h5 class="card-title mb-0">Permission Lists</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center" style="width:100%">
+                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered " style="width:100%">
                             <thead class="table-head">
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Name</th>
-                                    <th>Permissions</th>
+                                    <th>Route</th>
                                     <th>Authorize</th>
                                     <th>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($role->serial_no); ?></td>
-                                        <td><?php echo e($role->name); ?></td>
+                                        <td><?php echo e($permission->serial_no); ?></td>
+                                        <td><?php echo e($permission->name); ?></td>
                                         <td>
-                                            <?php $__currentLoopData = $role->permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <span class="btn btn-sm btn-primary"><?php echo e($permission->name); ?></span>
+                                            <?php $__currentLoopData = $permission->routes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $route): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <span class="btn btn-sm btn-primary"><?php echo e($route->route); ?></span>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </td>
-                                        <td><a href="<?php echo e(route('role.assignPermission',$role)); ?>"
+                                        <td><a href="<?php echo e(route('permission.assignRoute',$permission)); ?>"
                                             class="btn btn-danger"></i>
-                                            Assign Permission</a></td>
+                                            Assign Route</a></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -91,26 +91,24 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="<?php echo e(route('role.show', $role)); ?>"
+                                                    <li><a href="<?php echo e(route('permission.show', $permission)); ?>"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <li><a href="<?php echo e(route('role.edit',$role)); ?>" class="dropdown-item edit-item-btn"><i
+                                                    <li><a href="<?php echo e(route('permission.edit',$permission)); ?>" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    <?php if($role->name !== 'iep'): ?>
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
-                                                            data-item-id="<?php echo e($role->id); ?>"
-                                                            data-item-name="<?php echo e($role->name); ?>" data-bs-toggle="modal"
+                                                            data-item-id="<?php echo e($permission->id); ?>"
+                                                            data-item-name="<?php echo e($permission->name); ?>" data-bs-toggle="modal"
                                                             data-bs-target="#zoomInModal">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                             Delete
                                                         </button>
                                                     </li>
-                                                    <?php endif; ?>
                                                 </ul>
                                             </div>
                                         </td>
@@ -120,7 +118,7 @@
                         </table>
                     </div>
                     <!--tfooter section-->
-                    <?php echo $__env->make('typeform.partials.pagination', ['paginator' => $roles], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    <?php echo $__env->make('typeform.partials.pagination', ['paginator' => $permissions], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
             </div>
         </div>
@@ -195,4 +193,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/roles/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/permission/index.blade.php ENDPATH**/ ?>

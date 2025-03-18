@@ -103,6 +103,7 @@ class PermissionController extends Controller
     }
 
     public function assignRoute(Permission $permission){
+        $permission->load('routes');
         $routes = Route::getRoutes();
         $middlewareGroup = 'check_auth';
 

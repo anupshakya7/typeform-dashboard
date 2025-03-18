@@ -267,7 +267,6 @@
                                 </div>
                             </div>
                         </div><!-- end card header -->
-
                         <div class="card-body">
                             <div id="basic_radar" data-colors='["--vz-success"]' class="apex-charts" dir="ltr">
                             </div>

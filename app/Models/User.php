@@ -64,9 +64,9 @@ class User extends Authenticatable
         }
 
         $permissions = $this->role->permissions;
-
+        
         foreach($permissions as $permission){
-            if($permission->routes->contains('router',$route)){
+            if($permission->routes->contains('route',$route)){
                 return true;
             }   
         }
