@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -19,29 +18,74 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Create Permission</h4>
-        <p class="text-muted mb-0">Note: Please create Permission.</p>
+        <h4 class="fs-16 mb-1">Update Branch</h4>
+        <p class="text-muted mb-0">Note: Please update Branch.</p>
     </div>
 </div>
 
 
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Permission</h5>
+        <h5 class="card-title mb-0">Branch</h5>
         <a class="btn btn-info" onclick="history.back(); return false;">
                 <i class="ri-arrow-left-line"></i> Back
             </a>
     </div>
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="<?php echo e(route('permission.store')); ?>" method="POST" enctype="multipart/form-data">
+            <form id="mainForm" action="<?php echo e(route('branch.update',$branch)); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
+                            <select id="organization_id" name="organization_id" class="form-select" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Organization</option>
+                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($organization->id); ?>" <?php echo e($branch->organization_id == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['organization_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" placeholder="Name" id="name">
+                            <input type="text" name="name" value="<?php echo e(old('name',$branch->name)); ?>" class="form-control" placeholder="Name" id="name">
                             <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
+                            <select id="country" name="country" class="form-select select2" data-choices
+                                data-choices-sorting="true">
+                                <option selected>Choose Country</option>
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country['name']); ?>" <?php echo e($branch->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['country'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -99,4 +143,4 @@ unset($__errorArgs, $__bag); ?>
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/permission/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/branch/edit.blade.php ENDPATH**/ ?>

@@ -100,7 +100,7 @@
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    <?php if($role->name !== 'iep'): ?>
+                                                    <?php if($role->name !== 'superadmin'): ?>
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
                                                             data-item-id="<?php echo e($role->id); ?>"

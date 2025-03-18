@@ -101,7 +101,7 @@
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    @if($role->name !== 'iep')
+                                                    @if($role->name !== 'superadmin')
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
                                                             data-item-id="{{ $role->id }}"

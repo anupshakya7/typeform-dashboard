@@ -7,7 +7,6 @@
 @section('content')
 <div class="row">
     <div class="col">
-
         <div class="h-100">
 
             <!--greeting section -->
@@ -20,25 +19,24 @@
                 <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
                     <form action="{{route('home.index')}}" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard">
-
                             <div class="col-auto p-0">
                                 <select class="form-select select2" name="country" id="country"
                                     aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Country</option>
                                     @foreach ($countries as $country)
                                     <option value="{{ $country['name'] }}"
-                                        {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                        {{($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':'' }}>
                                         {{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-auto p-0">
-
                                 <select class="form-select select2" id="organization" name="organization"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Organization</option>
                                     @foreach ($organizations as $organization)
                                     <option value="{{ $organization->id }}"
-                                        {{ request('organization') == $organization->id ? 'selected' : '' }}>
+                                        {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
                                         {{ $organization->name }}</option>
                                     @endforeach
                                 </select>
@@ -46,13 +44,13 @@
 
                             <div class="col-auto p-0">
                                 <select class="form-select select2" id="branch" name="branch"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Branch</option>
                                 </select>
                             </div>
                             <div class="col-auto p-0">
                                 <select class="form-select select2" name="survey" id="survey"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Survey</option>
                                     {{-- @foreach ($surveyForms as $surveyForm)
                                             <option value="{{ $surveyForm->form_title }}"
@@ -707,20 +705,23 @@
 
 <script>
 $(document).ready(function() {
+    var branch_id = {!! json_encode($filterData->branch_id ?? null) !!};
+    var survey_id = {!! json_encode($filterData->form_id ?? null) !!};
+
     //Parameters
     var country = getQueryParams('country');
     var organization = getQueryParams('organization');
-    var branch = getQueryParams('branch');
-    var survey = getQueryParams('survey');
+    var branch = branch_id ? branch_id : getQueryParams('branch');
+    var survey = survey_id ? survey_id : getQueryParams('survey');
 
-    filterOrganization();
-    filterSurvey();
+    //filterOrganization();
     filterBranch();
+    filterSurvey();
 
     //Filter Organizations
-    $('#country').change(function() {
-        filterOrganization();
-    });
+    // $('#country').change(function() {
+    //     filterOrganization();
+    // });
 
     $('#organization').change(function() {
         filterSurvey();
@@ -732,40 +733,40 @@ $(document).ready(function() {
     });
 
 
-    function filterOrganization() {
-        var countryVal = $('#country').val();
+    // function filterOrganization() {
+    //     var countryVal = $('#country').val();
 
-        if (countryVal !== '') {
-            $.ajax({
-                url: "{{ route('organization.get') }}",
-                method: 'GET',
-                data: {
-                    country: countryVal
-                },
-                success: function(response) {
-                    console.log(response);
-                    $('#organization').prop('disabled', false);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                    response.organizations.forEach(function(organizationItem) {
-                        // $('#organization').append(new Option(organization.name,
-                        //     organization.id));
-                        var option = new Option(organizationItem.name, organizationItem.id);
-                        $('#organization').append(option);
+    //     if (countryVal !== '') {
+    //         $.ajax({
+    //             url: "{{ route('organization.get') }}",
+    //             method: 'GET',
+    //             data: {
+    //                 country: countryVal
+    //             },
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('#organization').prop('disabled', false);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //                 response.organizations.forEach(function(organizationItem) {
+    //                     // $('#organization').append(new Option(organization.name,
+    //                     //     organization.id));
+    //                     var option = new Option(organizationItem.name, organizationItem.id);
+    //                     $('#organization').append(option);
 
-                        if (organization && organization == organizationItem.id) {
-                            $(option).prop('selected', true);
-                        }
-                    })
-                },
-                error: function(xhr, status, error) {
-                    $('#organization').prop('disabled', true);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                }
-            })
-        }
-    }
+    //                     if (organization && organization == organizationItem.id) {
+    //                         $(option).prop('selected', true);
+    //                     }
+    //                 })
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 $('#organization').prop('disabled', true);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //             }
+    //         })
+    //     }
+    // }
 
     function filterBranch() {
         var organizationVal = $('#organization').val();
@@ -804,7 +805,7 @@ $(document).ready(function() {
 
     function filterSurvey() {
         var organizationVal = $('#organization').val();
-        var branchVal = $('#branch').val();
+        var branchVal = branch ;
 
         if (organizationVal !== '') {
             $.ajax({

@@ -17,12 +17,12 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'admin',
-            'email' => 'admin@themesbrand.com',
+            'name' => 'Super Admin',
+            'email' => 'superadmin@csb.com',
             'password' => 'password',
             'email_verified_at'=>'2022-01-02 17:04:58',
             'avatar' => 'avatar-1.jpg',
-            'role_id'=>Role::where('name','iep')->first()->id,
+            'role_id'=>Role::where('name','superadmin')->first()->id,
             'organization_id'=>Organization::inRandomOrder()->first()->id,
             'created_at' => now()
         ]);
