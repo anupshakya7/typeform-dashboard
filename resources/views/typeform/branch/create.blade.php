@@ -19,15 +19,15 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Create Branch</h4>
-        <p class="text-muted mb-0">Note: Please create Branch.</p>
+        <h4 class="fs-16 mb-1">Create Division</h4>
+        <p class="text-muted mb-0">Note: Please create Division.</p>
     </div>
 </div>
 
 
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Branch</h5>
+        <h5 class="card-title mb-0">Division</h5>
         <a class="btn btn-info" onclick="history.back(); return false;">
                 <i class="ri-arrow-left-line"></i> Back
             </a>

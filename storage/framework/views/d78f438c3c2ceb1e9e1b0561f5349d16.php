@@ -20,8 +20,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Form Management</h4>
-        <p class="text-muted mb-0">Create and manage forms easily accessing the form information.</p>
+        <h4 class="fs-16 mb-1">Survey Management</h4>
+        <p class="text-muted mb-0">Create and manage survey easily accessing the survey information.</p>
     </div>
 </div>
 
@@ -33,7 +33,7 @@
             <div class="d-flex gap-1 flex-wrap">
 
                 <a href="<?php echo e(route('form.create')); ?>" class="btn btn-info add-btn"><i class="ri-add-line align-bottom me-1"></i> Create
-                    Form</a>
+                    Survey</a>
             </div>
         </div>
         <div class="flex-shrink-0">
@@ -58,7 +58,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Form Lists</h5>
+                <h5 class="card-title mb-0">Survey Lists</h5>
             </div>
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center justify-content-between pb-3">
@@ -98,11 +98,11 @@
                                 <th scope="col">
                                    S.No.
                                 </th>
-                                <th>Form Type ID</th>
-                                <th>Form Name</th>
+                                <th>Survey ID</th>
+                                <th>Survey Name</th>
                                 <th>Country</th>
                                 <th>Organization</th>
-                                <th>Branch</th>
+                                <th>Division</th>
                                 <th>Before Survey</th>
                                 <th>During Survey</th>
                                 <th>After Survey</th>

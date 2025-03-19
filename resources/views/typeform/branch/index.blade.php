@@ -22,7 +22,7 @@
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">Branch Management</h4>
+            <h4 class="fs-16 mb-1">Division Management</h4>
         </div>
     </div>
 
@@ -35,7 +35,7 @@
 
                     <a href="{{ route('branch.create') }}" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
-                        Branch</a>
+                        Division</a>
                 </div>
             </div>
             <div class="flex-shrink-0">
@@ -60,7 +60,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Branch Lists</h5>
+                    <h5 class="card-title mb-0">Division Lists</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -69,7 +69,7 @@
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Organization</th>
-                                    <th>Branch Name</th>
+                                    <th>Division Name</th>
                                     <th>Country</th>
                                     <th>Action</th>
 

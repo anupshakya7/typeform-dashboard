@@ -1,22 +1,21 @@
-@extends('typeform.layout.web')
-@section('title')
-    @lang('translation.crm')
-@endsection
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.crm'); ?>
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
         integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css') }}" />
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css')); ?>" />
     <!-- 'classic' theme -->
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css') }}" />
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css')); ?>" />
     <!-- 'monolith' theme -->
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css') }}" />
+    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css')); ?>" />
     <!-- 'nano' theme -->
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <!--greeting section -->
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
@@ -44,11 +43,11 @@
                                 <tbody>
                                     <tr>
                                         <th>ID</th>
-                                        <td>{{ $form->id }}</td>
+                                        <td><?php echo e($form->id); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Survey Name</th>
-                                        <td>{{ $form->form_title }}</td>
+                                        <td><?php echo e($form->form_title); ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -59,43 +58,43 @@
                                 <tbody>
                                     <tr>
                                         <th>Well-Functioning Government</th>
-                                        <td>{{ $form->question->well_functioning_government }}</td>
+                                        <td><?php echo e($form->question->well_functioning_government); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Low Levels of Corruption</th>
-                                        <td>{{ $form->question->low_level_corruption }}</td>
+                                        <td><?php echo e($form->question->low_level_corruption); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Equitable Distribution of Resources</th>
-                                        <td>{{ $form->question->equitable_distribution }}</td>
+                                        <td><?php echo e($form->question->equitable_distribution); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Good Relations with Neighbours</th>
-                                        <td>{{ $form->question->good_relations }}</td>
+                                        <td><?php echo e($form->question->good_relations); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Free Flow of Information</th>
-                                        <td>{{ $form->question->free_flow }}</td>
+                                        <td><?php echo e($form->question->free_flow); ?></td>
                                     </tr>
                                     <tr>
                                         <th>High Levels of Human Capital</th>
-                                        <td>{{ $form->question->high_levels }}</td>
+                                        <td><?php echo e($form->question->high_levels); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Sound Business Environment</th>
-                                        <td>{{ $form->question->sound_business }}</td>
+                                        <td><?php echo e($form->question->sound_business); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Acceptance of the Rights of Others</th>
-                                        <td>{{ $form->question->acceptance_rights }}</td>
+                                        <td><?php echo e($form->question->acceptance_rights); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Positive Peace</th>
-                                        <td>{{ $form->question->positive_peace }}</td>
+                                        <td><?php echo e($form->question->positive_peace); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Negative Peace</th>
-                                        <td>{{ $form->question->negative_peace }}</td>
+                                        <td><?php echo e($form->question->negative_peace); ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -104,30 +103,30 @@
                             <h5 class="ms-1">Extra Questions</h5>
                             <table class="table table-bordered table-striped">
                                 <tbody>
-                                    @if($form->question->extra_ques1 || $form->question->extra_ques2 || $form->question->extra_ques3)
-                                    @if($form->question->extra_ques1)
+                                    <?php if($form->question->extra_ques1 || $form->question->extra_ques2 || $form->question->extra_ques3): ?>
+                                    <?php if($form->question->extra_ques1): ?>
                                     <tr>
                                         <th>Extra Question 1</th>
-                                        <td>{{ $form->question->extra_ques1 }}</td>
+                                        <td><?php echo e($form->question->extra_ques1); ?></td>
                                     </tr>
-                                    @endif
-                                    @if($form->question->extra_ques2)
+                                    <?php endif; ?>
+                                    <?php if($form->question->extra_ques2): ?>
                                     <tr>
                                         <th>Extra Question 2</th>
-                                        <td>{{ $form->question->extra_ques2 }}</td>
+                                        <td><?php echo e($form->question->extra_ques2); ?></td>
                                     </tr>
-                                    @endif
-                                    @if($form->question->extra_ques3)
+                                    <?php endif; ?>
+                                    <?php if($form->question->extra_ques3): ?>
                                     <tr>
                                         <th>Extra Question 3</th>
-                                        <td>{{ $form->question->extra_ques3 }}</td>
+                                        <td><?php echo e($form->question->extra_ques3); ?></td>
                                     </tr>
-                                    @endif
-                                    @else
+                                    <?php endif; ?>
+                                    <?php else: ?>
                                     <tr>
                                         <td>No Extra Questions</td>
                                     </tr>
-                                    @endif
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -148,19 +147,19 @@
     </div>
     </div>
     </div>
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- apexcharts -->
-    <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/@simonwep/pickr/pickr.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/form-pickers.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/@simonwep/pickr/pickr.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/form-pickers.init.js')); ?>"></script>
 
 
     <!-- Flatpickr JS -->
@@ -180,4 +179,6 @@
             imageDiv.appendChild(imageTag);
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/form/questions.blade.php ENDPATH**/ ?>

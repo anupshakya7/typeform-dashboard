@@ -1,20 +1,19 @@
-@extends('typeform.layout.web')
-@section('title') @lang('translation.crm') @endsection
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
     integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css')); ?>" />
 <!-- 'classic' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css')); ?>" />
 <!-- 'monolith' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css')); ?>" />
 <!-- 'nano' theme -->
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!--greeting section -->
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
@@ -41,43 +40,43 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{$form->id}}</td>
+                                <td><?php echo e($form->id); ?></td>
                             </tr>
                             <tr>
                                 <th>Survey ID</th>
-                                <td>{{$form->form_id}}</td>
+                                <td><?php echo e($form->form_id); ?></td>
                             </tr>
                             <tr>
                                 <th>Survey Name</th>
-                                <td>{{$form->form_title}}</td>
+                                <td><?php echo e($form->form_title); ?></td>
                             </tr>
                             <tr>
                                 <th>Country</th>
-                                <td>{{$form->country}}</td>
+                                <td><?php echo e($form->country); ?></td>
                             </tr>
                             <tr>
                                 <th>Organization</th>
-                                <td>{{optional($form->organization)->name}}</td>
+                                <td><?php echo e(optional($form->organization)->name); ?></td>
                             </tr>
                             <tr>
                                 <th>Division</th>
-                                <td>{{$form->branches ? optional($form->branches)->name : 'Main Branch'}}</td>
+                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Main Branch'); ?></td>
                             </tr>
                             <tr>
                                 <th>Before Date</th>
-                                <td>{{$form->before}}</td>
+                                <td><?php echo e($form->before); ?></td>
                             </tr>
                             <tr>
                                 <th>During Date</th>
-                                <td>{{$form->during}}</td>
+                                <td><?php echo e($form->during); ?></td>
                             </tr>
                             <tr>
                                 <th>After Date</th>
-                                <td>{{$form->after}}</td>
+                                <td><?php echo e($form->after); ?></td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td>{{Carbon\Carbon::parse($form->created_at)->format('d M, Y')}}</td>
+                                <td><?php echo e(Carbon\Carbon::parse($form->created_at)->format('d M, Y')); ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -98,19 +97,19 @@
 </div>
 </div>
 </div>
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-<script src="{{ URL::asset('build/js/app.js') }}"></script>
-<script src="{{ URL::asset('build/libs/@simonwep/pickr/pickr.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/form-pickers.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/libs/@simonwep/pickr/pickr.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/form-pickers.init.js')); ?>"></script>
 
 
 <!-- Flatpickr JS -->
@@ -130,4 +129,5 @@ function getImagePreview(event, divId) {
     imageDiv.appendChild(imageTag);
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/form/view.blade.php ENDPATH**/ ?>
