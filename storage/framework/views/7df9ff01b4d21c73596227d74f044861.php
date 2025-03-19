@@ -90,17 +90,18 @@
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
+
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a href="<?php echo e(route('user.show', $user)); ?>"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
+                                                    <?php if($user->role->name !== 'superadmin'): ?>
                                                     <li><a href="<?php echo e(route('user.edit',$user)); ?>" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    <?php if($user->role->name !== 'iep'): ?>
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
                                                             data-item-id="<?php echo e($user->id); ?>"

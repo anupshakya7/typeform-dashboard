@@ -208,10 +208,15 @@ class FormController extends Controller
 
     public function filterOrganization(Request $request){
         $validatedData = $request->validate([
-            'country' => 'required|string'
+            'country' => 'nullable|string'
         ]);
 
-        $organizations = Organization::where('country',$validatedData['country'])->get();
+        $organizationsQuery = Organization::query();
+
+        if($request->filled('country')){
+            $organizationsQuery->where('country',$validatedData['country']);
+        }
+        $organizations = $organizationsQuery->get();
         
         if($organizations){
             return response()->json([

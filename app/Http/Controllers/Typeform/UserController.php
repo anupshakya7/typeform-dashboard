@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -18,20 +19,23 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('role','organization')->paginate(10);
+        $users = User::with('role','organization')->filterUser()->paginate(10);
         $users = PaginationHelper::addSerialNo($users);
 
         return view('typeform.users.index',compact('users'));
     }
 
     public function show(User $user){
-        $user->load('role','organization');
+        $user->load('role','organization')->filterUser();
+        
         return view('typeform.users.view',compact('user'));
     }
 
     public function create(){
+        $roles = Role::whereNot('name','superadmin')->filterRole()->get();
         $organizations = Organization::all();
-        return view('typeform.users.create',compact('organizations'));
+
+        return view('typeform.users.create',compact('roles','organizations'));
     }
 
     public function store(Request $request){
@@ -39,12 +43,22 @@ class UserController extends Controller
             'name'=>'required|string|min:2',
             'email'=>'required|email|unique:users,email',
             'password'=>'required|min:6|confirmed',
-            'organization_id'=>'required|integer|exists:organizations,id',
+            'role_id'=>'required|integer|exists:roles,id',
+            'organization_id'=>['required','integer','exists:organizations,id'],
+            'branch_id'=>['nullable',Rule::requiredIf(function() use($request){
+                return $request->role_id == 3;
+            })],
+            'form_id'=>['nullable',Rule::requiredIf(function() use($request){
+                return $request->role_id == 4;
+            })],
         ]);
-
-        $defaultRole = Role::where('name','survey')->first();
-        $validatedData['role_id'] = $defaultRole->id;
         
+        $role = Role::where('name','branch')->pluck('id')->first();
+
+        if($request->role_id == $role){
+            $validatedData['branch_id'] = implode(', ',$validatedData['branch_id']);
+        }
+
         $user = User::create($validatedData);
         
         if($user){
@@ -66,7 +80,7 @@ class UserController extends Controller
             'name'=>'required|string|min:2',
             'email'=>'required|email|unique:users,email,'.$user->id,
             'password'=>'required|min:6|confirmed',
-            'organization_id'=>'required|integer|exists:organizations,id',
+            // 'organization_id'=>'required|integer|exists:organizations,id',
         ]);
 
         $userUpdated = $user->update($validatedData);

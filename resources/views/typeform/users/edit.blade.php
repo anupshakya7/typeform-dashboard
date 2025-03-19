@@ -74,7 +74,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization_id" class="form-label">Organization</label>
                             <select id="organization_id" name="organization_id" class="form-select" data-choices
@@ -88,7 +88,7 @@
                                 <span class="text-danger ms-1">{{$message}}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
                     
                     <!--end col-->

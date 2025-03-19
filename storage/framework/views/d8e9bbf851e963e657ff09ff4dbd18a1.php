@@ -101,28 +101,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="organization_id" class="form-label">Organization</label>
-                            <select id="organization_id" name="organization_id" class="form-select" data-choices
-                                data-choices-sorting="true">
-                                <option selected>Choose Organization</option>
-                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
-                            <?php $__errorArgs = ['organization_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
-                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                        </div>
-                    </div>
+                    
 
                     
                     <!--end col-->
