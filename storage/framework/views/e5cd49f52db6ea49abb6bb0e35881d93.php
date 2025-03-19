@@ -19,4 +19,4 @@
     <?php echo $__env->make('layouts.vendor-scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </body>
 </html>
-<?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/layouts/master-without-nav.blade.php ENDPATH**/ ?>
+<?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/layouts/master-without-nav.blade.php ENDPATH**/ ?>

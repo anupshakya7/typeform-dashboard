@@ -34,10 +34,10 @@
     </div>
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
+            <form id="mainForm" action="{{route('role.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control" placeholder="Name" id="name">

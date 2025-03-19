@@ -66,9 +66,9 @@
                             <select id="organization" name="organization" class="form-select select2" data-choices
                                 data-choices-sorting="true">
                                 <option value="" selected>Choose Organization</option>
-                                {{-- @foreach($organizations as $organization)
+                                @foreach($organizations as $organization)
                                 <option value="{{$organization->id}}" {{$organization->id == $form->organization_id ? 'selected':''}}>{{$organization->name}}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -253,12 +253,12 @@ $(document).ready(function() {
     //         }
     //     })
     // })
-    var countryVal = $('#country').val();
-    // var organizationVal = $('#organization').val();
+    // var countryVal = $('#country').val();
+    // // var organizationVal = $('#organization').val();
 
-    if (countryVal !== '') {
-        organization(countryVal);
-    }
+    // if (countryVal !== '') {
+    //     organization(countryVal);
+    // }
     
     var organizationVals = @json($form->organization->id);
 
@@ -281,14 +281,14 @@ $(document).ready(function() {
     }
 
 
-    $('#country').change(function() {
-        var countryVal = $('#country').val();
+    // $('#country').change(function() {
+    //     var countryVal = $('#country').val();
 
-        if (countryVal !== '') {
-            organization(countryVal);
-            handleBranch();
-        }
-    });
+    //     if (countryVal !== '') {
+    //         organization(countryVal);
+    //         handleBranch();
+    //     }
+    // });
 
     $('#organization,#setBranch').change(function() {
        handleBranch();
@@ -316,37 +316,37 @@ $(document).ready(function() {
         }
     }
 
-    function organization(countryVal){
-        $.ajax({
-                url: "{{route('organization.get')}}",
-                method: 'GET',
-                data: {
-                    country: countryVal
-                },
-                success: function(response) {
-                    console.log(response);
-                    $('#organization').prop('disabled', false);
-                    $('#organization').html('');
-                    $('#organization').append('<option value="" selected>Choose Organization</option>');
-                    var selectedItem = @json($form->organization->id);
-                    response.organizations.forEach(function(organization) {
-                        // $('#organization').append(new Option(organization.name, organization.id));
-                        var option = new Option(organization.name,organization.id);
+    // function organization(countryVal){
+    //     $.ajax({
+    //             url: "{{route('organization.get')}}",
+    //             method: 'GET',
+    //             data: {
+    //                 country: countryVal
+    //             },
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('#organization').prop('disabled', false);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option value="" selected>Choose Organization</option>');
+    //                 var selectedItem = @json($form->organization->id);
+    //                 response.organizations.forEach(function(organization) {
+    //                     // $('#organization').append(new Option(organization.name, organization.id));
+    //                     var option = new Option(organization.name,organization.id);
                         
-                        $('#organization').append(option);
+    //                     $('#organization').append(option);
 
-                        if(selectedItem && selectedItem == organization.id){
-                            $(option).prop('selected',true);
-                        }
-                    })
-                },
-                error: function(xhr, status, error) {
-                    $('#organization').prop('disabled', true);
-                    $('#organization').html('');
-                    $('#organization').append('<option value="" selected>Choose Organization</option>');
-                }
-            })
-    }
+    //                     if(selectedItem && selectedItem == organization.id){
+    //                         $(option).prop('selected',true);
+    //                     }
+    //                 })
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 $('#organization').prop('disabled', true);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option value="" selected>Choose Organization</option>');
+    //             }
+    //         })
+    // }
 
     function branch(organizationVal){
         if(organizationVal){

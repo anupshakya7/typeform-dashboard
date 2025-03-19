@@ -7,14 +7,75 @@
 @section('content')
 <div class="row">
     <div class="col">
-
         <div class="h-100">
 
             <!--greeting section -->
 
             <div class="mb-3 pb-1">
                 <div>
+<<<<<<< HEAD
                     <h4 class="mb-1">Welcome back, {{auth()->user()->name}}</h4>
+=======
+                    <h4 class="fs-16 mb-1">Welcome back, {{auth()->user()->name}}</h4>
+                    <p class="text-muted mb-0">Get insights, track trends, compare data, manage.</p>
+                </div>
+                <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
+                    <form action="{{route('home.index')}}" method="GET">
+                        <div class="row gap-3 m-0 p-0 dashboard">
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" name="country" id="country"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Country</option>
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country['name'] }}"
+                                        {{($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':'' }}>
+                                        {{ $country['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" id="organization" name="organization"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Organization</option>
+                                    @foreach ($organizations as $organization)
+                                    <option value="{{ $organization->id }}"
+                                        {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
+                                        {{ $organization->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" id="branch" name="branch"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Branch</option>
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" name="survey" id="survey"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Survey</option>
+                                    {{-- @foreach ($surveyForms as $surveyForm)
+                                            <option value="{{ $surveyForm->form_title }}"
+                                    {{ request('survey_form') == $surveyForm->form_title ? 'selected' : '' }}>
+                                    {{ $surveyForm->form_title }}</option>
+                                    @endforeach --}}
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
+
+                                </a>
+
+                            </div>
+                        </div>
+                    </form>
+
+>>>>>>> master
                 </div>
 
 
@@ -273,7 +334,6 @@
                                 </div>
                             </div>
                         </div><!-- end card header -->
-
                         <div class="card-body">
                             <div id="basic_radar" data-colors='["--vz-success"]' class="apex-charts" dir="ltr">
                             </div>
@@ -705,20 +765,23 @@
 
 <script>
 $(document).ready(function() {
+    var branch_id = {!! json_encode($filterData->branch_id ?? null) !!};
+    var survey_id = {!! json_encode($filterData->form_id ?? null) !!};
+
     //Parameters
     var country = getQueryParams('country');
     var organization = getQueryParams('organization');
-    var branch = getQueryParams('branch');
-    var survey = getQueryParams('survey');
+    var branch = branch_id ? branch_id : getQueryParams('branch');
+    var survey = survey_id ? survey_id : getQueryParams('survey');
 
-    filterOrganization();
-    filterSurvey();
+    //filterOrganization();
     filterBranch();
+    filterSurvey();
 
     //Filter Organizations
-    $('#country').change(function() {
-        filterOrganization();
-    });
+    // $('#country').change(function() {
+    //     filterOrganization();
+    // });
 
     $('#organization').change(function() {
         filterSurvey();
@@ -730,40 +793,40 @@ $(document).ready(function() {
     });
 
 
-    function filterOrganization() {
-        var countryVal = $('#country').val();
+    // function filterOrganization() {
+    //     var countryVal = $('#country').val();
 
-        if (countryVal !== '') {
-            $.ajax({
-                url: "{{ route('organization.get') }}",
-                method: 'GET',
-                data: {
-                    country: countryVal
-                },
-                success: function(response) {
-                    console.log(response);
-                    $('#organization').prop('disabled', false);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                    response.organizations.forEach(function(organizationItem) {
-                        // $('#organization').append(new Option(organization.name,
-                        //     organization.id));
-                        var option = new Option(organizationItem.name, organizationItem.id);
-                        $('#organization').append(option);
+    //     if (countryVal !== '') {
+    //         $.ajax({
+    //             url: "{{ route('organization.get') }}",
+    //             method: 'GET',
+    //             data: {
+    //                 country: countryVal
+    //             },
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('#organization').prop('disabled', false);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //                 response.organizations.forEach(function(organizationItem) {
+    //                     // $('#organization').append(new Option(organization.name,
+    //                     //     organization.id));
+    //                     var option = new Option(organizationItem.name, organizationItem.id);
+    //                     $('#organization').append(option);
 
-                        if (organization && organization == organizationItem.id) {
-                            $(option).prop('selected', true);
-                        }
-                    })
-                },
-                error: function(xhr, status, error) {
-                    $('#organization').prop('disabled', true);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                }
-            })
-        }
-    }
+    //                     if (organization && organization == organizationItem.id) {
+    //                         $(option).prop('selected', true);
+    //                     }
+    //                 })
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 $('#organization').prop('disabled', true);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //             }
+    //         })
+    //     }
+    // }
 
     function filterBranch() {
         var organizationVal = $('#organization').val();
@@ -802,7 +865,7 @@ $(document).ready(function() {
 
     function filterSurvey() {
         var organizationVal = $('#organization').val();
-        var branchVal = $('#branch').val();
+        var branchVal = branch ;
 
         if (organizationVal !== '') {
             $.ajax({

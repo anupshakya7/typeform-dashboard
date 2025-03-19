@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Role Details</h4>
-        <p class="text-muted mb-0">View role details.</p>
+        <h4 class="fs-16 mb-1">Permission Details</h4>
+        <p class="text-muted mb-0">View permission details.</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Role</h5>
+                <h5 class="card-title mb-0">Permission</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -41,19 +41,19 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td>{{$role->id}}</td>
+                                <td>{{$permission->id}}</td>
                             </tr>
                             <tr>
                                 <th>Name</th>
-                                <td>{{$role->name}}</td>
+                                <td>{{$permission->name}}</td>
                             </tr>
                             <tr>
-                                <th>Permissions</th>
+                                <th>Route</th>
                                 <td></td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td>{{Carbon\Carbon::parse($role->created_at)->format('d M, Y')}}</td>
+                                <td>{{Carbon\Carbon::parse($permission->created_at)->format('d M, Y')}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -22,7 +22,7 @@
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">User Management</h4>
+            <h4 class="fs-16 mb-1">Permission Management</h4>
         </div>
     </div>
 
@@ -33,9 +33,9 @@
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
-                    <a href="{{ route('user.create') }}" class="btn btn-info add-btn"><i
+                    <a href="{{ route('permission.create') }}" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
-                        User</a>
+                        Permission</a>
                 </div>
             </div>
             <div class="flex-shrink-0">
@@ -57,7 +57,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">User Lists</h5>
+                    <h5 class="card-title mb-0">Permission Lists</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -66,25 +66,25 @@
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Organization</th>
-                                    <th>Role</th>
+                                    <th>Route</th>
                                     <th>Authorize</th>
                                     <th>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $key => $user)
+                                @foreach ($permissions as $key => $permission)
                                     <tr>
-                                        <td>{{ $user->serial_no }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ optional($user->organization)->name }}</td>
-                                        <td><span class="btn btn-sm btn-danger">{{ optional($user->role)->name }}</span></td>
-                                        <td><a href="{{route('user.assignRole',$user)}}"
-                                            class="btn btn-info"></i>
-                                            Role</a></td>
+                                        <td>{{ $permission->serial_no }}</td>
+                                        <td>{{ $permission->name }}</td>
+                                        <td>
+                                            @foreach($permission->routes as $route)
+                                                <span class="btn btn-sm btn-primary">{{$route->route}}</span>
+                                            @endforeach
+                                        </td>
+                                        <td><a href="{{ route('permission.assignRoute',$permission) }}"
+                                            class="btn btn-danger"></i>
+                                            Assign Route</a></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -92,26 +92,24 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="{{ route('user.show', $user) }}"
+                                                    <li><a href="{{ route('permission.show', $permission) }}"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <li><a href="{{route('user.edit',$user)}}" class="dropdown-item edit-item-btn"><i
+                                                    <li><a href="{{route('permission.edit',$permission)}}" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    @if($user->role->name !== 'iep')
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
-                                                            data-item-id="{{ $user->id }}"
-                                                            data-item-name="{{ $user->name }}" data-bs-toggle="modal"
+                                                            data-item-id="{{ $permission->id }}"
+                                                            data-item-name="{{ $permission->name }}" data-bs-toggle="modal"
                                                             data-bs-target="#zoomInModal">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                             Delete
                                                         </button>
                                                     </li>
-                                                    @endif
                                                 </ul>
                                             </div>
                                         </td>
@@ -121,7 +119,7 @@
                         </table>
                     </div>
                     <!--tfooter section-->
-                    @include('typeform.partials.pagination', ['paginator' => $users])
+                    @include('typeform.partials.pagination', ['paginator' => $permissions])
                 </div>
             </div>
         </div>

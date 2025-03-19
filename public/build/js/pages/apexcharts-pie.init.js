@@ -40,7 +40,7 @@ function getChartColorsArray(chartId) {
 //  Simple Pie Charts
 
 // var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
-// if(chartPieBasicColors){
+// if(chartPieBasicColors){ 
 // var options = {
 //     series: [40, 60],
 //     chart: {

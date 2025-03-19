@@ -16,6 +16,7 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
+        $filterData = $request->all() == [] ? Form::latest()->first():null;
         //Dropdown
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
@@ -35,7 +36,7 @@ class IndexController extends Controller
 
         $resultByPillar = [];
 
-        return view('typeform.index',compact('countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore'));
+        return view('typeform.index',compact('countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','filterData'));
     }
 
     public function topBoxData(){

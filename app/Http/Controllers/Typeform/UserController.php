@@ -118,4 +118,31 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success','Password Successfully Changed');
     }
+
+    public function assignRole(User $user){
+        $userRole = auth()->user()->role->name;
+        if($userRole == 'superadmin'){
+            $roles = Role::all();
+        }else{
+            $roles = Role::whereNot('name','superadmin')->get();
+        }
+        
+        return view('typeform.users.assignRole',compact('user','roles'));
+    }
+
+    public function assignRoleSubmit(Request $request,User $user){
+        $validatedDate = $request->validate([
+            'role' =>  'required|integer'
+        ]);
+
+        $roleassign = $user->update([
+            'role_id'=>$validatedDate['role']
+        ]);
+
+        if($roleassign){
+            return redirect()->route('user.index')->with('success','Assign Role Successfully!!!');
+        }else{
+            return redirect()->back()->with('error','Failed to Assign Role');
+        }
+    }
 }

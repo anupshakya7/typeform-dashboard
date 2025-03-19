@@ -11,4 +11,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <?php echo $__env->yieldContent('script'); ?>
 
-<?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/layouts/vendor-scripts.blade.php ENDPATH**/ ?>
+<?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/layouts/vendor-scripts.blade.php ENDPATH**/ ?>

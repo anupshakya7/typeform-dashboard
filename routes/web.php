@@ -6,6 +6,7 @@ use App\Http\Controllers\Typeform\BranchController;
 use App\Http\Controllers\Typeform\FormController;
 use App\Http\Controllers\Typeform\IndexController;
 use App\Http\Controllers\Typeform\OrganizationController;
+use App\Http\Controllers\Typeform\PermissionController;
 use App\Http\Controllers\Typeform\RoleController;
 use App\Http\Controllers\Typeform\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,15 +38,30 @@ Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->nam
 //Custom Auth
 Route::post('/loginSubmit',[LoginController::class,'login'])->name('login.submit');
 
-Route::middleware('check_auth')->group(function(){
+Route::middleware('check_auth','check_route')->group(function(){
     Route::get('/',[IndexController::class,'index'])->name('home.index');
 
     Route::prefix('typeform')->group(function(){
         //User
         Route::resource('user',UserController::class);
 
+        //Assign Role to User
+        Route::get('user/{user}/assign-role',[UserController::class,'assignRole'])->name('user.assignRole');
+        Route::post('user/{user}/assign-role',[UserController::class,'assignRoleSubmit'])->name('user.assignRole.submit');
+
         //Roles
         Route::resource('role',RoleController::class);
+
+        //Assign Permission to Role
+        Route::get('role/{role}/assign-permission',[RoleController::class,'assignPermission'])->name('role.assignPermission');
+        Route::post('role/{role}/assign-permission',[RoleController::class,'assignPermissionSubmit'])->name('role.assignPermission.submit');
+
+        //Permissions
+        Route::resource('permission',PermissionController::class);
+
+        //Assign Route to Permission
+        Route::get('permission/{permission}/assign-route',[PermissionController::class,'assignRoute'])->name('permission.assignRoute');
+        Route::post('permission/{permission}/assign-route',[PermissionController::class,'assignRouteSubmit'])->name('permission.assignRoute.submit');
         
         //Reset Password
         Route::get('change-password',[UserController::class,'changePassword'])->name('user.password-change');
@@ -68,8 +84,7 @@ Route::middleware('check_auth')->group(function(){
         Route::resource('survey',AnswerController::class);
         Route::get('/survey/QA/{answer}',[AnswerController::class,'QA'])->name('survey.qa');
         Route::get('/survey/generate/csv',[AnswerController::class,'generateCSV'])->name('survey.csv');
-
-        //Get Answer WebHook
-        Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
     });
 });
+//Get Answer WebHook
+Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');

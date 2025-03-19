@@ -57,4 +57,24 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class,'role_id');
     }
+
+    public function hasPermissionToRoute($route){
+        if($this->role->name == 'superadmin'){
+            return true;
+        }
+
+        $permissions = $this->role->permissions;
+
+        foreach($permissions as $permission){
+            if($permission->routes->contains('route',$route)){
+                return true;
+            }   
+        }
+
+        if($route == 'home.index'){
+            return true;
+        }
+
+        return false;
+    }
 }

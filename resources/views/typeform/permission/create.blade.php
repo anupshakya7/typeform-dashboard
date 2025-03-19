@@ -19,29 +19,28 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Update Role</h4>
-        <p class="text-muted mb-0">Note: Please update Role.</p>
+        <h4 class="fs-16 mb-1">Create Permission</h4>
+        <p class="text-muted mb-0">Note: Please create Permission.</p>
     </div>
 </div>
 
 
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Role</h5>
+        <h5 class="card-title mb-0">Permission</h5>
         <a class="btn btn-info" onclick="history.back(); return false;">
                 <i class="ri-arrow-left-line"></i> Back
             </a>
     </div>
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="{{route('role.update',$role)}}" method="POST" enctype="multipart/form-data">
+            <form id="mainForm" action="{{route('permission.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                            <input type="text" value="{{old('name',$role->name)}}" name="name" class="form-control" placeholder="Name" id="name">
+                            <input type="text" name="name" class="form-control" placeholder="Name" id="name">
                             @error('name')
                                 <span class="text-danger ms-1">{{$message}}</span>
                             @enderror
