@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="form_id" class="form-label">Form Id<span class="text-danger">*</span></label>
+                            <label for="form_id" class="form-label">Survey Id<span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Form Id" id="form_id">
                                 <button type="submit" id="syncFormBtn" class="btn btn-blue"><i
@@ -60,7 +60,7 @@
 
 <div class="card" id="formForm" style="display:none;">
     <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Form</h4>
+        <h4 class="card-title mb-0 flex-grow-1">Survey</h4>
     </div><!-- end card header -->
     <div class="card-body">
         <div class="live-preview">
@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="formId" class="form-label">Form Id</label>
+                            <label for="formId" class="form-label">Survey Id<span class="text-danger">*</span></label>
                             <input type="text" name="formId" class="form-control" placeholder="Form Id" id="formId"
                                 readonly>
                         </div>
@@ -77,7 +77,7 @@
                     <!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="form_name" class="form-label">Form Name</label>
+                            <label for="form_name" class="form-label">Survey Name<span class="text-danger">*</span></label>
                             <input type="text" name="form_name" class="form-control" placeholder="Form Name"
                                 id="form_name">
                         </div>
@@ -85,7 +85,7 @@
                     <!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
+                            <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" data-choices
                                 data-choices-sorting="true">
@@ -99,7 +99,7 @@
                     <!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="organization" class="form-label">Organization</label>
+                            <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" data-choices
                                 data-choices-sorting="true">
                                 <option value="" selected>Choose Organization</option>
@@ -131,7 +131,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
-                            <label class="form-label mb-0">Before Survey Date [From - To] </label>
+                            <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
                             <input type="text" name="beforedate" class="form-control mt-2" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
                         </div>

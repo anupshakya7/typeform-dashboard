@@ -161,7 +161,7 @@
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     @foreach ($countries as $country)
                                     <option value="{{ $country['name'] }}"
-                                        {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                        {{($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':'' }}>
                                         {{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
@@ -169,11 +169,11 @@
                             <div class="col-auto p-0">
 
                                 <select class="form-select select2" id="organization" name="organization"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Organization</option>
                                     @foreach ($organizations as $organization)
                                     <option value="{{ $organization->id }}"
-                                        {{ request('organization') == $organization->id ? 'selected' : '' }}>
+                                        {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
                                         {{ $organization->name }}</option>
                                     @endforeach
                                 </select>
@@ -190,8 +190,9 @@
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Survey</option>
                                     @foreach ($surveyForms as $surveyForm)
+
                                             <option value="{{ $surveyForm->form_title }}"
-                                    {{ request('survey_form') == $surveyForm->form_title ? 'selected' : '' }}>
+                                    {{($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }}>
                                     {{ $surveyForm->form_title }}</option>
                                     @endforeach
                                 </select>

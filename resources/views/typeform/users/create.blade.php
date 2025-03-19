@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
+                            <label for="organization_id" class="form-label">Organization</label>
                             <select id="organization_id" name="organization_id" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Organization</option>
