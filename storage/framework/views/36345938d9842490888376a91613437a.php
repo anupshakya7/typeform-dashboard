@@ -7,7 +7,6 @@
 <?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col">
-
         <div class="h-100">
 
             <!--greeting section -->
@@ -269,7 +268,6 @@
                                 </div>
                             </div>
                         </div><!-- end card header -->
-
                         <div class="card-body">
                             <div id="basic_radar" data-colors='["--vz-success"]' class="apex-charts" dir="ltr">
                             </div>
@@ -565,20 +563,23 @@
 
 <script>
 $(document).ready(function() {
+    var branch_id = <?php echo json_encode($filterData->branch_id ?? null); ?>;
+    var survey_id = <?php echo json_encode($filterData->form_id ?? null); ?>;
+
     //Parameters
     var country = getQueryParams('country');
     var organization = getQueryParams('organization');
-    var branch = getQueryParams('branch');
-    var survey = getQueryParams('survey');
+    var branch = branch_id ? branch_id : getQueryParams('branch');
+    var survey = survey_id ? survey_id : getQueryParams('survey');
 
-    filterOrganization();
-    filterSurvey();
+    //filterOrganization();
     filterBranch();
+    filterSurvey();
 
     //Filter Organizations
-    $('#country').change(function() {
-        filterOrganization();
-    });
+    // $('#country').change(function() {
+    //     filterOrganization();
+    // });
 
     $('#organization').change(function() {
         filterSurvey();
@@ -590,40 +591,40 @@ $(document).ready(function() {
     });
 
 
-    function filterOrganization() {
-        var countryVal = $('#country').val();
+    // function filterOrganization() {
+    //     var countryVal = $('#country').val();
 
-        if (countryVal !== '') {
-            $.ajax({
-                url: "<?php echo e(route('organization.get')); ?>",
-                method: 'GET',
-                data: {
-                    country: countryVal
-                },
-                success: function(response) {
-                    console.log(response);
-                    $('#organization').prop('disabled', false);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                    response.organizations.forEach(function(organizationItem) {
-                        // $('#organization').append(new Option(organization.name,
-                        //     organization.id));
-                        var option = new Option(organizationItem.name, organizationItem.id);
-                        $('#organization').append(option);
+    //     if (countryVal !== '') {
+    //         $.ajax({
+    //             url: "<?php echo e(route('organization.get')); ?>",
+    //             method: 'GET',
+    //             data: {
+    //                 country: countryVal
+    //             },
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('#organization').prop('disabled', false);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //                 response.organizations.forEach(function(organizationItem) {
+    //                     // $('#organization').append(new Option(organization.name,
+    //                     //     organization.id));
+    //                     var option = new Option(organizationItem.name, organizationItem.id);
+    //                     $('#organization').append(option);
 
-                        if (organization && organization == organizationItem.id) {
-                            $(option).prop('selected', true);
-                        }
-                    })
-                },
-                error: function(xhr, status, error) {
-                    $('#organization').prop('disabled', true);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                }
-            })
-        }
-    }
+    //                     if (organization && organization == organizationItem.id) {
+    //                         $(option).prop('selected', true);
+    //                     }
+    //                 })
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 $('#organization').prop('disabled', true);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //             }
+    //         })
+    //     }
+    // }
 
     function filterBranch() {
         var organizationVal = $('#organization').val();
@@ -662,7 +663,7 @@ $(document).ready(function() {
 
     function filterSurvey() {
         var organizationVal = $('#organization').val();
-        var branchVal = $('#branch').val();
+        var branchVal = branch ;
 
         if (organizationVal !== '') {
             $.ajax({

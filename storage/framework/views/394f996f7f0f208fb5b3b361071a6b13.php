@@ -3,7 +3,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="index" class="logo logo-dark">
+        <a href="<?php echo e(route('home.index')); ?>" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
@@ -12,7 +12,7 @@
             </span>
         </a>
         <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
+        <a href="<?php echo e(route('home.index')); ?>" class="logo logo-light">
             <span class="logo-sm">
                 <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
@@ -43,6 +43,7 @@
                 
 
                 
+                <?php if(hasPermissionToRoute('user.index') || hasPermissionToRoute('role.index') || hasPermissionToRoute('permission.index') || hasPermissionToRoute('user.password-change')): ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarUser">
@@ -50,49 +51,70 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarUser">
                         <ul class="nav nav-sm flex-column">
+                            <?php if(hasPermissionToRoute('user.index')): ?>
                             <li class="nav-item">
                                 <a href="<?php echo e(route('user.index')); ?>" class="nav-link">User</a>
                             </li>
-                            
-                            
+                            <?php endif; ?>
+                            <?php if(hasPermissionToRoute('role.index')): ?>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('role.index')); ?>" class="nav-link">Role</a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(hasPermissionToRoute('permission.index')): ?>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('permission.index')); ?>" class="nav-link">Permission</a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(hasPermissionToRoute('user.password-change')): ?>
                             <li class="nav-item">
                                 <a href="<?php echo e(route('user.password-change')); ?>" class="nav-link">Reset Password</a>
                             </li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </li>
+                <?php endif; ?>
                 
 
                 
+                <?php if(hasPermissionToRoute('organization.index')): ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('organization.index')); ?>">
                     <i class="fa-solid fa-building-columns"></i> <span>Organization</span>
                     </a>
                 </li>
+                <?php endif; ?>
                 
 
                 
+                <?php if(hasPermissionToRoute('branch.index')): ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('branch.index')); ?>">
                     <i class="fa-solid fa-landmark-flag"></i> <span>Branch</span>
                     </a>
                 </li>
+                <?php endif; ?>
                 
 
                 
+                <?php if(hasPermissionToRoute('form.index')): ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
                     <i class="fa-solid fa-file"></i> <span>Form Management</span>
                     </a>
                 </li>
+                <?php endif; ?>
                 
 
                  
+                 <?php if(hasPermissionToRoute('survey.index')): ?>
                  <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('survey.index')); ?>">
                     <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
                     </a>
                 </li>
+                <?php endif; ?>
                 
 
                
