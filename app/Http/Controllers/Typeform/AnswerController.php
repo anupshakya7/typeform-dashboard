@@ -39,7 +39,7 @@ class AnswerController extends Controller
             });
         }
         
-        $answers = $answersQuery->paginate(10);
+        $answers = $answersQuery->filterSurvey()->paginate(10);
         
         
         $answers = PaginationHelper::addSerialNo($answers);
@@ -109,19 +109,27 @@ class AnswerController extends Controller
     }
 
     public function show($answer){
-       $answer = Answer::find($answer);
-
-       return view('typeform.survey.view',compact('answer'));
+       $answer = Answer::filterSurvey()->find($answer);
+       
+        if($answer){
+            return view('typeform.survey.view',compact('answer'));
+        }else{
+            return redirect()->back()->with('error','Survey Data Not Found');
+        }
     }
 
-    public function QA(Answer $answer){
-        $answer->load('form','form.question');
+    public function QA(String $id){
+        $answer = Answer::with('form','form.question')->filterSurvey()->find($id);
 
-        return view('typeform.survey.QA',compact('answer'));
+        if($answer){
+            return view('typeform.survey.QA',compact('answer'));
+        }else{
+            return redirect()->back()->with('error','Survey Data Not Found');
+        }
     }
 
     public function generateCSV(){
-        $survey = Answer::with('form','form.organization')->get();
+        $survey = Answer::with('form','form.organization')->filterSurvey()->get();
 
         $filename = 'survey.csv';
         $fp = fopen($filename,'w+');

@@ -40,6 +40,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
+                            @if(auth()->user()->role->name == 'superadmin')
                             <select id="organization_id" name="organization_id" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Organization</option>
@@ -47,6 +48,10 @@
                                 <option value="{{$organization->id}}">{{$organization->name}}</option>
                                 @endforeach
                             </select>
+                            @else
+                            <input type="text" class="form-control" placeholder="Organization" value="{{ auth()->user()->organization->name }}" readonly>
+                            <input type="hidden" name="organization_id" id="organization_id" class="form-control" value="{{ auth()->user()->organization->id }}" placeholder="Organization" readonly>
+                            @endif
                             @error('organization_id')
                                 <span class="text-danger ms-1">{{$message}}</span>
                             @enderror

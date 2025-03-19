@@ -15,6 +15,17 @@ class Organization extends Model
         'country'
     ];
 
+    public function scopeFilterOrganization($query){
+        $user = auth()->user();
+        $role = $user->role->name;
+ 
+        if($role == "organization"){
+             $query->where('id',$user->organization_id);
+        }
+ 
+        return $query;
+     }
+
     public function branches(){
         return $this->hasMany(Branch::class,'organization_id');
     }

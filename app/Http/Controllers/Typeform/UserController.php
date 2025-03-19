@@ -25,10 +25,15 @@ class UserController extends Controller
         return view('typeform.users.index',compact('users'));
     }
 
-    public function show(User $user){
-        $user->load('role','organization')->filterUser();
+    public function show(String $id){
+        $user = User::with('role','organization')->filterUser()->find($id);
+
+        if($user){
+            return view('typeform.users.view',compact('user'));
+        }else{
+            return redirect()->back()->with('error','User Not Found');
+        }
         
-        return view('typeform.users.view',compact('user'));
     }
 
     public function create(){
@@ -68,11 +73,15 @@ class UserController extends Controller
         }
     }
 
-    public function edit(User $user){
-        $user->load('role','organization');
+    public function edit(String $id){
+        $user = User::with('role','organization')->filterUser()->find($id);
         $organizations = Organization::all();
 
-        return view('typeform.users.edit',compact('user','organizations'));
+        if($user){
+            return view('typeform.users.edit',compact('user','organizations'));
+        }else{
+            return redirect()->back()->with('error','User Not Found');
+        }
     }
 
     public function update(Request $request,User $user){
@@ -97,7 +106,7 @@ class UserController extends Controller
             'item_id'=>'required|integer'
         ]);
 
-        $userDelete = User::find($validatedData['item_id']);
+        $userDelete = User::filterUser()->find($validatedData['item_id']);
 
         if($userDelete){
             $userDelete->delete();

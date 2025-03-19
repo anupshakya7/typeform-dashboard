@@ -13,18 +13,24 @@ use Illuminate\Support\Facades\Storage;
 class BranchController extends Controller
 {
     public function index(){
-        $branches = Branch::with('organization')->paginate(10);
+        $branches = Branch::with('organization')->filterBranch()->paginate(10);
         $branches = PaginationHelper::addSerialNo($branches);
 
         return view('typeform.branch.index',compact('branches'));
     }
 
-    public function show(Branch $branch){
-        return view('typeform.branch.view',compact('branch'));
+    public function show(String $id){
+        $branch = Branch::filterBranch()->find($id);
+        
+        if($branch){
+            return view('typeform.branch.view',compact('branch'));
+        }else{
+            return redirect()->back()->with('error','Branch Not Found');
+        }
     }
 
     public function create(){
-        $organizations = Organization::all();
+        $organizations = Organization::filterOrganization()->get();
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
 
@@ -47,12 +53,17 @@ class BranchController extends Controller
         }
     }
 
-    public function edit(Branch $branch){
-        $organizations = Organization::all();
+    public function edit(String $id){
+        $branch = Branch::filterBranch()->find($id);
+        $organizations = Organization::filterOrganization()->get();
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
 
-        return view('typeform.branch.edit',compact('branch','organizations','countries'));
+        if($branch){
+            return view('typeform.branch.edit',compact('branch','organizations','countries'));
+        }else{
+            return redirect()->back()->with('error','Branch Not Found');
+        }
     }
 
     public function update(Request $request,Branch $branch){
@@ -76,7 +87,7 @@ class BranchController extends Controller
             'item_id'=>'required|integer'
         ]);
 
-        $branchDelete = Branch::find($validatedData['item_id']);
+        $branchDelete = Branch::filterBranch()->find($validatedData['item_id']);
 
         if($branchDelete){
             $branchDelete->delete();
@@ -88,7 +99,7 @@ class BranchController extends Controller
     }
 
     public function generateCSV(){
-        $branches = Branch::with('organization')->get();
+        $branches = Branch::with('organization')->filterBranch()->get();
         $filename = "branch.csv";
         $fp = fopen($filename,'w+');
         fputcsv($fp,array('ID','Organization','Name','Created At'));
