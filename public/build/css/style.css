@@ -1,3 +1,7 @@
+
+*, html {
+    font-family: Arial, sans-serif;
+}
 body{
     background-color: #F4F4F4 ;
 }
@@ -51,6 +55,7 @@ body{
   }
 h1,h2,h3,h4,h5,h6 {
     color: black;
+    font-family: Arial, sans-seri !important;
 }
 
 .card-title {
@@ -196,7 +201,7 @@ table th, table td {
 .aside-tag {
     padding: 0.5rem 1.5rem;
     font-size: 9px;
-    font-family: 'inter',sans-serif;
+    font-family: 'Arial',sans-serif;
     color: #727272;
 }
 
@@ -212,9 +217,6 @@ table th, table td {
 .nav-item.active-nav {
     background-color: #F4F4F4;  
     border-radius: 5px;
-}
-.nav-item.active-nav:hover {
-    /* border-radius: 0px !important; */
 }
 
 .nav-item:hover {
@@ -341,6 +343,9 @@ table th, table td {
     top: 35px !important;
     right: 30px !important;
 }
+.apexcharts-legend-text {
+    font-family: Arial, sans-serif !important;
+}
 #simple_pie_chart {
     margin-left: -50px;
 }
@@ -353,3 +358,7 @@ table th, table td {
 .language-top-button {
     display: none;
 } 
+.card {
+    border-radius: 10px !important;
+    overflow: hidden;
+}

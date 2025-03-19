@@ -956,59 +956,7 @@ $(document).ready(function() {
         chart2.render();
     }
 
-    // var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
-    // if (chartPieBasicColors2) {
-    //     // Fetch the data (replace this with your actual data fetching logic)
-    //     var age18to24 = "<?php echo e($participantDetails['ageWise']['18 to 24']); ?>"; // e.g., "30"
-    //     var age25to44 = "<?php echo e($participantDetails['ageWise']['25 to 44']); ?>"; // e.g., "40"
-    //     var age45to64 = "<?php echo e($participantDetails['ageWise']['45 to 64']); ?>"; // e.g., "20"
-    //     var age65orOver = "<?php echo e($participantDetails['ageWise']['65 or over']); ?>"; // e.g., "10"
-
-    //     // Convert the data to numbers
-    //     var age18to24Number = parseInt(age18to24);
-    //     var age25to44Number = parseInt(age25to44);
-    //     var age45to64Number = parseInt(age45to64);
-    //     var age65orOverNumber = parseInt(age65orOver);
-
-    //     // Log the data to verify
-    //     console.log("18 to 24 years:", age18to24Number);
-    //     console.log("25 to 44 years:", age25to44Number);
-    //     console.log("45 to 64 years:", age45to64Number);
-    //     console.log("65 or over:", age65orOverNumber);
-
-    //     // Check if the data is valid
-    //     if (
-    //         !isNaN(age18to24Number) &&
-    //         !isNaN(age25to44Number) &&
-    //         !isNaN(age45to64Number) &&
-    //         !isNaN(age65orOverNumber)
-    //     ) {
-    //         var options = {
-    //             series: [age18to24Number, age25to44Number, age45to64Number,
-    //             age65orOverNumber], // Use numeric values
-    //             chart: {
-    //                 height: 192,
-    //                 type: 'pie',
-    //             },
-    //             labels: ['18 to 24 years', '25 to 44 years', '45 to 64 years', '65 or over'],
-    //             legend: {
-    //                 position: 'right'
-    //             },
-    //             dataLabels: {
-    //                 dropShadow: {
-    //                     enabled: false,
-    //                 }
-    //             },
-    //             colors: chartPieBasicColors2
-    //         };
-
-    //         var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
-    //         chart2.render();
-    //     } else {
-    //         console.error("Invalid data for series. Age-wise counts must be numbers.");
-    //     }
-    // }
-
+    
 
     //Positive Peace Bar
     var areachartSalesColorst = "";
