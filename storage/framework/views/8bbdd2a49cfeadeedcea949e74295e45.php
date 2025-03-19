@@ -1,10 +1,9 @@
-@extends('typeform.layout.web')
-@section('title')
-@lang('translation.crm')
-@endsection
+<?php $__env->startSection('title'); ?>
+<?php echo app('translator')->get('translation.crm'); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col">
         <div class="h-100">
@@ -13,32 +12,32 @@
 
             <div class="mb-3 pb-1 d-block d-sm-flex align-items-center flex-row gap-3">
                 <div>
-                    <h4 class="fs-16 mb-1">Welcome back, {{auth()->user()->name}}</h4>
+                    <h4 class="fs-16 mb-1">Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     <p class="text-muted mb-0">Get insights, track trends, compare data, manage.</p>
                 </div>
                 <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
-                    <form action="{{route('home.index')}}" method="GET">
+                    <form action="<?php echo e(route('home.index')); ?>" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard">
                             <div class="col-auto p-0">
                                 <select class="form-select select2" name="country" id="country"
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Country</option>
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country['name'] }}"
-                                        {{($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':'' }}>
-                                        {{ $country['name'] }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($country['name']); ?>"
+                                        <?php echo e(($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':''); ?>>
+                                        <?php echo e($country['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             <div class="col-auto p-0">
                                 <select class="form-select select2" id="organization" name="organization"
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Organization</option>
-                                    @foreach ($organizations as $organization)
-                                    <option value="{{ $organization->id }}"
-                                        {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
-                                        {{ $organization->name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($organization->id); ?>"
+                                        <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
+                                        <?php echo e($organization->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -52,11 +51,7 @@
                                 <select class="form-select select2" name="survey" id="survey"
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Survey</option>
-                                    {{-- @foreach ($surveyForms as $surveyForm)
-                                            <option value="{{ $surveyForm->form_title }}"
-                                    {{ request('survey_form') == $surveyForm->form_title ? 'selected' : '' }}>
-                                    {{ $surveyForm->form_title }}</option>
-                                    @endforeach --}}
+                                    
                                 </select>
                             </div>
                             <div class="col-auto p-0">
@@ -64,7 +59,7 @@
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                     <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
 
                                 </a>
 
@@ -103,7 +98,7 @@
                             <div class="d-flex align-items-end justify-content-between mt-4">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                        data-target="{{$topBox['survey']}}">{{$topBox['survey']}}</span>
+                                        data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                                 </h4>
 
 
@@ -134,7 +129,7 @@
                             <div class="d-flex align-items-end justify-content-between mt-4">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
-                                        data-target="{{$topBox['countries']}}">{{$topBox['countries']}}</span>
+                                        data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
                                 </h4>
 
 
@@ -163,7 +158,7 @@
                             <div class="d-flex align-items-end justify-content-between mt-4">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                        data-target="{{$topBox['organizations']}}">{{$topBox['organizations']}}</span>
+                                        data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
                                 </h4>
 
 
@@ -190,7 +185,7 @@
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                        data-target="{{$topBox['people']}}">{{$topBox['people']}}</span>
+                                        data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                                 </h4>
 
 
@@ -218,13 +213,13 @@
                                 class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                 <img class="svg-icon" type="image/svg+xml"
-                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                             </a>
                             <a class="icon-frame" href="#"
                                 class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                 <img class="svg-icon" type="image/svg+xml"
-                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                             </a>
                         </div>
@@ -253,13 +248,13 @@
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                     </a>
                                     <a class="icon-frame" href="#"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
                                 </div>
@@ -285,13 +280,13 @@
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                     </a>
                                     <a class="icon-frame" href="#"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
                                 </div>
@@ -319,13 +314,13 @@
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                     </a>
                                     <a class="icon-frame" href="#"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
                                 </div>
@@ -364,13 +359,13 @@
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <a class="icon-frame" href="#"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -399,13 +394,13 @@
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <a class="icon-frame" href="#"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -436,13 +431,13 @@
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                     <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                 </a>
                                 <a class="icon-frame" href="#"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                     <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                        src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                 </a>
                             </div>
@@ -469,13 +464,13 @@
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <a class="icon-frame" href="#"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -497,7 +492,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php
+                                                <?php
                                                     $pillars = [
                                                         'well_functioning_government'=>'Well-Functioning Government',
                                                         'low_level_corruption'=>'Low Levels of Corruption',
@@ -508,16 +503,16 @@
                                                         'sound_business'=>'Sound Business Environment',
                                                         'acceptance_rights'=>'Acceptance of the Rights of Others'
                                                     ]
-                                                @endphp
-                                                @foreach($pillarMeanScore['mean'] as $key=>$pillar)
+                                                ?>
+                                                <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$pillar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td><span class="fw-medium pillar-text">{{$pillars[$key]}}</span>
+                                                    <td><span class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                     </td>
-                                                    <td>{{$pillar}}</td>
-                                                    <td>{{$pillarMeanScore['countryMean'][$key]}}</td>
-                                                    <td>{{$pillarMeanScore['globalMean'][$key]}}</td>
+                                                    <td><?php echo e($pillar); ?></td>
+                                                    <td><?php echo e($pillarMeanScore['countryMean'][$key]); ?></td>
+                                                    <td><?php echo e($pillarMeanScore['globalMean'][$key]); ?></td>
                                                 </tr>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                             </tbody>
 
@@ -534,151 +529,7 @@
 
                 <!--table section starts here -->
 
-                {{-- <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card mb-0">
-                            <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
-                                <div class="flex-shrink-0">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div><!-- end card header -->
-
-                            <div class="card-body">
-                                <div class="live-preview">
-                                    <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap mb-0">
-                                            <thead class="table-light">
-                                                <tr>
-
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Before</th>
-                                                    <th scope="col">During</th>
-                                                    <th scope="col">% Change</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Well-Functioning
-                                                            Government</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%<img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                                alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Low Levels of
-                                                            Corruption</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                                            Resource</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-red">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Good Relations With
-                                                            Neighbours</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%<img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                                alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Free Flow Of
-                                                            Information</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
-                                                            Capital</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-red">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Sound Business
-                                                            Environment</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                                            Of
-                                                            Others</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td><span class="trend-blue">3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}"
-                                                            alt="ArrowExternalRight"></td>
-
-                                                </tr>
-
-                                            </tbody>
-
-                                        </table>
-                                        <!-- end table -->
-                                    </div>
-                                    <!-- end table responsive -->
-                                </div>
-
-                            </div>
-                        </div><!-- end card-body -->
-                    </div><!-- end card -->
-                </div> --}}
+                
                 <!-- end col -->
             </div>
             <!--end row-->
@@ -691,22 +542,22 @@
 
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <!-- apexcharts -->
-<script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-<script src="{{ URL::asset('build/js/app.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
 <script>
 $(document).ready(function() {
-    var branch_id = {!! json_encode($filterData->branch_id ?? null) !!};
-    var survey_id = {!! json_encode($filterData->form_id ?? null) !!};
+    var branch_id = <?php echo json_encode($filterData->branch_id ?? null); ?>;
+    var survey_id = <?php echo json_encode($filterData->form_id ?? null); ?>;
 
     //Parameters
     var country = getQueryParams('country');
@@ -738,7 +589,7 @@ $(document).ready(function() {
 
     //     if (countryVal !== '') {
     //         $.ajax({
-    //             url: "{{ route('organization.get') }}",
+    //             url: "<?php echo e(route('organization.get')); ?>",
     //             method: 'GET',
     //             data: {
     //                 country: countryVal
@@ -773,7 +624,7 @@ $(document).ready(function() {
 
         if (organizationVal !== '') {
             $.ajax({
-                url: "{{ route('branch.get') }}",
+                url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',
                 data: {
                     organization_id: organizationVal
@@ -806,10 +657,11 @@ $(document).ready(function() {
     function filterSurvey() {
         var organizationVal = $('#organization').val();
         var branchVal = branch ;
+        console.log(branchVal);
 
         if (organizationVal !== '') {
             $.ajax({
-                url: "{{ route('survey.get') }}",
+                url: "<?php echo e(route('survey.get')); ?>",
                 method: 'GET',
                 data: {
                     organization_id: organizationVal,
@@ -855,29 +707,29 @@ $(document).ready(function() {
         var options = {
             series: [{
                     name: 'Well Functioning Government',
-                    data: ["{{$meanScore['well_functioning_government']}}"]
+                    data: ["<?php echo e($meanScore['well_functioning_government']); ?>"]
                 }, {
                     name: 'Low Levels of corruption',
-                    data: ["{{$meanScore['low_level_corruption']}}"]
+                    data: ["<?php echo e($meanScore['low_level_corruption']); ?>"]
                 },
                 {
                     name: 'Equitable distribution of resources',
-                    data: ["{{$meanScore['equitable_distribution']}}"]
+                    data: ["<?php echo e($meanScore['equitable_distribution']); ?>"]
                 }, {
                     name: 'Good relations with neighbours',
-                    data: ["{{$meanScore['good_relations']}}"]
+                    data: ["<?php echo e($meanScore['good_relations']); ?>"]
                 }, {
                     name: 'Free Flow Of Information',
-                    data: ["{{$meanScore['free_flow']}}"]
+                    data: ["<?php echo e($meanScore['free_flow']); ?>"]
                 }, {
                     name: 'High Levels Of Human Capital',
-                    data: ["{{$meanScore['high_levels']}}"]
+                    data: ["<?php echo e($meanScore['high_levels']); ?>"]
                 }, {
                     name: 'Sound Business Environment',
-                    data: ["{{$meanScore['sound_business']}}"]
+                    data: ["<?php echo e($meanScore['sound_business']); ?>"]
                 }, {
                     name: 'Acceptance Of The Rights Of Others',
-                    data: ["{{$meanScore['acceptance_rights']}}"]
+                    data: ["<?php echo e($meanScore['acceptance_rights']); ?>"]
                 }
             ],
 
@@ -962,14 +814,14 @@ $(document).ready(function() {
             series: [{
                 name: 'Mean',
                 data: 
-                ["{{$meanScore['well_functioning_government']}}",
-                    "{{$meanScore['low_level_corruption']}}",
-                    " {{$meanScore['equitable_distribution']}}",
-                    "{{$meanScore['good_relations']}}",
-                    "{{$meanScore['free_flow']}}",
-                    "{{$meanScore['high_levels']}}",
-                    "{{$meanScore['sound_business']}}",
-                    "{{$meanScore['acceptance_rights']}}"
+                ["<?php echo e($meanScore['well_functioning_government']); ?>",
+                    "<?php echo e($meanScore['low_level_corruption']); ?>",
+                    " <?php echo e($meanScore['equitable_distribution']); ?>",
+                    "<?php echo e($meanScore['good_relations']); ?>",
+                    "<?php echo e($meanScore['free_flow']); ?>",
+                    "<?php echo e($meanScore['high_levels']); ?>",
+                    "<?php echo e($meanScore['sound_business']); ?>",
+                    "<?php echo e($meanScore['acceptance_rights']); ?>"
                 ],
             }],
             chart: {
@@ -1025,8 +877,8 @@ $(document).ready(function() {
     var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
     if (chartPieBasicColors) {
         var options = {
-            series: ["{{$participantDetails['genderWise']['male']}}",
-                "{{$participantDetails['genderWise']['female']}}"
+            series: ["<?php echo e($participantDetails['genderWise']['male']); ?>",
+                "<?php echo e($participantDetails['genderWise']['female']); ?>"
             ],
             chart: {
                 height: 192,
@@ -1053,10 +905,11 @@ $(document).ready(function() {
     if(chartPieBasicColors2){
         var options = {
             series: [
-                {{$participantDetails['ageWise']['18 to 24']}}, 
-                {{$participantDetails['ageWise']['25 to 44']}}, 
-                {{$participantDetails['ageWise']['45 to 64']}}, 
-                {{$participantDetails['ageWise']['65 or over']}}
+                <?php echo e($participantDetails['ageWise']['18 to 24']); ?>, 
+                <?php echo e($participantDetails['ageWise']['25 to 44']); ?>, 
+                <?php echo e($participantDetails['ageWise']['45 to 64']); ?>, 
+                <?php echo e($participantDetails['ageWise']['65 or over']); ?>
+
             ],
             chart: {
                 height: 192,
@@ -1085,13 +938,13 @@ $(document).ready(function() {
          var options = {
             series: [{
                 name: 'Mean',
-                data: ["{{$positivePeace['mean']}}"]
+                data: ["<?php echo e($positivePeace['mean']); ?>"]
             }, {
                 name: 'Country Mean',
-                data: ["{{$positivePeace['countryMean']}}"]
+                data: ["<?php echo e($positivePeace['countryMean']); ?>"]
             }, {
                 name: 'Global Mean',
-                data: ["{{$positivePeace['globalMean']}}"]
+                data: ["<?php echo e($positivePeace['globalMean']); ?>"]
             }],
              chart: {
                  type: 'bar',
@@ -1175,13 +1028,13 @@ $(document).ready(function() {
          var options = {
             series: [{
                 name: 'Mean',
-                data: ["{{$negativePeace['mean']}}"]
+                data: ["<?php echo e($negativePeace['mean']); ?>"]
             }, {
                 name: 'Country Mean',
-                data: ["{{$negativePeace['countryMean']}}"]
+                data: ["<?php echo e($negativePeace['countryMean']); ?>"]
             }, {
                 name: 'Global Mean',
-                data: ["{{$negativePeace['globalMean']}}"]
+                data: ["<?php echo e($negativePeace['globalMean']); ?>"]
             }],
              chart: {
                  type: 'bar',
@@ -1265,25 +1118,25 @@ $(document).ready(function() {
                 {
                     name: 'Mean',
                     data: [
-                        @foreach($pillarMeanScore['mean'] as $key=>$means)
-                            {{$means}},
-                        @endforeach
+                        <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php echo e($means); ?>,
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 },
                 {
                     name: 'Country Mean',
                     data: [
-                        @foreach($pillarMeanScore['countryMean'] as $key=>$means)
-                            {{$means}},
-                        @endforeach
+                        <?php $__currentLoopData = $pillarMeanScore['countryMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php echo e($means); ?>,
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 },
                 {
                     name: 'Global Mean',
                     data: [
-                        @foreach($pillarMeanScore['globalMean'] as $key=>$means)
-                            {{$means}},
-                        @endforeach
+                        <?php $__currentLoopData = $pillarMeanScore['globalMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php echo e($means); ?>,
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 }
             ],
@@ -1324,4 +1177,5 @@ $(document).ready(function() {
 
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/index.blade.php ENDPATH**/ ?>

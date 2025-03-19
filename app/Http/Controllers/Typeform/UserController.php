@@ -120,7 +120,13 @@ class UserController extends Controller
     }
 
     public function assignRole(User $user){
-        $roles = Role::all();
+        $userRole = auth()->user()->role->name;
+        if($userRole == 'superadmin'){
+            $roles = Role::all();
+        }else{
+            $roles = Role::whereNot('name','superadmin')->get();
+        }
+        
         return view('typeform.users.assignRole',compact('user','roles'));
     }
 

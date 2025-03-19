@@ -59,16 +59,20 @@ class User extends Authenticatable
     }
 
     public function hasPermissionToRoute($route){
-        if($this->role == 'iep'){
+        if($this->role->name == 'superadmin'){
             return true;
         }
 
         $permissions = $this->role->permissions;
-        
+
         foreach($permissions as $permission){
             if($permission->routes->contains('route',$route)){
                 return true;
             }   
+        }
+
+        if($route == 'home.index'){
+            return true;
         }
 
         return false;

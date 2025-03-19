@@ -38,7 +38,7 @@ Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->nam
 //Custom Auth
 Route::post('/loginSubmit',[LoginController::class,'login'])->name('login.submit');
 
-Route::middleware('check_auth')->group(function(){
+Route::middleware('check_auth','check_route')->group(function(){
     Route::get('/',[IndexController::class,'index'])->name('home.index');
 
     Route::prefix('typeform')->group(function(){
