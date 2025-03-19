@@ -84,8 +84,7 @@ Route::middleware('check_auth')->group(function(){
         Route::resource('survey',AnswerController::class);
         Route::get('/survey/QA/{answer}',[AnswerController::class,'QA'])->name('survey.qa');
         Route::get('/survey/generate/csv',[AnswerController::class,'generateCSV'])->name('survey.csv');
-
-        //Get Answer WebHook
-        Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
     });
 });
+//Get Answer WebHook
+Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
