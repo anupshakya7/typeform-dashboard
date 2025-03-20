@@ -19,10 +19,10 @@ body{
 }
 
 .trend-blue {
-    color: rgb(80, 80, 255);
+    color: #339966;
 }
 .trend-red {
-    color: rgb(235, 48, 48);
+    color: #f50a25;
 }
 .footer {
     background-color: #f3f3f9;
@@ -268,7 +268,6 @@ table th, table td {
     overflow: hidden !important;
     color: #333;
     gap: 7px;
-    font-family: 'Roboto',sans-serif;
 }
 .navbar-nav {
     margin: 0px 10px;

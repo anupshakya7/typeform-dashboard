@@ -22,8 +22,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Survey Management</h4>
-        <p class="text-muted mb-0">Survey management involves viewing, exporting, sorting, filtering, and organizing
+        <h4 class="fs-16 mb-1">Survey Data</h4>
+        <p class="text-muted mb-0">Survey data involves viewing, exporting, sorting, filtering, and organizing
             surveys.</p>
     </div>
 </div>
@@ -37,7 +37,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header align-items-center d-flex justify-content-between">
-                <h5 class="card-title mb-0">Survey Lists</h5>
+                <h5 class="card-title mb-0">Survey Data</h5>
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
@@ -102,11 +102,11 @@
                                 <th scope="col">
                                     S.No.
                                 </th>
+                                <th>Survey Data ID</th>
                                 <th>Survey ID</th>
-                                <th>Form ID</th>
-                                <th>Form Name</th>
-                                <th>Form Country</th>
-                                <th>Form Organization</th>
+                                <th>Survey Name</th>
+                                <th>Survey Country</th>
+                                <th>Survey Organization</th>
                                 <th>Participants Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>

@@ -187,9 +187,13 @@
                             </div>
                             <div class="col-auto p-0">
                                 <select class="form-select select2" name="survey" id="survey"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Survey</option>
-                                    
+                                    <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($surveyForm->form_title); ?>"
+                                    <?php echo e(request('survey_form') == $surveyForm->form_title ? 'selected' : ''); ?>>
+                                    <?php echo e($surveyForm->form_title); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             <div class="col-auto p-0">
@@ -223,7 +227,8 @@
                                 <img class="svg-icon" type="image/svg+xml"
                                     src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                             </a>
-                            <a class="icon-frame" href="#"
+                            <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                 class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                 <img class="svg-icon" type="image/svg+xml"
@@ -252,7 +257,8 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
@@ -284,13 +290,14 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href="#" 
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
                                             src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                     </a>
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
@@ -317,13 +324,14 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href=""
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
                                             src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                     </a>
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href=""  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
@@ -368,7 +376,8 @@
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
-                                        <a class="icon-frame" href="#"
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
@@ -403,7 +412,8 @@
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
-                                        <a class="icon-frame" href="#"
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
@@ -440,7 +450,8 @@
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                 </a>
-                                <a class="icon-frame" href="#"
+                                <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                     <img class="svg-icon" type="image/svg+xml"
@@ -473,7 +484,8 @@
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
-                                        <a class="icon-frame" href="#"
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"

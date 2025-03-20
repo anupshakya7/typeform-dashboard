@@ -227,7 +227,8 @@
                                 <img class="svg-icon" type="image/svg+xml"
                                     src="{{ URL::asset('build/icons/download.svg') }}"></img>
                             </a>
-                            <a class="icon-frame" href="#"
+                            <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                 class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                 <img class="svg-icon" type="image/svg+xml"
@@ -256,7 +257,8 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
@@ -288,13 +290,14 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href="#" 
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
                                             src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                     </a>
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
@@ -321,13 +324,14 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href=""
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
                                             src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                     </a>
-                                    <a class="icon-frame" href="#"
+                                    <a class="icon-frame" href=""  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
@@ -372,7 +376,8 @@
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                         </a>
-                                        <a class="icon-frame" href="#"
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
@@ -407,7 +412,8 @@
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                         </a>
-                                        <a class="icon-frame" href="#"
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
@@ -444,7 +450,8 @@
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                 </a>
-                                <a class="icon-frame" href="#"
+                                <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                     <img class="svg-icon" type="image/svg+xml"
@@ -477,7 +484,8 @@
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                         </a>
-                                        <a class="icon-frame" href="#"
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
@@ -554,7 +562,8 @@
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
                 </a>
-                <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                     <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
                 </a>
@@ -584,7 +593,7 @@
                             </td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-blue">3.8%<img class="trend-icon"
+                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
                                         src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
                             </td>
 
@@ -595,7 +604,7 @@
                                     Corruption</span></td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
                                     src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
                         </tr>
@@ -605,7 +614,7 @@
                                     Resource</span></td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-red">3.8%</span><img class="trend-icon"
+                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
                                     src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
 
                         </tr>
@@ -616,7 +625,7 @@
                             </td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-blue">3.8%<img class="trend-icon"
+                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
                                         src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
                             </td>
 
@@ -627,7 +636,7 @@
                                     Information</span></td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
                                     src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
                         </tr>
@@ -638,7 +647,7 @@
                             </td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-red">3.8%</span><img class="trend-icon"
+                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
                                     src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
 
                         </tr>
@@ -649,7 +658,7 @@
                             </td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
                                     src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
                         </tr>
@@ -660,7 +669,7 @@
                                     Others</span></td>
                             <td>3.8</td>
                             <td>3.8</td>
-                            <td><span class="trend-blue">3.8%</span><img class="trend-icon"
+                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
                                     src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
                         </tr>

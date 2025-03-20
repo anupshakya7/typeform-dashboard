@@ -120,7 +120,7 @@
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <!-- <h6 class="dropdown-header">Welcome Anna!</h6> -->
-                        <a class="dropdown-item" href="pages-profile"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
+                        
                         <a class="dropdown-item " href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1"></i> <span key="t-logout"><?php echo app('translator')->get('translation.logout'); ?></span></a>
                         <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
                             <?php echo csrf_field(); ?>
