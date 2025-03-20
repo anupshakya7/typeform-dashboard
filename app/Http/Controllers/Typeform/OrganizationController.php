@@ -26,18 +26,18 @@ class OrganizationController extends Controller
     }
 
     public function create(){
-        $countriesPath = public_path('build/js/countries/countries.json');
-        $countries = json_decode(File::get($countriesPath),true);
+        // $countriesPath = public_path('build/js/countries/countries.json');
+        // $countries = json_decode(File::get($countriesPath),true);
 
 
-        return view('typeform.organization.create',compact('countries'));
+        return view('typeform.organization.create');
     }
 
     public function store(Request $request){
         $validatedData = $request->validate([
             'name'=>'required|string|min:2',
             'logo'=>'nullable|mimes:png,jpg,jpeg|max:2048',
-            'country'=>'required|string'
+            // 'country'=>'required|string'
         ]);
 
         if($request->hasFile('logo') && $request->file('logo')->isValid()){
@@ -60,17 +60,17 @@ class OrganizationController extends Controller
     }
 
     public function edit(Organization $organization){
-        $countriesPath = public_path('build/js/countries/countries.json');
-        $countries = json_decode(File::get($countriesPath),true);
+        // $countriesPath = public_path('build/js/countries/countries.json');
+        // $countries = json_decode(File::get($countriesPath),true);
 
-        return view('typeform.organization.edit',compact('organization','countries'));
+        return view('typeform.organization.edit',compact('organization'));
     }
 
     public function update(Request $request,Organization $organization){
         $validatedData = $request->validate([
             'name'=>'required|string|min:2',
             'logo'=>'nullable|mimes:png,jpg,jpeg|max:2048',
-            'country'=>'required|string'
+            // 'country'=>'required|string'
         ]);
 
         if($request->hasFile('logo') && $request->file('logo')->isValid()){

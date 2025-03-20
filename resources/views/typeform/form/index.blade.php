@@ -87,6 +87,7 @@
                                         <option value="{{$country['name']}}" {{request('country') == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
                                     @endforeach
                                 </select> </div>
+                            @if(auth()->user()->role->name =='superadmin')
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
@@ -96,6 +97,7 @@
                                         @endforeach
                                     </select> </div>
                             </div>
+                            @endif
                     </div>
                 </form>
                 </div>

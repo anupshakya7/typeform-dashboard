@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="formId" class="form-label">Survey Id</label>
+                            <label for="formId" class="form-label">Survey Id<span class="text-danger">*</span></label>
                             <input type="text" name="formId" value="<?php echo e(old('formId',$form->form_id)); ?>" class="form-control" placeholder="Form Id" id="formId"
                                 readonly>
                         </div>
@@ -39,7 +39,7 @@
                     <!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="form_name" class="form-label">Survey Name</label>
+                            <label for="form_name" class="form-label">Survey Name<span class="text-danger">*</span></label>
                             <input type="text" name="form_name" value="<?php echo e(old('form_name',$form->form_title)); ?>" class="form-control" placeholder="Form Name"
                                 id="form_name">
                         </div>
@@ -47,7 +47,7 @@
                     <!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
+                            <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" data-choices
                                 data-choices-sorting="true">
@@ -61,7 +61,7 @@
                     <!--end col-->
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="organization" class="form-label">Organization</label>
+                            <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" data-choices
                                 data-choices-sorting="true">
                                 <option value="" selected>Choose Organization</option>
@@ -110,7 +110,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
-                            <label class="form-label mb-0">Before Survey Date [From - To] </label>
+                            <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
                             <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->before)); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
                         </div>

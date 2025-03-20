@@ -36,21 +36,26 @@ class FormController extends Controller
             $formsQuery->where('organization_id',$request->organization);
         }
 
-        $forms = $formsQuery->latest()->paginate(10);
+        $forms = $formsQuery->filterForm()->latest()->paginate(10);
         
         $forms = PaginationHelper::addSerialNo($forms);
 
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
-        $organizations = Organization::all();
+        $organizations = Organization::filterOrganization()->get();
 
         return view('typeform.form.index',compact('forms','countries','organizations'));
     }
 
-    public function show(Form $form)
+    public function show(String $id)
     {
-        $form->load('organization','branches');
-        return view('typeform.form.view',compact('form'));
+        $form = Form::with('organization','branches')->filterForm()->find($id);
+
+        if($form){
+            return view('typeform.form.view',compact('form'));
+        }else{
+            return redirect()->back()->with('error','Form Not Found');
+        }
     }
 
     public function create()
@@ -58,7 +63,7 @@ class FormController extends Controller
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
 
-        $organizations = Organization::all();
+        $organizations = Organization::filterOrganization()->get();
 
         return view('typeform.form.create',compact('countries','organizations'));
     }
@@ -208,10 +213,15 @@ class FormController extends Controller
 
     public function filterOrganization(Request $request){
         $validatedData = $request->validate([
-            'country' => 'required|string'
+            'country' => 'nullable|string'
         ]);
 
-        $organizations = Organization::where('country',$validatedData['country'])->get();
+        $organizationsQuery = Organization::query();
+
+        if($request->filled('country')){
+            $organizationsQuery->where('country',$validatedData['country']);
+        }
+        $organizations = $organizationsQuery->get();
         
         if($organizations){
             return response()->json([
@@ -273,16 +283,20 @@ class FormController extends Controller
         }
     }
 
-    public function edit(Form $form)
+    public function edit(String $id)
     {
-        $form->load('branches','branches.organization');
-        // dd($form);
+        $form = Form::with('branches','branches.organization')->filterForm()->find($id);
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
 
-        $organizations = Organization::all();
+        $organizations = Organization::filterOrganization()->get();
 
-        return view('typeform.form.edit',compact('form','countries','organizations'));
+        if($form){
+            return view('typeform.form.edit',compact('form','countries','organizations'));
+        }else{
+            return redirect()->back()->with('error','Form Not Found');
+        }
+       
     }
 
 
@@ -350,8 +364,9 @@ class FormController extends Controller
         $validatedData = $request->validate([
             'item_id'=>'required|integer'
         ]);
+        
 
-        $formDelete = Form::find($validatedData['item_id']);
+        $formDelete = Form::filterForm()->find($validatedData['item_id']);
 
         if($formDelete){
             $formDelete->delete();
@@ -362,13 +377,19 @@ class FormController extends Controller
         }
     }
 
-    public function formQuestion(Form $form){
-        $form->load('question');
-        return view('typeform.form.questions',compact('form'));
+    public function formQuestion(String $id){
+        $form = Form::with('question')->filterForm()->find($id);
+        
+        if($form){
+            return view('typeform.form.questions',compact('form'));
+        }else{
+            return redirect()->back()->with('error','Form Not Found');
+        }
+        
     }
 
     public function generateCSV(){
-        $forms = Form::with('organization','branches')->get();
+        $forms = Form::with('organization','branches')->filterForm()->get();
         $filename = "form.csv";
         $fp = fopen($filename,'w+');
         fputcsv($fp,array('ID','Form Id','Form Title','Country','Organization','Branch','Branch Level','Before','During','After','Created At'));
