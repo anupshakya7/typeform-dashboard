@@ -54,10 +54,7 @@
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>Country</th>
-                                <td><?php echo e($organization->country); ?></td>
-                            </tr>
+                            
                             <tr>
                                 <th>Created At</th>
                                 <td><?php echo e(Carbon\Carbon::parse($organization->created_at)->format('d M, Y')); ?></td>

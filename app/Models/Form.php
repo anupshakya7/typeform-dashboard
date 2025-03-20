@@ -21,6 +21,23 @@ class Form extends Model
         'after'
     ];
 
+    public function scopeFilterForm($query){
+        $user = auth()->user();
+        $role = $user->role->name;
+
+        $branchIds = is_array($user->branch_id) ? $user->branch_id : explode(', ',$user->branch_id);
+ 
+        if($role == "survey"){
+             $query->where('organization_id',$user->organization_id)->where('form_id',$user->form_id);
+        }elseif($role =="branch"){
+             $query->where('organization_id',$user->organization_id)->whereIn('branch_id',$branchIds);
+        }elseif($role == "organization"){
+             $query->where('organization_id',$user->organization_id);
+        }
+ 
+        return $query;
+     }
+
     public function organization(){
         return $this->hasOne(Organization::class,'id','organization_id');
     }

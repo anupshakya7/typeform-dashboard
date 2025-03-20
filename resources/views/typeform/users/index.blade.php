@@ -69,7 +69,9 @@
                                     <th>Email</th>
                                     <th>Organization</th>
                                     <th>Role</th>
+                                    {{-- @if(auth()->user()->role->name == 'superadmin')
                                     <th>Authorize</th>
+                                    @endif --}}
                                     <th>Action</th>
 
                                 </tr>
@@ -82,26 +84,30 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ optional($user->organization)->name }}</td>
                                         <td><span class="btn btn-sm btn-danger">{{ optional($user->role)->name }}</span></td>
+                                        {{-- @if(auth()->user()->role->name == 'superadmin')
                                         <td><a href="{{route('user.assignRole',$user)}}"
                                             class="btn btn-info"></i>
                                             Role</a></td>
+                                        @endif --}}
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
+
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a href="{{ route('user.show', $user) }}"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
+                                                    @if($user->role->name !== 'superadmin')
                                                     <li><a href="{{route('user.edit',$user)}}" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    @if($user->role->name !== 'iep')
+                                                    @if(auth()->user()->id !== $user->id)
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
                                                             data-item-id="{{ $user->id }}"
@@ -111,6 +117,7 @@
                                                             Delete
                                                         </button>
                                                     </li>
+                                                    @endif
                                                     @endif
                                                 </ul>
                                             </div>

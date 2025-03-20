@@ -31,6 +31,27 @@ class Answer extends Model
         'extra_ans3',
     ];
 
+    public function scopeFilterSurvey($query){
+        $user = auth()->user();
+        $role = $user->role->name;
+
+        $branchIds = is_array($user->branch_id) ? $user->branch_id : explode(', ',$user->branch_id); 
+ 
+        if($role == "survey"){
+             $query->where('form_id',$user->form_id);
+        }elseif($role =="branch"){
+             $query->whereHas('form',function($q) use($user,$branchIds){
+                $q->whereIn('branch_id',$branchIds);
+             });
+        }elseif($role == "organization"){
+             $query->whereHas('form',function($q) use($user){
+                $q->where('organization_id',$user->organization_id);
+             });
+        }
+ 
+        return $query;
+    }
+
     public function form(){
         return $this->belongsTo(Form::class,'form_id','form_id');
     }

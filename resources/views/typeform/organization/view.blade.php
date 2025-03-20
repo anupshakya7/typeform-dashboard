@@ -55,10 +55,10 @@
                                     @endif
                                 </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <th>Country</th>
                                 <td>{{$organization->country}}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <th>Created At</th>
                                 <td>{{Carbon\Carbon::parse($organization->created_at)->format('d M, Y')}}</td>

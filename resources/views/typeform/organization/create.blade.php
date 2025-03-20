@@ -57,7 +57,7 @@
                             <div id="logo_image"></div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <div class="mb-3">
                             <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
 
@@ -72,7 +72,7 @@
                                 <span class="text-danger ms-1">{{$message}}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="btn-submit-container">
 
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>
