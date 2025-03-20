@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Survey QA Details</h4>
-        <p class="text-muted mb-0">View survey QA details, including structure, contacts, departments, and roles.</p>
+        <h4 class="fs-16 mb-1">Survey Data QA Details</h4>
+        <p class="text-muted mb-0">View survey data QA details, including questions and answers.</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Survey QA</h5>
+                <h5 class="card-title mb-0">Survey Data QA</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -44,11 +44,11 @@
                                 <td>{{$answer->id}}</td>
                             </tr>
                             <tr>
-                                <th>Form Id</th>
+                                <th>Survey Id</th>
                                 <td>{{$answer->form_id}}</td>
                             </tr>
                             <tr>
-                                <th>Form</th>
+                                <th>Survey</th>
                                 <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
                             </tr>
                             <tr>

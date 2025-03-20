@@ -91,7 +91,7 @@
                 @if(hasPermissionToRoute('branch.index'))
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('branch.index')}}">
-                    <i class="fa-solid fa-landmark-flag"></i> <span>Branch</span>
+                    <i class="fa-solid fa-landmark-flag"></i> <span>Divisions</span>
                     </a>
                 </li>
                 @endif
@@ -101,7 +101,7 @@
                 @if(hasPermissionToRoute('form.index'))
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('form.index')}}">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
+                    <i class="fa-solid fa-file"></i> <span>Survey Management</span>
                     </a>
                 </li>
                 @endif
@@ -111,7 +111,7 @@
                  @if(hasPermissionToRoute('survey.index'))
                  <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('survey.index')}}">
-                    <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Survey Data</span>
                     </a>
                 </li>
                 @endif

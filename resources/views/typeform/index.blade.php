@@ -187,13 +187,13 @@
                             </div>
                             <div class="col-auto p-0">
                                 <select class="form-select select2" name="survey" id="survey"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Survey</option>
-                                    {{-- @foreach ($surveyForms as $surveyForm)
+                                    @foreach ($surveyForms as $surveyForm)
                                             <option value="{{ $surveyForm->form_title }}"
                                     {{ request('survey_form') == $surveyForm->form_title ? 'selected' : '' }}>
                                     {{ $surveyForm->form_title }}</option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-auto p-0">
