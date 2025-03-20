@@ -839,7 +839,7 @@ $(document).ready(function() {
                     show: false
                 }
             },
-            colors: ['#5DA3E1'],
+            colors: ['#0664bc'],
             xaxis: {
                 categories: [
                     'Well-functioning Government',
@@ -914,7 +914,7 @@ $(document).ready(function() {
                     enabled: false,
                 }
             },
-            colors: chartPieBasicColors
+            colors: ['#004994','#0c8cdb']
         };
 
         var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
@@ -950,7 +950,7 @@ $(document).ready(function() {
                     enabled: false,
                 }
             },
-            colors: chartPieBasicColors2
+            colors: ['#004994','#0f64bc','#0c8cdb','#74ccf8']
         };
 
         var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
@@ -1040,7 +1040,7 @@ $(document).ready(function() {
                     height: 10,
                 }
             },
-            colors: areachartSalesColorst
+            colors: ['#0f64bc','#fb9f68','#339966']
         };
         if (salesForecastChart2 != "")
             salesForecastChart2.destroy();
@@ -1130,7 +1130,7 @@ $(document).ready(function() {
                     height: 10,
                 }
             },
-            colors: areachartSalesColorsth
+            colors: ['#0f64bc','#fb9f68','#339966']
         };
         if (salesForecastChart3 != "")
             salesForecastChart3.destroy();
@@ -1191,7 +1191,7 @@ $(document).ready(function() {
             markers: {
                 size: 4
             },
-            colors: chartRadarMultiColors,
+            colors: ['#0f64bc','#fb9f68','#38b8a0'],
             xaxis: {
                 categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government',
                     'Low Levels of Corruption', 'Equitable Distribution Of Resource',
