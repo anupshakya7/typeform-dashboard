@@ -161,7 +161,7 @@
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($country['name']); ?>"
-                                        <?php echo e(request('country') == $country['name'] ? 'selected' : ''); ?>>
+                                        <?php echo e(($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':''); ?>>
                                         <?php echo e($country['name']); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
@@ -169,11 +169,11 @@
                             <div class="col-auto p-0">
 
                                 <select class="form-select select2" id="organization" name="organization"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Organization</option>
                                     <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($organization->id); ?>"
-                                        <?php echo e(request('organization') == $organization->id ? 'selected' : ''); ?>>
+                                        <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
                                         <?php echo e($organization->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
@@ -190,8 +190,9 @@
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Survey</option>
                                     <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                                             <option value="<?php echo e($surveyForm->form_title); ?>"
-                                    <?php echo e(request('survey_form') == $surveyForm->form_title ? 'selected' : ''); ?>>
+                                    <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?>>
                                     <?php echo e($surveyForm->form_title); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
