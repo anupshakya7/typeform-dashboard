@@ -69,9 +69,9 @@
                                     <th>Email</th>
                                     <th>Organization</th>
                                     <th>Role</th>
-                                    @if(auth()->user()->role->name == 'superadmin')
+                                    {{-- @if(auth()->user()->role->name == 'superadmin')
                                     <th>Authorize</th>
-                                    @endif
+                                    @endif --}}
                                     <th>Action</th>
 
                                 </tr>
@@ -84,11 +84,11 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ optional($user->organization)->name }}</td>
                                         <td><span class="btn btn-sm btn-danger">{{ optional($user->role)->name }}</span></td>
-                                        @if(auth()->user()->role->name == 'superadmin')
+                                        {{-- @if(auth()->user()->role->name == 'superadmin')
                                         <td><a href="{{route('user.assignRole',$user)}}"
                                             class="btn btn-info"></i>
                                             Role</a></td>
-                                        @endif
+                                        @endif --}}
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

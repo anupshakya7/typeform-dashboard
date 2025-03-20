@@ -68,7 +68,7 @@
                                     <th>Email</th>
                                     <th>Organization</th>
                                     <th>Role</th>
-                                    <th>Authorize</th>
+                                    
                                     <th>Action</th>
 
                                 </tr>
@@ -81,9 +81,7 @@
                                         <td><?php echo e($user->email); ?></td>
                                         <td><?php echo e(optional($user->organization)->name); ?></td>
                                         <td><span class="btn btn-sm btn-danger"><?php echo e(optional($user->role)->name); ?></span></td>
-                                        <td><a href="<?php echo e(route('user.assignRole',$user)); ?>"
-                                            class="btn btn-info"></i>
-                                            Role</a></td>
+                                        
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -102,6 +100,7 @@
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
+                                                    <?php if(auth()->user()->id !== $user->id): ?>
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
                                                             data-item-id="<?php echo e($user->id); ?>"
@@ -111,6 +110,7 @@
                                                             Delete
                                                         </button>
                                                     </li>
+                                                    <?php endif; ?>
                                                     <?php endif; ?>
                                                 </ul>
                                             </div>

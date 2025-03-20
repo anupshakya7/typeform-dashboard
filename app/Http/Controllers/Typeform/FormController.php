@@ -164,7 +164,6 @@ class FormController extends Controller
                 $questionsData = array_merge($formIdData, $questionFormattingData);
 
                 Question::create($questionsData);
-                return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
             } catch (\Exception $e) {
                 DB::rollBack();
                 return redirect()->back()->with('error', 'Failed to Create Form and its Questions'.$e->getMessage());

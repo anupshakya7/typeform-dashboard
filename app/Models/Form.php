@@ -24,11 +24,13 @@ class Form extends Model
     public function scopeFilterForm($query){
         $user = auth()->user();
         $role = $user->role->name;
+
+        $branchIds = is_array($user->branch_id) ? $user->branch_id : explode(', ',$user->branch_id);
  
         if($role == "survey"){
              $query->where('organization_id',$user->organization_id)->where('form_id',$user->form_id);
         }elseif($role =="branch"){
-             $query->where('organization_id',$user->organization_id)->whereIn('branch_id',$user->branch_id);
+             $query->where('organization_id',$user->organization_id)->whereIn('branch_id',$branchIds);
         }elseif($role == "organization"){
              $query->where('organization_id',$user->organization_id);
         }

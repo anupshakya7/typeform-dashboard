@@ -75,10 +75,11 @@ class UserController extends Controller
 
     public function edit(String $id){
         $user = User::with('role','organization')->filterUser()->find($id);
+        $roles = Role::whereNot('name','superadmin')->filterRole()->get();
         $organizations = Organization::all();
 
         if($user){
-            return view('typeform.users.edit',compact('user','organizations'));
+            return view('typeform.users.edit',compact('user','organizations','roles'));
         }else{
             return redirect()->back()->with('error','User Not Found');
         }
@@ -88,9 +89,26 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name'=>'required|string|min:2',
             'email'=>'required|email|unique:users,email,'.$user->id,
-            'password'=>'required|min:6|confirmed',
-            // 'organization_id'=>'required|integer|exists:organizations,id',
+            // 'password'=>'nullable|min:6|confirmed',
+            'role_id'=>'required|integer|exists:roles,id',
+            'organization_id'=>['required','integer','exists:organizations,id'],
+            'branch_id'=>['nullable',Rule::requiredIf(function() use($request){
+                return $request->role_id == 3;
+            })],
+            'form_id'=>['nullable',Rule::requiredIf(function() use($request){
+                return $request->role_id == 4;
+            })],
         ]);
+
+        $role = Role::where('name','branch')->pluck('id')->first();
+
+        if($request->role_id == $role){
+            $validatedData['branch_id'] = implode(', ',$validatedData['branch_id']);
+        }
+
+        if(isset($request->password) && $request->password){
+            $validatedData['password'] = $request->password;
+        }
 
         $userUpdated = $user->update($validatedData);
 
