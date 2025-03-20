@@ -87,7 +87,7 @@ class FormController extends Controller
             'afterdate' => 'nullable|string',
             'questions' => 'required|array',
         ]);
-
+        
         DB::transaction(function() use($validatedData){
             try {
                 //Formatting Date

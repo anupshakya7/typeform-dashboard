@@ -56,9 +56,7 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
 
                                     <div class="mb-3">
-                                        <div class="float-end">
-                                            <a href="<?php echo e(route('password.update')); ?>" class="text-muted">Forgot password?</a>
-                                        </div>
+                                        
                                         <label class="form-label" for="password-input">Password <span class="text-danger">*</span></label>
                                         <div class="position-relative auth-pass-inputgroup mb-3">
                                             <input type="password" class="form-control password-input pe-5 <?php $__errorArgs = ['password'];

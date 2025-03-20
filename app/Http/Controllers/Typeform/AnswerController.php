@@ -54,7 +54,7 @@ class AnswerController extends Controller
 
     public function getAnswer(Request $request){
         $allData = $request->all();
-        
+
         $formId = $allData['form_response']['form_id'];
         $eventId = $allData['event_id'];
         $answers = $allData['form_response']['answers'];

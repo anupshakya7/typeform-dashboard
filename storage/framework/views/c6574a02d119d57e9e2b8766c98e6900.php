@@ -6,69 +6,13 @@
 <?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col">
-
         <div class="h-100">
 
             <!--greeting section -->
 
-            <div class="mb-3 pb-1 d-block d-sm-flex align-items-center flex-row gap-3">
+            <div class="mb-3 pb-1">
                 <div>
-                    <h4 class="fs-16 mb-1">Welcome back, <?php echo e(auth()->user()->name); ?></h4>
-                    <p class="text-muted mb-0">Get insights, track trends, compare data, manage.</p>
-                </div>
-                <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
-                    <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                        <div class="row gap-3 m-0 p-0 dashboard">
-
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" name="country" id="country"
-                                    aria-label="Default select example" onchange="this.form.submit()">
-                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($country['name']); ?>"
-                                        <?php echo e(request('country') == $country['name'] ? 'selected' : ''); ?>>
-                                        <?php echo e($country['name']); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-
-                                <select class="form-select select2" id="organization" name="organization"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Organization</option>
-                                    <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($organization->id); ?>"
-                                        <?php echo e(request('organization') == $organization->id ? 'selected' : ''); ?>>
-                                        <?php echo e($organization->name); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
-
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" id="branch" name="branch"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Branch</option>
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" name="survey" id="survey"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Survey</option>
-                                    
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-
-                                </a>
-
-                            </div>
-                        </div>
-                    </form>
-
+                    <h4 class="mb-1">Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                 </div>
 
 
@@ -202,6 +146,72 @@
 
             <!--greeting section ends here -->
 
+            <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
+            <div>
+            <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
+            </div>
+
+                <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
+                    <form action="<?php echo e(route('home.index')); ?>" method="GET">
+                        <div class="row gap-3 m-0 p-0 dashboard">
+
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" name="country" id="country"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($country['name']); ?>"
+                                        <?php echo e(($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':''); ?>>
+                                        <?php echo e($country['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+
+                                <select class="form-select select2" id="organization" name="organization"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Organization</option>
+                                    <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($organization->id); ?>"
+                                        <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
+                                        <?php echo e($organization->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" id="branch" name="branch"
+                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    <option value="" selected>Branch</option>
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+                                <select class="form-select select2" name="survey" id="survey"
+                                    aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Survey</option>
+                                    <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                            <option value="<?php echo e($surveyForm->form_title); ?>"
+                                    <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?>>
+                                    <?php echo e($surveyForm->form_title); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                            <div class="col-auto p-0">
+                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+
+                                </a>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
 
             <!--bar graph section starts here-->
 
@@ -296,8 +306,7 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                            <div id="simple_pie_chart"
-                                data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
+                            <div id="simple_pie_chart" data-colors='["--vz-primary", "--vz-success"]'
                                 class="apex-charts" dir="ltr"></div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
@@ -331,7 +340,7 @@
 
                         <div class="card-body">
                             <div id="simple_pie_chart2"
-                                data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
+                                data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger"]'
                                 class="apex-charts" dir="ltr"></div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
@@ -486,33 +495,33 @@
                                             <thead class="table-light">
                                                 <tr>
 
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Mean</th>
-                                                    <th scope="col">Country Mean</th>
-                                                    <th scope="col">Global Mean</th>
+                                                    <th scope="col" class="text-center"></th>
+                                                    <th scope="col" class="text-center">Mean</th>
+                                                    <th scope="col" class="text-center">Country Mean</th>
+                                                    <th scope="col" class="text-center">Global Mean</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $pillars = [
-                                                        'well_functioning_government'=>'Well-Functioning Government',
-                                                        'low_level_corruption'=>'Low Levels of Corruption',
-                                                        'equitable_distribution'=>'Equitable Distribution of Resources',
-                                                        'good_relations'=>'Good Relations with Neighbours',
-                                                        'free_flow'=>'Free Flow of Information',
-                                                        'high_levels'=>'High Levels of Human Capital',
-                                                        'sound_business'=>'Sound Business Environment',
-                                                        'acceptance_rights'=>'Acceptance of the Rights of Others'
-                                                    ]
+                                                $pillars = [
+                                                'well_functioning_government'=>'Well-Functioning Government',
+                                                'low_level_corruption'=>'Low Levels of Corruption',
+                                                'equitable_distribution'=>'Equitable Distribution of Resources',
+                                                'good_relations'=>'Good Relations with Neighbours',
+                                                'free_flow'=>'Free Flow of Information',
+                                                'high_levels'=>'High Levels of Human Capital',
+                                                'sound_business'=>'Sound Business Environment',
+                                                'acceptance_rights'=>'Acceptance of the Rights of Others'
+                                                ]
                                                 ?>
                                                 <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$pillar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
                                                     <td><span class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                     </td>
-                                                    <td><?php echo e($pillar); ?></td>
-                                                    <td><?php echo e($pillarMeanScore['countryMean'][$key]); ?></td>
-                                                    <td><?php echo e($pillarMeanScore['globalMean'][$key]); ?></td>
+                                                    <td class="text-center"><?php echo e($pillar); ?></td>
+                                                    <td class="text-center"><?php echo e($pillarMeanScore['countryMean'][$key]); ?></td>
+                                                    <td class="text-center"><?php echo e($pillarMeanScore['globalMean'][$key]); ?></td>
                                                 </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
@@ -532,15 +541,15 @@
                 <!--table section starts here -->
 
                 
-                <!-- end col -->
-            </div>
-            <!--end row-->
+<!-- end col -->
+</div>
+<!--end row-->
 
 
-            <!--table section starts here -->
-        </div> <!-- end .h-100-->
+<!--table section starts here -->
+</div> <!-- end .h-100-->
 
-    </div> <!-- end col -->
+</div> <!-- end col -->
 
 
 </div>
@@ -558,20 +567,23 @@
 
 <script>
 $(document).ready(function() {
+    var branch_id = <?php echo json_encode($filterData->branch_id ?? null); ?>;
+    var survey_id = <?php echo json_encode($filterData->form_id ?? null); ?>;
+
     //Parameters
     var country = getQueryParams('country');
     var organization = getQueryParams('organization');
-    var branch = getQueryParams('branch');
-    var survey = getQueryParams('survey');
+    var branch = branch_id ? branch_id : getQueryParams('branch');
+    var survey = survey_id ? survey_id : getQueryParams('survey');
 
-    filterOrganization();
-    filterSurvey();
+    //filterOrganization();
     filterBranch();
+    filterSurvey();
 
     //Filter Organizations
-    $('#country').change(function() {
-        filterOrganization();
-    });
+    // $('#country').change(function() {
+    //     filterOrganization();
+    // });
 
     $('#organization').change(function() {
         filterSurvey();
@@ -583,40 +595,40 @@ $(document).ready(function() {
     });
 
 
-    function filterOrganization() {
-        var countryVal = $('#country').val();
+    // function filterOrganization() {
+    //     var countryVal = $('#country').val();
 
-        if (countryVal !== '') {
-            $.ajax({
-                url: "<?php echo e(route('organization.get')); ?>",
-                method: 'GET',
-                data: {
-                    country: countryVal
-                },
-                success: function(response) {
-                    console.log(response);
-                    $('#organization').prop('disabled', false);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                    response.organizations.forEach(function(organizationItem) {
-                        // $('#organization').append(new Option(organization.name,
-                        //     organization.id));
-                        var option = new Option(organizationItem.name, organizationItem.id);
-                        $('#organization').append(option);
+    //     if (countryVal !== '') {
+    //         $.ajax({
+    //             url: "<?php echo e(route('organization.get')); ?>",
+    //             method: 'GET',
+    //             data: {
+    //                 country: countryVal
+    //             },
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('#organization').prop('disabled', false);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //                 response.organizations.forEach(function(organizationItem) {
+    //                     // $('#organization').append(new Option(organization.name,
+    //                     //     organization.id));
+    //                     var option = new Option(organizationItem.name, organizationItem.id);
+    //                     $('#organization').append(option);
 
-                        if (organization && organization == organizationItem.id) {
-                            $(option).prop('selected', true);
-                        }
-                    })
-                },
-                error: function(xhr, status, error) {
-                    $('#organization').prop('disabled', true);
-                    $('#organization').html('');
-                    $('#organization').append('<option selected>Choose Organization</option>');
-                }
-            })
-        }
-    }
+    //                     if (organization && organization == organizationItem.id) {
+    //                         $(option).prop('selected', true);
+    //                     }
+    //                 })
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 $('#organization').prop('disabled', true);
+    //                 $('#organization').html('');
+    //                 $('#organization').append('<option selected>Choose Organization</option>');
+    //             }
+    //         })
+    //     }
+    // }
 
     function filterBranch() {
         var organizationVal = $('#organization').val();
@@ -655,7 +667,7 @@ $(document).ready(function() {
 
     function filterSurvey() {
         var organizationVal = $('#organization').val();
-        var branchVal = $('#branch').val();
+        var branchVal = branch ;
 
         if (organizationVal !== '') {
             $.ajax({
@@ -797,7 +809,10 @@ $(document).ready(function() {
                     height: 10,
                 }
             },
-            colors: areachartSalesColors
+            // colors: areachartSalesColors
+            colors: [
+                '#6097CF', '#8B939C', '#67D36E', '#D2D4D7', '#1B68B7', '#A0CFFF', '#E58F87', '#D4DE86'
+            ]
         };
         if (salesForecastChart != "")
             salesForecastChart.destroy();
@@ -811,8 +826,7 @@ $(document).ready(function() {
         var options = {
             series: [{
                 name: 'Mean',
-                data: 
-                ["<?php echo e($meanScore['well_functioning_government']); ?>",
+                data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
                     "<?php echo e($meanScore['low_level_corruption']); ?>",
                     " <?php echo e($meanScore['equitable_distribution']); ?>",
                     "<?php echo e($meanScore['good_relations']); ?>",
@@ -829,7 +843,7 @@ $(document).ready(function() {
                     show: false
                 }
             },
-            colors: chartRadarBasicColors,
+            colors: ['#5DA3E1'],
             xaxis: {
                 categories: [
                     'Well-functioning Government',
@@ -844,13 +858,19 @@ $(document).ready(function() {
             },
             tooltip: {
                 enabled: true,
-                shared: false, // Set to false to ensure visibility
-                followCursor: true, // Follows the mouse for better positioning
-                theme: 'dark', // Ensures the tooltip is visible
-                y: {
-                    formatter: function(val) {
-                        return val.toFixed(2) + " points";
-                    }
+                shared: false,
+                followCursor: true,
+                theme: 'dark',
+                custom: function({
+                    series,
+                    seriesIndex,
+                    dataPointIndex,
+                    w
+                }) {
+                    let value = series[seriesIndex][dataPointIndex].toFixed(2);
+                    return `<div style="background:#222;padding:8px;border-radius:5px;color:white;">
+                            <strong style="color:#007bff;">${value} points</strong>
+                        </div>`;
                 }
             },
             stroke: {
@@ -865,6 +885,7 @@ $(document).ready(function() {
                     size: 8 // Ensures tooltip appears when hovering over points
                 }
             }
+
         };
 
         var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
@@ -875,8 +896,14 @@ $(document).ready(function() {
     var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
     if (chartPieBasicColors) {
         var options = {
-            series: ["<?php echo e($participantDetails['genderWise']['male']); ?>",
-                "<?php echo e($participantDetails['genderWise']['female']); ?>"
+            <?php
+                $malePieChart = $participantDetails['genderWise']['male'];
+                $femalePieChart = $participantDetails['genderWise']['female'];
+               
+            ?>
+            series: [<?php echo e($malePieChart); ?>,
+                <?php echo e($femalePieChart); ?>
+
             ],
             chart: {
                 height: 192,
@@ -898,17 +925,22 @@ $(document).ready(function() {
         chart.render();
     }
 
+    
+
+
     //Piechart Age
     var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
-    if(chartPieBasicColors2){
+    if (chartPieBasicColors2) {
         var options = {
-            series: [
-                <?php echo e($participantDetails['ageWise']['18 to 24']); ?>, 
-                <?php echo e($participantDetails['ageWise']['25 to 44']); ?>, 
-                <?php echo e($participantDetails['ageWise']['45 to 64']); ?>, 
-                <?php echo e($participantDetails['ageWise']['65 or over']); ?>
-
-            ],
+            <?php
+                $level_one = $participantDetails['ageWise']['18 to 24'];
+                $level_two = $participantDetails['ageWise']['25 to 44'];
+                $level_three = $participantDetails['ageWise']['45 to 64'];
+                $level_four = $participantDetails['ageWise']['65 or over'];
+                
+            ?>
+            series: [<?php echo e($level_one); ?>,<?php echo e($level_two); ?>,<?php echo e($level_three); ?>,<?php echo e($level_four); ?>],
+           
             chart: {
                 height: 192,
                 type: 'pie',
@@ -929,101 +961,103 @@ $(document).ready(function() {
         chart2.render();
     }
 
+    
+
     //Positive Peace Bar
     var areachartSalesColorst = "";
-     areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
-     if (areachartSalesColorst) {
-         var options = {
+    areachartSalesColorst = getChartColorsArray("sales-forecast-chart-2");
+    if (areachartSalesColorst) {
+        var options = {
             series: [{
                 name: 'Mean',
-                data: ["<?php echo e($positivePeace['mean']); ?>"]
+                data: [<?php echo e($positivePeace['mean']); ?>]
             }, {
                 name: 'Country Mean',
-                data: ["<?php echo e($positivePeace['countryMean']); ?>"]
+                data: [<?php echo e($positivePeace['countryMean']); ?>]
             }, {
                 name: 'Global Mean',
-                data: ["<?php echo e($positivePeace['globalMean']); ?>"]
+                data: [<?php echo e($positivePeace['globalMean']); ?>]
             }],
-             chart: {
-                 type: 'bar',
-                 height: 341,
-                 toolbar: {
-                     show: false,
-                 },
-             },
-             plotOptions: {
-                 bar: {
-                     horizontal: false,
-                     columnWidth: '40%',
-                 },
-             },
-             stroke: {
-                 show: true,
-                 width: 5,
-                 colors: ['transparent']
-             },
-             xaxis: {
-                 categories: [''],
-                 axisTicks: {
-                     show: false,
-                     borderType: 'solid',
-                     color: '#78909C',
-                     height: 6,
-                     offsetX: 0,
-                     offsetY: 0
-                 },
-                 title: {
-                     offsetX: 0,
-                     offsetY: -30,
-                     style: {
-                         color: '#78909C',
-                         fontSize: '12px',
-                         fontWeight: 400,
-                     },
-                 },
-             },
-             yaxis: {
-                 labels: {
-                     formatter: function (value) {
-                         return value;
-                     }
-                 },
-                 tickAmount: 4,
-                 min: 0
-             },
-             fill: {
-                 opacity: 1
-             },
-             legend: {
-                 show: true,
-                 position: 'bottom',
-                 horizontalAlign: 'center',
-                 fontWeight: 500,
-                 offsetX: 0,
-                 offsetY: -14,
-                 itemMargin: {
-                     horizontal: 8,
-                     vertical: 0
-                 },
-                 markers: {
-                     width: 10,
-                     height: 10,
-                 }
-             },
-             colors: areachartSalesColorst
-         };
-         if (salesForecastChart2 != "")
-             salesForecastChart2.destroy();
-         salesForecastChart2 = new ApexCharts(document.querySelector("#sales-forecast-chart-2"), options);
-         salesForecastChart2.render();
-     }
+            chart: {
+                type: 'bar',
+                height: 341,
+                toolbar: {
+                    show: false,
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '40%',
+                },
+            },
+            stroke: {
+                show: true,
+                width: 5,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: [''],
+                axisTicks: {
+                    show: false,
+                    borderType: 'solid',
+                    color: '#78909C',
+                    height: 6,
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                title: {
+                    offsetX: 0,
+                    offsetY: -30,
+                    style: {
+                        color: '#78909C',
+                        fontSize: '12px',
+                        fontWeight: 400,
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: function(value) {
+                        return value;
+                    }
+                },
+                tickAmount: 4,
+                min: 0
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontWeight: 500,
+                offsetX: 0,
+                offsetY: -14,
+                itemMargin: {
+                    horizontal: 8,
+                    vertical: 0
+                },
+                markers: {
+                    width: 10,
+                    height: 10,
+                }
+            },
+            colors: areachartSalesColorst
+        };
+        if (salesForecastChart2 != "")
+            salesForecastChart2.destroy();
+        salesForecastChart2 = new ApexCharts(document.querySelector("#sales-forecast-chart-2"), options);
+        salesForecastChart2.render();
+    }
 
 
-     //Negative Peace Bar
-     var areachartSalesColorsth = "";
-     areachartSalesColorsth = getChartColorsArray("sales-forecast-chart-3");
-     if (areachartSalesColorsth) {
-         var options = {
+    //Negative Peace Bar
+    var areachartSalesColorsth = "";
+    areachartSalesColorsth = getChartColorsArray("sales-forecast-chart-3");
+    if (areachartSalesColorsth) {
+        var options = {
             series: [{
                 name: 'Mean',
                 data: ["<?php echo e($negativePeace['mean']); ?>"]
@@ -1034,112 +1068,113 @@ $(document).ready(function() {
                 name: 'Global Mean',
                 data: ["<?php echo e($negativePeace['globalMean']); ?>"]
             }],
-             chart: {
-                 type: 'bar',
-                 height: 341,
-                 toolbar: {
-                     show: false,
-                 },
-             },
-             plotOptions: {
-                 bar: {
-                     horizontal: false,
-                     columnWidth: '40%',
-                 },
-             },
-             stroke: {
-                 show: true,
-                 width: 5,
-                 colors: ['transparent']
-             },
-             xaxis: {
-                 categories: [''],
-                 axisTicks: {
-                     show: false,
-                     borderType: 'solid',
-                     color: '#78909C',
-                     height: 6,
-                     offsetX: 0,
-                     offsetY: 0
-                 },
-                 title: {
-                     offsetX: 0,
-                     offsetY: -30,
-                     style: {
-                         color: '#78909C',
-                         fontSize: '12px',
-                         fontWeight: 400,
-                     },
-                 },
-             },
-             yaxis: {
-                 labels: {
-                     formatter: function (value) {
-                         return value;
-                     }
-                 },
-                 tickAmount: 4,
-                 min: 0
-             },
-             fill: {
-                 opacity: 1
-             },
-             legend: {
-                 show: true,
-                 position: 'bottom',
-                 horizontalAlign: 'center',
-                 fontWeight: 500,
-                 offsetX: 0,
-                 offsetY: -14,
-                 itemMargin: {
-                     horizontal: 8,
-                     vertical: 0
-                 },
-                 markers: {
-                     width: 10,
-                     height: 10,
-                 }
-             },
-             colors: areachartSalesColorsth
-         };
-         if (salesForecastChart3 != "")
-             salesForecastChart3.destroy();
-         salesForecastChart3 = new ApexCharts(document.querySelector("#sales-forecast-chart-3"), options);
-         salesForecastChart3.render();
-     }
+            chart: {
+                type: 'bar',
+                height: 341,
+                toolbar: {
+                    show: false,
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '40%',
+                },
+            },
+            stroke: {
+                show: true,
+                width: 5,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: [''],
+                axisTicks: {
+                    show: false,
+                    borderType: 'solid',
+                    color: '#78909C',
+                    height: 6,
+                    offsetX: 0,
+                    offsetY: 0
+                },
+                title: {
+                    offsetX: 0,
+                    offsetY: -30,
+                    style: {
+                        color: '#78909C',
+                        fontSize: '12px',
+                        fontWeight: 400,
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: function(value) {
+                        return value;
+                    }
+                },
+                tickAmount: 4,
+                min: 0
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontWeight: 500,
+                offsetX: 0,
+                offsetY: -14,
+                itemMargin: {
+                    horizontal: 8,
+                    vertical: 0
+                },
+                markers: {
+                    width: 10,
+                    height: 10,
+                }
+            },
+            colors: areachartSalesColorsth
+        };
+        if (salesForecastChart3 != "")
+            salesForecastChart3.destroy();
+        salesForecastChart3 = new ApexCharts(document.querySelector("#sales-forecast-chart-3"), options);
+        salesForecastChart3.render();
+    }
 
     //Pillars Result Radar Chart
+    var chartHeight = window.innerWidth <= 768 ? 800 : 600;  // 400px for mobile and 600px for desktop
+
     var chartRadarMultiColors = getChartColorsArray("multi_radar");
     if (chartRadarMultiColors) {
         var options = {
-            series: [
-                {
+            series: [{
                     name: 'Mean',
                     data: [
-                        <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php echo e($means); ?>,
+                        <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        "<?php echo e($means); ?>",
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 },
                 {
                     name: 'Country Mean',
                     data: [
-                        <?php $__currentLoopData = $pillarMeanScore['countryMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php echo e($means); ?>,
+                        <?php $__currentLoopData = $pillarMeanScore['countryMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        "<?php echo e($means); ?>",
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 },
                 {
                     name: 'Global Mean',
                     data: [
-                        <?php $__currentLoopData = $pillarMeanScore['globalMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php echo e($means); ?>,
+                        <?php $__currentLoopData = $pillarMeanScore['globalMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        "<?php echo e($means); ?>",
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 }
             ],
             chart: {
-                height: 600,
+                height: chartHeight,
                 type: 'radar',
                 dropShadow: {
                     enabled: true,
@@ -1162,7 +1197,11 @@ $(document).ready(function() {
             },
             colors: chartRadarMultiColors,
             xaxis: {
-                categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government', 'Low Levels of Corruption', 'Equitable Distribution Of Resource', 'Good Relations With Neighbours', 'Free Flow Of Information', 'High Levels Of Human Capital', 'Sound Business Environment']
+                categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government',
+                    'Low Levels of Corruption', 'Equitable Distribution Of Resource',
+                    'Good Relations With Neighbours', 'Free Flow Of Information',
+                    'High Levels Of Human Capital', 'Sound Business Environment'
+                ]
             }
         };
         var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
