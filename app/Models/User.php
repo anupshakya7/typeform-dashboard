@@ -76,7 +76,7 @@ class User extends Authenticatable
     }
 
     public function hasPermissionToRoute($route){
-        if($this->role->name == 'superadmin'){
+        if($this->role->name == 'superadmin' || $this->role->name == 'krizmatic'){
             return true;
         }
 

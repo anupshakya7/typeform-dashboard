@@ -61,10 +61,12 @@
                                 <a href="{{route('role.index')}}" class="nav-link">Role</a>
                             </li>
                             @endif
+                            @if(auth()->user()->role->name == 'krizmatic')
                             @if(hasPermissionToRoute('permission.index'))
                             <li class="nav-item">
                                 <a href="{{route('permission.index')}}" class="nav-link">Permission</a>
                             </li>
+                            @endif
                             @endif
                             @if(hasPermissionToRoute('user.password-change'))
                             <li class="nav-item">
