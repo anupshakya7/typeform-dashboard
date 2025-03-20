@@ -47,9 +47,6 @@
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                         data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                                 </h4>
-
-
-
                             </div>
                         </div><!-- end card body -->
                     </div><!-- end card -->
@@ -198,13 +195,18 @@
                                 </select>
                             </div>
                             <div class="col-auto p-0">
-                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-
-                                </a>
+                                
+                                <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                    <div class="dropdown">
+                        <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
 
                             </div>
                         </div>
@@ -220,23 +222,24 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Mean Scores Values</h4>
                     <div class="flex-shrink-0">
-                        <div class="d-flex flex-row gap-2 align-items-center">
-                            <!--info here-->
-                            <a class="icon-frame" href="#"
-                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                <img class="svg-icon" type="image/svg+xml"
-                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                            </a>
-                            <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                        aria-controls="theme-settings-offcanvas"
-                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                <img class="svg-icon" type="image/svg+xml"
-                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                            </a>
-                        </div>
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                    <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                    <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
+  
+                    <!-- Info Icon for additional settings -->
+                    <a class="icon-frame" href="#" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+                    </a>
+                    </div>
                     </div>
                 </div><!-- end card header -->
                 <div class="card-body pb-0">
@@ -258,14 +261,18 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                    <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
+                                    <a class="icon-frame" href="#" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                    </a>
-                                    <a class="icon-frame" href="#"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
@@ -291,12 +298,16 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#" 
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                    </a>
+                                    <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
                                     <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -325,12 +336,16 @@
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href=""
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                    </a>
+                                    <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
                                     <a class="icon-frame" href=""  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -371,12 +386,16 @@
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                        </a>
+                                        <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -407,12 +426,16 @@
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                        </a>
+                                        <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -440,17 +463,21 @@
                 <!--area radar chart section starts here -->
 
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header z-1 d-flex justify-content-between align-items-center">
                         <h4 class="card-title mb-0">Results by Pillars</h4>
                         <div class="flex-shrink-0">
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <!--info here-->
-                                <a class="icon-frame" href="#"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                </a>
+                                <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
                                 <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -479,12 +506,16 @@
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                        </a>
+                                        <div class="dropdown">
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-pdf">Export as PDF</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-png">Export as PNG</a></li>
+                        <li><a class="dropdown-item" href="#" id="export-excel">Export as Excel</a></li>
+                        </ul>
+                    </div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -1223,5 +1254,8 @@ $(document).ready(function() {
 
 });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/index.blade.php ENDPATH**/ ?>
