@@ -299,7 +299,7 @@ $(document).ready(function(){
                                             data-choices-sorting="true">
                                             <option value="" selected>Choose Organization</option>
                                             @foreach ($organizations as $organization)
-                                            <option value="{{ $organization->id }}">
+                                            <option value="{{ $organization->id }}" {{$user->organization_id == $organization->id ? 'selected':''}}>
                                                 {{ $organization->name }}</option>
                                             @endforeach
                                         </select>
@@ -362,6 +362,7 @@ $(document).ready(function(){
                     var userBranchIdsInteger = userBranchIds.map(function(item){
                         return parseInt(item,10);
                     });
+                    
 
                     response.branches.forEach(function(branchItem) {
                         // $('#branch').append(new Option(branch.name,
@@ -404,10 +405,18 @@ $(document).ready(function(){
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
                     $('#survey').append('<option value="" selected>Choose Survey</option>');
+
+                    var surveyId = @json($user->form_id);
+
                     response.forms.forEach(function(formItem) {
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
                         var option = new Option(formItem.form_title, formItem.form_id);
+
+                        if(surveyId && surveyId == formItem.form_id){
+                            $(option).attr('selected',true);
+                        }
+
                         $('#survey').append(option);
                     })
                 },

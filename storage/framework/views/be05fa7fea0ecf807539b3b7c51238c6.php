@@ -81,7 +81,9 @@
                     <?php if($form->branch_id): ?>
                     <div class="col-md-6" id="branchDiv">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Branch</label>
+                            <label for="branch" class="form-label">Branch <?php if(auth()->user()->role->name=='branch'): ?>
+                                <span class="text-danger">*</span>
+                                <?php endif; ?></label>
                             <?php
                                 $organization_id = $form->branches->organization->id;
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
@@ -364,7 +366,20 @@ $(document).ready(function() {
 
                     
                     var selectedItem = <?php echo $selectedBranchId; ?>;
-                    response.branches.forEach(function(branch) {
+                    
+                    var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                    var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                    var branchList = response.branches.filter(function(branch){
+                        if(userRole == "branch"){
+                            let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                            return branchIds.includes(branch.id.toString());
+                        }
+
+                        return true;
+                    });
+                    
+                    branchList.forEach(function(branch) {
                         // $('#organization').append(new Option(organization.name, organization.id));
                         var option = new Option(branch.name,branch.id);
                         

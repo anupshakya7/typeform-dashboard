@@ -333,7 +333,7 @@ $(document).ready(function(){
                                             data-choices-sorting="true">
                                             <option value="" selected>Choose Organization</option>
                                             <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($organization->id); ?>">
+                                            <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>>
                                                 <?php echo e($organization->name); ?></option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
@@ -396,6 +396,7 @@ $(document).ready(function(){
                     var userBranchIdsInteger = userBranchIds.map(function(item){
                         return parseInt(item,10);
                     });
+                    
 
                     response.branches.forEach(function(branchItem) {
                         // $('#branch').append(new Option(branch.name,
@@ -438,10 +439,18 @@ $(document).ready(function(){
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
                     $('#survey').append('<option value="" selected>Choose Survey</option>');
+
+                    var surveyId = <?php echo json_encode($user->form_id, 15, 512) ?>;
+
                     response.forms.forEach(function(formItem) {
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
                         var option = new Option(formItem.form_title, formItem.form_id);
+
+                        if(surveyId && surveyId == formItem.form_id){
+                            $(option).attr('selected',true);
+                        }
+
                         $('#survey').append(option);
                     })
                 },
