@@ -201,8 +201,6 @@ $(document).ready(function(){
     $('#formUserBranchLevel').hide();
     $('#formUserSurveyLevel').hide();
 
-    var firstLoad = true;
-    
     filterLevelBox();
 
     $('#role').change(function(){
@@ -214,12 +212,10 @@ $(document).ready(function(){
     $(document).on('change','#organization',function() {
         var roleVal = $('#role option:selected').data('rolename');
 
+        filterBranch();
+
         if(roleVal == 'survey'){
-            filterBranch(function() {
-                filterSurvey();
-            });
-        }else{
-            filterBranch();
+            filterSurvey();
         }
     });
 
@@ -300,7 +296,7 @@ $(document).ready(function(){
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="branch" class="form-label title_level">Division<span class="text-danger">*</span></label>
+                                            <label for="branch" class="form-label title_level">Branch<span class="text-danger">*</span></label>
                                             <select id="branch" name="branch_id[]" class="form-select select2" data-choices
                                                 data-choices-sorting="true" multiple disabled>
                                                 <option value="" selected>Choose Branch</option>
@@ -346,7 +342,7 @@ $(document).ready(function(){
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="branch" class="form-label title_level">Division</label>
+                                        <label for="branch" class="form-label title_level">Branch</label>
                                         <select id="branch" name="branch_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
                                             <option value="" selected>Choose Branch</option>
@@ -378,8 +374,9 @@ $(document).ready(function(){
         }
     }
 
-    function filterBranch(callback) {
+    function filterBranch() {
         var organizationVal = $('#organization').val();
+        console.log(organizationVal);
 
         if (organizationVal !== '') {
             $.ajax({
@@ -415,11 +412,6 @@ $(document).ready(function(){
 
                         $('#branch').append(option);
                     })
-
-                    firstLoad = false;
-                    if (callback && typeof callback == 'function') {
-                        callback();
-                    }
                 },
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
@@ -432,10 +424,7 @@ $(document).ready(function(){
 
     function filterSurvey() {
         var organizationVal = $('#organization').val();
-        var branchLoadId = firstLoad ? <?php echo json_encode($user->branch_id, 15, 512) ?> : null;
-        var branchVal = branchLoadId ? branchLoadId : $('#branch').val();
-
-        console.log(branchVal);
+        var branchVal = $('#branch').val() ;
 
         if (organizationVal !== '') {
             $.ajax({
