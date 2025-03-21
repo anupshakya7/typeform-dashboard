@@ -359,7 +359,9 @@ table th, table td {
     border-radius: 10px !important;
     overflow: hidden;
 }
-
+.icon-frame {
+    margin-bottom: 2px;
+}
 /**download dropdown css starts here **/
 
 /* Hide the default dropdown arrow */

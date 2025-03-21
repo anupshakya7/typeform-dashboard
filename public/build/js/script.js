@@ -131,21 +131,119 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /**download data js */
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("export-pdf").addEventListener("click", exportToPDF);
-    document.getElementById("export-png").addEventListener("click", exportToPNG);
-    document.getElementById("export-excel").addEventListener("click", exportToExcel);
+    // Add a single event listener for all export actions
+    document.querySelectorAll(".dropdown-item[data-type]").forEach(item => {
+        item.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default link behavior
+
+            const exportType = this.getAttribute("data-type"); // Get the export type (pdf, png, excel)
+            const chartId = this.getAttribute("data-chart-id"); // Get the chart ID
+            
+
+
+            // Nested if-else for chartId and exportType
+            if (chartId === "sales-forecast-chart") {
+                const chartTitle = document.querySelector('.mean-score-bar-title')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+                    exportToPDF(chartId,chartTitle);
+                } else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
+                } 
+                else {
+                    console.error("Unsupported export type for chart1:", exportType);
+                }
+            } else if (chartId === "basic_radar") {
+                const chartTitle = document.querySelector('.mean-result-title')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+
+                    exportToPDF(chartId,chartTitle);
+                } else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
+                }  else {
+                    console.error("Unsupported export type for chart2:", exportType);
+                }
+            } 
+            else if (chartId === "simple_pie_chart") {
+                const chartTitle = document.querySelector('.pie-gender-title')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+
+                    exportToPDF(chartId,chartTitle);
+                } else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
+                }  else {
+                    console.error("Unsupported export type for chart2:", exportType);
+                }
+            }
+            else if (chartId === "sales-forecast-chart-2") {
+                const chartTitle = document.querySelector('.positive-peace-title')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+
+                    exportToPDF(chartId,chartTitle);
+                }  else if (exportType === "excel") {
+                    exportToExcel(chartId);
+                } else {
+                    console.error("Unsupported export type for chart2:", exportType);
+                }
+            }
+            
+            else if (chartId === "sales-forecast-chart-3") {
+                const chartTitle = document.querySelector('.negative-peace-title')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+
+                    exportToPDF(chartId,chartTitle);
+                } else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
+                } else {
+                    console.error("Unsupported export type for chart2:", exportType);
+                }
+            } 
+            else if (chartId === "multi_radar") {
+                const chartTitle = document.querySelector('.results-by-pillar-radar')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+
+                    exportToPDF(chartId,chartTitle);
+                } else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
+                }  else {
+                    console.error("Unsupported export type for chart2:", exportType);
+                }
+            }
+            else if (chartId === "pillar-table") {
+                const chartTitle = document.querySelector('.results-by-pillar-table')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+
+                    exportToPDF(chartId,chartTitle);
+                } else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
+                } else if (exportType === "excel") {
+                    exportToExcel(chartId,chartTitle);
+                } else {
+                    console.error("Unsupported export type for chart2:", exportType);
+                }
+            } else {
+                console.error("Unsupported chart ID:", chartId);
+            }
+        });
+    });
 });
 
-function exportToPDF() {
+function exportToPDF(chartId,chartTitle) {
     // Capture the chart title
-    const chartTitle = document.querySelector(".card-title").innerText;
+    // const chartTitle = document.querySelector(".card-title").innerText;
 
     // Capture the logo (assuming the logo is an img element with a specific class or ID)
     const logo = document.querySelector(".logo img"); // Adjust the selector to match your logo element
     const logoData = logo ? logo.src : null;
 
     // Capture the chart as an image
-    html2canvas(document.getElementById("sales-forecast-chart")).then(canvas => {
+    html2canvas(document.getElementById(chartId)).then(canvas => {
         const chartImgData = canvas.toDataURL("image/png");
 
         // Initialize PDF
@@ -165,20 +263,20 @@ function exportToPDF() {
         pdf.addImage(chartImgData, "PNG", 10, 40, 280, 150); // Adjust position and dimensions as needed
 
         // Save the PDF
-        pdf.save("chart.pdf");
+        pdf.save(`${chartTitle}.pdf`);
     });
 }
 
-function exportToPNG() {
+function exportToPNG(chartId,chartTitle) {
     // Capture the chart title
-    const chartTitle = document.querySelector(".card-title").innerText;
+    // const chartTitle = document.querySelector(".card-title").innerText;
 
     // Capture the logo (assuming the logo is an img element with a specific class or ID)
     const logo = document.querySelector(".logo img"); // Adjust the selector to match your logo element
     const logoData = logo ? logo.src : null;
 
     // Capture the chart as an image
-    html2canvas(document.getElementById("sales-forecast-chart")).then(canvas => {
+    html2canvas(document.getElementById(chartId)).then(canvas => {
         const ctx = canvas.getContext("2d");
 
         // Create a new canvas to add logo, title, and chart image
@@ -217,7 +315,7 @@ function exportToPNG() {
                 // Create a link to download the image
                 const link = document.createElement("a");
                 link.href = newCanvas.toDataURL("image/png");
-                link.download = "chart.png";
+                link.download = `${chartTitle}.png`;
                 link.click();
             };
         } else {
@@ -232,20 +330,90 @@ function exportToPNG() {
             // Create a link to download the image
             const link = document.createElement("a");
             link.href = newCanvas.toDataURL("image/png");
-            link.download = "chart.png";
+            link.download = "Meanscorevalues.png";
             link.click();
         }
     });
 }
-function exportToExcel() {
+function exportToExcel(chartId, chartTitle) {
     // Get the table element
-    const table = document.getElementById("sales-forecast-chart");
+    const table = document.getElementById(chartId);
+
+    if (!table) {
+        alert("Table not found!");
+        return;
+    }
 
     // Convert the table to a worksheet using SheetJS
     const wb = XLSX.utils.table_to_book(table, { sheet: "Chart Data" });
 
-    // Export the workbook to an Excel file
-    XLSX.writeFile(wb, 'chart_data.xlsx');
+    // Sanitize title for a valid filename (remove special characters and spaces)
+    const safeTitle = chartTitle.replace(/[^a-zA-Z0-9]/g, "_").trim();
+
+    // Ensure there's a valid filename
+    const fileName = safeTitle ? `${safeTitle}.xlsx` : "Chart_Data.xlsx";
+
+    // Export the workbook to an Excel file with the title as filename
+    XLSX.writeFile(wb, fileName);
 }
 
 
+
+/**export all data -============================---------------------------*/
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("export-all").addEventListener("click", function () {
+        const charts = [
+            { id: "sales-forecast-chart", title: "Mean Scores Values" },
+            { id: "basic_radar", title: "Mean Result" },
+            { id: "simple_pie_chart", title: "Participants by Gender" },
+            { id: "simple_pie_chart2", title: "Participants by Age" },
+            { id: "sales-forecast-chart-2", title: "Positive Peace" },
+            { id: "sales-forecast-chart-3", title: "Negative Peace" },
+            { id: "multi_radar", title: "Results by pillars: Radar" },
+            { id: "pillar-table", title: "Results by pillar: Table" }
+        ];
+        exportAllToPDF(charts);
+    });
+});
+
+function exportAllToPDF(charts) {
+    const jsPDF = window.jspdf.jsPDF;
+    const pdf = new jsPDF({ orientation: "landscape" });
+
+    const logo = document.querySelector(".logo img");
+    const logoData = logo ? logo.src : null;
+    let yOffset = 20;
+
+    if (logoData) {
+        pdf.addImage(logoData, "PNG", 10, 10, 30, 30);
+        yOffset = 50;
+    }
+
+    const addChartToPDF = (index) => {
+        if (index >= charts.length) {
+            pdf.save("All_Charts.pdf");
+            return;
+        }
+
+        const { id, title } = charts[index];
+        const chartElement = document.getElementById(id);
+
+        if (!chartElement) {
+            addChartToPDF(index + 1);
+            return;
+        }
+
+        html2canvas(chartElement).then(canvas => {
+            if (index > 0) pdf.addPage();
+            pdf.setFontSize(16);
+            pdf.text(title, 10, yOffset);
+            pdf.addImage(canvas.toDataURL("image/png"), "PNG", 10, yOffset + 10, 280, 150);
+            addChartToPDF(index + 1);
+        }).catch(error => {
+            console.error(`Error rendering chart "${title}":`, error);
+            addChartToPDF(index + 1);
+        });
+    };
+
+    addChartToPDF(0);
+}
