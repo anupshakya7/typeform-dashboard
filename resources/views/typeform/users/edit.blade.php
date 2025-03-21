@@ -167,6 +167,8 @@ $(document).ready(function(){
     $('#formUserBranchLevel').hide();
     $('#formUserSurveyLevel').hide();
 
+    var firstLoad = true;
+    
     filterLevelBox();
 
     $('#role').change(function(){
@@ -178,10 +180,12 @@ $(document).ready(function(){
     $(document).on('change','#organization',function() {
         var roleVal = $('#role option:selected').data('rolename');
 
-        filterBranch();
-
         if(roleVal == 'survey'){
-            filterSurvey();
+            filterBranch(function() {
+                filterSurvey();
+            });
+        }else{
+            filterBranch();
         }
     });
 
@@ -262,7 +266,7 @@ $(document).ready(function(){
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="branch" class="form-label title_level">Branch<span class="text-danger">*</span></label>
+                                            <label for="branch" class="form-label title_level">Division<span class="text-danger">*</span></label>
                                             <select id="branch" name="branch_id[]" class="form-select select2" data-choices
                                                 data-choices-sorting="true" multiple disabled>
                                                 <option value="" selected>Choose Branch</option>
@@ -299,7 +303,7 @@ $(document).ready(function(){
                                             data-choices-sorting="true">
                                             <option value="" selected>Choose Organization</option>
                                             @foreach ($organizations as $organization)
-                                            <option value="{{ $organization->id }}">
+                                            <option value="{{ $organization->id }}" {{$user->organization_id == $organization->id ? 'selected':''}}>
                                                 {{ $organization->name }}</option>
                                             @endforeach
                                         </select>
@@ -308,7 +312,7 @@ $(document).ready(function(){
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="branch" class="form-label title_level">Branch</label>
+                                        <label for="branch" class="form-label title_level">Division</label>
                                         <select id="branch" name="branch_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
                                             <option value="" selected>Choose Branch</option>
@@ -340,9 +344,8 @@ $(document).ready(function(){
         }
     }
 
-    function filterBranch() {
+    function filterBranch(callback) {
         var organizationVal = $('#organization').val();
-        console.log(organizationVal);
 
         if (organizationVal !== '') {
             $.ajax({
@@ -362,6 +365,7 @@ $(document).ready(function(){
                     var userBranchIdsInteger = userBranchIds.map(function(item){
                         return parseInt(item,10);
                     });
+                    
 
                     response.branches.forEach(function(branchItem) {
                         // $('#branch').append(new Option(branch.name,
@@ -377,6 +381,11 @@ $(document).ready(function(){
 
                         $('#branch').append(option);
                     })
+
+                    firstLoad = false;
+                    if (callback && typeof callback == 'function') {
+                        callback();
+                    }
                 },
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
@@ -389,7 +398,8 @@ $(document).ready(function(){
 
     function filterSurvey() {
         var organizationVal = $('#organization').val();
-        var branchVal = $('#branch').val() ;
+        var branchLoadId = firstLoad ? @json($user->branch_id) : null;
+        var branchVal = branchLoadId ? branchLoadId : $('#branch').val();
 
         if (organizationVal !== '') {
             $.ajax({
@@ -404,10 +414,18 @@ $(document).ready(function(){
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
                     $('#survey').append('<option value="" selected>Choose Survey</option>');
+
+                    var surveyId = @json($user->form_id);
+
                     response.forms.forEach(function(formItem) {
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
                         var option = new Option(formItem.form_title, formItem.form_id);
+
+                        if(surveyId && surveyId == formItem.form_id){
+                            $(option).attr('selected',true);
+                        }
+
                         $('#survey').append(option);
                     })
                 },

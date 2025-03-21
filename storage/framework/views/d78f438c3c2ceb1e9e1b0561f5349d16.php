@@ -78,7 +78,6 @@
                                         <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select> </div>
-                            <?php if(auth()->user()->role->name =='superadmin'): ?>
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
@@ -88,7 +87,25 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select> </div>
                             </div>
-                            <?php endif; ?>
+                            <div class="col-auto">
+                                <div class="col-auto"> 
+                                    <select class="form-select select2" name="branch" aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Division</option>
+                                        <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($branch->id); ?>" <?php echo e(request('branch') == $branch->id ? 'selected':''); ?>><?php echo e($branch->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select> </div>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="col-auto"> 
+                                    <select class="form-select select2" name="survey" aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Survey</option>
+                                        <?php $__currentLoopData = $surveys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $survey): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($survey->form_id); ?>" <?php echo e(request('survey') == $survey->form_id ? 'selected':''); ?>><?php echo e($survey->form_title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select> </div>
+                            </div>
                     </div>
                 </form>
                 </div>

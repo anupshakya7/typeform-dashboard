@@ -19,10 +19,11 @@ class Organization extends Model
         $user = auth()->user();
         $role = $user->role->name;
 
-        // if($role == "branch" || $role="survey"){
-        //     $query->where('id',$user->organization_id);
-        // }else
-        if($role == "organization"){
+        if($role == 'survey'){
+            $query->where('id',$user->organization_id);
+        }elseif($role == "branch"){
+            $query->where('id',$user->organization_id);
+        }elseif($role == "organization"){
              $query->where('id',$user->organization_id);
         }
 

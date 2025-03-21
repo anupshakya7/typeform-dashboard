@@ -15,7 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::with('permissions')->whereNot('name','superadmin')->paginate(10);
+        $roles = Role::with('permissions')->whereNotIn('name',['superadmin','krizmatic'])->paginate(10);
         $roles = PaginationHelper::addSerialNo($roles);
         return view('typeform.roles.index',compact('roles'));
     }

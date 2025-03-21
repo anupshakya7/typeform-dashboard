@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -71,12 +71,20 @@ class User extends Authenticatable
         return $this->belongsTo(Organization::class,'organization_id');
     }
 
+    public function branch(){
+        return $this->belongsTo(Branch::class,'branch_id');
+    }
+
+    public function survey(){
+        return $this->belongsTo(Form::class,'form_id','form_id');
+    }
+
     public function role(){
         return $this->belongsTo(Role::class,'role_id');
     }
 
     public function hasPermissionToRoute($route){
-        if($this->role->name == 'superadmin'){
+        if($this->role->name == 'superadmin' || $this->role->name == 'krizmatic'){
             return true;
         }
 

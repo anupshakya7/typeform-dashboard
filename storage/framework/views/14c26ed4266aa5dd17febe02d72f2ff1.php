@@ -61,10 +61,12 @@
                                 <a href="<?php echo e(route('role.index')); ?>" class="nav-link">Role</a>
                             </li>
                             <?php endif; ?>
+                            <?php if(auth()->user()->role->name == 'krizmatic'): ?>
                             <?php if(hasPermissionToRoute('permission.index')): ?>
                             <li class="nav-item">
                                 <a href="<?php echo e(route('permission.index')); ?>" class="nav-link">Permission</a>
                             </li>
+                            <?php endif; ?>
                             <?php endif; ?>
                             <?php if(hasPermissionToRoute('user.password-change')): ?>
                             <li class="nav-item">

@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class FormController extends Controller
 {
@@ -35,6 +36,12 @@ class FormController extends Controller
         if($request->filled('organization')){
             $formsQuery->where('organization_id',$request->organization);
         }
+        if($request->filled('branch')){
+            $formsQuery->where('branch_id',$request->branch);
+        }
+        if($request->filled('survey')){
+            $formsQuery->where('form_id',$request->survey);
+        }
 
         $forms = $formsQuery->filterForm()->latest()->paginate(10);
         
@@ -43,8 +50,10 @@ class FormController extends Controller
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
         $organizations = Organization::filterOrganization()->get();
+        $branches = Branch::filterBranch()->get();
+        $surveys = Form::filterForm()->get();
 
-        return view('typeform.form.index',compact('forms','countries','organizations'));
+        return view('typeform.form.index',compact('forms','countries','organizations','branches','surveys'));
     }
 
     public function show(String $id)
@@ -86,7 +95,9 @@ class FormController extends Controller
             'form_name' => 'required|string',
             'country' => 'required|string',
             'organization' => 'required|integer',
-            'branch' => 'nullable|integer',
+            'branch'=>['nullable','integer',Rule::requiredIf(function() use($request){
+                return auth()->user()->role->name == 'branch';
+            })],
             'beforedate' => 'required|string',
             'duringdate' => 'nullable|string',
             'afterdate' => 'nullable|string',
@@ -257,11 +268,20 @@ class FormController extends Controller
 
     public function filterSurvey(Request $request){
         $validatedData = $request->validate([
-            'organization_id' => 'required|integer',
-            'branch_id'=>'nullable|integer'
+            'country'=>'nullable|string',
+            'organization_id' => 'nullable|integer',
+            'branch_id'=>'nullable|integer',
         ]);
 
-        $formQuery = Form::where('organization_id',$validatedData['organization_id']);
+        $formQuery = Form::query();
+        
+        if($request->filled('country')){
+            $formQuery->where('country',$validatedData['country']);
+        }
+
+        if($request->filled('organization_id')){
+            $formQuery->where('organization_id',$validatedData['organization_id']);
+        }
         
         if($request->filled('branch_id')){
             $formQuery->where('branch_id',$validatedData['branch_id']);
@@ -306,7 +326,9 @@ class FormController extends Controller
             'form_name' => 'required|string',
             'country' => 'required|string',
             'organization' => 'required|integer',
-            'branch' => 'nullable|integer',
+            'branch'=>['nullable','integer',Rule::requiredIf(function() use($request){
+                return auth()->user()->role->name == 'branch';
+            })],
             'beforedate' => 'required|string',
             'duringdate' => 'nullable|string',
             'afterdate' => 'nullable|string',

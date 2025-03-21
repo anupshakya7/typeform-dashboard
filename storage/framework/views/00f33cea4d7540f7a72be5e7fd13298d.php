@@ -104,7 +104,7 @@
                                 data-choices-sorting="true">
                                 <option value="" selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
+                                <option value="<?php echo e($organization->id); ?>" <?php echo e(auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':''); ?> ><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
@@ -113,12 +113,16 @@
                     <div class="col-md-12" id="setBranchDiv" style="display: none;">
                         <div class="my-3">
                             <label for="setBranch" class="form-label">Would you like to set this form to the branch of this organization?</label>
-                            <input type="checkbox" class="ms-2" id="setBranch"/>
+                            <input type="checkbox" class="ms-2" id="setBranch" <?php if(auth()->user()->role->name=='branch'): ?>checked <?php endif; ?> />
                         </div>
                     </div>
                     <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Branch</label>
+                            <label for="branch" class="form-label">Branch
+                                <?php if(auth()->user()->role->name=='branch'): ?>
+                                <span class="text-danger">*</span>
+                                <?php endif; ?>
+                            </label>
                             <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true" disabled>
                                 <option value="" selected>Choose Branch</option>
@@ -301,8 +305,14 @@ $(document).ready(function() {
     //     }
     // });
 
+    checkBoxBranch();
+
     //Filter Branches
     $('#organization,#setBranch').change(function() {
+        checkBoxBranch();
+    });
+
+    function checkBoxBranch(){
         var organizationVal = $('#organization').val();
         
         if (organizationVal !== '') {
@@ -319,7 +329,7 @@ $(document).ready(function() {
         }else{
             $('#setBranchDiv').css('display','none');
         }
-    });
+    }
 
     function branch(organizationVal){
         $.ajax({
@@ -332,7 +342,21 @@ $(document).ready(function() {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
                     $('#branch').append('<option value="" selected>Choose Branch</option>');
-                    response.branches.forEach(function(branch) {
+
+                    var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                    var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                   
+                    var branchList = response.branches.filter(function(branch){
+                        if(userRole == "branch"){
+                            let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                            return branchIds.includes(branch.id.toString());
+                        }
+
+                        return true;
+                    });
+
+                    branchList.forEach(function(branch) {
                         $('#branch').append(new Option(branch.name, branch.id));
                     })
                 },
