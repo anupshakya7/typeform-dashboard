@@ -435,6 +435,8 @@ $(document).ready(function(){
         var branchLoadId = firstLoad ? <?php echo json_encode($user->branch_id, 15, 512) ?> : null;
         var branchVal = branchLoadId ? branchLoadId : $('#branch').val();
 
+        console.log(branchVal);
+
         if (organizationVal !== '') {
             $.ajax({
                 url: "<?php echo e(route('survey.get')); ?>",

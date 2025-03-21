@@ -178,7 +178,7 @@
 
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
-                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->branch->name); ?>" readonly>
+                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->branch_id != null ? auth()->user()->branch->name :''); ?>" readonly>
                                     <input type="hidden" name="branch" class="form-control" value="<?php echo e(old('branch',auth()->user()->branch_id)); ?>" id="branch" readonly>
                                     <?php else: ?>
                                     <select class="form-select select2" id="branch" name="branch"

@@ -25,8 +25,13 @@ class IndexController extends Controller
         $surveyForms = Form::filterForm()->get();
         
         //Survey id if no then latest form id
-        $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
-        $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
+        if(auth()->user()->role->name == "survey"){
+            $country = auth()->user()->survey->country;
+            $survey_id = auth()->user()->survey->form_id;
+        }else{
+            $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
+            $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
+        }
 
         $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
 
