@@ -99,7 +99,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="branch" aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Branch</option>
+                                        <option value="" selected>Division</option>
                                         @foreach($branches as $branch)
                                         <option value="{{$branch->id}}" {{request('branch') == $branch->id ? 'selected':''}}>{{$branch->name}}</option>
                                         @endforeach
