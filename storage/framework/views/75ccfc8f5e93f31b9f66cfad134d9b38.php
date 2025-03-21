@@ -39,6 +39,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
+                            <?php if(auth()->user()->role->name == 'superadmin'): ?>
                             <select id="organization_id" name="organization_id" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Organization</option>
@@ -46,6 +47,10 @@
                                 <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
+                            <?php else: ?>
+                            <input type="text" class="form-control" placeholder="Organization" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
+                            <input type="hidden" name="organization_id" id="organization_id" class="form-control" value="<?php echo e(auth()->user()->organization->id); ?>" placeholder="Organization" readonly>
+                            <?php endif; ?>
                             <?php $__errorArgs = ['organization_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

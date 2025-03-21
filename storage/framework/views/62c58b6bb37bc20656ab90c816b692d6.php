@@ -3,7 +3,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="index" class="logo logo-dark">
+        <a href="<?php echo e(route('home.index')); ?>" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
@@ -12,7 +12,7 @@
             </span>
         </a>
         <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
+        <a href="<?php echo e(route('home.index')); ?>" class="logo logo-light">
             <span class="logo-sm">
                 <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
             </span>
@@ -91,7 +91,7 @@
                 <?php if(hasPermissionToRoute('branch.index')): ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('branch.index')); ?>">
-                    <i class="fa-solid fa-landmark-flag"></i> <span>Branch</span>
+                    <i class="fa-solid fa-landmark-flag"></i> <span>Divisions</span>
                     </a>
                 </li>
                 <?php endif; ?>
@@ -101,7 +101,7 @@
                 <?php if(hasPermissionToRoute('form.index')): ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
-                    <i class="fa-solid fa-file"></i> <span>Form Management</span>
+                    <i class="fa-solid fa-file"></i> <span>Survey Management</span>
                     </a>
                 </li>
                 <?php endif; ?>
@@ -111,7 +111,7 @@
                  <?php if(hasPermissionToRoute('survey.index')): ?>
                  <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('survey.index')); ?>">
-                    <i class="fa-solid fa-clipboard-list"></i> <span>Survey Lists</span>
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Survey Data</span>
                     </a>
                 </li>
                 <?php endif; ?>

@@ -68,7 +68,7 @@
                                     <th>Email</th>
                                     <th>Organization</th>
                                     <th>Role</th>
-                                    
+                                    <th>Authorize</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -81,26 +81,26 @@
                                         <td><?php echo e($user->email); ?></td>
                                         <td><?php echo e(optional($user->organization)->name); ?></td>
                                         <td><span class="btn btn-sm btn-danger"><?php echo e(optional($user->role)->name); ?></span></td>
-                                        
+                                        <td><a href="<?php echo e(route('user.assignRole',$user)); ?>"
+                                            class="btn btn-info"></i>
+                                            Role</a></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
-
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a href="<?php echo e(route('user.show', $user)); ?>"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <?php if($user->role->name !== 'superadmin'): ?>
                                                     <li><a href="<?php echo e(route('user.edit',$user)); ?>" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    <?php if(auth()->user()->id !== $user->id): ?>
+                                                    <?php if($user->role->name !== 'iep'): ?>
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
                                                             data-item-id="<?php echo e($user->id); ?>"
@@ -110,7 +110,6 @@
                                                             Delete
                                                         </button>
                                                     </li>
-                                                    <?php endif; ?>
                                                     <?php endif; ?>
                                                 </ul>
                                             </div>
@@ -196,4 +195,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/users/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/users/index.blade.php ENDPATH**/ ?>

@@ -21,7 +21,7 @@
 
     <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">User Management</h4>
+            <h4 class="fs-16 mb-1">Division Management</h4>
         </div>
     </div>
 
@@ -32,14 +32,17 @@
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
-                    <a href="<?php echo e(route('user.create')); ?>" class="btn btn-info add-btn"><i
+                    <a href="<?php echo e(route('branch.create')); ?>" class="btn btn-info add-btn"><i
                             class="ri-add-line align-bottom me-1"></i> Create
-                        User</a>
+                        Division</a>
                 </div>
             </div>
             <div class="flex-shrink-0">
                 <div class="d-flex flex-row gap-2 align-items-center">
                     <!--info here-->
+                    <a href="<?php echo e(route('branch.csv')); ?>" class="btn btn-success"><i
+                            class="ri-file-download-line align-bottom me-1"></i>
+                        Export</a>
                     <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
                         data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                         aria-controls="theme-settings-offcanvas">
@@ -56,7 +59,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">User Lists</h5>
+                    <h5 class="card-title mb-0">Division Lists</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -64,54 +67,45 @@
                             <thead class="table-head">
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
                                     <th>Organization</th>
-                                    <th>Role</th>
-                                    
+                                    <th>Division Name</th>
+                                    <th>Country</th>
                                     <th>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($user->serial_no); ?></td>
-                                        <td><?php echo e($user->name); ?></td>
-                                        <td><?php echo e($user->email); ?></td>
-                                        <td><?php echo e(optional($user->organization)->name); ?></td>
-                                        <td><span class="btn btn-sm btn-danger"><?php echo e(optional($user->role)->name); ?></span></td>
-                                        
+                                        <td><?php echo e($branch->serial_no); ?></td>
+                                        <td><?php echo e(optional($branch->organization)->name); ?></td>
+                                        <td><?php echo e($branch->name); ?></td>
+                                        <td><?php echo e($branch->country); ?></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
-
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="<?php echo e(route('user.show', $user)); ?>"
+                                                    <li><a href="<?php echo e(route('branch.show', $branch)); ?>"
                                                             class="dropdown-item"><i
                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                             View</a>
                                                     </li>
-                                                    <?php if($user->role->name !== 'superadmin'): ?>
-                                                    <li><a href="<?php echo e(route('user.edit',$user)); ?>" class="dropdown-item edit-item-btn"><i
+                                                    <li><a href="<?php echo e(route('branch.edit',$branch)); ?>" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
                                                     </li>
-                                                    <?php if(auth()->user()->id !== $user->id): ?>
                                                     <li>
                                                         <button class="dropdown-item remove-item-btn"
-                                                            data-item-id="<?php echo e($user->id); ?>"
-                                                            data-item-name="<?php echo e($user->name); ?>" data-bs-toggle="modal"
+                                                            data-item-id="<?php echo e($branch->id); ?>"
+                                                            data-item-name="<?php echo e($branch->name); ?>" data-bs-toggle="modal"
                                                             data-bs-target="#zoomInModal">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                             Delete
                                                         </button>
                                                     </li>
-                                                    <?php endif; ?>
-                                                    <?php endif; ?>
                                                 </ul>
                                             </div>
                                         </td>
@@ -121,7 +115,7 @@
                         </table>
                     </div>
                     <!--tfooter section-->
-                    <?php echo $__env->make('typeform.partials.pagination', ['paginator' => $users], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    <?php echo $__env->make('typeform.partials.pagination', ['paginator' => $branches], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
             </div>
         </div>
@@ -156,8 +150,6 @@
 
     <!-- App js -->
     <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
-
-
 
 
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -196,4 +188,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/users/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/branch/index.blade.php ENDPATH**/ ?>

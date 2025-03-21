@@ -46,15 +46,15 @@ class AnswerController extends Controller
 
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
-        $organizations = Organization::all();
-        $surveyForms = Form::all();
+        $organizations = Organization::filterOrganization()->get();
+        $surveyForms = Form::filterForm()->get();
 
         return view('typeform.survey.index',compact('answers','countries','organizations','surveyForms'));
     }
 
     public function getAnswer(Request $request){
         $allData = $request->all();
-        
+
         $formId = $allData['form_response']['form_id'];
         $eventId = $allData['event_id'];
         $answers = $allData['form_response']['answers'];

@@ -17,7 +17,7 @@
 
             <div class="d-flex align-items-center">
 
-                <div class="dropdown ms-1 topbar-head-dropdown header-item language-top-button">
+                <div class="dropdown ms-1 topbar-head-dropdown header-item language-top-button" style="display:none;">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php switch(Session::get('lang')):
                         case ('ru'): ?>

@@ -18,11 +18,15 @@ class Organization extends Model
     public function scopeFilterOrganization($query){
         $user = auth()->user();
         $role = $user->role->name;
- 
-        if($role == "organization"){
+
+        if($role == 'survey'){
+            $query->where('id',$user->organization_id);
+        }elseif($role == "branch"){
+            $query->where('id',$user->organization_id);
+        }elseif($role == "organization"){
              $query->where('id',$user->organization_id);
         }
- 
+
         return $query;
      }
 
