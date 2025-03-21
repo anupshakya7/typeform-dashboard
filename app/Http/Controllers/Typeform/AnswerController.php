@@ -39,7 +39,7 @@ class AnswerController extends Controller
             });
         }
         
-        $answers = $answersQuery->filterSurvey()->paginate(10);
+        $answers = $answersQuery->filterSurvey()->latest()->paginate(10);
         
         
         $answers = PaginationHelper::addSerialNo($answers);
