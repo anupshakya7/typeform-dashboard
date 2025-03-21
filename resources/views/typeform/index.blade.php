@@ -186,7 +186,7 @@
                                 </select>
                             </div>
                             <div class="col-auto p-0">
-                            <p class="p-0 m-0"><span class="text-muted">Select Project</span> <span class="text-danger">*</span></p>
+                            <p class="p-0 m-0"><span class="text-muted"> Project</span> </p>
                                 <select class="form-select select2" name="survey" id="survey"
                                     aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Survey</option>
@@ -200,6 +200,7 @@
                             </div>
                             <div class="col-auto p-0">
                                 
+
                                 <!-- Dropdown for exporting as PDF, PNG, or Excel -->
                                 <div class="dropdown">
     <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

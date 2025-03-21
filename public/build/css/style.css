@@ -137,6 +137,11 @@ table th, table td {
   
 
 /*loader css starts here*/
+.crop-text {
+    width: 150px;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+}
 
 .btn-blue {
     background-color: #299CDB;
