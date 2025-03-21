@@ -78,6 +78,7 @@
                                         <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select> </div>
+                            <?php if(auth()->user()->role->name =='superadmin'): ?>
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
@@ -87,6 +88,7 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select> </div>
                             </div>
+                            <?php endif; ?>
                     </div>
                 </form>
                 </div>
