@@ -175,12 +175,101 @@ class FormController extends Controller
                 $questionsData = array_merge($formIdData, $questionFormattingData);
 
                 Question::create($questionsData);
+                Log::error('Created Successfully!!!');
+                $forms = Form::with('organization','branches')->filterForm()->latest()->paginate(10);
+
+                return redirect()->route('form.index',$forms)->with('success', 'Successfully Created Form and its Questions!!!');
             } catch (\Exception $e) {
+                Log::error($e->getMessage());
                 DB::rollBack();
+
                 return redirect()->back()->with('error', 'Failed to Create Form and its Questions'.$e->getMessage());
             }
-            return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
+            // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
         });
+
+            // try {
+            //     DB::beginTransaction();
+
+            //     //Formatting Date
+            //     $beforedate_start = $this->reformatDate(explode(' to ',$validatedData['beforedate'])[0]);
+            //     $beforedate_end = $this->reformatDate(explode(' to ',$validatedData['beforedate'])[1]);
+            //     if($validatedData['duringdate']){
+            //         $duringdate_start = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[0]);
+            //         $duringdate_end = $this->reformatDate(explode(' to ',$validatedData['duringdate'])[1]);
+            //     }
+            //     if($validatedData['afterdate']){
+            //         $enddate_start = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[0]);
+            //         $enddate_end = $this->reformatDate(explode(' to ',$validatedData['afterdate'])[1]); 
+            //     }
+
+            //     if(isset($validatedData['branch'])){
+            //         $branch_id =$validatedData['branch'];
+            //         $branchLevel = 1;
+            //     }else{
+            //         $branch_id=null;
+            //         $branchLevel = 0;
+            //     }
+            //     // isset()
+            //     //Form Data
+            //     $formData = [
+            //         'form_id' => $validatedData['formId'],
+            //         'form_title' => $validatedData['form_name'],
+            //         'country' => $validatedData['country'],
+            //         'organization_id' => $validatedData['organization'],
+            //         'branch_id' => $branch_id,
+            //         'branch_level'=>$branchLevel,
+            //         'before' => $beforedate_start.' to '.$beforedate_end,
+            //         'during' => $validatedData['duringdate'] !== null ? $duringdate_start.' to '.$duringdate_end : null,
+            //         'after' => $validatedData['afterdate'] !== null ? $enddate_start.' to '.$enddate_end : null
+            //     ];
+
+
+            //     Form::create($formData);
+    
+            //     //Question Data
+            //     $labelDBData = [
+            //         'name',
+            //         'age',
+            //         'gender',
+            //         'village-town-city',
+            //         'well_functioning_government',
+            //         'low_level_corruption',
+            //         'equitable_distribution',
+            //         'good_relations',
+            //         'free_flow',
+            //         'high_levels',
+            //         'sound_business',
+            //         'acceptance_rights',
+            //         'positive_peace',
+            //         'negative_peace',
+            //         'extra_ques1',
+            //         'extra_ques2',
+            //         'extra_ques3',
+            //     ];
+            //     $questionFormattingData = [];
+    
+            //     foreach ($validatedData['questions'] as $key => $question) {
+            //         $questionFormattingData[$labelDBData[$key]] = $question;
+            //     }
+    
+            //     $formIdData = [
+            //         'form_id' => $validatedData['formId']
+            //     ];
+    
+            //     $questionsData = array_merge($formIdData, $questionFormattingData);
+
+            //     Question::create($questionsData);
+            //     $forms = Form::with('organization','branches')->filterForm()->latest()->paginate(10);
+
+            //     return redirect()->route('form.index',$forms)->with('success', 'Successfully Created Form and its Questions!!!');
+            //     Log::error('Created Successfully!!!');
+            //     DB::commit();
+            // } catch (\Exception $e) {
+            //     DB::rollBack();
+            //     Log::error($e->getMessage());
+            //     return redirect()->back()->with('error', 'Failed to Create Form and its Questions'.$e->getMessage());
+            // }
 
     }
 
@@ -409,8 +498,27 @@ class FormController extends Controller
         
     }
 
-    public function generateCSV(){
-        $forms = Form::with('organization','branches')->filterForm()->get();
+    public function generateCSV(Request $request){
+        $formsQuery = Form::with('organization','branches')->filterForm();
+        
+        if($request->filled('search_title')){
+            $formsQuery->where('form_title','like','%'.$request->search_title.'%');
+        }
+
+        if($request->filled('country')){
+            $formsQuery->where('country',$request->country);
+        }
+        if($request->filled('organization')){
+            $formsQuery->where('organization_id',$request->organization);
+        }
+        if($request->filled('branch')){
+            $formsQuery->where('branch_id',$request->branch);
+        }
+        if($request->filled('survey')){
+            $formsQuery->where('form_id',$request->survey);
+        }
+        
+        $forms = $formsQuery->get();
         $filename = "form.csv";
         $fp = fopen($filename,'w+');
         fputcsv($fp,array('ID','Form Id','Form Title','Country','Organization','Branch','Branch Level','Before','During','After','Created At'));
