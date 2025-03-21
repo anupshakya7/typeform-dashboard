@@ -316,7 +316,7 @@ $(document).ready(function(){
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="branch" class="form-label title_level">Branch<span class="text-danger">*</span></label>
+                                            <label for="branch" class="form-label title_level">Division<span class="text-danger">*</span></label>
                                             <select id="branch" name="branch_id[]" class="form-select select2" data-choices
                                                 data-choices-sorting="true" multiple disabled>
                                                 <option value="" selected>Choose Branch</option>
@@ -362,7 +362,7 @@ $(document).ready(function(){
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="branch" class="form-label title_level">Branch</label>
+                                        <label for="branch" class="form-label title_level">Division</label>
                                         <select id="branch" name="branch_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
                                             <option value="" selected>Choose Branch</option>
