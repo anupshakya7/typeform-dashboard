@@ -151,7 +151,7 @@ class AnswerController extends Controller
             $surveyQuery->where('form_id',$request->survey_form);
         }
 
-        $survey = $surveyQuery->get();
+        $survey = $surveyQuery->latest()->get();
 
         $filename = 'survey.csv';
         $fp = fopen($filename,'w+');
@@ -183,9 +183,9 @@ class AnswerController extends Controller
         foreach($survey as $row){
             fputcsv($fp,array(
                 $row->id,
-                $row->form->form_title,
-                $row->form->country,
-                $row->form->organization->name,
+                $row->form ? optional($row->form)->form_title:null,
+                $row->form ? optional($row->form)->country:null,
+                $row->form ? optional($row->form)->organization->name :null,
                 $row->name,
                 $row->age,
                 $row->gender,

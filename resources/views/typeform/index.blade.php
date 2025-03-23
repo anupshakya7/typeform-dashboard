@@ -13,19 +13,23 @@
 
                 <div class="mb-3 pb-1">
                     <div>
-                        <h4 class="mb-1">Welcome back, {{auth()->user()->name}}</h4>
+                        <h4 class="mb-1">Welcome back, {{ auth()->user()->name }}</h4>
                     </div>
-
-
                 </div>
-
                 <!--end greeting section-->
-
 
                 <!--card row section ==========================================================-->
 
+                @php
+                    if(auth()->user()->role->name == 'superadmin' || auth()->user()->role->name == 'krizmatic'){
+                        $columns = 3;
+                    }else{
+                        $columns = 4;
+                    }
+                @endphp
+
                 <div class="row">
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-{{$columns}} col-md-6">
                         <!-- card -->
                         <div class="card card-animate stat-card">
                             <div class="card-body">
@@ -47,11 +51,14 @@
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                             data-target="{{ $topBox['survey'] }}">{{ $topBox['survey'] }}</span>
                                     </h4>
+
+
+
                                 </div>
                             </div><!-- end card body -->
                         </div><!-- end card -->
                     </div><!-- end col -->
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-{{$columns}} col-md-6">
                         <!-- card -->
                         <div class="card card-animate stat-card">
                             <div class="card-body">
@@ -71,18 +78,15 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-end justify-content-between mt-4">
-
                                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
                                             data-target="{{ $topBox['countries'] }}">{{ $topBox['countries'] }}</span>
                                     </h4>
-
-
-
                                 </div>
                             </div><!-- end card body -->
                         </div><!-- end card -->
                     </div><!-- end col -->
-                    <div class="col-xl-3 col-md-6">
+                    @if(auth()->user()->role->name == 'superadmin' || auth()->user()->role->name == 'krizmatic')
+                    <div class="col-xl-{{$columns}} col-md-6">
                         <!-- card -->
                         <div class="card card-animate stat-card">
                             <div class="card-body">
@@ -100,17 +104,15 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-end justify-content-between mt-4">
-
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                             data-target="{{ $topBox['organizations'] }}">{{ $topBox['organizations'] }}</span>
                                     </h4>
-
-
                                 </div>
                             </div><!-- end card body -->
                         </div><!-- end card -->
                     </div><!-- end col -->
-                    <div class="col-xl-3 col-md-6">
+                    @endif
+                    <div class="col-xl-{{$columns}} col-md-6">
                         <!-- card -->
                         <div class="card card-animate stat-card">
                             <div class="card-body">
@@ -146,29 +148,35 @@
 
                 <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
                     <div>
-                        <h4><span class="badge bg-success lh-1">Positive Peace Survey 2025</span></h4>
+                        <h4><span class="badge bg-success lh-1">{{$formDetails->form_title}}</span></h4>
                         <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
                     </div>
 
                     <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
                         <form action="{{ route('home.index') }}" method="GET">
-                            <div class="row gap-sm-3 gap-2 m-0 p-0 dashboard align-items-end">
-
+                            <div class="row gap-3 m-0 p-0 dashboard">
                                 <div class="col-auto p-0">
-                                    <p class="p-0 m-0 text-muted">Country</p>
+                                    @if(auth()->user()->role->name == 'survey')
+                                        <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
+                                    @else
                                     <select class="form-select select2" name="country" id="country"
-                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        aria-label="Default select example">
+                                        <option value="" selected>Country</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country['name'] }}"
-                                                {{ ($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected' : '' }}>
+                                                {{ (($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : '' }}>
                                                 {{ $country['name'] }}</option>
                                         @endforeach
                                     </select>
+                                    @endif
+                                    {{-- <div id="country_hidden">
+
+                                    </div> --}}
                                 </div>
                                 <div class="col-auto p-0">
-                                    <p class="p-0 m-0 text-muted">Organization</p>
+                                    @if(auth()->user()->role->name == 'superadmin')
                                     <select class="form-select select2" id="organization" name="organization"
-                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        aria-label="Default select example">
                                         <option value="" selected>Organization</option>
                                         @foreach ($organizations as $organization)
                                             <option value="{{ $organization->id }}"
@@ -176,17 +184,28 @@
                                                 {{ $organization->name }}</option>
                                         @endforeach
                                     </select>
+                                    @else
+                                    <input type="text" class="form-control" value="{{auth()->user()->organization->name}}" readonly>
+                                    <input type="hidden" name="organization" class="form-control" value="{{old('organization',auth()->user()->organization_id)}}" id="organization" readonly>
+                                    @endif
                                 </div>
 
                                 <div class="col-auto p-0">
-                                    <p class="p-0 m-0 text-muted">Branch</p>
+                                    @if(auth()->user()->role->name == 'survey')
+                                    <input type="text" class="form-control" value="{{auth()->user()->branch_id != null ? auth()->user()->branch->name :''}}" readonly>
+                                    <input type="hidden" name="branch" class="form-control" value="{{old('branch',auth()->user()->branch_id)}}" id="branch" readonly>
+                                    @else
                                     <select class="form-select select2" id="branch" name="branch"
-                                        aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                        <option value="" selected>Branch</option>
+                                        aria-label="Default select example" disabled>
+                                        <option value="" selected>Division</option>
                                     </select>
+                                    @endif
                                 </div>
                                 <div class="col-auto p-0">
-                                    <p class="p-0 m-0"><span class="text-muted"> Project</span> </p>
+                                    @if(auth()->user()->role->name == 'survey')
+                                        <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
+                                        <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
+                                    @else
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example" onchange="this.form.submit()">
                                         <option value="" selected>Survey</option>
@@ -196,372 +215,279 @@
                                                 {{ $surveyForm->form_title }}</option>
                                         @endforeach
                                     </select>
+                                    @endif
                                 </div>
                                 <div class="col-auto p-0">
-
-
-                                    <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                    <div class="dropdown">
-                                        <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                            id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                            <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                    Report</a></li>
-
-                                        </ul>
-                                    </div>
+                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                                          <div class="dropdown">
+                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#" id="export-all">Download
+                                                        Report</a></li>
+    
+                                            </ul>
+                                        </div>
                                 </div>
-
-
                             </div>
-
+                            @if(auth()->user()->role->name !== 'survey')
                             <div class="note text-muted">
                                 <p>Note: Please select at least one project & choose branch, organization, country
                                     respectively to filter data.</p>
                             </div>
-                    </div>
+                            @endif
+                        </form>
 
-                </div>
-                </form>
-
-            </div>
-        </div>
-
-        <!--bar graph section starts here-->
-        <div id="dashboard_info">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Mean Scores Values</h4>
-                <div class="flex-shrink-0">
-                    <div class="d-flex flex-row gap-2 align-items-center">
-                        <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                        <div class="dropdown">
-                            <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="svg-icon" type="image/svg+xml"
-                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="#" data-type="pdf"
-                                        data-chart-id="sales-forecast-chart">Export as PDF</a></li>
-                                <li><a class="dropdown-item" href="#" data-type="png"
-                                        data-chart-id="sales-forecast-chart">Export as PNG</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Info Icon for additional settings -->
-                        <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                            data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-                            <img class="svg-icon" type="image/svg+xml"
-                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
-                        </a>
                     </div>
                 </div>
-            </div><!-- end card header -->
-            <div class="card-body pb-0">
-                <div id="sales-forecast-chart" data-colors='["--vz-primary", "--vz-success", "--vz-warning"]'
-                    class="apex-charts" dir="ltr"></div>
-            </div>
-        </div><!-- end card -->
 
 
-        <!--bar graph section ends here-->
-
-
-        <!-- radar and pie section -->
-        <div class="row">
-            <div class="col-sm-7 pb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                        <h4 class="card-title mean-result-title">Mean Results</h4>
-                        <div class="flex-shrink-0">
-                            <div class="d-flex flex-row gap-2 align-items-center">
-                                <!--info here-->
-                                <div class="dropdown">
-                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                        <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                data-chart-id="basic_radar">Export as PDF</a></li>
-                                        <li><a class="dropdown-item" href="#" data-type="png"
-                                                data-chart-id="basic_radar">Export as PNG</a></li>
-                                    </ul>
-                                </div>
-                                <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                    data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
-
-                                </a>
-                            </div>
-                        </div>
-                    </div><!-- end card header -->
-                    <div class="card-body">
-                        <div id="basic_radar" data-colors='["--vz-success"]' class="apex-charts" dir="ltr">
-                        </div>
-                    </div><!-- end card-body -->
-                </div><!-- end card -->
-            </div>
-            <div class="col-sm-5">
-
-                <!--gender pie chart here -->
+                <!--bar graph section starts here-->
 
                 <div class="card">
-                    <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                        <h4 class="card-title pie-gender-title mb-0">Participants by Gender</h4>
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">Mean Scores Values</h4>
                         <div class="flex-shrink-0">
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <!--info here-->
-                                <div class="dropdown">
-                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                        <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                data-chart-id="simple_pie_chart">Export as PDF</a></li>
-                                        <li><a class="dropdown-item" href="#" data-type="png"
-                                                data-chart-id="simple_pie_chart">Export as PNG</a></li>
-                                    </ul>
-                                </div>
-                                <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                    data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
+                                <a class="icon-frame" href="#"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
-
-                                </a>
-                            </div>
-                        </div>
-                    </div><!-- end card header -->
-
-                    <div class="card-body">
-                        <div id="simple_pie_chart" data-colors='["--vz-primary", "--vz-success"]' class="apex-charts"
-                            dir="ltr"></div>
-                    </div><!-- end card-body -->
-                </div><!-- end card -->
-                <!--gender pie chart here -->
-
-
-                <!--age pie chart here -->
-
-                <div class="card">
-                    <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                        <h4 class="card-title pie-age-title mb-0">Participants by Age</h4>
-                        <div class="flex-shrink-0">
-                            <div class="d-flex flex-row gap-2 align-items-center">
-                                <!--info here-->
-                                <div class="dropdown">
-                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                        <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                data-chart-id="simple_pie_chart2">Export as PDF</a></li>
-                                        <li><a class="dropdown-item" href="#" data-type="png"
-                                                data-chart-id="simple_pie_chart2">Export as PNG</a></li>
-                                    </ul>
-                                </div>
-                                <a class="icon-frame" href="" data-bs-toggle="offcanvas"
-                                    data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
-
-                                </a>
-                            </div>
-                        </div>
-                    </div><!-- end card header -->
-
-                    <div class="card-body">
-                        <div id="simple_pie_chart2"
-                            data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger"]'
-                            class="apex-charts" dir="ltr"></div>
-                    </div><!-- end card-body -->
-                </div><!-- end card -->
-
-                <!--age pie chart here -->
-
-
-            </div>
-        </div>
-        <div>
-            <!-- radar and pie section -->
-
-            <!--two column bar chart section -->
-
-
-
-            <div class="row">
-
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title positive-peace-title mb-0 flex-grow-1">Positive Peace</h4>
-                            <div class="flex-shrink-0">
-                                <div class="d-flex flex-row gap-2 align-items-center">
-                                    <!--info here-->
-                                    <div class="dropdown">
-                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                            <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                    data-chart-id="sales-forecast-chart-2">Export as PDF</a></li>
-                                            <li><a class="dropdown-item" href="#" data-type="png"
-                                                    data-chart-id="sales-forecast-chart-2">Export as PNG</a></li>
-                                        </ul>
-                                    </div>
-                                    <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                        data-bs-target="#theme-settings-offcanvas"
-                                        aria-controls="theme-settings-offcanvas"
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
-
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- end card header -->
-                        <div class="card-body pb-0">
-                            <div id="sales-forecast-chart-2"
-                                data-colors='["--vz-primary", "--vz-success", "--vz-warning"]' class="apex-charts"
-                                dir="ltr"></div>
-                        </div>
-                    </div><!-- end card -->
-
-                </div>
-
-
-
-                <!--2------>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title negative-peace-title mb-0 flex-grow-1">Negative Peace</h4>
-                            <div class="flex-shrink-0">
-                                <div class="d-flex flex-row gap-2 align-items-center">
-                                    <!--info here-->
-                                    <div class="dropdown">
-                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                            <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                    data-chart-id="sales-forecast-chart-3">Export as PDF</a></li>
-                                            <li><a class="dropdown-item" href="#" data-type="png"
-                                                    data-chart-id="sales-forecast-chart-3">Export as PNG</a></li>
-                                        </ul>
-                                    </div>
-                                    <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                        data-bs-target="#theme-settings-offcanvas"
-                                        aria-controls="theme-settings-offcanvas"
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
-
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- end card header -->
-                        <div class="card-body pb-0">
-                            <div id="sales-forecast-chart-3"
-                                data-colors='["--vz-primary", "--vz-success", "--vz-warning"]' class="apex-charts"
-                                dir="ltr"></div>
-                        </div>
-                    </div><!-- end card -->
-
-                </div>
-            </div>
-
-
-            <!--two column bar chart section -->
-
-            <!--area radar chart section starts here -->
-
-            <div class="card">
-                <div class="card-header z-1 d-flex justify-content-between align-items-center">
-                    <h4 class="card-title results-by-pillar-radar mb-0">Results by Pillars</h4>
-                    <div class="flex-shrink-0">
-                        <div class="d-flex flex-row gap-2 align-items-center">
-                            <!--info here-->
-                            <div class="dropdown">
-                                <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                    <li><a class="dropdown-item" href="#" data-type="pdf"
-                                            data-chart-id="multi_radar">Export as PDF</a></li>
-                                    <li><a class="dropdown-item" href="#" data-type="png"
-                                            data-chart-id="multi_radar">Export as PNG</a></li>
-                                </ul>
+                                <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                    data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
+
+                                </a>
                             </div>
-                            <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                <img class="svg-icon" type="image/svg+xml"
-                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
-
-                            </a>
                         </div>
+                    </div><!-- end card header -->
+                    <div class="card-body pb-0">
+                        <div id="sales-forecast-chart" data-colors='["--vz-primary", "--vz-success", "--vz-warning"]'
+                            class="apex-charts" dir="ltr"></div>
                     </div>
-                </div><!-- end card header -->
+                </div><!-- end card -->
 
-                <div class="card-body">
-                    <div id="multi_radar" data-colors='["--vz-danger", "--vz-success", "--vz-primary"]'
-                        class="apex-charts" dir="ltr"></div>
-                </div><!-- end card-body -->
-            </div><!-- end card -->
 
-            <!--area radar chart section starts here -->
+                <!--bar graph section ends here-->
 
-            <div class="row mb-4">
-                <div class="col-xl-12">
-                    <div class="card mb-0">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title results-by-pillar-table mb-0 flex-grow-1">Results By Pillar</h4>
-                            <div class="flex-shrink-0">
-                                <div class="d-flex flex-row gap-2 align-items-center">
-                                    <!--info here-->
-                                    <div class="dropdown">
-                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+
+                <!-- radar and pie section -->
+                <div class="row">
+                    <div class="col-sm-7 pb-4">
+                        <div class="card h-100">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h4 class="card-title">Mean Results</h4>
+                                <div class="flex-shrink-0">
+                                    <div class="d-flex flex-row gap-2 align-items-center">
+                                        <!--info here-->
+                                        <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                            data-bs-target="#theme-settings-offcanvas"
+                                            aria-controls="theme-settings-offcanvas"
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                         </a>
-                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                            <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                    data-chart-id="pillar-table">Export as PDF</a></li>
-                                            <li><a class="dropdown-item" href="#" data-type="png"
-                                                    data-chart-id="pillar-table">Export as PNG</a></li>
-                                            <li><a class="dropdown-item" href="#" data-type="excel"
-                                                    data-chart-id="pillar-table">Export as Excel</a></li>
-                                        </ul>
+                                        <a class="icon-frame" href="#"
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+
+                                        </a>
                                     </div>
+                                </div>
+                            </div><!-- end card header -->
+                            <div class="card-body">
+                                <div id="basic_radar" data-colors='["--vz-success"]' class="apex-charts" dir="ltr">
+                                </div>
+                            </div><!-- end card-body -->
+                        </div><!-- end card -->
+                    </div>
+                    <div class="col-sm-5">
+
+                        <!--gender pie chart here -->
+
+                        <div class="card">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h4 class="card-title mb-0">Participants by Gender</h4>
+                                <div class="flex-shrink-0">
+                                    <div class="d-flex flex-row gap-2 align-items-center">
+                                        <!--info here-->
+                                        <a class="icon-frame" href="#"
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                        </a>
+                                        <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                            data-bs-target="#theme-settings-offcanvas"
+                                            aria-controls="theme-settings-offcanvas"
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- end card header -->
+
+                            <div class="card-body">
+                                <div id="simple_pie_chart" data-colors='["--vz-primary", "--vz-success"]'
+                                    class="apex-charts" dir="ltr"></div>
+                            </div><!-- end card-body -->
+                        </div><!-- end card -->
+                        <!--gender pie chart here -->
+
+
+                        <!--age pie chart here -->
+
+                        <div class="card">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h4 class="card-title mb-0">Participants by Age</h4>
+                                <div class="flex-shrink-0">
+                                    <div class="d-flex flex-row gap-2 align-items-center">
+                                        <!--info here-->
+                                        <a class="icon-frame" href=""
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                        </a>
+                                        <a class="icon-frame" href="" data-bs-toggle="offcanvas"
+                                            data-bs-target="#theme-settings-offcanvas"
+                                            aria-controls="theme-settings-offcanvas"
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- end card header -->
+
+                            <div class="card-body">
+                                <div id="simple_pie_chart2"
+                                    data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger"]'
+                                    class="apex-charts" dir="ltr"></div>
+                            </div><!-- end card-body -->
+                        </div><!-- end card -->
+
+                        <!--age pie chart here -->
+
+
+                    </div>
+                </div>
+                <div>
+                    <!-- radar and pie section -->
+
+                    <!--two column bar chart section -->
+
+
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Positive Peace</h4>
+                                    <div class="flex-shrink-0">
+                                        <div class="d-flex flex-row gap-2 align-items-center">
+                                            <!--info here-->
+                                            <a class="icon-frame" href="#"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            </a>
+                                            <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                                data-bs-target="#theme-settings-offcanvas"
+                                                aria-controls="theme-settings-offcanvas"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
+
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div><!-- end card header -->
+                                <div class="card-body pb-0">
+                                    <div id="sales-forecast-chart-2"
+                                        data-colors='["--vz-primary", "--vz-success", "--vz-warning"]' class="apex-charts"
+                                        dir="ltr"></div>
+                                </div>
+                            </div><!-- end card -->
+
+                        </div>
+
+
+
+                        <!--2------>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Negative Peace</h4>
+                                    <div class="flex-shrink-0">
+                                        <div class="d-flex flex-row gap-2 align-items-center">
+                                            <!--info here-->
+                                            <a class="icon-frame" href="#"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            </a>
+                                            <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                                data-bs-target="#theme-settings-offcanvas"
+                                                aria-controls="theme-settings-offcanvas"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
+
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div><!-- end card header -->
+                                <div class="card-body pb-0">
+                                    <div id="sales-forecast-chart-3"
+                                        data-colors='["--vz-primary", "--vz-success", "--vz-warning"]' class="apex-charts"
+                                        dir="ltr"></div>
+                                </div>
+                            </div><!-- end card -->
+
+                        </div>
+                    </div>
+
+
+                    <!--two column bar chart section -->
+
+                    <!--area radar chart section starts here -->
+
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Results by Pillars</h4>
+                            <div class="flex-shrink-0">
+                                <div class="d-flex flex-row gap-2 align-items-center">
+                                    <!--info here-->
+                                    <a class="icon-frame" href="#"
+                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
+
+                                        <img class="svg-icon" type="image/svg+xml"
+                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                    </a>
                                     <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                         data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
@@ -576,92 +502,100 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                            <div class="live-preview">
-                                <div class="table-responsive">
-                                    <table class="table align-middle table-nowrap mb-0" id="pillar-table">
-                                        <thead class="table-light">
-                                            <tr>
+                            <div id="multi_radar" data-colors='["--vz-danger", "--vz-success", "--vz-primary"]'
+                                class="apex-charts" dir="ltr"></div>
+                        </div><!-- end card-body -->
+                    </div><!-- end card -->
 
-                                                <th scope="col" class="text-center"></th>
-                                                <th scope="col" class="text-center">Mean</th>
-                                                <th scope="col" class="text-center">Country Mean</th>
-                                                <th scope="col" class="text-center">Global Mean</th>
+                    <!--area radar chart section starts here -->
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php
-                                                $pillars = [
-                                                    'well_functioning_government' => 'Well-Functioning Government',
-                                                    'low_level_corruption' => 'Low Levels of Corruption',
-                                                    'equitable_distribution' => 'Equitable Distribution of Resources',
-                                                    'good_relations' => 'Good Relations with Neighbours',
-                                                    'free_flow' => 'Free Flow of Information',
-                                                    'high_levels' => 'High Levels of Human Capital',
-                                                    'sound_business' => 'Sound Business Environment',
-                                                    'acceptance_rights' => 'Acceptance of the Rights of Others',
-                                                ];
-                                            @endphp
-                                            @foreach ($pillarMeanScore['mean'] as $key => $pillar)
-                                                <tr>
-                                                    <td><span class="fw-medium pillar-text">{{ $pillars[$key] }}</span>
-                                                    </td>
-                                                    <td class="text-center">{{ $pillar }}</td>
-                                                    <td class="text-center">{{ $pillarMeanScore['countryMean'][$key] }}
-                                                    </td>
-                                                    <td class="text-center">{{ $pillarMeanScore['globalMean'][$key] }}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                    <div class="row mb-4">
+                        <div class="col-xl-12">
+                            <div class="card mb-0">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Results By Pillar</h4>
+                                    <div class="flex-shrink-0">
+                                        <div class="d-flex flex-row gap-2 align-items-center">
+                                            <a href="{{route('home.csv',['survey'=> request('survey') ])}}" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
+                                                Export</a>
+                                            <!--info here-->
+                                            <a class="icon-frame" href="#"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                                        </tbody>
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            </a>
+                                            <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                                data-bs-target="#theme-settings-offcanvas"
+                                                aria-controls="theme-settings-offcanvas"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                                    </table>
-                                    <!-- end table -->
-                                    <!-- Survey table -->
-                                    
-                                </div>
-                                <!-- end table responsive -->
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
+
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div><!-- end card header -->
 
                                 <div class="card-body">
                                     <div class="live-preview">
                                         <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0" id="survey-table" style="display: none;">
+                                            <table class="table align-middle table-nowrap mb-0">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th scope="col">Survey Data ID</th>
-                                                        <th scope="col">Survey ID</th>
-                                                        <th scope="col">Survey Name</th>
-                                                        <th scope="col">Survey Country</th>
-                                                        <th scope="col">Survey Organization</th>
-                                                        <th scope="col">Participants Name</th>
-                                                        <th scope="col">Age</th>
-                                                        <th scope="col">Gender</th>
-                                                        <th scope="col">Survey Date</th>
+
+                                                        <th scope="col" class="text-center"></th>
+                                                        <th scope="col" class="text-center">Mean</th>
+                                                        <th scope="col" class="text-center">Country Mean</th>
+                                                        <th scope="col" class="text-center">Global Mean</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <!-- Rows will be populated dynamically by Ajax -->
+                                                    @php
+                                                        $pillars = [
+                                                            'well_functioning_government' =>
+                                                                'Well-Functioning Government',
+                                                            'low_level_corruption' => 'Low Levels of Corruption',
+                                                            'equitable_distribution' =>
+                                                                'Equitable Distribution of Resources',
+                                                            'good_relations' => 'Good Relations with Neighbours',
+                                                            'free_flow' => 'Free Flow of Information',
+                                                            'high_levels' => 'High Levels of Human Capital',
+                                                            'sound_business' => 'Sound Business Environment',
+                                                            'acceptance_rights' => 'Acceptance of the Rights of Others',
+                                                        ];
+                                                    @endphp
+                                                    @foreach ($pillarMeanScore['mean'] as $key => $pillar)
+                                                        <tr>
+                                                            <td><span
+                                                                    class="fw-medium pillar-text">{{ $pillars[$key] }}</span>
+                                                            </td>
+                                                            <td class="text-center">{{ $pillar }}</td>
+                                                            <td class="text-center">
+                                                                {{ $pillarMeanScore['countryMean'][$key] }}</td>
+                                                            <td class="text-center">
+                                                                {{ $pillarMeanScore['globalMean'][$key] }}</td>
+                                                        </tr>
+                                                    @endforeach
+
                                                 </tbody>
+
                                             </table>
                                             <!-- end table -->
-                                            <!-- Survey table -->
-                                            
                                         </div>
                                         <!-- end table responsive -->
+                                    </div>
 
-                            </div>
+                                </div>
+                            </div><!-- end card-body -->
+                        </div><!-- end card -->
+                    </div><!-- end col -->
 
-                        </div>
-                    </div><!-- end card-body -->
-                </div><!-- end card -->
-            </div><!-- end col -->
+                    <!--table section starts here -->
 
-           
-
-            <!--table section starts here -->
-
-            {{-- <div class="row">
+                    {{-- <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
@@ -799,15 +733,15 @@
 </div><!-- end card-body -->
 </div><!-- end card -->
 </div> --}}
-            <!-- end col -->
-        </div>
-        <!--end row-->
+                    <!-- end col -->
+                </div>
+                <!--end row-->
 
 
-        <!--table section starts here -->
-    </div> <!-- end .h-100-->
+                <!--table section starts here -->
+            </div> <!-- end .h-100-->
 
-    </div> <!-- end col -->
+        </div> <!-- end col -->
 
 
     </div>
@@ -834,6 +768,8 @@
             var branch = branch_id ? branch_id : getQueryParams('branch');
             var survey = survey_id ? survey_id : getQueryParams('survey');
 
+            var isFirstLoad = true;
+
             //filterOrganization();
             filterBranch();
             filterSurvey();
@@ -843,14 +779,35 @@
             //     filterOrganization();
             // });
 
-            $('#organization').change(function() {
+            // $('#country').change(function(){
+            //     filterSurvey();
+            // });
+
+            // $('#organization').change(function() {
+            //     filterSurvey();
+            //     filterBranch();
+            // });
+
+            // $('#branch').change(function() {
+            //     filterSurvey();
+            // });
+
+
+            $(document).on('change', '#country', function() {
                 filterSurvey();
-                filterBranch();
+            });
+            $(document).on('change', '#organization', function() {
+                $('#branch').prop('disabled', true);
+                $('#branch').html('<option value="" selected>Choose Branch</option>');
+                filterBranch(function() {
+                    filterSurvey();
+                });
+
+            });
+            $(document).on('change', '#branch', function() {
+                filterSurvey();
             });
 
-            $('#branch').change(function() {
-                filterSurvey();
-            });
 
 
             // function filterOrganization() {
@@ -888,7 +845,7 @@
             //     }
             // }
 
-            function filterBranch() {
+            function filterBranch(callback) {
                 var organizationVal = $('#organization').val();
 
                 if (organizationVal !== '') {
@@ -902,17 +859,46 @@
                             console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Branch</option>');
-                            response.branches.forEach(function(branchItem) {
-                                // $('#branch').append(new Option(branch.name,
-                                // branch.id));
-                                var option = new Option(branchItem.name, branchItem.id);
-                                $('#branch').append(option);
+                            $('#branch').append('<option value="" selected>Choose Division</option>');
 
-                                if (branch && branch == branchItem.id) {
-                                    $(option).prop('selected', true);
+                            var userRole = @json(auth()->user()->role->name);
+                            var userBranchId = @json(auth()->user()->branch_id);
+
+                        
+                            var branchList = response.branches.filter(function(branch){
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                                    return branchIds.includes(branch.id.toString());
                                 }
-                            })
+
+                                return true;
+                            });
+
+                            console.log(branchList);
+                            
+                            if (isFirstLoad) {
+                                branchList.forEach(function(branchItem) {
+                                    // $('#branch').append(new Option(branch.name,
+                                    // branch.id));
+                                    var option = new Option(branchItem.name, branchItem.id);
+                                    $('#branch').append(option);
+
+                                    if (branch && branch == branchItem.id) {
+                                        $(option).prop('selected', true);
+                                    }
+                                });
+                            } else {
+                                branchList.forEach(function(branchItem) {
+                                    var option = new Option(branchItem.name, branchItem.id);
+                                    $('#branch').append(option);
+                                });
+                            }
+
+                            if (callback && typeof callback == 'function') {
+                                callback();
+                            }
+
+                            isFirstLoad = false;
                         },
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
@@ -924,14 +910,16 @@
             }
 
             function filterSurvey() {
+                var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
-                var branchVal = branch;
+                var branchVal = isFirstLoad ? branch : $('#branch').val();
 
                 if (organizationVal !== '') {
                     $.ajax({
                         url: "{{ route('survey.get') }}",
                         method: 'GET',
                         data: {
+                            country: countryVal,
                             organization_id: organizationVal,
                             branch_id: branchVal
                         },
@@ -949,7 +937,8 @@
                                 if (survey && survey == formItem.form_id) {
                                     $(option).prop('selected', true);
                                 }
-                            })
+                            });
+
                         },
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
@@ -1102,7 +1091,6 @@
                             show: false
                         }
                     },
-
                     colors: ['#0664bc'],
                     xaxis: {
                         categories: [
@@ -1475,8 +1463,4 @@
 
         });
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 @endsection

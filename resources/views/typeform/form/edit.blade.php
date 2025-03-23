@@ -75,14 +75,14 @@
                     <!--end col-->
                     <div class="col-md-12" id="setBranchDiv">
                         <div class="my-3">
-                            <label for="setBranch" class="form-label">Would you like to set this form to the branch of this organization?</label>
+                            <label for="setBranch" class="form-label">Would you like to set this form to the division of this organization?</label>
                             <input type="checkbox" {{$form->branch_id ? 'checked':''}} class="ms-2" id="setBranch"/>
                         </div>
                     </div>
                     @if($form->branch_id)
                     <div class="col-md-6" id="branchDiv">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Branch @if(auth()->user()->role->name=='branch')
+                            <label for="branch" class="form-label">Division @if(auth()->user()->role->name=='branch')
                                 <span class="text-danger">*</span>
                                 @endif</label>
                             @php
@@ -91,7 +91,7 @@
                             @endphp
                             <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true">
-                                <option value="" selected>Choose Branch</option>
+                                <option value="" selected>Choose Division</option>
                                 {{-- @foreach($branches as $branch)
                                 <option value="{{$branch->id}}" {{$branch->id == $form->branch_id ? 'selected':''}}>{{$branch->name}}</option>
                                 @endforeach --}}
@@ -101,10 +101,10 @@
                     @else
                     <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Branch</label>
+                            <label for="branch" class="form-label">Division</label>
                             <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true" disabled>
-                                <option value="" selected>Choose Branch</option>
+                                <option value="" selected>Choose Division</option>
                             </select>
                         </div>
                     </div>
@@ -361,7 +361,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
 
                     @php
                         $selectedBranchId = $form->branches !== null ? json_encode($form->branches->id) : 'null';
@@ -396,13 +396,13 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
                 }
             })
         }else{
             $('#branch').prop('disabled', true);
             $('#branch').html('');
-            $('#branch').append('<option value="" selected>Choose Branch</option>');
+            $('#branch').append('<option value="" selected>Choose Division</option>');
         }
         
     }

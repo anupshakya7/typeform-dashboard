@@ -37,7 +37,7 @@ class UserController extends Controller
     }
 
     public function create(){
-        $roles = Role::whereNot('name','superadmin')->filterRole()->get();
+        $roles = Role::whereNotIn('name',['superadmin','krizmatic'])->filterRole()->get();
         $organizations = Organization::all();
 
         return view('typeform.users.create',compact('roles','organizations'));
@@ -75,7 +75,7 @@ class UserController extends Controller
 
     public function edit(String $id){
         $user = User::with('role','organization')->filterUser()->find($id);
-        $roles = Role::whereNot('name','superadmin')->filterRole()->get();
+        $roles = Role::whereNotIn('name',['superadmin','krizmatic'])->filterRole()->get();
         $organizations = Organization::all();
 
         if($user){
