@@ -13,7 +13,7 @@
 
                 <div class="mb-3 pb-1">
                     <div>
-                        <h4 class="mb-1">Welcome back, {{ auth()->user()->name }}</h4>
+                        <h4 class="mb-1">Welcome back, {{auth()->user()->name}}</h4>
                     </div>
 
 
