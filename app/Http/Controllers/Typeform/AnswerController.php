@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\File;
 class AnswerController extends Controller
 {
     public function index(Request $request){
-        $answersQuery = Answer::with('form','form.organization')->select('id','event_id','form_id','name','age','gender','created_at');
+        $answersQuery = Answer::with('form','form.organization','form.branches')->select('id','event_id','form_id','name','age','gender','created_at');
         
         if($request->filled('search_participant')){
             $answersQuery->where('name','like','%'.$request->search_participant.'%');
@@ -31,16 +31,23 @@ class AnswerController extends Controller
             $answersQuery->whereHas('form',function($query) use($request){
                 $query->where('organization_id',$request->organization);
             });
+
+            if($request->filled('branch')){
+                $answersQuery->whereHas('form',function($query) use($request){
+                    $query->where('branch_id',$request->branch);
+                });
+            }
         }
 
-        if($request->filled('survey_form')){
+        if($request->filled('survey')){
             $answersQuery->whereHas('form',function($query) use($request){
-                $query->where('form_id',$request->survey_form);
+                $query->where('form_id',$request->survey);
             });
         }
         
         $answers = $answersQuery->filterSurvey()->latest()->paginate(10);
         
+
         
         $answers = PaginationHelper::addSerialNo($answers);
 
@@ -145,10 +152,16 @@ class AnswerController extends Controller
             $surveyQuery->whereHas('form',function($query) use($request){
                 $query->where('organization_id',$request->organization);
             });
+
+            if($request->filled('branch')){
+                $surveyQuery->whereHas('form',function($query) use($request){
+                    $query->where('branch_id',$request->branch);
+                });
+            }
         }
 
-        if($request->filled('survey_form')){
-            $surveyQuery->where('form_id',$request->survey_form);
+        if($request->filled('survey')){
+            $surveyQuery->where('form_id',$request->survey);
         }
 
         $survey = $surveyQuery->latest()->get();

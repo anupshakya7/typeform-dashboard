@@ -1,20 +1,20 @@
-@extends('typeform.layout.web')
-@section('title') @lang('translation.crm') @endsection
 
-@section('css')
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
     integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css')); ?>" />
 <!-- 'classic' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css')); ?>" />
 <!-- 'monolith' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css')); ?>" />
 <!-- 'nano' theme -->
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!--greeting section -->
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
@@ -25,7 +25,7 @@
 </div>
 
 
-<form id="mainForm" action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
+<form id="mainForm" action="<?php echo e(route('user.store')); ?>" method="POST" enctype="multipart/form-data">
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
         <h5 class="card-title mb-0">User</h5>
@@ -37,65 +37,77 @@
     <div class="card-body">
         <div class="live-preview">
         
-                @csrf
+                <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" value="{{old('name')}}" placeholder="Name" id="name">
-                            @error('name')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            <input type="text" name="name" class="form-control" value="<?php echo e(old('name')); ?>" placeholder="Name" id="name">
+                            <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address<span class="text-danger">*</span></label>
-                            <input type="email" name="email" class="form-control" value="{{old('email')}}" placeholder="Email Address" id="email">
-                            @error('email')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            <input type="email" name="email" class="form-control" value="<?php echo e(old('email')); ?>" placeholder="Email Address" id="email">
+                            <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
                             <input type="password" name="password" class="form-control" placeholder="Password" id="password">
-                            @error('password')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Confirm Password<span class="text-danger">*</span></label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" id="password_confirmation">
-                            @error('c_password')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            <?php $__errorArgs = ['c_password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
-                    {{-- <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="organization_id" class="form-label">Organization</label>
-                            <select id="organization_id" name="organization_id" class="form-select" data-choices
-                                data-choices-sorting="true">
-                                <option selected>Choose Organization</option>
-                                @foreach($organizations as $organization)
-                                <option value="{{$organization->id}}">{{$organization->name}}</option>
-                                @endforeach
-                            </select>
-                            @error('organization_id')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div> --}}
+                    
 
                     
                     <!--end col-->
-                    {{-- <div class="btn-submit-container">
-                        <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-                    </div> --}}
+                    
 
                     <!--end col-->
                 </div>
@@ -131,44 +143,28 @@
                             <select id="role" name="role_id" class="form-select" data-choices
                                 data-choices-sorting="true">
                                 <option selected>Choose Role</option>
-                                @foreach($roles as $role)
-                                <option value="{{$role->id}}" data-rolename="{{$role->name}}">{{$role->name}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($role->id); ?>" data-rolename="<?php echo e($role->name); ?>"><?php echo e($role->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                            @error('role_id')
-                                <span class="text-danger ms-1">{{$message}}</span>
-                            @enderror
+                            <?php $__errorArgs = ['role_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                 </div>
         </div>
     </div>
 </div>
-{{-- <div class="card" id="formUserType" style="display:none;">
-    <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Choose <span class="title_level"></span></h5>
 
-    </div>
-    
-    <div class="card-body">
-        <div class="tab-content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-3" id="field_level">
-                            <label for="field_dropdown" class="form-label title_level"><span class="text-danger">*</span></label>
-                            <select id="field_dropdown" class="form-select" data-choices
-                                data-choices-sorting="true">
-                                {{-- <option selected>Choose Role</option>
-                                @foreach($roles as $role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
-                                @endforeach --}}
-                            {{-- </select>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-</div> --}}
+                            
 
 <div class="card" id="formUserOrganizationLevel">
 
@@ -185,22 +181,22 @@
     <button type="submit" class="btn btn-blue btn-submit">Submit</button>
 </div>
 </form>
-{{-- --}}
-@endsection
+
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-<script src="{{ URL::asset('build/js/app.js') }}"></script>
-<script src="{{ URL::asset('build/libs/@simonwep/pickr/pickr.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/form-pickers.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/libs/@simonwep/pickr/pickr.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/form-pickers.init.js')); ?>"></script>
 
 
 <!-- Flatpickr JS -->
@@ -215,7 +211,7 @@ $(document).ready(function(){
     //     if(roleVal == "organization"){
     //         $('.title_level').text('Organization'); 
     //         $.ajax({
-    //             url: "{{ route('organization.get') }}",
+    //             url: "<?php echo e(route('organization.get')); ?>",
     //             method: 'GET',
     //             success: function(response) {
     //                 console.log(response);
@@ -270,10 +266,10 @@ $(document).ready(function(){
                                         <select id="organization" name="organization_id" class="form-select" data-choices
                                             data-choices-sorting="true">
                                             <option value="" selected>Choose Organization</option>
-                                            @foreach ($organizations as $organization)
-                                            <option value="{{ $organization->id }}">
-                                                {{ $organization->name }}</option>
-                                            @endforeach
+                                            <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($organization->id); ?>">
+                                                <?php echo e($organization->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -294,25 +290,25 @@ $(document).ready(function(){
                         <div class="tab-content">
                                 <div class="row">
                                     <div class="col-md-6">
-                                         @if(auth()->user()->role->name == "organization")
+                                         <?php if(auth()->user()->role->name == "organization"): ?>
                                         <div class="mb-3">
                                             <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
-                                            <input type="text" value="{{auth()->user()->organization->name}}" class="form-control" readonly>
-                                            <input type="hidden" name="organization_id" value="{{auth()->user()->organization->id}}" class="form-control" id="organization">
+                                            <input type="text" value="<?php echo e(auth()->user()->organization->name); ?>" class="form-control" readonly>
+                                            <input type="hidden" name="organization_id" value="<?php echo e(auth()->user()->organization->id); ?>" class="form-control" id="organization">
                                         </div>
-                                        @else
+                                        <?php else: ?>
                                         <div class="mb-3">
                                             <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                             <select id="organization" name="organization_id" class="form-select" data-choices
                                                 data-choices-sorting="true">
                                                 <option value="" selected>Choose Organization</option>
-                                                @foreach ($organizations as $organization)
-                                                <option value="{{ $organization->id }}">
-                                                    {{ $organization->name }}</option>
-                                                @endforeach
+                                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($organization->id); ?>">
+                                                    <?php echo e($organization->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
-                                        @endif
+                                        <?php endif; ?>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
@@ -340,25 +336,25 @@ $(document).ready(function(){
                         <div class="tab-content">
                             <div class="row">
                                 <div class="col-md-4">
-                                    @if(auth()->user()->role->name == "organization")
+                                    <?php if(auth()->user()->role->name == "organization"): ?>
                                     <div class="mb-3">
                                         <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
-                                        <input type="text" value="{{auth()->user()->organization->name}}" class="form-control" readonly>
-                                        <input type="hidden" name="organization_id" value="{{auth()->user()->organization->id}}" class="form-control" id="organization">
+                                        <input type="text" value="<?php echo e(auth()->user()->organization->name); ?>" class="form-control" readonly>
+                                        <input type="hidden" name="organization_id" value="<?php echo e(auth()->user()->organization->id); ?>" class="form-control" id="organization">
                                     </div>
-                                    @else
+                                    <?php else: ?>
                                     <div class="mb-3">
                                         <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                         <select id="organization" name="organization_id" class="form-select" data-choices
                                             data-choices-sorting="true">
                                             <option value="" selected>Choose Organization</option>
-                                            @foreach ($organizations as $organization)
-                                            <option value="{{ $organization->id }}">
-                                                {{ $organization->name }}</option>
-                                            @endforeach
+                                            <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($organization->id); ?>">
+                                                <?php echo e($organization->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
@@ -417,7 +413,7 @@ $(document).ready(function(){
 
         if (organizationVal !== '') {
             $.ajax({
-                url: "{{ route('branch.get') }}",
+                url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',
                 data: {
                     organization_id: organizationVal
@@ -449,7 +445,7 @@ $(document).ready(function(){
 
         if (organizationVal !== '') {
             $.ajax({
-                url: "{{ route('survey.get') }}",
+                url: "<?php echo e(route('survey.get')); ?>",
                 method: 'GET',
                 data: {
                     organization_id: organizationVal,
@@ -480,4 +476,5 @@ $(document).ready(function(){
     
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/users/create.blade.php ENDPATH**/ ?>
