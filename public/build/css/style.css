@@ -426,5 +426,8 @@ table th, table td {
     gap: 0.5rem;
   }
   
-
+.note P {
+    font-style: italic;
+    padding: 2px 0px;
+}
 /**download dropdown css starts here **/

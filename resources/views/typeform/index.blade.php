@@ -145,80 +145,87 @@
             <!--greeting section ends here -->
 
             <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
-            <div>
-            <h4><span class="badge bg-success lh-1">Positive Peace Survey 2025</span></h4>
-            <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
-            </div>
+                    <div>
+                    <h4><span class="badge bg-success lh-1">Positive Peace Survey 2025</span></h4>
+                    <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
+                    </div>
 
                 <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
-                    <form action="{{route('home.index')}}" method="GET">
-                        <div class="row gap-sm-3 gap-2 m-0 p-0 dashboard align-items-end">
+                        <form action="{{route('home.index')}}" method="GET">
+                            <div class="row gap-sm-3 gap-2 m-0 p-0 dashboard align-items-end">
 
-                            <div class="col-auto p-0">
-                                <p class="p-0 m-0 text-muted">Country</p>
-                                <select class="form-select select2" name="country" id="country"
-                                    aria-label="Default select example" onchange="this.form.submit()">
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country['name'] }}"
-                                        {{($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':'' }}>
-                                        {{ $country['name'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                            <p class="p-0 m-0 text-muted">Organization</p>
-                                <select class="form-select select2" id="organization" name="organization"
-                                    aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Organization</option>
-                                    @foreach ($organizations as $organization)
-                                    <option value="{{ $organization->id }}"
-                                        {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
-                                        {{ $organization->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                                <div class="col-auto p-0">
+                                    <p class="p-0 m-0 text-muted">Country</p>
+                                    <select class="form-select select2" name="country" id="country"
+                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        @foreach ($countries as $country)
+                                        <option value="{{ $country['name'] }}"
+                                            {{($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':'' }}>
+                                            {{ $country['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-auto p-0">
+                                <p class="p-0 m-0 text-muted">Organization</p>
+                                    <select class="form-select select2" id="organization" name="organization"
+                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Organization</option>
+                                        @foreach ($organizations as $organization)
+                                        <option value="{{ $organization->id }}"
+                                            {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
+                                            {{ $organization->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                            <div class="col-auto p-0">
-                            <p class="p-0 m-0 text-muted">Branch</p>
-                                <select class="form-select select2" id="branch" name="branch"
-                                    aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Branch</option>
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                            <p class="p-0 m-0"><span class="text-muted"> Project</span> </p>
-                                <select class="form-select select2" name="survey" id="survey"
-                                    aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Survey</option>
-                                    @foreach ($surveyForms as $surveyForm)
+                                <div class="col-auto p-0">
+                                <p class="p-0 m-0 text-muted">Branch</p>
+                                    <select class="form-select select2" id="branch" name="branch"
+                                        aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                        <option value="" selected>Branch</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto p-0">
+                                <p class="p-0 m-0"><span class="text-muted"> Project</span> </p>
+                                    <select class="form-select select2" name="survey" id="survey"
+                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Survey</option>
+                                        @foreach ($surveyForms as $surveyForm)
 
-                                            <option value="{{ $surveyForm->form_title }}"
-                                    {{($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }}>
-                                    {{ $surveyForm->form_title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                                
+                                                <option value="{{ $surveyForm->form_title }}"
+                                        {{($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }}>
+                                        {{ $surveyForm->form_title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-auto p-0">
+                                    
 
-                                <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                <div class="dropdown">
-    <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/download.svg') }}"></img>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-        <li><a class="dropdown-item" href="#" id="export-all" >Download Report</a></li>
-        
-    </ul>
-</div>
+                                    <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                                    <div class="dropdown">
+                    <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-all" >Download Report</a></li>
+                        
+                    </ul>
+                </div>
+                </div>
+                
 
+                </div>
+                
+                <div class="note text-muted">
+                    <p>Note: Please select at least one project & choose branch, organization, country respectively to filter data.</p>
+                </div>
                             </div>
+                           
                         </div>
                     </form>
 
                 </div>
             </div>
-
 
             <!--bar graph section starts here-->
 

@@ -1,3 +1,100 @@
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("export-all").addEventListener("click", function () {
+        const charts = [
+            { id: "dashboard", title: "Dashboard" }
+            // { id: "basic_radar_chart", title: "Mean Result" },
+            // { id: "simple_pie_chart", title: "Participants by Gender" },
+            // { id: "simple_pie_chart2", title: "Participants by Age" },
+            // { id: "sales-forecast-chart-2", title: "Positive Peace" },
+            // { id: "sales-forecast-chart-3", title: "Negative Peace" },
+            // { id: "multi_radar", title: "Results by pillars: Radar" },
+            // { id: "pillar-table", title: "Results by pillar: Table" }
+        ];
+        exportChartsToPNGAndPDF(charts);
+    });
+});
+
+function exportChartsToPNGAndPDF(charts) {
+    const jsPDF = window.jspdf.jsPDF;
+    const pdf = new jsPDF({ orientation: "portrait" });
+    let yOffset = 10;  // Padding at the top
+    let xOffset = 25;  // Padding on the left
+    const exportedImages = [];
+
+    const logo = document.querySelector(".logo img");
+    const logoData = logo ? logo.src : null;
+
+    // Add logo and title ("Community Strength Barometer") on the same line
+    if (logoData) {
+        pdf.addImage(logoData, "PNG", xOffset, yOffset, 20, 20); // Logo size
+        const pdfWidth = pdf.internal.pageSize.width; // Page width
+        const titleText = "Community Strength Barometer: Report";
+        const titleWidth = pdf.getTextWidth(titleText); // Width of the title text
+        const titleXPosition = xOffset + 25; // Position the title next to the logo
+        pdf.setFontSize(14);
+        pdf.text(titleText, titleXPosition, yOffset + 15); // Align text next to the logo
+    }
+
+    // Add a light grey border after the logo and title
+    const titleYPosition = yOffset + 25; // Slightly move down after title
+    const pdfWidth = pdf.internal.pageSize.width;
+    pdf.setLineWidth(0.5); // Border thickness
+    pdf.setDrawColor(211, 211, 211); // Light grey color
+    pdf.line(xOffset, titleYPosition, pdfWidth - xOffset, titleYPosition); // Draw the border
+
+    // Add some padding below the border before the first chart
+    yOffset = titleYPosition + 20; // Increased space after the top border
+
+    const captureChart = (index) => {
+        if (index >= charts.length) {
+            generatePDF(exportedImages);
+            return;
+        }
+
+        const { id, title } = charts[index];
+        const chartElement = document.getElementById(id);
+
+        if (!chartElement) {
+            captureChart(index + 1);
+            return;
+        }
+
+        html2canvas(chartElement).then(canvas => {
+            exportedImages.push({ title, imgData: canvas.toDataURL("image/png"), width: canvas.width, height: canvas.height });
+            captureChart(index + 1);
+        }).catch(error => {
+            console.error(`Error rendering chart "${title}":`, error);
+            captureChart(index + 1);
+        });
+    };
+
+    const generatePDF = (images) => {
+        let imageCount = 0;
+        images.forEach((image, i) => {
+            if (imageCount % 2 === 0 && i > 0) pdf.addPage();
+            pdf.setFontSize(12);
+            const imgWidth = 130;
+            const aspectRatio = image.width / image.height;
+            const imgHeight = imgWidth / aspectRatio;
+            const yPosition = yOffset + (imageCount % 2 === 0 ? 0 : imgHeight + 20); // Adjust spacing between images
+            pdf.text(image.title, xOffset, yPosition - 5);
+
+            // Add 1px light grey border around each image
+            const borderMargin = 1;
+            pdf.setFillColor(211, 211, 211); // Light grey color
+            pdf.setLineWidth(0.5); // Set border line thickness to 1px
+            pdf.rect(xOffset - borderMargin, yPosition - borderMargin, imgWidth + 2 * borderMargin, imgHeight + 2 * borderMargin); // Draw the border
+
+            pdf.addImage(image.imgData, "PNG", xOffset, yPosition, imgWidth, imgHeight);
+            imageCount++;
+        });
+        pdf.save("CSB_Report.pdf");
+    };
+
+    captureChart(0);
+}
+
+
 //flatpicker js
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize Flatpickr
@@ -158,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDF(chartId,chartTitle);
+                    exportToPDFMeanRadar(chartId,chartTitle);
                 } else if (exportType === "png") {
                     exportToPNG(chartId,chartTitle);
                 }  else {
@@ -194,9 +291,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDF(chartId,chartTitle);
-                }  else if (exportType === "excel") {
-                    exportToExcel(chartId);
+                    exportToPDFPnBar(chartId,chartTitle);
+                }  else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
                 } else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
@@ -207,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDF(chartId,chartTitle);
+                    exportToPDFPnBar(chartId,chartTitle);
                 } else if (exportType === "png") {
                     exportToPNG(chartId,chartTitle);
                 } else {
@@ -219,7 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDF(chartId,chartTitle);
+                    exportToPDFMultiRadar(chartId,chartTitle);
                 } else if (exportType === "png") {
                     exportToPNG(chartId,chartTitle);
                 }  else {
@@ -255,6 +352,7 @@ function exportToPDF(chartId, chartTitle) {
     html2canvas(document.getElementById(chartId), {
         scale: 2, // Increase scale for higher resolution
     useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null
     }).then(canvas => {
         const chartImgData = canvas.toDataURL("image/png");
 
@@ -310,6 +408,7 @@ function exportToPNG(chartId, chartTitle) {
     html2canvas(document.getElementById(chartId), {
         scale: 2, // Increase scale for higher resolution
         useCORS: true, // Allow cross-origin images (if needed)
+        backgroundColor: null
     }).then(canvas => {
         const ctx = canvas.getContext("2d");
 
@@ -410,63 +509,191 @@ function exportToExcel(chartId, chartTitle) {
     XLSX.writeFile(wb, fileName);
 }
 
+//for mean radar
+function exportToPDFMeanRadar(chartId, chartTitle) {
+    // Capture the logo (assuming the logo is an img element with a specific class or ID)
+    const logo = document.querySelector(".logo img"); // Adjust the selector to match your logo element
+    const logoData = logo ? logo.src : null;
 
+    // Capture the chart as an image
+    html2canvas(document.getElementById(chartId), {
+        scale: 2, // Increase scale for higher resolution
+    useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null // Ensures a transparent background
+    }).then(canvas => {
+        const chartImgData = canvas.toDataURL("image/png");
 
-/**export all data -============================---------------------------*/
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("export-all").addEventListener("click", function () {
-        const charts = [
-            { id: "sales-forecast-chart", title: "Mean Scores Values" },
-            { id: "basic_radar", title: "Mean Result" },
-            { id: "simple_pie_chart", title: "Participants by Gender" },
-            { id: "simple_pie_chart2", title: "Participants by Age" },
-            { id: "sales-forecast-chart-2", title: "Positive Peace" },
-            { id: "sales-forecast-chart-3", title: "Negative Peace" },
-            { id: "multi_radar", title: "Results by pillars: Radar" },
-            { id: "pillar-table", title: "Results by pillar: Table" }
-        ];
-        exportAllToPDF(charts);
+        // Initialize PDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: "landscape" });
+
+        // Define margins and dimensions
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 20; // Margin from the edges
+        const logoWidth = 20; // Width of the logo
+        const logoHeight = 20; // Height of the logo
+        const titleFontSize = 16;
+        const titleLineHeight = 20; // Line height for the title
+
+        // Add a black border around the content
+        pdf.setDrawColor(0); // Set border color to black
+        pdf.setLineWidth(1); // Set border thickness
+        pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin); // Draw border
+
+        // Add logo to the PDF (if available)
+        if (logoData) {
+            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight); // Position logo inside the border
+        }
+
+        // Add chart title to the PDF (after the logo, centered a bit higher)
+        pdf.setFontSize(titleFontSize);
+        pdf.setTextColor(0); // Ensure text color is black
+        const titleX = margin + logoWidth + 20; // Position title after the logo with extra spacing
+        const titleY = 43; // Move title a bit higher (adjust as needed)
+        pdf.text(chartTitle, titleX, titleY);
+
+        // Calculate the position for the chart image to center it
+        const chartImgWidth = pageWidth - 2 * margin - 20; // Chart width (full width minus margins and padding)
+        const chartImgHeight = (chartImgWidth * canvas.height) / canvas.width; // Maintain aspect ratio
+        // const chartImgX = margin + 10; // Centered horizontally inside the border
+        // const chartImgY = titleY + titleLineHeight + 0; // Position below the title with some spacing
+        const chartImgX = margin + 10; // Set custom X position
+        const chartImgY = 10; // Set custom Y position
+        
+        // Add chart image to the PDF
+        pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight);
+
+        // Save the PDF
+        pdf.save(`${chartTitle}.pdf`);
     });
-});
+}
+//for multi radar
+function exportToPDFMultiRadar(chartId, chartTitle) {
+    // Capture the logo (assuming the logo is an img element with a specific class or ID)
+    const logo = document.querySelector(".logo img"); // Adjust the selector to match your logo element
+    const logoData = logo ? logo.src : null;
 
-function exportAllToPDF(charts) {
-    const jsPDF = window.jspdf.jsPDF;
-    const pdf = new jsPDF({ orientation: "landscape" });
+    // Capture the chart as an image
+    html2canvas(document.getElementById(chartId), {
+        scale: 2, // Increase scale for higher resolution
+    useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null // Ensures a transparent background
+    }).then(canvas => {
+        const chartImgData = canvas.toDataURL("image/png");
 
+        // Initialize PDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: "landscape" });
+
+        // Define margins and dimensions
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 20; // Margin from the edges
+        const logoWidth = 20; // Width of the logo
+        const logoHeight = 20; // Height of the logo
+        const titleFontSize = 16;
+        const titleLineHeight = 20; // Line height for the title
+
+        // Add a black border around the content
+        pdf.setDrawColor(0); // Set border color to black
+        pdf.setLineWidth(1); // Set border thickness
+        pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin); // Draw border
+
+        // Add logo to the PDF (if available)
+        if (logoData) {
+            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight); // Position logo inside the border
+        }
+
+        // Add chart title to the PDF (after the logo, centered a bit higher)
+        pdf.setFontSize(titleFontSize);
+        pdf.setTextColor(0); // Ensure text color is black
+        const titleX = margin + logoWidth + 20; // Position title after the logo with extra spacing
+        const titleY = 43; // Move title a bit higher (adjust as needed)
+        pdf.text(chartTitle, titleX, titleY);
+
+        // Calculate the position for the chart image to center it
+        const chartImgWidth = pageWidth - 2 * margin - 20; // Chart width (full width minus margins and padding)
+        const chartImgHeight = (chartImgWidth * canvas.height) / canvas.width; // Maintain aspect ratio
+        // const chartImgX = margin + 10; // Centered horizontally inside the border
+        // const chartImgY = titleY + titleLineHeight + 0; // Position below the title with some spacing
+        const chartImgX = margin + 10; // Set custom X position
+        const chartImgY = 30; // Set custom Y position
+        
+        // Add chart image to the PDF
+        pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight);
+
+        // Save the PDF
+        pdf.save(`${chartTitle}.pdf`);
+    });
+}
+
+
+//for positive and negative peace
+function exportToPDFPnBar(chartId, chartTitle) {
+    // Capture the logo
     const logo = document.querySelector(".logo img");
     const logoData = logo ? logo.src : null;
-    let yOffset = 20;
 
-    if (logoData) {
-        pdf.addImage(logoData, "PNG", 10, 10, 30, 30);
-        yOffset = 50;
-    }
+    // Capture the chart as an image
+    html2canvas(document.getElementById(chartId), {
+        scale: 2, // High resolution
+        useCORS: true,
+        backgroundColor: null // Ensure transparency
+    }).then(canvas => {
+        const chartImgData = canvas.toDataURL("image/png");
 
-    const addChartToPDF = (index) => {
-        if (index >= charts.length) {
-            pdf.save("All_Charts.pdf");
-            return;
+        // Initialize PDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: "landscape" });
+
+        // Define margins and dimensions
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 20; // Margin from the edges
+        const logoWidth = 20;
+        const logoHeight = 20;
+        const titleFontSize = 16;
+        const titleLineHeight = 20;
+
+        // Add a black border around the content
+        pdf.setDrawColor(0);
+        pdf.setLineWidth(1);
+        pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
+
+        // Add logo (if available)
+        if (logoData) {
+            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight);
         }
 
-        const { id, title } = charts[index];
-        const chartElement = document.getElementById(id);
+        // Add title
+        pdf.setFontSize(titleFontSize);
+        pdf.setTextColor(0);
+        const titleX = margin + logoWidth + 20;
+        const titleY = margin + 23;
+        pdf.text(chartTitle, titleX, titleY);
 
-        if (!chartElement) {
-            addChartToPDF(index + 1);
-            return;
+        // Calculate the image size to fit within the border
+        const maxChartWidth = pageWidth - 2 * margin - 40; // Reduce width to fit within the border
+        const maxChartHeight = pageHeight - titleY - titleLineHeight - margin - 30; // Reduce height to fit
+
+        // Maintain aspect ratio
+        let chartImgWidth = maxChartWidth;
+        let chartImgHeight = (canvas.height / canvas.width) * chartImgWidth;
+
+        if (chartImgHeight > maxChartHeight) {
+            chartImgHeight = maxChartHeight;
+            chartImgWidth = (canvas.width / canvas.height) * chartImgHeight;
         }
 
-        html2canvas(chartElement).then(canvas => {
-            if (index > 0) pdf.addPage();
-            pdf.setFontSize(16);
-            pdf.text(title, 10, yOffset);
-            pdf.addImage(canvas.toDataURL("image/png"), "PNG", 10, yOffset + 10, 280, 150);
-            addChartToPDF(index + 1);
-        }).catch(error => {
-            console.error(`Error rendering chart "${title}":`, error);
-            addChartToPDF(index + 1);
-        });
-    };
+        // Center the image inside the border
+        const chartImgX = margin + ((pageWidth - 2 * margin - chartImgWidth) / 2);
+        const chartImgY = titleY + titleLineHeight + 10; // Add spacing below the title
 
-    addChartToPDF(0);
+        // Add the chart image
+        pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight, '', 'FAST');
+
+        // Save the PDF
+        pdf.save(`${chartTitle}.pdf`);
+    });
 }
