@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Now trigger the export functionality
                 const charts = [
-                    { id: "sales-forecast-chart", title: "Dashboard" },
+                    { id: "sales-forecast-chart", title: "Mean Scores Values" },
                     { id: "basic_radar_chart", title: "Mean Result" },
                     { id: "simple_pie_chart", title: "Participants by Gender" },
                     { id: "simple_pie_chart2", title: "Participants by Age" },
