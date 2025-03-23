@@ -16,24 +16,16 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        $filterData = $request->all() == [] ? Form::filterForm()->latest()->first():null;
-
+        $filterData = $request->all() == [] ? Form::latest()->first():null;
         //Dropdown
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
-        $organizations = Organization::filterOrganization()->get();
-        $surveyForms = Form::filterForm()->get();
+        $organizations = Organization::all();
+        $surveyForms = Form::all();
         
         //Survey id if no then latest form id
-        if(auth()->user()->role->name == "survey"){
-            $country = auth()->user()->survey->country;
-            $survey_id = auth()->user()->survey->form_id;
-        }else{
-            $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
-            $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
-        }
-
-        $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
+        $country = isset($request->country) && $request->country ? $request->country : Form::latest()->first()->country;
+        $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
 
         $topBox = $this->topBoxData();
         $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
@@ -44,14 +36,14 @@ class IndexController extends Controller
 
         $resultByPillar = [];
 
-        return view('typeform.index',compact('countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','filterData','selectedCountrywithSurvey'));
+        return view('typeform.index',compact('countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','filterData'));
     }
 
     public function topBoxData(){
-        $surveys = Form::filterForm()->count();
-        $countries = Form::select('country')->distinct()->filterForm()->get()->count();
-        $organizations = Organization::filterOrganization()->count();
-        $people = Answer::filterSurvey()->count();
+        $surveys = Form::count();
+        $countries = Form::select('country')->distinct()->get()->count();
+        $organizations = Organization::count();
+        $people = Answer::count();
 
         return [
             'survey'=>$surveys,
@@ -76,8 +68,8 @@ class IndexController extends Controller
         ];
 
         foreach($pillars as $pillar){
-            $sum = Answer::where('form_id',$survey_id)->filterSurvey()->sum($pillar);
-            $count = Answer::where('form_id',$survey_id)->filterSurvey()->whereNotNull($pillar)->count();
+            $sum = Answer::where('form_id',$survey_id)->sum($pillar);
+            $count = Answer::where('form_id',$survey_id)->whereNotNull($pillar)->count();
             $count = $count == 0 ? 1 : $count; 
 
             $mean = $sum / $count;
@@ -93,8 +85,8 @@ class IndexController extends Controller
         $ageWise = [];
 
         //Gender Wise
-        $male = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Male')->count();
-        $female = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Female')->count();
+        $male = Answer::where('form_id',$survey_id)->where('gender','Male')->count();
+        $female = Answer::where('form_id',$survey_id)->where('gender','Female')->count();
 
         $genderWise = [
             'male'=>$male,
@@ -103,7 +95,7 @@ class IndexController extends Controller
         //Gender Wise
 
         //Age Wise
-        $participants = Answer::where('form_id',$survey_id)->filterSurvey();
+        $participants = Answer::where('form_id',$survey_id);
         $ages = ['18 to 24','25 to 44','45 to 64','65 or over'];
 
         foreach($ages as $age){
@@ -124,7 +116,7 @@ class IndexController extends Controller
         $positiveMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer')->filterForm();
+            $query = Form::with('answer');
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);
@@ -164,7 +156,7 @@ class IndexController extends Controller
         $singlePillarMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer')->filterForm();
+            $query = Form::with('answer');
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);

@@ -71,14 +71,6 @@ class User extends Authenticatable
         return $this->belongsTo(Organization::class,'organization_id');
     }
 
-    public function branch(){
-        return $this->belongsTo(Branch::class,'branch_id');
-    }
-
-    public function survey(){
-        return $this->belongsTo(Form::class,'form_id','form_id');
-    }
-
     public function role(){
         return $this->belongsTo(Role::class,'role_id');
     }

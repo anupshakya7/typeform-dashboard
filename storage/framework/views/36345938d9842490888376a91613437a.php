@@ -1,10 +1,10 @@
-@extends('typeform.layout.web')
-@section('title')
-@lang('translation.crm')
-@endsection
+
+<?php $__env->startSection('title'); ?>
+<?php echo app('translator')->get('translation.crm'); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col">
         <div class="h-100">
@@ -13,7 +13,7 @@
 
             <div class="mb-3 pb-1">
                 <div>
-                    <h4 class="mb-1">Welcome back, {{auth()->user()->name}}</h4>
+                    <h4 class="mb-1">Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                 </div>
 
 
@@ -45,11 +45,8 @@
                             <div class="d-flex align-items-end justify-content-between mt-4">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                        data-target="{{$topBox['survey']}}">{{$topBox['survey']}}</span>
+                                        data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                                 </h4>
-
-
-
                             </div>
                         </div><!-- end card body -->
                     </div><!-- end card -->
@@ -76,7 +73,7 @@
                             <div class="d-flex align-items-end justify-content-between mt-4">
 
                                 <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
-                                        data-target="{{$topBox['countries']}}">{{$topBox['countries']}}</span>
+                                        data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
                                 </h4>
 
 
@@ -103,9 +100,12 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
+
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                        data-target="{{$topBox['organizations']}}">{{$topBox['organizations']}}</span>
+                                        data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
                                 </h4>
+
+
                             </div>
                         </div><!-- end card body -->
                     </div><!-- end card -->
@@ -129,7 +129,7 @@
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                        data-target="{{$topBox['people']}}">{{$topBox['people']}}</span>
+                                        data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                                 </h4>
 
 
@@ -145,96 +145,111 @@
             <!--greeting section ends here -->
 
             <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
-            <div>
-            <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
-            </div>
+                    <div>
+                    <h4><span class="badge bg-success lh-1">Positive Peace Survey 2025</span></h4>
+                    <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
+                    </div>
 
                 <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
-                    <form action="{{route('home.index')}}" method="GET">
-                        <div class="row gap-3 m-0 p-0 dashboard">
+                        <form action="<?php echo e(route('home.index')); ?>" method="GET">
+                            <div class="row gap-sm-3 gap-2 m-0 p-0 dashboard align-items-end">
 
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" name="country" id="country"
-                                    aria-label="Default select example">
-                                    <option value="" selected>Country</option>
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country['name'] }}"
-                                        {{($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':'' }}>
-                                        {{ $country['name'] }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="col-auto p-0">
+                                    <p class="p-0 m-0 text-muted">Country</p>
+                                    <select class="form-select select2" name="country" id="country"
+                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($country['name']); ?>"
+                                            <?php echo e(($filterData && $filterData->country == $country['name']) || request('country') == $country['name'] ? 'selected':''); ?>>
+                                            <?php echo e($country['name']); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                                <div class="col-auto p-0">
+                                <p class="p-0 m-0 text-muted">Organization</p>
+                                    <select class="form-select select2" id="organization" name="organization"
+                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Organization</option>
+                                        <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($organization->id); ?>"
+                                            <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
+                                            <?php echo e($organization->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-auto p-0">
+                                <p class="p-0 m-0 text-muted">Branch</p>
+                                    <select class="form-select select2" id="branch" name="branch"
+                                        aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                        <option value="" selected>Branch</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto p-0">
+                                <p class="p-0 m-0"><span class="text-muted"> Project</span> </p>
+                                    <select class="form-select select2" name="survey" id="survey"
+                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Survey</option>
+                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                                <option value="<?php echo e($surveyForm->form_title); ?>"
+                                        <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?>>
+                                        <?php echo e($surveyForm->form_title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                                <div class="col-auto p-0">
+                                    
+
+                                    <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                                    <div class="dropdown">
+                    <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-all" >Download Report</a></li>
+                        
+                    </ul>
+                </div>
+                </div>
+                
+
+                </div>
+                
+                <div class="note text-muted">
+                    <p>Note: Please select at least one project & choose branch, organization, country respectively to filter data.</p>
+                </div>
                             </div>
-                            <div class="col-auto p-0">
-
-                                <select class="form-select select2" id="organization" name="organization"
-                                    aria-label="Default select example">
-                                    <option value="" selected>Organization</option>
-                                    @foreach ($organizations as $organization)
-                                    <option value="{{ $organization->id }}"
-                                        {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
-                                        {{ $organization->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" id="branch" name="branch"
-                                    aria-label="Default select example" disabled>
-                                    <option value="" selected>Branch</option>
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                                <select class="form-select select2" name="survey" id="survey"
-                                    aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Survey</option>
-                                    @foreach ($surveyForms as $surveyForm)
-
-                                            <option value="{{ $surveyForm->form_title }}"
-                                    {{($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }}>
-                                    {{ $surveyForm->form_title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-auto p-0">
-                                <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
-
-                                </a>
-
-                            </div>
+                           
                         </div>
                     </form>
 
                 </div>
             </div>
 
-
             <!--bar graph section starts here-->
 
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Mean Scores Values</h4>
+                    <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Mean Scores Values</h4>
                     <div class="flex-shrink-0">
-                        <div class="d-flex flex-row gap-2 align-items-center">
-                            <!--info here-->
-                            <a class="icon-frame" href="#"
-                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                <img class="svg-icon" type="image/svg+xml"
-                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                            </a>
-                            <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                        aria-controls="theme-settings-offcanvas"
-                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                <img class="svg-icon" type="image/svg+xml"
-                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
-
-                            </a>
-                        </div>
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                    <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                    <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="sales-forecast-chart">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="sales-forecast-chart">Export as PNG</a></li>
+    </ul>
+</div>
+  
+                    <!-- Info Icon for additional settings -->
+                    <a class="icon-frame" href="#" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+                    </a>
+                    </div>
                     </div>
                 </div><!-- end card header -->
                 <div class="card-body pb-0">
@@ -252,22 +267,25 @@
                 <div class="col-sm-7 pb-4">
                     <div class="card h-100">
                         <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                            <h4 class="card-title">Mean Results</h4>
+                            <h4 class="card-title mean-result-title">Mean Results</h4>
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                    <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="basic_radar">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="basic_radar">Export as PNG</a></li>
+    </ul>
+</div>
+                                    <a class="icon-frame" href="#" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                    </a>
-                                    <a class="icon-frame" href="#"
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
                                 </div>
@@ -285,22 +303,25 @@
 
                     <div class="card">
                         <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                            <h4 class="card-title mb-0">Participants by Gender</h4>
+                            <h4 class="card-title pie-gender-title mb-0">Participants by Gender</h4>
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#" 
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                    </a>
+                                    <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="simple_pie_chart">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="simple_pie_chart">Export as PNG</a></li>
+    </ul>
+</div>
                                     <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
                                 </div>
@@ -319,22 +340,25 @@
 
                     <div class="card">
                         <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                            <h4 class="card-title mb-0">Participants by Age</h4>
+                            <h4 class="card-title pie-age-title mb-0">Participants by Age</h4>
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href=""
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                    </a>
+                                    <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="simple_pie_chart2">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="simple_pie_chart2">Export as PNG</a></li>
+    </ul>
+</div>
                                     <a class="icon-frame" href=""  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                         class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
                                 </div>
@@ -365,22 +389,25 @@
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Positive Peace</h4>
+                                <h4 class="card-title positive-peace-title mb-0 flex-grow-1">Positive Peace</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
+                                        <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="sales-forecast-chart-2">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="sales-forecast-chart-2">Export as PNG</a></li>
+    </ul>
+</div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -401,22 +428,25 @@
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Negative Peace</h4>
+                                <h4 class="card-title negative-peace-title mb-0 flex-grow-1">Negative Peace</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
+                                        <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="sales-forecast-chart-3">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="sales-forecast-chart-3">Export as PNG</a></li>
+    </ul>
+</div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -438,23 +468,26 @@
                 <!--area radar chart section starts here -->
 
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="card-title mb-0">Results by Pillars</h4>
+                    <div class="card-header z-1 d-flex justify-content-between align-items-center">
+                        <h4 class="card-title results-by-pillar-radar mb-0">Results by Pillars</h4>
                         <div class="flex-shrink-0">
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <!--info here-->
-                                <a class="icon-frame" href="#"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                </a>
+                                <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="multi_radar">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="multi_radar">Export as PNG</a></li>
+    </ul>
+</div>
                                 <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                     <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                        src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                 </a>
                             </div>
@@ -473,22 +506,26 @@
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Results By Pillar</h4>
+                                <h4 class="card-title results-by-pillar-table mb-0 flex-grow-1">Results By Pillar</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                        </a>
+                                        <div class="dropdown">
+    <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+        <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="pillar-table">Export as PDF</a></li>
+        <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="pillar-table">Export as PNG</a></li>
+        <li><a class="dropdown-item" href="#" data-type="excel" data-chart-id="pillar-table">Export as Excel</a></li>
+    </ul>
+</div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -498,7 +535,7 @@
                             <div class="card-body">
                                 <div class="live-preview">
                                     <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap mb-0">
+                                        <table class="table align-middle table-nowrap mb-0" id="pillar-table">
                                             <thead class="table-light">
                                                 <tr>
 
@@ -510,7 +547,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php
+                                                <?php
                                                 $pillars = [
                                                 'well_functioning_government'=>'Well-Functioning Government',
                                                 'low_level_corruption'=>'Low Levels of Corruption',
@@ -521,16 +558,16 @@
                                                 'sound_business'=>'Sound Business Environment',
                                                 'acceptance_rights'=>'Acceptance of the Rights of Others'
                                                 ]
-                                                @endphp
-                                                @foreach($pillarMeanScore['mean'] as $key=>$pillar)
+                                                ?>
+                                                <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$pillar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td><span class="fw-medium pillar-text">{{$pillars[$key]}}</span>
+                                                    <td><span class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                     </td>
-                                                    <td class="text-center">{{$pillar}}</td>
-                                                    <td class="text-center">{{$pillarMeanScore['countryMean'][$key]}}</td>
-                                                    <td class="text-center">{{$pillarMeanScore['globalMean'][$key]}}</td>
+                                                    <td class="text-center"><?php echo e($pillar); ?></td>
+                                                    <td class="text-center"><?php echo e($pillarMeanScore['countryMean'][$key]); ?></td>
+                                                    <td class="text-center"><?php echo e($pillarMeanScore['globalMean'][$key]); ?></td>
                                                 </tr>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                             </tbody>
 
@@ -547,144 +584,7 @@
 
                 <!--table section starts here -->
 
-                {{-- <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card mb-0">
-                            <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
-                                <div class="flex-shrink-0">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                </a>
-                <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
-                </a>
-            </div>
-        </div>
-    </div><!-- end card header -->
-
-    <div class="card-body">
-        <div class="live-preview">
-            <div class="table-responsive">
-                <table class="table align-middle table-nowrap mb-0">
-                    <thead class="table-light">
-                        <tr>
-
-                            <th scope="col"></th>
-                            <th scope="col">Before</th>
-                            <th scope="col">During</th>
-                            <th scope="col">% Change</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">Well-Functioning
-                                    Government</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                            </td>
-
-                        </tr>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">Low Levels of
-                                    Corruption</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                        </tr>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                    Resource</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
-
-                        </tr>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">Good Relations With
-                                    Neighbours</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                            </td>
-
-                        </tr>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">Free Flow Of
-                                    Information</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                        </tr>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">High Levels Of Human
-                                    Capital</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
-
-                        </tr>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">Sound Business
-                                    Environment</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                        </tr>
-                        <tr>
-
-                            <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                    Of
-                                    Others</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-                <!-- end table -->
-            </div>
-            <!-- end table responsive -->
-        </div>
-
-    </div>
-</div><!-- end card-body -->
-</div><!-- end card -->
-</div> --}}
+                
 <!-- end col -->
 </div>
 <!--end row-->
@@ -697,22 +597,23 @@
 
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
+
 <!-- apexcharts -->
-<script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-<script src="{{ URL::asset('build/js/app.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
 <script>
 $(document).ready(function() {
-    var branch_id = {!! json_encode($filterData->branch_id ?? null) !!};
-    var survey_id = {!! json_encode($filterData->form_id ?? null) !!};
+    var branch_id = <?php echo json_encode($filterData->branch_id ?? null); ?>;
+    var survey_id = <?php echo json_encode($filterData->form_id ?? null); ?>;
 
     //Parameters
     var country = getQueryParams('country');
@@ -729,10 +630,6 @@ $(document).ready(function() {
     //     filterOrganization();
     // });
 
-    $('#country').change(function(){
-        filterSurvey();
-    });
-
     $('#organization').change(function() {
         filterSurvey();
         filterBranch();
@@ -748,7 +645,7 @@ $(document).ready(function() {
 
     //     if (countryVal !== '') {
     //         $.ajax({
-    //             url: "{{ route('organization.get') }}",
+    //             url: "<?php echo e(route('organization.get')); ?>",
     //             method: 'GET',
     //             data: {
     //                 country: countryVal
@@ -783,7 +680,7 @@ $(document).ready(function() {
 
         if (organizationVal !== '') {
             $.ajax({
-                url: "{{ route('branch.get') }}",
+                url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',
                 data: {
                     organization_id: organizationVal
@@ -814,18 +711,14 @@ $(document).ready(function() {
     }
 
     function filterSurvey() {
-        var countryVal = $('#country').val();
         var organizationVal = $('#organization').val();
         var branchVal = branch ;
 
-        console.log(countryVal);
-
         if (organizationVal !== '') {
             $.ajax({
-                url: "{{ route('survey.get') }}",
+                url: "<?php echo e(route('survey.get')); ?>",
                 method: 'GET',
                 data: {
-                    country: countryVal,
                     organization_id: organizationVal,
                     branch_id: branchVal
                 },
@@ -869,29 +762,29 @@ $(document).ready(function() {
         var options = {
             series: [{
                     name: 'Well Functioning Government',
-                    data: ["{{$meanScore['well_functioning_government']}}"]
+                    data: ["<?php echo e($meanScore['well_functioning_government']); ?>"]
                 }, {
                     name: 'Low Levels of corruption',
-                    data: ["{{$meanScore['low_level_corruption']}}"]
+                    data: ["<?php echo e($meanScore['low_level_corruption']); ?>"]
                 },
                 {
                     name: 'Equitable distribution of resources',
-                    data: ["{{$meanScore['equitable_distribution']}}"]
+                    data: ["<?php echo e($meanScore['equitable_distribution']); ?>"]
                 }, {
                     name: 'Good relations with neighbours',
-                    data: ["{{$meanScore['good_relations']}}"]
+                    data: ["<?php echo e($meanScore['good_relations']); ?>"]
                 }, {
                     name: 'Free Flow Of Information',
-                    data: ["{{$meanScore['free_flow']}}"]
+                    data: ["<?php echo e($meanScore['free_flow']); ?>"]
                 }, {
                     name: 'High Levels Of Human Capital',
-                    data: ["{{$meanScore['high_levels']}}"]
+                    data: ["<?php echo e($meanScore['high_levels']); ?>"]
                 }, {
                     name: 'Sound Business Environment',
-                    data: ["{{$meanScore['sound_business']}}"]
+                    data: ["<?php echo e($meanScore['sound_business']); ?>"]
                 }, {
                     name: 'Acceptance Of The Rights Of Others',
-                    data: ["{{$meanScore['acceptance_rights']}}"]
+                    data: ["<?php echo e($meanScore['acceptance_rights']); ?>"]
                 }
             ],
 
@@ -978,14 +871,14 @@ $(document).ready(function() {
         var options = {
             series: [{
                 name: 'Mean',
-                data: ["{{$meanScore['well_functioning_government']}}",
-                    "{{$meanScore['low_level_corruption']}}",
-                    " {{$meanScore['equitable_distribution']}}",
-                    "{{$meanScore['good_relations']}}",
-                    "{{$meanScore['free_flow']}}",
-                    "{{$meanScore['high_levels']}}",
-                    "{{$meanScore['sound_business']}}",
-                    "{{$meanScore['acceptance_rights']}}"
+                data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
+                    "<?php echo e($meanScore['low_level_corruption']); ?>",
+                    " <?php echo e($meanScore['equitable_distribution']); ?>",
+                    "<?php echo e($meanScore['good_relations']); ?>",
+                    "<?php echo e($meanScore['free_flow']); ?>",
+                    "<?php echo e($meanScore['high_levels']); ?>",
+                    "<?php echo e($meanScore['sound_business']); ?>",
+                    "<?php echo e($meanScore['acceptance_rights']); ?>"
                 ],
             }],
             chart: {
@@ -995,6 +888,7 @@ $(document).ready(function() {
                     show: false
                 }
             },
+            
             colors: ['#0664bc'],
             xaxis: {
                 categories: [
@@ -1048,13 +942,14 @@ $(document).ready(function() {
     var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
     if (chartPieBasicColors) {
         var options = {
-            @php
+            <?php
                 $malePieChart = $participantDetails['genderWise']['male'];
                 $femalePieChart = $participantDetails['genderWise']['female'];
                
-            @endphp
-            series: [{{$malePieChart }},
-                {{$femalePieChart }}
+            ?>
+            series: [<?php echo e($malePieChart); ?>,
+                <?php echo e($femalePieChart); ?>
+
             ],
             chart: {
                 height: 192,
@@ -1083,14 +978,14 @@ $(document).ready(function() {
     var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
     if (chartPieBasicColors2) {
         var options = {
-            @php
+            <?php
                 $level_one = $participantDetails['ageWise']['18 to 24'];
                 $level_two = $participantDetails['ageWise']['25 to 44'];
                 $level_three = $participantDetails['ageWise']['45 to 64'];
                 $level_four = $participantDetails['ageWise']['65 or over'];
                 
-            @endphp
-            series: [{{$level_one }},{{$level_two }},{{$level_three}},{{$level_four}}],
+            ?>
+            series: [<?php echo e($level_one); ?>,<?php echo e($level_two); ?>,<?php echo e($level_three); ?>,<?php echo e($level_four); ?>],
            
             chart: {
                 height: 192,
@@ -1121,13 +1016,13 @@ $(document).ready(function() {
         var options = {
             series: [{
                 name: 'Mean',
-                data: [{{$positivePeace['mean']}}]
+                data: [<?php echo e($positivePeace['mean']); ?>]
             }, {
                 name: 'Country Mean',
-                data: [{{$positivePeace['countryMean']}}]
+                data: [<?php echo e($positivePeace['countryMean']); ?>]
             }, {
                 name: 'Global Mean',
-                data: [{{$positivePeace['globalMean']}}]
+                data: [<?php echo e($positivePeace['globalMean']); ?>]
             }],
             chart: {
                 type: 'bar',
@@ -1211,13 +1106,13 @@ $(document).ready(function() {
         var options = {
             series: [{
                 name: 'Mean',
-                data: ["{{$negativePeace['mean']}}"]
+                data: ["<?php echo e($negativePeace['mean']); ?>"]
             }, {
                 name: 'Country Mean',
-                data: ["{{$negativePeace['countryMean']}}"]
+                data: ["<?php echo e($negativePeace['countryMean']); ?>"]
             }, {
                 name: 'Global Mean',
-                data: ["{{$negativePeace['globalMean']}}"]
+                data: ["<?php echo e($negativePeace['globalMean']); ?>"]
             }],
             chart: {
                 type: 'bar',
@@ -1302,25 +1197,25 @@ $(document).ready(function() {
             series: [{
                     name: 'Mean',
                     data: [
-                        @foreach($pillarMeanScore['mean'] as $key => $means)
-                        "{{$means}}",
-                        @endforeach
+                        <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        "<?php echo e($means); ?>",
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 },
                 {
                     name: 'Country Mean',
                     data: [
-                        @foreach($pillarMeanScore['countryMean'] as $key => $means)
-                        "{{$means}}",
-                        @endforeach
+                        <?php $__currentLoopData = $pillarMeanScore['countryMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        "<?php echo e($means); ?>",
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 },
                 {
                     name: 'Global Mean',
                     data: [
-                        @foreach($pillarMeanScore['globalMean'] as $key => $means)
-                        "{{$means}}",
-                        @endforeach
+                        <?php $__currentLoopData = $pillarMeanScore['globalMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        "<?php echo e($means); ?>",
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     ],
                 }
             ],
@@ -1365,4 +1260,9 @@ $(document).ready(function() {
 
 });
 </script>
-@endsection
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CSB 2025\typeform-dashboard\resources\views/typeform/index.blade.php ENDPATH**/ ?>
