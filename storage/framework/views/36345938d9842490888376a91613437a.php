@@ -144,7 +144,7 @@
 
             <!--greeting section ends here -->
 
-            <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
+            <div class="filter-section mb-3 d-flex justify-content-between align-items-start flex-wrap g-3">
                     <div>
                     <h4><span class="badge bg-success lh-1">Positive Peace Survey 2025</span></h4>
                     <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
