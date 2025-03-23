@@ -35,11 +35,11 @@ class AnswerController extends Controller
 
         if($request->filled('survey_form')){
             $answersQuery->whereHas('form',function($query) use($request){
-                $query->where('form_title',$request->survey_form);
+                $query->where('form_id',$request->survey_form);
             });
         }
         
-        $answers = $answersQuery->filterSurvey()->paginate(10);
+        $answers = $answersQuery->filterSurvey()->latest()->paginate(10);
         
         
         $answers = PaginationHelper::addSerialNo($answers);
@@ -128,8 +128,30 @@ class AnswerController extends Controller
         }
     }
 
-    public function generateCSV(){
-        $survey = Answer::with('form','form.organization')->filterSurvey()->get();
+    public function generateCSV(Request $request){
+        $surveyQuery = Answer::with('form','form.organization')->filterSurvey();
+
+        if($request->filled('search_participant')){
+            $surveyQuery->where('name','like','%'.$request->search_participant.'%');
+        }
+
+        if($request->filled('country')){
+            $surveyQuery->whereHas('form',function($query) use($request){
+                $query->where('country',$request->country);
+            });
+        }
+
+        if($request->filled('organization')){
+            $surveyQuery->whereHas('form',function($query) use($request){
+                $query->where('organization_id',$request->organization);
+            });
+        }
+
+        if($request->filled('survey_form')){
+            $surveyQuery->where('form_id',$request->survey_form);
+        }
+
+        $survey = $surveyQuery->get();
 
         $filename = 'survey.csv';
         $fp = fopen($filename,'w+');

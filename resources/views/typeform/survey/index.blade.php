@@ -41,7 +41,7 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <a href="{{route('survey.csv')}}" type="button" class="btn btn-success"><i
+                        <a href="{{route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'survey_form'=>request('survey_form')])}}" type="button" class="btn btn-success"><i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
                             Export</button>
@@ -85,7 +85,7 @@
                                 <div class="col-auto"> <select class="form-select select2" name="survey_form" onchange="this.form.submit()" aria-label="Default select example">
                                         <option value="" selected>Survey</option>
                                         @foreach($surveyForms as $surveyForm)
-                                        <option value="{{$surveyForm->form_title}}" {{request('survey_form') == $surveyForm->form_title ? 'selected':''}}>{{$surveyForm->form_title}}</option>
+                                        <option value="{{$surveyForm->form_id}}" {{request('survey_form') == $surveyForm->form_id ? 'selected':''}}>{{$surveyForm->form_title}}</option>
                                         @endforeach
                                     </select> </div>
                             </div>
