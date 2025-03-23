@@ -7,6 +7,7 @@ body{
 }
 .stat-card {
     background-color: #537CF0;
+    /* background-color: #004994; */
     border-radius: 3px;
     color: white;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.25);
@@ -449,4 +450,29 @@ table tbody tr:nth-child(odd) {
 
 table td{
     padding: 7px 10px !important;
+}
+.role-batch {
+    background-color: rgb(255, 188, 188);
+    color: rgb(155, 1, 1);
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    transition: all 0.5s ease;
+}
+.role-batch i {
+    font-size: 16px;
+    color: rgb(153, 3, 3);
+}
+
+.permission-assign:hover {
+    background-color: rgb(155, 1, 1);
+    color: rgb(255, 255, 255);
+}
+.permission-assign:hover i {
+    color: rgb(255, 255, 255);
 }

@@ -83,7 +83,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ optional($user->organization)->name }}</td>
-                                        <td><span class="btn btn-sm btn-danger">{{ optional($user->role)->name }}</span></td>
+                                        <td><span class="role-batch">{{ optional($user->role)->name }}</span></td>
                                         {{-- @if(auth()->user()->role->name == 'superadmin')
                                         <td><a href="{{route('user.assignRole',$user)}}"
                                             class="btn btn-info"></i>
