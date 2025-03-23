@@ -9,6 +9,7 @@ use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -115,7 +116,10 @@ class OrganizationController extends Controller
     }
 
     public function generateCSV(){
-        $organizations = Organization::all();
+        $columns = Schema::getColumnListing('organizations');
+        $columns = array_diff($columns,['logo']);
+
+        $organizations = Organization::select($columns)->get();
         $filename = "organization.csv";
     
 

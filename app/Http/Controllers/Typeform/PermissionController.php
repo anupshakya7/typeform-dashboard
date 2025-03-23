@@ -52,6 +52,7 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
+        $permission->load('routes');
         return view('typeform.permission.view',compact('permission'));
     }
 

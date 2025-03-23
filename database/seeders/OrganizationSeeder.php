@@ -15,17 +15,14 @@ class OrganizationSeeder extends Seeder
     {
         Organization::create([
             'name'=>'IEP',
-            'country'=>'Australia'
         ]);
 
         Organization::create([
             'name'=>'Krizmatic',
-            'country'=>'Nepal'
         ]);
        
         Organization::create([
             'name'=>'World Vision',
-            'country'=>'United Kingdom'
         ]);
     }
 }

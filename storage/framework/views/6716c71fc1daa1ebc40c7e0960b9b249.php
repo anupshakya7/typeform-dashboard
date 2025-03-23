@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet">
@@ -90,7 +91,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="branch" aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Branch</option>
                                         <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($branch->id); ?>" <?php echo e(request('branch') == $branch->id ? 'selected':''); ?>><?php echo e($branch->name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -282,4 +283,4 @@
 </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/form/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\typeform-dashboard\resources\views/typeform/form/index.blade.php ENDPATH**/ ?>

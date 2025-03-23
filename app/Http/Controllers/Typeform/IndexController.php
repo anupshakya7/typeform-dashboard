@@ -16,16 +16,26 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        $filterData = $request->all() == [] ? Form::latest()->first():null;
+        $filterData = $request->all() == [] ? Form::filterForm()->latest()->first():null;
+
         //Dropdown
         $countriesPath = public_path('build/js/countries/countries.json');
         $countries = json_decode(File::get($countriesPath),true);
-        $organizations = Organization::all();
-        $surveyForms = Form::all();
+        $organizations = Organization::filterOrganization()->get();
+        $surveyForms = Form::filterForm()->get();
         
         //Survey id if no then latest form id
-        $country = isset($request->country) && $request->country ? $request->country : Form::latest()->first()->country;
-        $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
+        if(auth()->user()->role->name == "survey"){
+            $country = auth()->user()->survey->country;
+            $survey_id = auth()->user()->survey->form_id;
+        }else{
+            $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
+            $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
+        }
+
+        $formDetails = Form::where('form_id',$survey_id)->first();
+
+        $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
 
         $topBox = $this->topBoxData();
         $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
@@ -36,14 +46,14 @@ class IndexController extends Controller
 
         $resultByPillar = [];
 
-        return view('typeform.index',compact('countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','filterData'));
+        return view('typeform.index',compact('formDetails','countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','filterData','selectedCountrywithSurvey'));
     }
 
     public function topBoxData(){
-        $surveys = Form::count();
-        $countries = Form::select('country')->distinct()->get()->count();
-        $organizations = Organization::count();
-        $people = Answer::count();
+        $surveys = Form::filterForm()->count();
+        $countries = Form::select('country')->distinct()->filterForm()->get()->count();
+        $organizations = Organization::filterOrganization()->count();
+        $people = Answer::filterSurvey()->count();
 
         return [
             'survey'=>$surveys,
@@ -68,8 +78,8 @@ class IndexController extends Controller
         ];
 
         foreach($pillars as $pillar){
-            $sum = Answer::where('form_id',$survey_id)->sum($pillar);
-            $count = Answer::where('form_id',$survey_id)->whereNotNull($pillar)->count();
+            $sum = Answer::where('form_id',$survey_id)->filterSurvey()->sum($pillar);
+            $count = Answer::where('form_id',$survey_id)->filterSurvey()->whereNotNull($pillar)->count();
             $count = $count == 0 ? 1 : $count; 
 
             $mean = $sum / $count;
@@ -85,8 +95,8 @@ class IndexController extends Controller
         $ageWise = [];
 
         //Gender Wise
-        $male = Answer::where('form_id',$survey_id)->where('gender','Male')->count();
-        $female = Answer::where('form_id',$survey_id)->where('gender','Female')->count();
+        $male = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Male')->count();
+        $female = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Female')->count();
 
         $genderWise = [
             'male'=>$male,
@@ -95,7 +105,7 @@ class IndexController extends Controller
         //Gender Wise
 
         //Age Wise
-        $participants = Answer::where('form_id',$survey_id);
+        $participants = Answer::where('form_id',$survey_id)->filterSurvey();
         $ages = ['18 to 24','25 to 44','45 to 64','65 or over'];
 
         foreach($ages as $age){
@@ -116,7 +126,7 @@ class IndexController extends Controller
         $positiveMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer');
+            $query = Form::with('answer')->filterForm();
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);
@@ -156,7 +166,7 @@ class IndexController extends Controller
         $singlePillarMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer');
+            $query = Form::with('answer')->filterForm();
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);
@@ -229,5 +239,46 @@ class IndexController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function generateCSV(Request $request){
+
+        if(auth()->user()->role->name == "survey"){
+            $country = auth()->user()->survey->country;
+            $survey_id = auth()->user()->survey->form_id;
+        }else{
+            $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
+            $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
+        }
+
+
+        $pillarMeanScores =  $this->pillarsMeanScore($country,$survey_id);
+        
+        $filename = "result_by_pillar.csv";
+        $fp = fopen($filename,'w+');
+        fputcsv($fp,array('','Mean','Country Mean','Global Mean'));
+        $pillars = [
+            'well_functioning_government'=>'Well-Functioning Government',
+            'low_level_corruption'=>'Low Levels of Corruption',
+            'equitable_distribution'=>'Equitable Distribution of Resources',
+            'good_relations'=>'Good Relations with Neighbours',
+            'free_flow'=>'Free Flow of Information',
+            'high_levels'=>'High Levels of Human Capital',
+            'sound_business'=>'Sound Business Environment',
+            'acceptance_rights'=>'Acceptance of the Rights of Others'
+        ];
+
+        foreach($pillarMeanScores['mean'] as $key=>$pillarMeanScore){
+            fputcsv($fp,array(
+                $pillars[$key],
+                $pillarMeanScore,
+                $pillarMeanScores['countryMean'][$key],
+                $pillarMeanScores['globalMean'][$key]
+            ));
+        }
+
+        fclose($fp);
+        $headers = array('Content-Type'=>'text/csv');
+        return response()->download($filename,'result_by_pillar.csv',$headers);
     }
 }

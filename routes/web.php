@@ -40,6 +40,7 @@ Route::post('/loginSubmit',[LoginController::class,'login'])->name('login.submit
 
 Route::middleware('check_auth','check_route')->group(function(){
     Route::get('/',[IndexController::class,'index'])->name('home.index');
+    Route::get('/generate/csv',[IndexController::class,'generateCSV'])->name('home.csv');
 
     Route::prefix('typeform')->group(function(){
         //User
@@ -84,6 +85,9 @@ Route::middleware('check_auth','check_route')->group(function(){
         Route::resource('survey',AnswerController::class);
         Route::get('/survey/QA/{answer}',[AnswerController::class,'QA'])->name('survey.qa');
         Route::get('/survey/generate/csv',[AnswerController::class,'generateCSV'])->name('survey.csv');
+        Route::get('/survey/generate/csv',[AnswerController::class,'generateCSV'])->name('survey.csv');
+        Route::get('/fecthallsurvey', [AnswerController::class, 'fetchAllSurvey'])->name('survey.fecthallsurvey');
+
     });
 });
 //Get Answer WebHook

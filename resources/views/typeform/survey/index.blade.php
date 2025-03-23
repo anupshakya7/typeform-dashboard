@@ -44,7 +44,7 @@
                         <a href="{{route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'survey_form'=>request('survey_form')])}}" type="button" class="btn btn-success"><i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
-                            Export</button>
+                            Export</a>
                         <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                         aria-controls="theme-settings-offcanvas">
                             <img class="svg-icon" type="image/svg+xml"
