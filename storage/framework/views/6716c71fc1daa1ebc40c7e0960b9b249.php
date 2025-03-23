@@ -91,7 +91,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="branch" aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Branch</option>
                                         <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($branch->id); ?>" <?php echo e(request('branch') == $branch->id ? 'selected':''); ?>><?php echo e($branch->name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

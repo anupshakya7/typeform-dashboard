@@ -1,18 +1,74 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("export-all").addEventListener("click", function () {
-        const charts = [
-            { id: "dashboard", title: "Dashboard" }
-            // { id: "basic_radar_chart", title: "Mean Result" },
-            // { id: "simple_pie_chart", title: "Participants by Gender" },
-            // { id: "simple_pie_chart2", title: "Participants by Age" },
-            // { id: "sales-forecast-chart-2", title: "Positive Peace" },
-            // { id: "sales-forecast-chart-3", title: "Negative Peace" },
-            // { id: "multi_radar", title: "Results by pillars: Radar" },
-            // { id: "pillar-table", title: "Results by pillar: Table" }
-        ];
-        exportChartsToPNGAndPDF(charts);
+        document.getElementById("export-all").disabled = true;
+        const selectedCountry = document.getElementById('country').value;
+        const selectedOrganization = document.getElementById('organization').value;
+        document.getElementById("survey-table").style.display = "block";
+
+        $.ajax({
+            url: '/typeform/fecthallsurvey', 
+            type: 'GET',
+            data: {
+                country: selectedCountry,  // Send the selected country
+                organization_id: selectedOrganization  // Send the selected organization ID
+            },
+            dataType: 'json',
+            success: function (response) {                // Assuming 'response' contains the data needed to populate the charts and tables
+                const surveyData = response.surveys; // Adjust according to the data structure
+
+                // Update DOM elements with fetched data (you should have chart render logic here)
+                updateTable(surveyData);
+
+                // Once data is fetched and DOM updated, enable the export functionality
+                document.getElementById("export-all").disabled = false; // Enable export button
+
+                // Now trigger the export functionality
+                const charts = [
+                    { id: "sales-forecast-chart", title: "Dashboard" },
+                    { id: "basic_radar_chart", title: "Mean Result" },
+                    { id: "simple_pie_chart", title: "Participants by Gender" },
+                    { id: "simple_pie_chart2", title: "Participants by Age" },
+                    { id: "sales-forecast-chart-2", title: "Positive Peace" },
+                    { id: "sales-forecast-chart-3", title: "Negative Peace" },
+                    { id: "multi_radar", title: "Results by pillars: Radar" },
+                    { id: "pillar-table", title: "Results by pillar: Table" },
+                    { id: "survey-table", title: "Survey Report: Table" }
+
+                ];
+                // Call the export function to generate PNG and PDF
+                exportChartsToPNGAndPDF(charts);
+
+
+            },
+            error: function (error) {
+                console.log('Error fetching data:', error);
+                document.getElementById("export-all").disabled = false; // Re-enable button in case of error
+
+            }
+        });
     });
 });
+
+function updateTable(data) {
+    const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
+    tableBody.innerHTML = "";  // Clear existing table rows
+
+    // Populate the table with fetched data
+    data.forEach(function (item) {
+        const row = tableBody.insertRow();
+
+        // Assuming the response data contains the correct properties
+        row.insertCell(0).textContent = item.survey_data_id || 'N/A';
+        row.insertCell(1).textContent = item.survey_id || 'N/A';
+        row.insertCell(2).textContent = item.survey_name || 'N/A';
+        row.insertCell(3).textContent = item.survey_country || 'N/A';
+        row.insertCell(4).textContent = item.survey_organization || 'N/A';
+        row.insertCell(5).textContent = item.participant_name || 'N/A';
+        row.insertCell(6).textContent = item.age || 'N/A';
+        row.insertCell(7).textContent = item.gender || 'N/A';
+        row.insertCell(8).textContent = item.survey_date || 'N/A';
+    });
+}
 
 function exportChartsToPNGAndPDF(charts) {
     const jsPDF = window.jspdf.jsPDF;
@@ -92,6 +148,7 @@ function exportChartsToPNGAndPDF(charts) {
     };
 
     captureChart(0);
+
 }
 
 

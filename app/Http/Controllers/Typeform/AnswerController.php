@@ -212,4 +212,50 @@ class AnswerController extends Controller
 
         return response()->download($filename,'survey.csv',$headers);
     }
+
+    public function fetchAllSurvey(Request $request)
+    {
+        // Start building the query
+        $answersQuery = Answer::with('form', 'form.organization')  // Load the related form and organization
+            ->select('id', 'event_id', 'form_id', 'name', 'age', 'gender', 'created_at');
+        
+        
+
+        // Filter by country if provided
+        if($request->filled('country')){
+            $answersQuery->whereHas('form',function($query) use($request){
+                $query->where('country',$request->country);
+            });
+        }
+
+        if($request->filled('organization')){
+            $answersQuery->whereHas('form',function($query) use($request){
+                $query->where('organization_id',$request->organization_id);
+            });
+        }
+
+
+        // Get all answers (no pagination)
+        $answers = $answersQuery->filterSurvey()->latest()->get();  // Use get() to fetch all data
+        
+        // Prepare data for frontend
+        $formattedAnswers = $answers->map(function($answer) {
+            return [
+                'survey_data_id' => $answer->event_id,
+                'survey_id' => $answer->form_id,
+                'survey_name' => $answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet',
+                'survey_country' => $answer->form ? optional($answer->form)->country : 'No Country',
+                'survey_organization' => $answer->form ? optional($answer->form)->organization->name : 'No Organization',
+                'participant_name' => $answer->name,
+                'age' => $answer->age,
+                'gender' => $answer->gender,
+                'survey_date' => Carbon::parse($answer->created_at)->format('d M, Y'),
+            ];
+        });
+
+        // Return the data as a JSON response
+        return response()->json([
+            'surveys' => $formattedAnswers,
+        ]);
+    }
 }
