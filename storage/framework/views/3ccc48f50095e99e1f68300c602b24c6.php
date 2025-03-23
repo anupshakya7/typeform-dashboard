@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body">
-                <div class="mb-2">
+                <div class="mb-2 table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
@@ -48,7 +48,11 @@
                             </tr>
                             <tr>
                                 <th>Permissions</th>
-                                <td></td>
+                                <td>
+                                    <?php $__currentLoopData = $role->permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <span class="authorize-batch"><?php echo e($permission->name); ?></span>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
