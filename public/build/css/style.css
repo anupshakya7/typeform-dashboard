@@ -426,8 +426,13 @@ table th, table td {
     gap: 0.5rem;
   }
   
-.note P {
+.note p {
     font-style: italic;
-    padding: 2px 0px;
+    padding: 2px 5px;
+    background-color: #d44742;
+    color: white;
+    margin-top: 10px;
+    border-radius: 3px;
+    display: inline-block;
 }
 /**download dropdown css starts here **/

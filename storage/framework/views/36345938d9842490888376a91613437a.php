@@ -216,7 +216,7 @@
 
                 </div>
                 
-                <div class="note text-muted">
+                <div class="note">
                     <p>Note: Please select at least one project & choose branch, organization, country respectively to filter data.</p>
                 </div>
                             </div>
