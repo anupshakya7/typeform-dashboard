@@ -36,14 +36,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 ];
                 // Call the export function to generate PNG and PDF
-                exportChartsToPNGAndPDF(charts);
-
+                exportChartsToPNGAndPDF(charts, function () {
+                    surveyTable.style.display = "none"; // Hide table after export is complete
+                });
 
             },
             error: function (error) {
                 console.log('Error fetching data:', error);
-                document.getElementById("export-all").disabled = false; // Re-enable button in case of error
-
+                document.getElementById("export-all").disabled = false;
+                surveyTable.style.display = "none"; // Hide table on error
             }
         });
     });
