@@ -39,7 +39,7 @@
         <div class="flex-shrink-0">
             <div class="d-flex flex-row gap-2 align-items-center">
                 <!--info here-->
-                <a href="<?php echo e(route('form.csv')); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
+                <a href="<?php echo e(route('form.csv',['search_title'=> request('search_title'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
                     Export</a>
                 <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                 aria-controls="theme-settings-offcanvas">

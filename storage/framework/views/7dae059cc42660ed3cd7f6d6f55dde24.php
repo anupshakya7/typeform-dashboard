@@ -628,7 +628,7 @@
                                 <div class="card-body">
                                     <div class="live-preview">
                                         <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mt-3" id="survey-table" style="display: none;">
+                                            <table class="table align-middle table-nowrap mb-0" id="survey-table" style="display: none;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th scope="col">Survey Data ID</th>
