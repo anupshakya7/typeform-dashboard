@@ -98,21 +98,21 @@
                             </div>
                             <div class="col-auto">
                                 <div class="col-auto"> 
-                                    <select class="form-select select2" name="branch" aria-label="Default select example" onchange="this.form.submit()">
+                                    <select class="form-select select2" name="branch" id="branch" aria-label="Default select example" onchange="this.form.submit()" disabled>
                                         <option value="" selected>Division</option>
-                                        @foreach($branches as $branch)
+                                        {{-- @foreach($branches as $branch)
                                         <option value="{{$branch->id}}" {{request('branch') == $branch->id ? 'selected':''}}>{{$branch->name}}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select> </div>
                             </div>
 
                             <div class="col-auto">
                                 <div class="col-auto"> 
-                                    <select class="form-select select2" name="survey" aria-label="Default select example" onchange="this.form.submit()">
+                                    <select class="form-select select2" name="survey" id="survey" aria-label="Default select example" onchange="this.form.submit()" disabled>
                                         <option value="" selected>Survey</option>
-                                        @foreach($surveys as $survey)
+                                        {{-- @foreach($surveys as $survey)
                                         <option value="{{$survey->form_id}}" {{request('survey') == $survey->form_id ? 'selected':''}}>{{$survey->form_title}}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select> </div>
                             </div>
                     </div>
@@ -405,6 +405,127 @@
                 document.getElementById('form_search').submit();
             },800);
         }
+
+        $(document).ready(function(){
+            function getQueryParams(param) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            var country_name = getQueryParams('country');
+            var organization_id = getQueryParams('organization');
+            var branch_id = getQueryParams('branch');
+
+            if(country_name !== null){
+                filterSurvey();
+            }
+
+            if(organization_id !== null){
+                filterBranch();
+                filterSurvey();
+            }
+
+            if(branch_id !== null){
+                filterSurvey();
+            }
+
+
+            function filterBranch(callback) {
+                var organizationVal = organization_id;
+
+                if (organizationVal !== '') {
+                    $.ajax({
+                        url: "{{ route('branch.get') }}",
+                        method: 'GET',
+                        data: {
+                            organization_id: organizationVal
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            $('#branch').prop('disabled', false);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Division</option>');
+
+                            var userRole = @json(auth()->user()->role->name);
+                            var userBranchId = @json(auth()->user()->branch_id);
+
+                        
+                            var branchList = response.branches.filter(function(branch){
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                                    return branchIds.includes(branch.id.toString());
+                                }
+
+                                return true;
+                            });
+                            
+                            branchList.forEach(function(branchItem) {
+                                // $('#branch').append(new Option(branch.name,
+                                // branch.id));
+                                var option = new Option(branchItem.name, branchItem.id);
+                                $('#branch').append(option);
+
+                                if (branch_id && branch_id == branchItem.id) {
+                                    $(option).prop('selected', true);
+                                }
+                            });
+
+                            if (callback && typeof callback == 'function') {
+                                callback();
+                            }
+
+                            isFirstLoad = false;
+                        },
+                        error: function(xhr, status, error) {
+                            $('#branch').prop('disabled', true);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                        }
+                    })
+                }
+            }
+
+            function filterSurvey() {
+                var countryVal = country_name;
+                var organizationVal = organization_id;
+                var branchVal = branch_id;
+                console.log(countryVal,organizationVal,branchVal);
+                if (organizationVal !== '') {
+                    $.ajax({
+                        url: "{{ route('survey.get') }}",
+                        method: 'GET',
+                        data: {
+                            country: countryVal,
+                            organization_id: organizationVal,
+                            branch_id: branchVal
+                        },
+                        success: function(response) {
+
+                            console.log(response);
+                            $('#survey').prop('disabled', false);
+                            $('#survey').html('');
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            response.forms.forEach(function(formItem) {
+                                // $('#survey').append(new Option(form.form_title,
+                                // form.id));
+                                var option = new Option(formItem.form_title, formItem.form_id);
+                                $('#survey').append(option);
+
+                                if (survey && survey == formItem.form_id) {
+                                    $(option).prop('selected', true);
+                                }
+                            });
+
+                        },
+                        error: function(xhr, status, error) {
+                            $('#survey').prop('disabled', true);
+                            $('#survey').html('');
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                        }
+                    })
+                }
+            }
+        });
 </script>
 
 @endsection

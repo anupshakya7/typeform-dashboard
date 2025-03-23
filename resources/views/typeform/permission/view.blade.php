@@ -36,7 +36,7 @@
             </div>
 
             <div class="card-body">
-                <div class="mb-2">
+                <div class="mb-2 table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
@@ -51,7 +51,7 @@
                                 <th>Route</th>
                                 <td>
                                     @foreach($permission->routes as $route)
-                                        <span class="btn btn-sm btn-primary">{{$route->route}}</span>
+                                        <span class="authorize-batch">{{$route->route}}</span>
                                     @endforeach
                                 </td>
                             </tr>

@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body">
-                <div class="mb-2">
+                <div class="mb-2 table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
@@ -50,8 +50,8 @@
                                 <th>Route</th>
                                 <td>
                                     <?php $__currentLoopData = $permission->routes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $route): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <span class="btn btn-sm btn-primary"><?php echo e($route->route); ?></span>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <span class="authorize-batch"><?php echo e($route->route); ?></span>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </td>
                             </tr>
                             <tr>

@@ -78,11 +78,11 @@
                                         <td><?php echo e($role->name); ?></td>
                                         <td>
                                             <?php $__currentLoopData = $role->permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <span class="btn btn-sm btn-primary"><?php echo e($permission->name); ?></span>
+                                                <span class="authorize-batch"><?php echo e($permission->name); ?></span>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </td>
                                         <td><a href="<?php echo e(route('role.assignPermission',$role)); ?>"
-                                            class="btn btn-danger"></i>
+                                            class="role-batch permission-assign"><i class='bx bxs-user-check'></i>
                                             Assign Permission</a></td>
                                         <td>
                                             <div class="dropdown d-inline-block">

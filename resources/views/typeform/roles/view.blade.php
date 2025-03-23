@@ -36,7 +36,7 @@
             </div>
 
             <div class="card-body">
-                <div class="mb-2">
+                <div class="mb-2 table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
@@ -49,7 +49,11 @@
                             </tr>
                             <tr>
                                 <th>Permissions</th>
-                                <td></td>
+                                <td>
+                                    @foreach($role->permissions as $permission)
+                                        <span class="authorize-batch">{{ $permission->name }}</span>
+                                    @endforeach
+                                </td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
