@@ -146,7 +146,7 @@
 
             <div class="filter-section mb-3 d-flex justify-content-between align-items-start flex-wrap g-3">
                     <div>
-                    <h4><span class="badge bg-success lh-1">Positive Peace Survey 2025</span></h4>
+                    <h4><span class="badge bg-success lh-1">{{$formDetails->form_title}}</span></h4>
                     <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
                     </div>
 
@@ -509,6 +509,9 @@
                                 <h4 class="card-title results-by-pillar-table mb-0 flex-grow-1">Results By Pillar</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
+                                        <a href="{{route('home.csv',['survey'=>request('survey')])}}" type="button" class="btn btn-success"><i
+                                            class="ri-file-download-line align-bottom me-1"></i>
+                                        Export</a>
                                         <!--info here-->
                                         <div class="dropdown">
     <a class="icon-frame" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -517,7 +520,7 @@
     <ul class="dropdown-menu" aria-labelledby="exportDropdown">
         <li><a class="dropdown-item" href="#" data-type="pdf" data-chart-id="pillar-table">Export as PDF</a></li>
         <li><a class="dropdown-item" href="#" data-type="png" data-chart-id="pillar-table">Export as PNG</a></li>
-        <li><a class="dropdown-item" href="#" data-type="excel" data-chart-id="pillar-table">Export as Excel</a></li>
+        {{-- <li><a class="dropdown-item" href="#" data-type="excel" data-chart-id="pillar-table">Export as Excel</a></li> --}}
     </ul>
 </div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"

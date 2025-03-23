@@ -40,6 +40,7 @@ Route::post('/loginSubmit',[LoginController::class,'login'])->name('login.submit
 
 Route::middleware('check_auth','check_route')->group(function(){
     Route::get('/',[IndexController::class,'index'])->name('home.index');
+    Route::get('/generate/csv',[IndexController::class,'generateCSV'])->name('home.csv');
 
     Route::prefix('typeform')->group(function(){
         //User
