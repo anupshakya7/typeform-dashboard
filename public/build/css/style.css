@@ -70,7 +70,8 @@ table th, table td {
     text-wrap: nowrap;
 }
 .table-head {
-    background-color: #F6F6F6;
+    background-color: #0bb39c;
+    color: #fff;
 }
 .participants-name {
     white-space: wrap;
@@ -436,3 +437,16 @@ table th, table td {
     display: inline-block;
 }
 /**download dropdown css starts here **/
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Optional: style the odd rows differently */
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff; 
+}
+
+table td{
+    padding: 7px 10px !important;
+}
