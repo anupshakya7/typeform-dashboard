@@ -79,11 +79,11 @@
                                         <td>{{ $permission->name }}</td>
                                         <td>
                                             @foreach($permission->routes as $route)
-                                                <span class="btn btn-sm btn-primary">{{$route->route}}</span>
+                                                <span class="authorize-batch">{{$route->route}}</span>
                                             @endforeach
                                         </td>
                                         <td><a href="{{ route('permission.assignRoute',$permission) }}"
-                                            class="btn btn-danger"></i>
+                                            class="role-batch permission-assign"><i class='bx bxs-user-check'></i>
                                             Assign Route</a></td>
                                         <td>
                                             <div class="dropdown d-inline-block">

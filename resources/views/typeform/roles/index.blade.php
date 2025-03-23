@@ -79,7 +79,7 @@
                                         <td>{{ $role->name }}</td>
                                         <td>
                                             @foreach($role->permissions as $permission)
-                                                <span class="btn btn-sm btn-primary">{{ $permission->name }}</span>
+                                                <span class="authorize-batch">{{ $permission->name }}</span>
                                             @endforeach
                                         </td>
                                         <td><a href="{{ route('role.assignPermission',$role) }}"
