@@ -755,3 +755,6 @@ function exportToPDFPnBar(chartId, chartTitle) {
         pdf.save(`${chartTitle}.pdf`);
     });
 }
+
+
+//survey begin js
