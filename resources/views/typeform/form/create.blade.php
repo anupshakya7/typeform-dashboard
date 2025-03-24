@@ -162,7 +162,7 @@
                         <p class="note-tag">Note: Please pick the starting and ending date for survey.</p>
                     </div> --}}
                     <div class="btn-submit-container">
-                        <button type="button" class="btn btn-blue btn-submit" >Submit</button>
+                        <button type="submit" class="btn btn-blue btn-submit" >Submit</button>
                     </div>
 
                     <!--end col-->
@@ -188,7 +188,7 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+{{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button>
 
@@ -209,7 +209,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
 
 {{-- --}}
 @endsection
