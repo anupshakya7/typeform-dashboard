@@ -1,23 +1,26 @@
 <!-- ========== App Menu ========== -->
 <div class="app-menu navbar-menu" >
     <!-- LOGO -->
+    <?php
+        $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/logo.png');
+   ?>
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
         <a href="<?php echo e(route('home.index')); ?>" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
+                <img src="<?php echo e($organizationLogo); ?>" alt="" width="120">
             </span>
             <span class="logo-lg">
-                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
+                <img src="<?php echo e($organizationLogo); ?>" alt="" width="120">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="<?php echo e(route('home.index')); ?>" class="logo logo-light">
             <span class="logo-sm">
-                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
+                <img src="<?php echo e($organizationLogo); ?>" alt="" width="120">
             </span>
             <span class="logo-lg">
-                <img src="<?php echo e(URL::asset('build/images/logo.png')); ?>" alt="">
+                <img src="<?php echo e($organizationLogo); ?>" alt="" width="120">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
