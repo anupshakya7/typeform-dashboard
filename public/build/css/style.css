@@ -6,8 +6,9 @@ body{
     background-color: #F4F4F4 ;
 }
 .stat-card {
-    background-color: #537CF0;
-    /* background-color: #004994; */
+    /* background-color: #537CF0; */
+    background-color: #002347;
+    /* background-color: #00366e; */
     border-radius: 3px;
     color: white;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.25);
@@ -488,4 +489,26 @@ table td{
 }
 .permission-assign:hover i {
     color: rgb(255, 255, 255);
+}
+.organization-name {
+    width: 160px;
+}
+.about-csb {
+    /* background-color: #255974; */
+    color: white;
+    padding: 20px;
+    margin: 10px 0px 20px 0px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.25);
+    border-radius: 10px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.about-csb h5 {
+    color: white;
+    font-weight: bold;
+}
+.about-csb p {
+    margin: 0;
+    padding: 0;
 }
