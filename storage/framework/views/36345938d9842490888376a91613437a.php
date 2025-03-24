@@ -1004,8 +1004,8 @@
                     },
                     // colors: areachartSalesColors
                     colors: [
-                        '#6097CF', '#8B939C', '#67D36E', '#D2D4D7', '#1B68B7', '#A0CFFF', '#E58F87',
-                        '#D4DE86'
+                        '#002347', '#00366e', '#004994', '#0f64bc', '#107ec2', '#0c8cdb', '#4cacdc',
+                        '#74ccf8'
                     ]
                 };
                 if (salesForecastChart != "")
