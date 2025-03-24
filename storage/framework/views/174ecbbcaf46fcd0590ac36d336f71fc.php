@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body">
-                <div class="mb-2">
+                <div class="mb-2 table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
@@ -60,7 +60,7 @@
                             </tr>
                             <tr>
                                 <th>Division</th>
-                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Main Branch'); ?></td>
+                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Head Office'); ?></td>
                             </tr>
                             <tr>
                                 <th>Before Date</th>

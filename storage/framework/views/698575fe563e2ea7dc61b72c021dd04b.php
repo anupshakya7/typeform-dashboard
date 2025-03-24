@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body">
-                <div class="mb-2">
+                <div class="mb-2 table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
@@ -56,7 +56,7 @@
                             </tr>
                             <tr>
                                 <th>Role</th>
-                                <td><?php echo e(optional($user->role)->name); ?></td>
+                                <td><span class="role-batch"><?php echo e(optional($user->role)->name); ?></span></td>
                             </tr>
                             <tr>
                                 <th>Created At</th>

@@ -129,7 +129,7 @@
                                 <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->country : 'No Country'}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->organization->name : 'No Organization'}}</td>
-                                <td>{{optional($answer->form)->branches ? optional($answer->form)->branches->name : 'Main Branch'}}</td>
+                                <td>{{optional($answer->form)->branches ? optional($answer->form)->branches->name : 'Head Office'}}</td>
                                 <td>
                                     <span class="participants-name">
                                         {{$answer->name}}
@@ -142,20 +142,20 @@
                                 @endphp
                                 <td>{{$date}}</td>
                                 <td>
+                                    @if($answer->form)
                                     <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="ri-more-fill align-middle"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="{{route('survey.show',$answer)}}" class="dropdown-item"><i
+                                            {{-- <li><a href="{{route('survey.show',$answer)}}" class="dropdown-item"><i
+                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
+                                            </li> --}}
+                                          
+                                            <li><a href="{{route('survey.qa',$answer)}}" class="dropdown-item"><i
                                                         class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                             </li>
-                                            @if($answer->form)
-                                            <li><a href="{{route('survey.qa',$answer)}}" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> QA</a>
-                                            </li>
-                                            @endif
                                             
                                             <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
@@ -168,6 +168,7 @@
                                             </li> -->
                                         </ul>
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

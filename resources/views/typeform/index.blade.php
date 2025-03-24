@@ -161,7 +161,7 @@
                                     @else
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
-                                        <option value="" selected>Country</option>
+                                        <option value="" selected>Select Country</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country['name'] }}"
                                                 {{ (($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : '' }}>
@@ -177,7 +177,7 @@
                                     @if(auth()->user()->role->name == 'superadmin')
                                     <select class="form-select select2" id="organization" name="organization"
                                         aria-label="Default select example">
-                                        <option value="" selected>Organization</option>
+                                        <option value="" selected>Select Organization</option>
                                         @foreach ($organizations as $organization)
                                             <option value="{{ $organization->id }}"
                                                 {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
@@ -197,7 +197,7 @@
                                     @else
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Select Division</option>
                                     </select>
                                     @endif
                                 </div>
@@ -208,7 +208,7 @@
                                     @else
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                         @foreach ($surveyForms as $surveyForm)
                                             <option value="{{ $surveyForm->form_title }}"
                                                 {{ ($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }}>
@@ -297,19 +297,19 @@
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <div class="dropdown">
-                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                        <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                data-chart-id="basic_radar">Export as PDF</a></li>
-                                        <li><a class="dropdown-item" href="#" data-type="png"
-                                                data-chart-id="basic_radar">Export as PNG</a></li>
-                                    </ul>
-                                </div>
+                                    <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="basic_radar">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="basic_radar">Export as PNG</a></li>
+                                        </ul>
+                                    </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -945,7 +945,7 @@
                             console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = @json(auth()->user()->role->name);
                             var userBranchId = @json(auth()->user()->branch_id);
@@ -989,7 +989,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Branch</option>');
                         }
                     })
                 }
@@ -1013,7 +1013,7 @@
                             console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                             response.forms.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
@@ -1029,7 +1029,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }

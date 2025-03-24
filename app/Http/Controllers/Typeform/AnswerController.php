@@ -226,6 +226,67 @@ class AnswerController extends Controller
         return response()->download($filename,'survey.csv',$headers);
     }
 
+    public function generateIndividualCSV($id){
+        $surveySingle = Answer::with('form','form.organization')->filterSurvey()->where('id',$id)->first();
+
+        $filename = 'survey.csv';
+        $fp = fopen($filename,'w+');
+        fputcsv($fp,array(
+            'ID',
+            'Survey Data ID',
+            'Survey ID',
+            'Survey',
+            'Participant',
+            'Age',
+            'Gender',
+            'Address',
+            'Well-Functioning Government',
+            'Low Levels of Corruption',
+            'Equitable Distribution of Resources',
+            'Good Relations with Neighbours',
+            'Free Flow of Information',
+            'High Levels of Human Capital',
+            'Sound Business Environment',
+            'Acceptance of the Rights of Others',
+            'Positive Peace',
+            'Negative Peace',
+            'Extra Question 1',
+            'Extra Question 2',
+            'Extra Question 3',
+            'Survey Date'
+        ));
+
+            fputcsv($fp,array(
+                $surveySingle->id,
+                $surveySingle->event_id,
+                $surveySingle->form_id,
+                $surveySingle->form ? optional($surveySingle->form)->form_title:null,
+                $surveySingle->name,
+                $surveySingle->age,
+                $surveySingle->gender,
+                $surveySingle->{'village-town-city'},
+                $surveySingle->well_functioning_government,
+                $surveySingle->low_level_corruption,
+                $surveySingle->equitable_distribution,
+                $surveySingle->good_relations,
+                $surveySingle->free_flow,
+                $surveySingle->high_levels,
+                $surveySingle->sound_business,
+                $surveySingle->acceptance_rights,
+                $surveySingle->positive_peace,
+                $surveySingle->negative_peace,
+                $surveySingle->extra_ans1,
+                $surveySingle->extra_ans2,
+                $surveySingle->extra_ans3,
+                Carbon::parse($surveySingle->created_at)->format('d M, Y'),
+            ));
+
+        fclose($fp);
+        $headers = array('Content-Type'=>'text/csv');
+
+        return response()->download($filename,$surveySingle->name.' survey.csv',$headers);
+    }
+
     public function fetchAllSurvey(Request $request)
     {
         // Start building the query

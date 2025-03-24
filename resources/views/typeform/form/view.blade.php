@@ -61,7 +61,7 @@
                             </tr>
                             <tr>
                                 <th>Division</th>
-                                <td>{{$form->branches ? optional($form->branches)->name : 'Main Branch'}}</td>
+                                <td>{{$form->branches ? optional($form->branches)->name : 'Head Office'}}</td>
                             </tr>
                             <tr>
                                 <th>Before Date</th>

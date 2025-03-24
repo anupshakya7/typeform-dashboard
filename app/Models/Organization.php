@@ -11,8 +11,7 @@ class Organization extends Model
 
     protected $fillable = [
         'name',
-        'logo',
-        'country'
+        'logo'
     ];
 
     public function scopeFilterOrganization($query){

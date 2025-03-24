@@ -160,7 +160,7 @@
                                     <?php else: ?>
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
-                                        <option value="" selected>Country</option>
+                                        <option value="" selected>Select Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($country['name']); ?>"
                                                 <?php echo e((($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : ''); ?>>
@@ -174,7 +174,7 @@
                                     <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                     <select class="form-select select2" id="organization" name="organization"
                                         aria-label="Default select example">
-                                        <option value="" selected>Organization</option>
+                                        <option value="" selected>Select Organization</option>
                                         <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($organization->id); ?>"
                                                 <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
@@ -194,7 +194,7 @@
                                     <?php else: ?>
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Select Division</option>
                                     </select>
                                     <?php endif; ?>
                                 </div>
@@ -205,7 +205,7 @@
                                     <?php else: ?>
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                         <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($surveyForm->form_title); ?>"
                                                 <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?>>
@@ -247,16 +247,23 @@
 
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Mean Scores Values</h4>
+                        <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Mean Scores Values</h4>
                         <div class="flex-shrink-0">
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <!--info here-->
-                                <a class="icon-frame" href="#"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                </a>
+                                <div class="dropdown">
+                            <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="svg-icon" type="image/svg+xml"
+                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                <li><a class="dropdown-item" href="#" data-type="pdf"
+                                        data-chart-id="sales-forecast-chart">Export as PDF</a></li>
+                                <li><a class="dropdown-item" href="#" data-type="png"
+                                        data-chart-id="sales-forecast-chart">Export as PNG</a></li>
+                            </ul>
+                        </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -283,25 +290,31 @@
                     <div class="col-sm-7 pb-4">
                         <div class="card h-100">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                                <h4 class="card-title">Mean Results</h4>
+                                <h4 class="card-title mean-result-title">Mean Results</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                            data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
+                                    <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="basic_radar">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="basic_radar">Export as PNG</a></li>
+                                        </ul>
+                                    </div>
+                                <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                    data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
-                                        </a>
+                                </a>
                                     </div>
                                 </div>
                             </div><!-- end card header -->
@@ -317,16 +330,23 @@
 
                         <div class="card">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                                <h4 class="card-title mb-0">Participants by Gender</h4>
+                                <h4 class="card-title pie-gender-title mb-0">Participants by Gender</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                        </a>
+                                        <div class="dropdown">
+                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img class="svg-icon" type="image/svg+xml"
+                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                        <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                data-chart-id="simple_pie_chart">Export as PDF</a></li>
+                                        <li><a class="dropdown-item" href="#" data-type="png"
+                                                data-chart-id="simple_pie_chart">Export as PNG</a></li>
+                                    </ul>
+                                </div>
                                         <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                             data-bs-target="#theme-settings-offcanvas"
                                             aria-controls="theme-settings-offcanvas"
@@ -352,16 +372,23 @@
 
                         <div class="card">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                                <h4 class="card-title mb-0">Participants by Age</h4>
+                                <h4 class="card-title pie-age-title mb-0">Participants by Age</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href=""
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                        </a>
+                                        <div class="dropdown">
+                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img class="svg-icon" type="image/svg+xml"
+                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                        <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                data-chart-id="simple_pie_chart2">Export as PDF</a></li>
+                                        <li><a class="dropdown-item" href="#" data-type="png"
+                                                data-chart-id="simple_pie_chart2">Export as PNG</a></li>
+                                    </ul>
+                                </div>
                                         <a class="icon-frame" href="" data-bs-toggle="offcanvas"
                                             data-bs-target="#theme-settings-offcanvas"
                                             aria-controls="theme-settings-offcanvas"
@@ -399,16 +426,23 @@
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Positive Peace</h4>
+                                    <h4 class="card-title positive-peace-title mb-0 flex-grow-1">Positive Peace</h4>
                                     <div class="flex-shrink-0">
                                         <div class="d-flex flex-row gap-2 align-items-center">
                                             <!--info here-->
-                                            <a class="icon-frame" href="#"
-                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
+                                            <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="sales-forecast-chart-2">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="sales-forecast-chart-2">Export as PNG</a></li>
+                                        </ul>
+                                    </div>
                                             <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                                 data-bs-target="#theme-settings-offcanvas"
                                                 aria-controls="theme-settings-offcanvas"
@@ -436,16 +470,23 @@
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Negative Peace</h4>
+                                    <h4 class="card-title negative-peace-title mb-0 flex-grow-1">Negative Peace</h4>
                                     <div class="flex-shrink-0">
                                         <div class="d-flex flex-row gap-2 align-items-center">
                                             <!--info here-->
-                                            <a class="icon-frame" href="#"
-                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
+                                            <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="sales-forecast-chart-3">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="sales-forecast-chart-3">Export as PNG</a></li>
+                                        </ul>
+                                    </div>
                                             <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                                 data-bs-target="#theme-settings-offcanvas"
                                                 aria-controls="theme-settings-offcanvas"
@@ -474,17 +515,24 @@
                     <!--area radar chart section starts here -->
 
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4 class="card-title mb-0">Results by Pillars</h4>
+                        <div class="card-header z-1 d-flex justify-content-between align-items-center">
+                            <h4 class="card-title results-by-pillar-radar mb-0">Results by Pillars</h4>
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
-                                    <a class="icon-frame" href="#"
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                    </a>
+                                    <div class="dropdown">
+                                <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                    <li><a class="dropdown-item" href="#" data-type="pdf"
+                                            data-chart-id="multi_radar">Export as PDF</a></li>
+                                    <li><a class="dropdown-item" href="#" data-type="png"
+                                            data-chart-id="multi_radar">Export as PNG</a></li>
+                                </ul>
+                            </div>
                                     <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                         data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
@@ -510,18 +558,26 @@
                         <div class="col-xl-12">
                             <div class="card mb-0">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Results By Pillar</h4>
+                                    <h4 class="card-title results-by-pillar-table mb-0 flex-grow-1">Results By Pillar</h4>
                                     <div class="flex-shrink-0">
                                         <div class="d-flex flex-row gap-2 align-items-center">
                                             <a href="<?php echo e(route('home.csv',['survey'=> request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
                                                 Export</a>
                                             <!--info here-->
-                                            <a class="icon-frame" href="#"
-                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
+                                            <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="pillar-table">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="pillar-table">Export as PNG</a></li>
+                                            
+                                        </ul>
+                                    </div>
                                             <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                                 data-bs-target="#theme-settings-offcanvas"
                                                 aria-controls="theme-settings-offcanvas"
@@ -603,7 +659,36 @@
 
         </div> <!-- end col -->
 
+        <div class="card-body">
+                                    <div class="live-preview">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle table-nowrap mb-0" id="survey-table" style="display: none;">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col">Survey Data ID</th>
+                                                        <th scope="col">Survey ID</th>
+                                                        <th scope="col">Survey Name</th>
+                                                        <th scope="col">Survey Country</th>
+                                                        <th scope="col">Survey Organization</th>
+                                                        <th scope="col">Participants Name</th>
+                                                        <th scope="col">Age</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Survey Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Rows will be populated dynamically by Ajax -->
+                                                </tbody>
+                                            </table>
+                                            <!-- end table -->
+                                            <!-- Survey table -->
+                                            
+                                        </div>
+                                        <!-- end table responsive -->
 
+                            </div>
+
+                        </div>
     </div>
 <?php $__env->stopSection(); ?>
 
@@ -719,7 +804,7 @@
                             console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -763,7 +848,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Branch</option>');
                         }
                     })
                 }
@@ -787,7 +872,7 @@
                             console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                             response.forms.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
@@ -803,7 +888,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }
@@ -1325,6 +1410,10 @@
 
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/index.blade.php ENDPATH**/ ?>
