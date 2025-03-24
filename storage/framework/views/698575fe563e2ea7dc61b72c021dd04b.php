@@ -43,6 +43,15 @@
                                 <td><?php echo e($user->id); ?></td>
                             </tr>
                             <tr>
+                                <th>Profile</th>
+                                <td>
+                                    <?php
+                                        $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
+                                    ?>
+                                    <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="80">
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>Name</th>
                                 <td><?php echo e($user->name); ?></td>
                             </tr>

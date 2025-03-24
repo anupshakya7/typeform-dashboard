@@ -10,13 +10,24 @@
 
                 <!--greeting section -->
 
-                <div class="mb-3 pb-1">
+                <div>
                     <div>
-                        <h4 class="mb-1">Welcome back, <?php echo e(auth()->user()->name); ?></h4>
+                        <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     </div>
                 </div>
                 <!--end greeting section-->
 
+  <!-- about csb section--------========================================= -->
+  <div class="about-csb" style="background-image: url(<?php echo e(asset('build/images/csb-banner.jpg')); ?>)">
+  <h5>Community Strength Barometer - CSB</h5>
+   <p>
+    The Community Strength Barometer (CSB) measures social cohesion, resilience, and well-being within communities, assessing engagement, support networks, and collective problem-solving.
+   </p>
+</div>
+
+
+                <!-- about csb section--------========================================= -->
+               
                 <!--card row section ==========================================================-->
 
                 <?php
@@ -145,7 +156,9 @@
 
                 <!--greeting section ends here -->
 
-                <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
+                <!--initial filter -->
+
+                <div class="filter-section initial-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
                     <div>
                         <h4><span class="badge bg-success lh-1"><?php echo e($formDetails->form_title); ?></span></h4>
                         <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
@@ -153,7 +166,7 @@
 
                     <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard">
+                            <div class="row gap-3 m-0 p-0 dashboard flex-nowrap">
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
                                         <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
@@ -182,7 +195,7 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php else: ?>
-                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
+                                    <input type="text" class="form-control organization-name" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
                                     <input type="hidden" name="organization" class="form-control" value="<?php echo e(old('organization',auth()->user()->organization_id)); ?>" id="organization" readonly>
                                     <?php endif; ?>
                                 </div>
@@ -243,6 +256,107 @@
                 </div>
 
 
+                <!--initial filter -->
+<!--hidden filter section-->
+               
+                <div class="filter-section show-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
+                    <div>
+                        <h4><span class="badge bg-success lh-1"><?php echo e($formDetails->form_title); ?></span></h4>
+                        <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
+                    </div>
+
+                    <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
+                        <form action="<?php echo e(route('home.index')); ?>" method="GET">
+                            <div class="row gap-3 m-0 p-0 dashboard flex-nowrap">
+                                <div class="col-auto p-0">
+                                    <?php if(auth()->user()->role->name == 'survey'): ?>
+                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
+                                    <?php else: ?>
+                                    <select class="form-select select2" name="country" id="country"
+                                        aria-label="Default select example">
+                                        <option value="" selected>Country</option>
+                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($country['name']); ?>"
+                                                <?php echo e((($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : ''); ?>>
+                                                <?php echo e($country['name']); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php endif; ?>
+                                    
+                                </div>
+                                <div class="col-auto p-0">
+                                    <?php if(auth()->user()->role->name == 'superadmin'): ?>
+                                    <select class="form-select select2" id="organization" name="organization"
+                                        aria-label="Default select example">
+                                        <option value="" selected>Organization</option>
+                                        <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($organization->id); ?>"
+                                                <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
+                                                <?php echo e($organization->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php else: ?>
+                                    <input type="text" class="form-control organization-name" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
+                                    <input type="hidden" name="organization" class="form-control" value="<?php echo e(old('organization',auth()->user()->organization_id)); ?>" id="organization" readonly>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="col-auto p-0">
+                                    <?php if(auth()->user()->role->name == 'survey'): ?>
+                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->branch_id != null ? auth()->user()->branch->name :''); ?>" readonly>
+                                    <input type="hidden" name="branch" class="form-control" value="<?php echo e(old('branch',auth()->user()->branch_id)); ?>" id="branch" readonly>
+                                    <?php else: ?>
+                                    <select class="form-select select2" id="branch" name="branch"
+                                        aria-label="Default select example" disabled>
+                                        <option value="" selected>Division</option>
+                                    </select>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col-auto p-0">
+                                    <?php if(auth()->user()->role->name == 'survey'): ?>
+                                        <input type="text" class="form-control" value="<?php echo e(auth()->user()->survey->form_title); ?>" readonly>
+                                        <input type="hidden" name="survey" class="form-control" value="<?php echo e(old('survey',auth()->user()->form_id)); ?>" id="branch" readonly>
+                                    <?php else: ?>
+                                    <select class="form-select select2" name="survey" id="survey"
+                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        <option value="" selected>Survey</option>
+                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($surveyForm->form_title); ?>"
+                                                <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?>>
+                                                <?php echo e($surveyForm->form_title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col-auto p-0">
+                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                                          <div class="dropdown">
+                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#" id="export-all">Download
+                                                        Report</a></li>
+    
+                                            </ul>
+                                        </div>
+                                </div>
+                            </div>
+                            <?php if(auth()->user()->role->name !== 'survey'): ?>
+                            <div class="note text-muted">
+                                <p>Note: Please select at least one project & choose branch, organization, country
+                                    respectively to filter data.</p>
+                            </div>
+                            <?php endif; ?>
+                        </form>
+
+                    </div>
+                </div>
+
+<!--hidden filter section-->
                 <!--bar graph section starts here-->
 
                 <div class="card">
@@ -1003,8 +1117,8 @@
                     },
                     // colors: areachartSalesColors
                     colors: [
-                        '#6097CF', '#8B939C', '#67D36E', '#D2D4D7', '#1B68B7', '#A0CFFF', '#E58F87',
-                        '#D4DE86'
+                        '#002347', '#00366e', '#004994', '#0f64bc', '#107ec2', '#0c8cdb', '#4cacdc',
+                        '#74ccf8'
                     ]
                 };
                 if (salesForecastChart != "")

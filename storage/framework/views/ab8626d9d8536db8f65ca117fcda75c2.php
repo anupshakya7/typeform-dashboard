@@ -35,9 +35,27 @@
     
     <div class="card-body">
         <div class="live-preview">
-        
                 <?php echo csrf_field(); ?>
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-center">
+                            <img src="<?php echo e(asset('build/images/users/user-default.png')); ?>" alt="profile_image" width="150" height="150" id="profile_image" style="border-radius:50%;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile" class="form-label">Profile</label>
+                            <input type="file" name="profile" class="form-control" value="<?php echo e(old('profile')); ?>" id="profile" onchange="getImagePreview(event,'profile_image')">
+                            <?php $__errorArgs = ['profile'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
@@ -146,7 +164,7 @@ unset($__errorArgs, $__bag); ?>
                                 <option value="<?php echo e($role->id); ?>" data-rolename="<?php echo e($role->name); ?>"><?php echo e($role->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                            <?php $__errorArgs = ['role'];
+                            <?php $__errorArgs = ['role_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -202,6 +220,16 @@ unset($__errorArgs, $__bag); ?>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
+
+function getImagePreview(event,divId){
+    var image = URL.createObjectURL(event.target.files[0]);
+    var imageTag = document.getElementById(divId);
+
+    imageTag.src = image;
+    imageTag.style.borderRadius = "50%";
+    imageDiv.appendChild(imageTag);
+}
+
 $(document).ready(function(){
     
     // $('#role').change(function(){
