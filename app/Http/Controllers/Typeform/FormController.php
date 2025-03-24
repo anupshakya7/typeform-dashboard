@@ -125,7 +125,7 @@ class FormController extends Controller
                     $branch_id=null;
                     $branchLevel = 0;
                 }
-                // isset()
+
                 //Form Data
                 $formData = [
                     'form_id' => $validatedData['formId'],
@@ -138,7 +138,6 @@ class FormController extends Controller
                     'during' => $validatedData['duringdate'] !== null ? $duringdate_start.' to '.$duringdate_end : null,
                     'after' => $validatedData['afterdate'] !== null ? $enddate_start.' to '.$enddate_end : null
                 ];
-
 
                 Form::create($formData);
     
@@ -175,13 +174,14 @@ class FormController extends Controller
                 $questionsData = array_merge($formIdData, $questionFormattingData);
 
                 Question::create($questionsData);
+                // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 DB::rollBack();
                 return redirect()->back()->with('error', 'Failed to Create Form and its Questions'.$e->getMessage());
             }
-            return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
         });
-
+        return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
     }
 
     public function getForm(Request $request)

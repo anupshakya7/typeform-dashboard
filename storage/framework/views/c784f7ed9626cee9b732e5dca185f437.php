@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -18,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Survey Details</h4>
-        <p class="text-muted mb-0">View survey details, including organization, branch, and date.</p>
+        <h4 class="fs-16 mb-1">Survey Data Details</h4>
+        <p class="text-muted mb-0">View survey data details, including participants details.</p>
     </div>
 </div>
 
@@ -28,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Survey</h5>
+                <h5 class="card-title mb-0">Survey Data</h5>
                 <a class="btn btn-info" onclick="history.back(); return false;">
                         <i class="ri-arrow-left-line"></i> Back
                     </a>
@@ -40,46 +41,44 @@
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <td><?php echo e($form->id); ?></td>
+                                <td><?php echo e($answer->id); ?></td>
                             </tr>
                             <tr>
-                                <th>Survey ID</th>
-                                <td><?php echo e($form->form_id); ?></td>
+                                <th>Survey Data Id</th>
+                                <td><?php echo e($answer->event_id); ?></td>
                             </tr>
                             <tr>
-                                <th>Survey Name</th>
-                                <td><?php echo e($form->form_title); ?></td>
+                                <th>Survey Id</th>
+                                <td><?php echo e($answer->form_id); ?></td>
                             </tr>
                             <tr>
-                                <th>Country</th>
-                                <td><?php echo e($form->country); ?></td>
+                                <th>Survey</th>
+                                <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
                             </tr>
                             <tr>
-                                <th>Organization</th>
-                                <td><?php echo e(optional($form->organization)->name); ?></td>
+                                <th>Name</th>
+                                <td><?php echo e($answer->name); ?></td>
                             </tr>
                             <tr>
-                                <th>Division</th>
-                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Head Office'); ?></td>
+                                <th>Age</th>
+                                <td><?php echo e($answer->age); ?></td>
                             </tr>
                             <tr>
-                                <th>Before Date</th>
-                                <td><?php echo e($form->before); ?></td>
+                                <th>Gender</th>
+                                <td><?php echo e($answer->gender); ?></td>
                             </tr>
                             <tr>
-                                <th>During Date</th>
-                                <td><?php echo e($form->during); ?></td>
-                            </tr>
-                            <tr>
-                                <th>After Date</th>
-                                <td><?php echo e($form->after); ?></td>
+                                <th>City</th>
+                                <td><?php echo e($answer->{'village-town-city'}); ?></td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td><?php echo e(Carbon\Carbon::parse($form->created_at)->format('d M, Y')); ?></td>
+                                <td><?php echo e(Carbon\Carbon::parse($answer->created_at)->format('d M, Y')); ?></td>
                             </tr>
                         </tbody>
                     </table>
+                    
+
                 </div>
 
                 <nav class="mb-3">
@@ -114,20 +113,5 @@
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-function getImagePreview(event, divId) {
-    var image = URL.createObjectURL(event.target.files[0]);
-    var imageDiv = document.getElementById(divId);
-
-    imageDiv.innerHTML = '';
-
-    var imageTag = document.createElement('img');
-    imageTag.src = image;
-    imageTag.width = "150";
-    imageTag.style.padding = "5px";
-    imageDiv.appendChild(imageTag);
-}
-</script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/form/view.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/survey/view.blade.php ENDPATH**/ ?>

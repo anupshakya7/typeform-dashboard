@@ -19,8 +19,8 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Survey Data QA Details</h4>
-        <p class="text-muted mb-0">View survey data QA details, including questions and answers.</p>
+        <h4 class="fs-16 mb-1">Survey Data Details</h4>
+        <p class="text-muted mb-0">View survey data details, including questions and answers.</p>
     </div>
 </div>
 
@@ -29,10 +29,21 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Survey Data QA</h5>
-                <a class="btn btn-info" onclick="history.back(); return false;">
-                        <i class="ri-arrow-left-line"></i> Back
-                    </a>
+                <h5 class="card-title mb-0">Survey Data</h5>
+                    <div class="dropdown d-flex">
+                        <a class="btn btn-info me-3" onclick="history.back(); return false;">
+                            <i class="ri-arrow-left-line"></i> Back
+                        </a>
+                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="svg-icon" type="image/svg+xml"
+                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                        </a>
+        
+                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                            <li><a class="dropdown-item" href="{{route('survey.single.csv',$answer)}}">Export as Excel</a></li>
+                        </ul>
+                    </div>
             </div>
 
             <div class="card-body">
@@ -42,6 +53,10 @@
                             <tr>
                                 <th>ID</th>
                                 <td>{{$answer->id}}</td>
+                            </tr>
+                            <tr>
+                                <th>Survey Data Id</th>
+                                <td>{{$answer->event_id}}</td>
                             </tr>
                             <tr>
                                 <th>Survey Id</th>
@@ -54,6 +69,18 @@
                             <tr>
                                 <th>Name</th>
                                 <td>{{$answer->name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Age</th>
+                                <td>{{$answer->age}}</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>{{$answer->gender}}</td>
+                            </tr>
+                            <tr>
+                                <th>City</th>
+                                <td>{{$answer->{'village-town-city'} }}</td>
                             </tr>
                             <tr>
                                 <th>{{$answer->form->question->well_functioning_government}}</th>

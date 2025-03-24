@@ -11,8 +11,7 @@ class Branch extends Model
 
     protected $fillable=[
         'organization_id',
-        'name',
-        'country'
+        'name'
     ];
 
     public function scopeFilterBranch($query){

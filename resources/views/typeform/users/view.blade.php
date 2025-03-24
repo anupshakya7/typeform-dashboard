@@ -57,7 +57,7 @@
                             </tr>
                             <tr>
                                 <th>Role</th>
-                                <td>{{optional($user->role)->name}}</td>
+                                <td><span class="role-batch">{{optional($user->role)->name}}</span></td>
                             </tr>
                             <tr>
                                 <th>Created At</th>

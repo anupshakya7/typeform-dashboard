@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\File;
 class AnswerController extends Controller
 {
     public function index(Request $request){
-        $answersQuery = Answer::with('form','form.organization')->select('id','event_id','form_id','name','age','gender','created_at');
+        $answersQuery = Answer::with('form','form.organization','form.branches')->select('id','event_id','form_id','name','age','gender','created_at');
         
         if($request->filled('search_participant')){
             $answersQuery->where('name','like','%'.$request->search_participant.'%');
@@ -31,16 +31,23 @@ class AnswerController extends Controller
             $answersQuery->whereHas('form',function($query) use($request){
                 $query->where('organization_id',$request->organization);
             });
+
+            if($request->filled('branch')){
+                $answersQuery->whereHas('form',function($query) use($request){
+                    $query->where('branch_id',$request->branch);
+                });
+            }
         }
 
-        if($request->filled('survey_form')){
+        if($request->filled('survey')){
             $answersQuery->whereHas('form',function($query) use($request){
-                $query->where('form_id',$request->survey_form);
+                $query->where('form_id',$request->survey);
             });
         }
         
         $answers = $answersQuery->filterSurvey()->latest()->paginate(10);
         
+
         
         $answers = PaginationHelper::addSerialNo($answers);
 
@@ -145,10 +152,16 @@ class AnswerController extends Controller
             $surveyQuery->whereHas('form',function($query) use($request){
                 $query->where('organization_id',$request->organization);
             });
+
+            if($request->filled('branch')){
+                $surveyQuery->whereHas('form',function($query) use($request){
+                    $query->where('branch_id',$request->branch);
+                });
+            }
         }
 
-        if($request->filled('survey_form')){
-            $surveyQuery->where('form_id',$request->survey_form);
+        if($request->filled('survey')){
+            $surveyQuery->where('form_id',$request->survey);
         }
 
         $survey = $surveyQuery->latest()->get();
@@ -211,6 +224,67 @@ class AnswerController extends Controller
         $headers = array('Content-Type'=>'text/csv');
 
         return response()->download($filename,'survey.csv',$headers);
+    }
+
+    public function generateIndividualCSV($id){
+        $surveySingle = Answer::with('form','form.organization')->filterSurvey()->where('id',$id)->first();
+
+        $filename = 'survey.csv';
+        $fp = fopen($filename,'w+');
+        fputcsv($fp,array(
+            'ID',
+            'Survey Data ID',
+            'Survey ID',
+            'Survey',
+            'Participant',
+            'Age',
+            'Gender',
+            'Address',
+            'Well-Functioning Government',
+            'Low Levels of Corruption',
+            'Equitable Distribution of Resources',
+            'Good Relations with Neighbours',
+            'Free Flow of Information',
+            'High Levels of Human Capital',
+            'Sound Business Environment',
+            'Acceptance of the Rights of Others',
+            'Positive Peace',
+            'Negative Peace',
+            'Extra Question 1',
+            'Extra Question 2',
+            'Extra Question 3',
+            'Survey Date'
+        ));
+
+            fputcsv($fp,array(
+                $surveySingle->id,
+                $surveySingle->event_id,
+                $surveySingle->form_id,
+                $surveySingle->form ? optional($surveySingle->form)->form_title:null,
+                $surveySingle->name,
+                $surveySingle->age,
+                $surveySingle->gender,
+                $surveySingle->{'village-town-city'},
+                $surveySingle->well_functioning_government,
+                $surveySingle->low_level_corruption,
+                $surveySingle->equitable_distribution,
+                $surveySingle->good_relations,
+                $surveySingle->free_flow,
+                $surveySingle->high_levels,
+                $surveySingle->sound_business,
+                $surveySingle->acceptance_rights,
+                $surveySingle->positive_peace,
+                $surveySingle->negative_peace,
+                $surveySingle->extra_ans1,
+                $surveySingle->extra_ans2,
+                $surveySingle->extra_ans3,
+                Carbon::parse($surveySingle->created_at)->format('d M, Y'),
+            ));
+
+        fclose($fp);
+        $headers = array('Content-Type'=>'text/csv');
+
+        return response()->download($filename,$surveySingle->name.' survey.csv',$headers);
     }
 
     public function fetchAllSurvey(Request $request)

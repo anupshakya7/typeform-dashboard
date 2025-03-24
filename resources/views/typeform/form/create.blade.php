@@ -134,6 +134,9 @@
                     <div class="card-header align-items-center d-flex mb-3">
                         <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
                     </div>
+                    <div class="note">
+                        <p>Note: Please enter the survey dates for each phase: before the project starts, during the project, and after completion. If a survey phase hasn’t been conducted yet, you can leave those dates empty.’ after Survey Timeline.</p>
+                    </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
@@ -155,9 +158,9 @@
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>
-                    <div>
+                    {{-- <div>
                         <p class="note-tag">Note: Please pick the starting and ending date for survey.</p>
-                    </div>
+                    </div> --}}
                     <div class="btn-submit-container">
 
                         <button type="submit" class="btn btn-blue btn-submit">Submit</button>
@@ -342,7 +345,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
 
                     var userRole = @json(auth()->user()->role->name);
                     var userBranchId = @json(auth()->user()->branch_id);
@@ -364,7 +367,7 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
                 }
             })
     }

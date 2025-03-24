@@ -81,7 +81,7 @@
                                         <td><?php echo e($user->name); ?></td>
                                         <td><?php echo e($user->email); ?></td>
                                         <td><?php echo e(optional($user->organization)->name); ?></td>
-                                        <td><span class="btn btn-sm btn-danger"><?php echo e(optional($user->role)->name); ?></span></td>
+                                        <td><span class="role-batch"><?php echo e(optional($user->role)->name); ?></span></td>
                                         
                                         <td>
                                             <div class="dropdown d-inline-block">

@@ -40,8 +40,7 @@ class BranchController extends Controller
     public function store(Request $request){
         $validatedData = $request->validate([
             'organization_id'=>'required|integer|exists:organizations,id',
-            'name'=>'required|string|min:2',
-            'country'=>'required|string'
+            'name'=>'required|string|min:2'
         ]);
 
         $branch = Branch::create($validatedData);
@@ -69,8 +68,7 @@ class BranchController extends Controller
     public function update(Request $request,Branch $branch){
         $validatedData = $request->validate([
             'organization_id'=>'required|integer|exists:organizations,id',
-            'name'=>'required|string|min:2',
-            'country'=>'required|string'
+            'name'=>'required|string|min:2'
         ]);
 
         $branchUpdated = $branch->update($validatedData);

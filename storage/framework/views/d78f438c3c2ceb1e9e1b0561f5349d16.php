@@ -136,7 +136,7 @@
                                 <td><?php echo e($form->form_title); ?></td>
                                 <td><?php echo e($form->country); ?></td>
                                 <td><?php echo e(optional($form->organization)->name); ?></td>
-                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Main Branch'); ?></td>
+                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Head Office'); ?></td>
                                 <td><?php echo e($form->before); ?> </td>
                                 <td><?php echo e($form->during); ?></td>
                                 <td><?php echo e($form->after); ?></td>
