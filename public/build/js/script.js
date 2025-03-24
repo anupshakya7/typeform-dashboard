@@ -1,156 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("export-all").addEventListener("click", function () {
-        document.getElementById("export-all").disabled = true;
-        const selectedCountry = document.getElementById('country').value;
-        const selectedOrganization = document.getElementById('organization').value;
-        document.getElementById("survey-table").style.display = "block";
 
-        $.ajax({
-            url: '/typeform/fecthallsurvey', 
-            type: 'GET',
-            data: {
-                country: selectedCountry,  // Send the selected country
-                organization_id: selectedOrganization  // Send the selected organization ID
-            },
-            dataType: 'json',
-            success: function (response) {                // Assuming 'response' contains the data needed to populate the charts and tables
-                const surveyData = response.surveys; // Adjust according to the data structure
-
-                // Update DOM elements with fetched data (you should have chart render logic here)
-                updateTable(surveyData);
-
-                // Once data is fetched and DOM updated, enable the export functionality
-                document.getElementById("export-all").disabled = false; // Enable export button
-
-                // Now trigger the export functionality
-                const charts = [
-                    { id: "sales-forecast-chart", title: "Mean Scores Values" },
-                    { id: "basic_radar_chart", title: "Mean Result" },
-                    { id: "simple_pie_chart", title: "Participants by Gender" },
-                    { id: "simple_pie_chart2", title: "Participants by Age" },
-                    { id: "sales-forecast-chart-2", title: "Positive Peace" },
-                    { id: "sales-forecast-chart-3", title: "Negative Peace" },
-                    { id: "multi_radar", title: "Results by pillars: Radar" },
-                    { id: "pillar-table", title: "Results by pillar: Table" },
-                    { id: "survey-table", title: "Survey Report: Table" }
-
-                ];
-                // Call the export function to generate PNG and PDF
-                exportChartsToPNGAndPDF(charts, function () {
-                    surveyTable.style.display = "none"; // Hide table after export is complete
-                });
-
-            },
-            error: function (error) {
-                console.log('Error fetching data:', error);
-                document.getElementById("export-all").disabled = false;
-                surveyTable.style.display = "none"; // Hide table on error
-            }
-        });
-    });
-});
-
-function updateTable(data) {
-    const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
-    tableBody.innerHTML = "";  // Clear existing table rows
-
-    // Populate the table with fetched data
-    data.forEach(function (item) {
-        const row = tableBody.insertRow();
-
-        // Assuming the response data contains the correct properties
-        row.insertCell(0).textContent = item.survey_data_id || 'N/A';
-        row.insertCell(1).textContent = item.survey_id || 'N/A';
-        row.insertCell(2).textContent = item.survey_name || 'N/A';
-        row.insertCell(3).textContent = item.survey_country || 'N/A';
-        row.insertCell(4).textContent = item.survey_organization || 'N/A';
-        row.insertCell(5).textContent = item.participant_name || 'N/A';
-        row.insertCell(6).textContent = item.age || 'N/A';
-        row.insertCell(7).textContent = item.gender || 'N/A';
-        row.insertCell(8).textContent = item.survey_date || 'N/A';
-    });
-}
-
-function exportChartsToPNGAndPDF(charts) {
-    const jsPDF = window.jspdf.jsPDF;
-    const pdf = new jsPDF({ orientation: "portrait" });
-    let yOffset = 10;  // Padding at the top
-    let xOffset = 25;  // Padding on the left
-    const exportedImages = [];
-
-    const logo = document.querySelector(".logo img");
-    const logoData = logo ? logo.src : null;
-
-    // Add logo and title ("Community Strength Barometer") on the same line
-    if (logoData) {
-        pdf.addImage(logoData, "PNG", xOffset, yOffset, 20, 20); // Logo size
-        const pdfWidth = pdf.internal.pageSize.width; // Page width
-        const titleText = "Community Strength Barometer: Report";
-        const titleWidth = pdf.getTextWidth(titleText); // Width of the title text
-        const titleXPosition = xOffset + 25; // Position the title next to the logo
-        pdf.setFontSize(14);
-        pdf.text(titleText, titleXPosition, yOffset + 15); // Align text next to the logo
-    }
-
-    // Add a light grey border after the logo and title
-    const titleYPosition = yOffset + 25; // Slightly move down after title
-    const pdfWidth = pdf.internal.pageSize.width;
-    pdf.setLineWidth(0.5); // Border thickness
-    pdf.setDrawColor(211, 211, 211); // Light grey color
-    pdf.line(xOffset, titleYPosition, pdfWidth - xOffset, titleYPosition); // Draw the border
-
-    // Add some padding below the border before the first chart
-    yOffset = titleYPosition + 20; // Increased space after the top border
-
-    const captureChart = (index) => {
-        if (index >= charts.length) {
-            generatePDF(exportedImages);
-            return;
-        }
-
-        const { id, title } = charts[index];
-        const chartElement = document.getElementById(id);
-
-        if (!chartElement) {
-            captureChart(index + 1);
-            return;
-        }
-
-        html2canvas(chartElement).then(canvas => {
-            exportedImages.push({ title, imgData: canvas.toDataURL("image/png"), width: canvas.width, height: canvas.height });
-            captureChart(index + 1);
-        }).catch(error => {
-            console.error(`Error rendering chart "${title}":`, error);
-            captureChart(index + 1);
-        });
-    };
-
-    const generatePDF = (images) => {
-        let imageCount = 0;
-        images.forEach((image, i) => {
-            if (imageCount % 2 === 0 && i > 0) pdf.addPage();
-            pdf.setFontSize(12);
-            const imgWidth = 130;
-            const aspectRatio = image.width / image.height;
-            const imgHeight = imgWidth / aspectRatio;
-            const yPosition = yOffset + (imageCount % 2 === 0 ? 0 : imgHeight + 20); // Adjust spacing between images
-            pdf.text(image.title, xOffset, yPosition - 5);
-
-            // Add 1px light grey border around each image
-            const borderMargin = 1;
-            pdf.setFillColor(211, 211, 211); // Light grey color
-            pdf.setLineWidth(0.5); // Set border line thickness to 1px
-            pdf.rect(xOffset - borderMargin, yPosition - borderMargin, imgWidth + 2 * borderMargin, imgHeight + 2 * borderMargin); // Draw the border
-
-            pdf.addImage(image.imgData, "PNG", xOffset, yPosition, imgWidth, imgHeight);
-            imageCount++;
-        });
-        pdf.save("CSB_Report.pdf");
-    };
-
-    captureChart(0);
-
-}
 
 
 //flatpicker js
@@ -758,3 +606,14 @@ function exportToPDFPnBar(chartId, chartTitle) {
 
 
 //survey begin js
+const btnshow = document.querySelector('#show-data');
+const selectSurvey = document.querySelector('.select-survey'); // Selects the first element with the class 'select-survey'
+
+// Check if both elements exist before adding event listener
+if (btnshow && selectSurvey) {
+  btnshow.addEventListener('click', function () {
+    // Set the display property to 'block'
+    selectSurvey.style.display = 'block';
+    
+  });
+}

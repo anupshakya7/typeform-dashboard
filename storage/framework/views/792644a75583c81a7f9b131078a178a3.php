@@ -134,6 +134,9 @@
                     <div class="card-header align-items-center d-flex mb-3">
                         <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
                     </div>
+                    <div class="note">
+                        <p>Note: Please enter the survey dates for each phase: before the project starts, during the project, and after completion. If a survey phase hasn’t been conducted yet, you can leave those dates empty.’ after Survey Timeline.</p>
+                    </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
@@ -155,13 +158,9 @@
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>
-                    <div>
-                        <p class="note-tag">Note: Please pick the starting and ending date for survey.</p>
-                    </div>
+                    
                     <div class="btn-submit-container">
-
-                        <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-
+                        <button type="button" class="btn btn-blue btn-submit" >Submit</button>
                     </div>
 
                     <!--end col-->
@@ -182,6 +181,32 @@
             <div class="dot-spinner__dot"></div>
         </div>
     </div>
+</div>
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -342,7 +367,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
 
                     var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                     var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -364,7 +389,7 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
                 }
             })
     }

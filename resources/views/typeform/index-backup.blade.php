@@ -157,7 +157,94 @@
 
                 <!--greeting section ends here -->
 
+                <!--initial filter -->
+
+                <div class="filter-section new-filter initial-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
+    <div>
+        <!-- <h4><span class="badge bg-success lh-1">{{$formDetails->form_title}}</span></h4> -->
+        <h5 class="m-0 p-0" style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
+    </div>
+
+    <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
+        <form action="{{ route('home.index') }}" method="GET">
+            <div class="row gap-3 m-0 p-0 dashboard flex-nowrap">
+                <div class="col-auto p-0">
+                    @if(auth()->user()->role->name == 'survey')
+                        <input type="text" class="form-control" name="country" id="country_filter" value="{{$filterData->country}}" readonly>
+                    @else
+                    <select class="form-select select2" name="country" id="country_filter_select"
+                        aria-label="Default select example">
+                        <option value="" selected>Select Country</option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country['name'] }}"
+                                {{ (($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : '' }}>
+                                {{ $country['name'] }}</option>
+                        @endforeach
+                    </select>
+                    @endif
+                </div>
+                <div class="col-auto p-0">
+                    @if(auth()->user()->role->name == 'superadmin')
+                    <select class="form-select select2" id="organization_filter" name="organization"
+                        aria-label="Default select example">
+                        <option value="" selected>Select Organization</option>
+                        @foreach ($organizations as $organization)
+                            <option value="{{ $organization->id }}"
+                                {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
+                                {{ $organization->name }}</option>
+                        @endforeach
+                    </select>
+                    @else
+                    <input type="text" class="form-control organization-name" value="{{auth()->user()->organization->name}}" readonly>
+                    <input type="hidden" name="organization" class="form-control" value="{{old('organization',auth()->user()->organization_id)}}" id="organization_hidden" readonly>
+                    @endif
+                </div>
+
+                <div class="col-auto p-0">
+                    @if(auth()->user()->role->name == 'survey')
+                    <input type="text" class="form-control" value="{{auth()->user()->branch_id != null ? auth()->user()->branch->name :''}}" readonly>
+                    <input type="hidden" name="branch" class="form-control" value="{{old('branch',auth()->user()->branch_id)}}" id="branch_hidden" readonly>
+                    @else
+                    <select class="form-select select2" id="branch_filter" name="branch"
+                        aria-label="Default select example" disabled>
+                        <option value="" selected>Select Division</option>
+                    </select>
+                    @endif
+                </div>
+                <div class="col-auto p-0">
+                    @if(auth()->user()->role->name == 'survey')
+                        <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
+                        <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="survey_hidden" readonly>
+                    @else
+                    <select class="form-select select2" name="survey" id="survey_filter"
+                        aria-label="Default select example" onchange="this.form.submit()">
+                        <option value="" selected>Select Survey</option>
+                        @foreach ($surveyForms as $surveyForm)
+                            <option value="{{ $surveyForm->form_title }}"
+                                {{ ($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }}>
+                                {{ $surveyForm->form_title }}</option>
+                        @endforeach
+                    </select>
+                    @endif
+                </div>
+                
+            </div>
             
+        </form>
+    </div>
+    
+</div>
+
+<div class="alert alert-danger start-survey">
+    <h6 class="fw-bold mb-2">Important: Follow These Steps</h6>
+    <ul class="mb-0 ps-3">
+        <li><strong>Select a project</strong> to begin.</li>
+        <li>Choose a <strong>country, organization, and branch</strong> in order.</li>
+        <li><strong>Survey selection is mandatory</strong> to proceed.</li>
+    </ul>
+</div>
+<button id="show-data">Show Data</button>
+                <!--initial filter -->
 <!--hidden filter section-->
                
                 <div class="filter-section show-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
@@ -260,8 +347,9 @@
                 </div>
 
 <!--hidden filter section-->
-                <!--bar graph section starts here-->
 
+
+                <!--bar graph section starts here-->
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
                         <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Mean Scores Values</h4>
@@ -297,15 +385,11 @@
                             class="apex-charts" dir="ltr"></div>
                     </div>
                 </div><!-- end card -->
-
-
                 <!--bar graph section ends here-->
-
-
                 <!-- radar and pie section -->
                 <div class="row">
                     <div class="col-sm-7 pb-4">
-                        <div class="card h-100 " id="basic_radar_chart">
+                        <div class="card h-100">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
                                 <h4 class="card-title mean-result-title">Mean Results</h4>
                                 <div class="flex-shrink-0">
@@ -433,11 +517,7 @@
                 </div>
                 <div>
                     <!-- radar and pie section -->
-
                     <!--two column bar chart section -->
-
-
-
                     <div class="row">
 
                         <div class="col-sm-6">
@@ -612,7 +692,7 @@
                                 <div class="card-body">
                                     <div class="live-preview">
                                         <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0" id="pillar-table">
+                                            <table class="table align-middle table-nowrap mb-0">
                                                 <thead class="table-head">
                                                     <tr>
 
@@ -679,131 +759,131 @@
 
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                </a>
-                <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                    </a>
+                    <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                    aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
-                </a>
-            </div>
-        </div>
-    </div><!-- end card header -->
+                                <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- end card header -->
 
-    <div class="card-body">
-        <div class="live-preview">
-            <div class="table-responsive">
-                <table class="table align-middle table-nowrap mb-0">
-                    <thead class="table-light">
-                        <tr>
+                <div class="card-body">
+                    <div class="live-preview">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-nowrap mb-0">
+                                <thead class="table-light">
+                                    <tr>
 
-                            <th scope="col"></th>
-                            <th scope="col">Before</th>
-                            <th scope="col">During</th>
-                            <th scope="col">% Change</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">Before</th>
+                                        <th scope="col">During</th>
+                                        <th scope="col">% Change</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">Well-Functioning
-                                    Government</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                            </td>
+                                        <td><span class="fw-medium pillar-text">Well-Functioning
+                                                Government</span>
+                                        </td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
+                                        </td>
 
-                        </tr>
-                        <tr>
+                                    </tr>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">Low Levels of
-                                    Corruption</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                        <td><span class="fw-medium pillar-text">Low Levels of
+                                                Corruption</span></td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                    </tr>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                    Resource</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
+                                        <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                                Resource</span></td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-red"><span >3.8%</span><img class="trend-icon"
+                                                src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                    </tr>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">Good Relations With
-                                    Neighbours</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                            </td>
+                                        <td><span class="fw-medium pillar-text">Good Relations With
+                                                Neighbours</span>
+                                        </td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
+                                        </td>
 
-                        </tr>
-                        <tr>
+                                    </tr>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">Free Flow Of
-                                    Information</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                        <td><span class="fw-medium pillar-text">Free Flow Of
+                                                Information</span></td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                    </tr>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">High Levels Of Human
-                                    Capital</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
+                                        <td><span class="fw-medium pillar-text">High Levels Of Human
+                                                Capital</span>
+                                        </td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-red"><span >3.8%</span><img class="trend-icon"
+                                                src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                    </tr>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">Sound Business
-                                    Environment</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                        <td><span class="fw-medium pillar-text">Sound Business
+                                                Environment</span>
+                                        </td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                    </tr>
+                                    <tr>
 
-                            <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                    Of
-                                    Others</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                        <td><span class="fw-medium pillar-text">Acceptance Of The Rights
+                                                Of
+                                                Others</span></td>
+                                        <td>3.8</td>
+                                        <td>3.8</td>
+                                        <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
+                                    </tr>
 
-                    </tbody>
+                                </tbody>
 
-                </table>
-                <!-- end table -->
-            </div>
-            <!-- end table responsive -->
-        </div>
+                            </table>
+                            <!-- end table -->
+                        </div>
+                        <!-- end table responsive -->
+                    </div>
 
-    </div>
-</div><!-- end card-body -->
-</div><!-- end card -->
-</div> --}}
+                </div>
+        </div><!-- end card-body -->
+        </div><!-- end card -->
+        </div> --}}
                     <!-- end col -->
                 </div>
                 <!--end row-->
@@ -813,12 +893,12 @@
             </div> <!-- end .h-100-->
 
         </div> <!-- end col -->
-
-        <div class="card-body">
+                   
+        <div class="card-body" id="survey-table" >
                                     <div class="live-preview">
                                         <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0" id="survey-table" style="display: none;">
-                                                <thead class="table-light">
+                                            <table class="table align-middle table-nowrap mb-0" style="display: none;">
+                                                <thead class="table-head">
                                                     <tr>
                                                         <th scope="col">Survey Data ID</th>
                                                         <th scope="col">Survey ID</th>
@@ -845,6 +925,8 @@
 
                         </div>
     </div>
+    
+                
 @endsection
 
 
@@ -1565,160 +1647,159 @@
 
         //Export All
         document.addEventListener("DOMContentLoaded", function () {
-    const exportButton = document.getElementById("export-all");
-    const surveyTable = document.getElementById("survey-table"); // Define surveyTable
+            document.getElementById("export-all").addEventListener("click", function () {
+                document.getElementById("export-all").disabled = true;
+                const selectedCountry = document.getElementById('country').value;
+                const selectedOrganization = document.getElementById('organization').value;
+                document.getElementById("survey-table").style.display = "block";
 
-    exportButton.addEventListener("click", function () {
-        exportButton.disabled = true; // Disable the export button
-        surveyTable.style.display = "block"; // Show the survey table
+                $.ajax({
+                    url: '/typeform/fecthallsurvey', 
+                    type: 'GET',
+                    data: {
+                        country: selectedCountry,  // Send the selected country
+                        organization_id: selectedOrganization  // Send the selected organization ID
+                    },
+                    dataType: 'json',
+                    success: function (response) {                // Assuming 'response' contains the data needed to populate the charts and tables
+                        const surveyData = response.surveys; // Adjust according to the data structure
 
-        const selectedCountry = document.getElementById('country').value;
-        const selectedOrganization = document.getElementById('organization').value;
+                        // Update DOM elements with fetched data (you should have chart render logic here)
+                        updateTable(surveyData);
 
-        $.ajax({
-            url: '/typeform/fecthallsurvey',
-            type: 'GET',
-            data: {
-                country: selectedCountry,
-                organization_id: selectedOrganization
-            },
-            dataType: 'json',
-            success: function (response) {
-                const surveyData = response.surveys; // Adjust according to the data structure
-                updateTable(surveyData); // Update the table with fetched data
+                        // Once data is fetched and DOM updated, enable the export functionality
+                        document.getElementById("export-all").disabled = false; // Enable export button
 
-                const charts = [
-                    { id: "sales-forecast-chart", title: "Mean Scores Values" },
-                    { id: "basic_radar_chart", title: "Mean Result" },
-                    { id: "simple_pie_chart", title: "Participants by Gender" },
-                    { id: "simple_pie_chart2", title: "Participants by Age" },
-                    { id: "sales-forecast-chart-2", title: "Positive Peace" },
-                    { id: "sales-forecast-chart-3", title: "Negative Peace" },
-                    { id: "multi_radar", title: "Results by pillars: Radar" },
-                    { id: "pillar-table", title: "Results by pillar: Table" },
-                    { id: "survey-table", title: "Survey Report: Table" }
-                ];
+                        // Now trigger the export functionality
+                        const charts = [
+                            { id: "sales-forecast-chart", title: "Mean Scores Values" },
+                            { id: "basic_radar_chart", title: "Mean Result" },
+                            { id: "simple_pie_chart", title: "Participants by Gender" },
+                            { id: "simple_pie_chart2", title: "Participants by Age" },
+                            { id: "sales-forecast-chart-2", title: "Positive Peace" },
+                            { id: "sales-forecast-chart-3", title: "Negative Peace" },
+                            { id: "multi_radar", title: "Results by pillars: Radar" },
+                            { id: "pillar-table", title: "Results by pillar: Table" },
+                            { id: "survey-table", title: "Survey Report: Table" }
 
-                // Export charts and tables to PNG and PDF
-                exportChartsToPNGAndPDF(charts, function () {
-                    surveyTable.style.display = "none"; // Hide table after export is complete
-                    exportButton.disabled = false; // Re-enable the export button
+                        ];
+                        // Call the export function to generate PNG and PDF
+                        exportChartsToPNGAndPDF(charts, function () {
+                            surveyTable.style.display = "none"; // Hide table after export is complete
+                        });
+
+                    },
+                    error: function (error) {
+                        console.log('Error fetching data:', error);
+                        document.getElementById("export-all").disabled = false;
+                        surveyTable.style.display = "none"; // Hide table on error
+                    }
                 });
-            },
-            error: function (error) {
-                console.log('Error fetching data:', error);
-                exportButton.disabled = false; // Re-enable the export button
-                surveyTable.style.display = "none"; // Hide table on error
-            }
+            });
         });
-    });
-});
 
-function updateTable(data) {
-    const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
-    tableBody.innerHTML = ""; // Clear existing table rows
+        function updateTable(data) {
+            const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";  // Clear existing table rows
 
-    // Populate the table with fetched data
-    data.forEach(function (item) {
-        const row = tableBody.insertRow();
+            // Populate the table with fetched data
+            data.forEach(function (item) {
+                const row = tableBody.insertRow();
 
-        // Assuming the response data contains the correct properties
-        row.insertCell(0).textContent = item.survey_data_id || 'N/A';
-        row.insertCell(1).textContent = item.survey_id || 'N/A';
-        row.insertCell(2).textContent = item.survey_name || 'N/A';
-        row.insertCell(3).textContent = item.survey_country || 'N/A';
-        row.insertCell(4).textContent = item.survey_organization || 'N/A';
-        row.insertCell(5).textContent = item.participant_name || 'N/A';
-        row.insertCell(6).textContent = item.age || 'N/A';
-        row.insertCell(7).textContent = item.gender || 'N/A';
-        row.insertCell(8).textContent = item.survey_date || 'N/A';
-    });
-}
-
-function exportChartsToPNGAndPDF(charts, callback) {
-    const jsPDF = window.jspdf.jsPDF;
-    const pdf = new jsPDF({ orientation: "portrait" });
-    let yOffset = 10; // Padding at the top
-    const xOffset = 25; // Padding on the left
-    const exportedImages = [];
-
-    const logo = document.querySelector(".logo img");
-    const logoData = logo ? logo.src : null;
-
-    // Add logo and title ("Community Strength Barometer") on the same line
-    if (logoData) {
-        pdf.addImage(logoData, "PNG", xOffset, yOffset, 20, 20); // Logo size
-        const titleText = "Community Strength Barometer: Report";
-        pdf.setFontSize(14);
-        pdf.text(titleText, xOffset + 25, yOffset + 15); // Align text next to the logo
-    }
-
-    // Add a light grey border after the logo and title
-    const titleYPosition = yOffset + 25; // Slightly move down after title
-    const pdfWidth = pdf.internal.pageSize.width;
-    pdf.setLineWidth(0.5); // Border thickness
-    pdf.setDrawColor(211, 211, 211); // Light grey color
-    pdf.line(xOffset, titleYPosition, pdfWidth - xOffset, titleYPosition); // Draw the border
-
-    // Add some padding below the border before the first chart
-    yOffset = titleYPosition + 20; // Increased space after the top border
-
-    const captureChart = (index) => {
-        if (index >= charts.length) {
-            generatePDF(exportedImages);
-            if (callback) callback(); // Ensure the callback is called
-            return;
+                // Assuming the response data contains the correct properties
+                row.insertCell(0).textContent = item.survey_data_id || 'N/A';
+                row.insertCell(1).textContent = item.survey_id || 'N/A';
+                row.insertCell(2).textContent = item.survey_name || 'N/A';
+                row.insertCell(3).textContent = item.survey_country || 'N/A';
+                row.insertCell(4).textContent = item.survey_organization || 'N/A';
+                row.insertCell(5).textContent = item.participant_name || 'N/A';
+                row.insertCell(6).textContent = item.age || 'N/A';
+                row.insertCell(7).textContent = item.gender || 'N/A';
+                row.insertCell(8).textContent = item.survey_date || 'N/A';
+            });
         }
 
-        const { id, title } = charts[index];
-        const chartElement = document.getElementById(id);
+        function exportChartsToPNGAndPDF(charts) {
+            const jsPDF = window.jspdf.jsPDF;
+            const pdf = new jsPDF({ orientation: "portrait" });
+            let yOffset = 10;  // Padding at the top
+            let xOffset = 25;  // Padding on the left
+            const exportedImages = [];
 
-        if (!chartElement) {
-            console.error(`Element with ID ${id} not found.`);
-            captureChart(index + 1); // Skip to the next chart
-            return;
-        }
+            const logo = document.querySelector(".logo img");
+            const logoData = logo ? logo.src : null;
 
-        html2canvas(chartElement).then(canvas => {
-            exportedImages.push({ title, imgData: canvas.toDataURL("image/png"), width: canvas.width, height: canvas.height });
-            captureChart(index + 1);
-        }).catch(error => {
-            console.error(`Error rendering chart "${title}":`, error);
-            captureChart(index + 1); // Skip to the next chart
-        });
-    };
-
-    const generatePDF = (images) => {
-        images.forEach((image, i) => {
-            if (i > 0 && yOffset + image.height > pdf.internal.pageSize.height - 20) {
-                pdf.addPage(); // Add a new page if the image doesn't fit
-                yOffset = 10; // Reset yOffset for the new page
+            // Add logo and title ("Community Strength Barometer") on the same line
+            if (logoData) {
+                pdf.addImage(logoData, "PNG", xOffset, yOffset, 20, 20); // Logo size
+                const pdfWidth = pdf.internal.pageSize.width; // Page width
+                const titleText = "Community Strength Barometer: Report";
+                const titleWidth = pdf.getTextWidth(titleText); // Width of the title text
+                const titleXPosition = xOffset + 25; // Position the title next to the logo
+                pdf.setFontSize(14);
+                pdf.text(titleText, titleXPosition, yOffset + 15); // Align text next to the logo
             }
 
-            const imgWidth = 130;
-            const aspectRatio = image.width / image.height;
-            const imgHeight = imgWidth / aspectRatio;
+            // Add a light grey border after the logo and title
+            const titleYPosition = yOffset + 25; // Slightly move down after title
+            const pdfWidth = pdf.internal.pageSize.width;
+            pdf.setLineWidth(0.5); // Border thickness
+            pdf.setDrawColor(211, 211, 211); // Light grey color
+            pdf.line(xOffset, titleYPosition, pdfWidth - xOffset, titleYPosition); // Draw the border
 
-            pdf.setFontSize(12);
-            pdf.text(image.title, xOffset, yOffset - 5); // Add chart title
+            // Add some padding below the border before the first chart
+            yOffset = titleYPosition + 20; // Increased space after the top border
 
-            // Add 1px light grey border around each image
-            pdf.setLineWidth(0.5);
-            pdf.setDrawColor(211, 211, 211);
-            pdf.rect(xOffset - 1, yOffset - 1, imgWidth + 2, imgHeight + 2); // Draw the border
+            const captureChart = (index) => {
+                if (index >= charts.length) {
+                    generatePDF(exportedImages);
+                    return;
+                }
 
-            pdf.addImage(image.imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
-            yOffset += imgHeight + 20; // Add spacing between charts
-        });
+                const { id, title } = charts[index];
+                const chartElement = document.getElementById(id);
 
-        pdf.save("CSB_Report.pdf");
-    };
+                if (!chartElement) {
+                    captureChart(index + 1);
+                    return;
+                }
 
-    captureChart(0); // Start capturing charts
-}
+                html2canvas(chartElement).then(canvas => {
+                    exportedImages.push({ title, imgData: canvas.toDataURL("image/png"), width: canvas.width, height: canvas.height });
+                    captureChart(index + 1);
+                }).catch(error => {
+                    console.error(`Error rendering chart "${title}":`, error);
+                    captureChart(index + 1);
+                });
+            };
+
+            const generatePDF = (images) => {
+                let imageCount = 0;
+                images.forEach((image, i) => {
+                    if (imageCount % 2 === 0 && i > 0) pdf.addPage();
+                    pdf.setFontSize(12);
+                    const imgWidth = 130;
+                    const aspectRatio = image.width / image.height;
+                    const imgHeight = imgWidth / aspectRatio;
+                    const yPosition = yOffset + (imageCount % 2 === 0 ? 0 : imgHeight + 20); // Adjust spacing between images
+                    pdf.text(image.title, xOffset, yPosition - 5);
+
+                    // Add 1px light grey border around each image
+                    const borderMargin = 1;
+                    pdf.setFillColor(211, 211, 211); // Light grey color
+                    pdf.setLineWidth(0.5); // Set border line thickness to 1px
+                    pdf.rect(xOffset - borderMargin, yPosition - borderMargin, imgWidth + 2 * borderMargin, imgHeight + 2 * borderMargin); // Draw the border
+
+                    pdf.addImage(image.imgData, "PNG", xOffset, yPosition, imgWidth, imgHeight);
+                    imageCount++;
+                });
+                pdf.save("CSB_Report.pdf");
+            };
+
+            captureChart(0);
+
+        }
     </script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

@@ -157,107 +157,7 @@
 
                 <!--greeting section ends here -->
 
-                <!--initial filter -->
-
-                <div class="filter-section initial-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
-                    <div>
-                        <h4><span class="badge bg-success lh-1"><?php echo e($formDetails->form_title); ?></span></h4>
-                        <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
-                    </div>
-
-                    <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
-                        <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard flex-nowrap">
-                                <div class="col-auto p-0">
-                                    <?php if(auth()->user()->role->name == 'survey'): ?>
-                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
-                                    <?php else: ?>
-                                    <select class="form-select select2" name="country" id="country"
-                                        aria-label="Default select example">
-                                        <option value="" selected>Country</option>
-                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country['name']); ?>"
-                                                <?php echo e((($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : ''); ?>>
-                                                <?php echo e($country['name']); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    <?php endif; ?>
-                                    
-                                </div>
-                                <div class="col-auto p-0">
-                                    <?php if(auth()->user()->role->name == 'superadmin'): ?>
-                                    <select class="form-select select2" id="organization" name="organization"
-                                        aria-label="Default select example">
-                                        <option value="" selected>Organization</option>
-                                        <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($organization->id); ?>"
-                                                <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
-                                                <?php echo e($organization->name); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    <?php else: ?>
-                                    <input type="text" class="form-control organization-name" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
-                                    <input type="hidden" name="organization" class="form-control" value="<?php echo e(old('organization',auth()->user()->organization_id)); ?>" id="organization" readonly>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="col-auto p-0">
-                                    <?php if(auth()->user()->role->name == 'survey'): ?>
-                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->branch_id != null ? auth()->user()->branch->name :''); ?>" readonly>
-                                    <input type="hidden" name="branch" class="form-control" value="<?php echo e(old('branch',auth()->user()->branch_id)); ?>" id="branch" readonly>
-                                    <?php else: ?>
-                                    <select class="form-select select2" id="branch" name="branch"
-                                        aria-label="Default select example" disabled>
-                                        <option value="" selected>Division</option>
-                                    </select>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="col-auto p-0">
-                                    <?php if(auth()->user()->role->name == 'survey'): ?>
-                                        <input type="text" class="form-control" value="<?php echo e(auth()->user()->survey->form_title); ?>" readonly>
-                                        <input type="hidden" name="survey" class="form-control" value="<?php echo e(old('survey',auth()->user()->form_id)); ?>" id="branch" readonly>
-                                    <?php else: ?>
-                                    <select class="form-select select2" name="survey" id="survey"
-                                        aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Survey</option>
-                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($surveyForm->form_title); ?>"
-                                                <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?>>
-                                                <?php echo e($surveyForm->form_title); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="col-auto p-0">
-                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                          <div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-    
-                                            </ul>
-                                        </div>
-                                </div>
-                            </div>
-                            <?php if(auth()->user()->role->name !== 'survey'): ?>
-                            <div class="note text-muted">
-                                <p>Note: Please select at least one project & choose branch, organization, country
-                                    respectively to filter data.</p>
-                            </div>
-                            <?php endif; ?>
-                        </form>
-
-                    </div>
-                </div>
-
-
-                <!--initial filter -->
+            
 <!--hidden filter section-->
                
                 <div class="filter-section show-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
@@ -403,25 +303,25 @@
                 <!-- radar and pie section -->
                 <div class="row">
                     <div class="col-sm-7 pb-4">
-                        <div class="card h-100">
+                        <div class="card h-100 " id="basic_radar_chart">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
                                 <h4 class="card-title mean-result-title">Mean Results</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <div class="dropdown">
-                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                        <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                data-chart-id="basic_radar">Export as PDF</a></li>
-                                        <li><a class="dropdown-item" href="#" data-type="png"
-                                                data-chart-id="basic_radar">Export as PNG</a></li>
-                                    </ul>
-                                </div>
+                                    <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="basic_radar">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="basic_radar">Export as PNG</a></li>
+                                        </ul>
+                                    </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -709,8 +609,8 @@
                                 <div class="card-body">
                                     <div class="live-preview">
                                         <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0">
-                                                <thead class="table-light">
+                                            <table class="table align-middle table-nowrap mb-0" id="pillar-table">
+                                                <thead class="table-head">
                                                     <tr>
 
                                                         <th scope="col" class="text-center"></th>
@@ -919,7 +819,7 @@
                             console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -963,7 +863,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Branch</option>');
                         }
                     })
                 }
@@ -987,7 +887,7 @@
                             console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                             response.forms.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
@@ -1003,7 +903,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }
@@ -1524,7 +1424,163 @@
             //Chart Js Code End
 
         });
+
+        //Export All
+        document.addEventListener("DOMContentLoaded", function () {
+    const exportButton = document.getElementById("export-all");
+    const surveyTable = document.getElementById("survey-table"); // Define surveyTable
+
+    exportButton.addEventListener("click", function () {
+        exportButton.disabled = true; // Disable the export button
+        surveyTable.style.display = "block"; // Show the survey table
+
+        const selectedCountry = document.getElementById('country').value;
+        const selectedOrganization = document.getElementById('organization').value;
+
+        $.ajax({
+            url: '/typeform/fecthallsurvey',
+            type: 'GET',
+            data: {
+                country: selectedCountry,
+                organization_id: selectedOrganization
+            },
+            dataType: 'json',
+            success: function (response) {
+                const surveyData = response.surveys; // Adjust according to the data structure
+                updateTable(surveyData); // Update the table with fetched data
+
+                const charts = [
+                    { id: "sales-forecast-chart", title: "Mean Scores Values" },
+                    { id: "basic_radar_chart", title: "Mean Result" },
+                    { id: "simple_pie_chart", title: "Participants by Gender" },
+                    { id: "simple_pie_chart2", title: "Participants by Age" },
+                    { id: "sales-forecast-chart-2", title: "Positive Peace" },
+                    { id: "sales-forecast-chart-3", title: "Negative Peace" },
+                    { id: "multi_radar", title: "Results by pillars: Radar" },
+                    { id: "pillar-table", title: "Results by pillar: Table" },
+                    { id: "survey-table", title: "Survey Report: Table" }
+                ];
+
+                // Export charts and tables to PNG and PDF
+                exportChartsToPNGAndPDF(charts, function () {
+                    surveyTable.style.display = "none"; // Hide table after export is complete
+                    exportButton.disabled = false; // Re-enable the export button
+                });
+            },
+            error: function (error) {
+                console.log('Error fetching data:', error);
+                exportButton.disabled = false; // Re-enable the export button
+                surveyTable.style.display = "none"; // Hide table on error
+            }
+        });
+    });
+});
+
+function updateTable(data) {
+    const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
+    tableBody.innerHTML = ""; // Clear existing table rows
+
+    // Populate the table with fetched data
+    data.forEach(function (item) {
+        const row = tableBody.insertRow();
+
+        // Assuming the response data contains the correct properties
+        row.insertCell(0).textContent = item.survey_data_id || 'N/A';
+        row.insertCell(1).textContent = item.survey_id || 'N/A';
+        row.insertCell(2).textContent = item.survey_name || 'N/A';
+        row.insertCell(3).textContent = item.survey_country || 'N/A';
+        row.insertCell(4).textContent = item.survey_organization || 'N/A';
+        row.insertCell(5).textContent = item.participant_name || 'N/A';
+        row.insertCell(6).textContent = item.age || 'N/A';
+        row.insertCell(7).textContent = item.gender || 'N/A';
+        row.insertCell(8).textContent = item.survey_date || 'N/A';
+    });
+}
+
+function exportChartsToPNGAndPDF(charts, callback) {
+    const jsPDF = window.jspdf.jsPDF;
+    const pdf = new jsPDF({ orientation: "portrait" });
+    let yOffset = 10; // Padding at the top
+    const xOffset = 25; // Padding on the left
+    const exportedImages = [];
+
+    const logo = document.querySelector(".logo img");
+    const logoData = logo ? logo.src : null;
+
+    // Add logo and title ("Community Strength Barometer") on the same line
+    if (logoData) {
+        pdf.addImage(logoData, "PNG", xOffset, yOffset, 20, 20); // Logo size
+        const titleText = "Community Strength Barometer: Report";
+        pdf.setFontSize(14);
+        pdf.text(titleText, xOffset + 25, yOffset + 15); // Align text next to the logo
+    }
+
+    // Add a light grey border after the logo and title
+    const titleYPosition = yOffset + 25; // Slightly move down after title
+    const pdfWidth = pdf.internal.pageSize.width;
+    pdf.setLineWidth(0.5); // Border thickness
+    pdf.setDrawColor(211, 211, 211); // Light grey color
+    pdf.line(xOffset, titleYPosition, pdfWidth - xOffset, titleYPosition); // Draw the border
+
+    // Add some padding below the border before the first chart
+    yOffset = titleYPosition + 20; // Increased space after the top border
+
+    const captureChart = (index) => {
+        if (index >= charts.length) {
+            generatePDF(exportedImages);
+            if (callback) callback(); // Ensure the callback is called
+            return;
+        }
+
+        const { id, title } = charts[index];
+        const chartElement = document.getElementById(id);
+
+        if (!chartElement) {
+            console.error(`Element with ID ${id} not found.`);
+            captureChart(index + 1); // Skip to the next chart
+            return;
+        }
+
+        html2canvas(chartElement).then(canvas => {
+            exportedImages.push({ title, imgData: canvas.toDataURL("image/png"), width: canvas.width, height: canvas.height });
+            captureChart(index + 1);
+        }).catch(error => {
+            console.error(`Error rendering chart "${title}":`, error);
+            captureChart(index + 1); // Skip to the next chart
+        });
+    };
+
+    const generatePDF = (images) => {
+        images.forEach((image, i) => {
+            if (i > 0 && yOffset + image.height > pdf.internal.pageSize.height - 20) {
+                pdf.addPage(); // Add a new page if the image doesn't fit
+                yOffset = 10; // Reset yOffset for the new page
+            }
+
+            const imgWidth = 130;
+            const aspectRatio = image.width / image.height;
+            const imgHeight = imgWidth / aspectRatio;
+
+            pdf.setFontSize(12);
+            pdf.text(image.title, xOffset, yOffset - 5); // Add chart title
+
+            // Add 1px light grey border around each image
+            pdf.setLineWidth(0.5);
+            pdf.setDrawColor(211, 211, 211);
+            pdf.rect(xOffset - 1, yOffset - 1, imgWidth + 2, imgHeight + 2); // Draw the border
+
+            pdf.addImage(image.imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
+            yOffset += imgHeight + 20; // Add spacing between charts
+        });
+
+        pdf.save("CSB_Report.pdf");
+    };
+
+    captureChart(0); // Start capturing charts
+}
     </script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
