@@ -44,6 +44,15 @@
                                 <td>{{$user->id}}</td>
                             </tr>
                             <tr>
+                                <th>Profile</th>
+                                <td>
+                                    @php
+                                        $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
+                                    @endphp
+                                    <img src="{{$profile}}" alt="{{$user->name}}" width="80">
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>Name</th>
                                 <td>{{$user->name}}</td>
                             </tr>

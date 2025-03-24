@@ -65,6 +65,7 @@
                             <thead class="table-head">
                                 <tr>
                                     <th>S.No.</th>
+                                    <th>Profile</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Organization</th>
@@ -80,6 +81,12 @@
                                 @foreach ($users as $key => $user)
                                     <tr>
                                         <td>{{ $user->serial_no }}</td>
+                                        <td>
+                                            @php
+                                                $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
+                                            @endphp
+                                            <img src="{{$profile}}" alt="{{$user->name}}" width="80">
+                                        </td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ optional($user->organization)->name }}</td>

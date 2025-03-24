@@ -10,7 +10,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -46,6 +48,7 @@ class UserController extends Controller
     public function store(Request $request){
         $validatedData = $request->validate([
             'name'=>'required|string|min:2',
+            'profile'=>'nullable|mimes:jpg,png,jpeg|max:2048',
             'email'=>'required|email|unique:users,email',
             'password'=>'required|min:6|confirmed',
             'role_id'=>'required|integer|exists:roles,id',
@@ -57,12 +60,22 @@ class UserController extends Controller
                 return $request->role_id == 4;
             })],
         ]);
+
+        if($request->hasFile('profile') && $request->file('profile')->isValid()){
+            $profilePic = $request->file('profile');
+            $profilePicName = Str::uuid().'.'.$profilePic->getClientOriginalExtension();
+
+            $profilePath = $profilePic->storeAs('build/profile',$profilePicName,'public');
+        }
+
+        $validatedData['avatar']=$profilePath ?? null;
         
+
         $role = Role::where('name','branch')->pluck('id')->first();
 
         if($request->role_id == $role){
             $validatedData['branch_id'] = implode(', ',$validatedData['branch_id']);
-        }
+        }   
 
         $user = User::create($validatedData);
         
@@ -88,6 +101,7 @@ class UserController extends Controller
     public function update(Request $request,User $user){
         $validatedData = $request->validate([
             'name'=>'required|string|min:2',
+            'profile'=>'nullable|mimes:jpg,png,jpeg|max:2048',
             'email'=>'required|email|unique:users,email,'.$user->id,
             // 'password'=>'nullable|min:6|confirmed',
             'role_id'=>'required|integer|exists:roles,id',
@@ -99,6 +113,17 @@ class UserController extends Controller
                 return $request->role_id == 4;
             })],
         ]);
+
+        if($request->hasFile('profile') && $request->file('profile')->isValid()){
+            Storage::delete('public/'.$user->avatar);
+
+            $profilePic = $request->file('profile');
+            $profilePicName = Str::uuid().'.'.$profilePic->getClientOriginalExtension();
+
+            $profilePath = $profilePic->storeAs('build/profile',$profilePicName,'public');
+        }
+
+        $validatedData['avatar'] = $profilePath ?? null;
 
         $role = Role::where('name','branch')->pluck('id')->first();
 
@@ -127,6 +152,9 @@ class UserController extends Controller
         $userDelete = User::filterUser()->find($validatedData['item_id']);
 
         if($userDelete){
+            if($userDelete->avatar && Storage::disk('public')->exists($userDelete->avatar)){
+                Storage::disk('public')->delete($userDelete->avatar);
+            }
             $userDelete->delete();
 
             return redirect()->route('user.index')->with('success','Deleted User Successfully!!!');

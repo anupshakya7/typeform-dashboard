@@ -40,6 +40,21 @@
         <div class="live-preview">
 
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-center">
+                            @php
+                                $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
+                            @endphp
+                            <img src="{{$profile}}" alt="profile_image" width="150" height="150" id="profile_image" style="border-radius:50%;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile" class="form-label">Profile</label>
+                            <input type="file" name="profile" class="form-control" value="{{old('profile')}}" id="profile" onchange="getImagePreview(event,'profile_image')">
+                            @error('profile')
+                                <span class="text-danger ms-1">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
@@ -162,6 +177,14 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
+function getImagePreview(event,divId){
+    var image = URL.createObjectURL(event.target.files[0]);
+    var imageTag = document.getElementById(divId);
+
+    imageTag.src = image;
+    imageTag.style.borderRadius = "50%";
+    imageDiv.appendChild(imageTag);
+}
 $(document).ready(function(){
     $('#formUserOrganizationLevel').hide();
     $('#formUserBranchLevel').hide();
