@@ -130,7 +130,7 @@
                                 <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
                                 <td><?php echo e($answer->form ? optional($answer->form)->country : 'No Country'); ?></td>
                                 <td><?php echo e($answer->form ? optional($answer->form)->organization->name : 'No Organization'); ?></td>
-                                <td><?php echo e(optional($answer->form)->branches ? optional($answer->form)->branches->name : 'Main Branch'); ?></td>
+                                <td><?php echo e(optional($answer->form)->branches ? optional($answer->form)->branches->name : 'Head Office'); ?></td>
                                 <td>
                                     <span class="participants-name">
                                         <?php echo e($answer->name); ?>
@@ -144,20 +144,16 @@
                                 ?>
                                 <td><?php echo e($date); ?></td>
                                 <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="<?php echo e(route('survey.show',$answer)); ?>" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <?php if($answer->form): ?>
-                                            <li><a href="<?php echo e(route('survey.qa',$answer)); ?>" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> QA</a>
-                                            </li>
-                                            <?php endif; ?>
+                                    <?php if($answer->form): ?>
+                                    <a href="<?php echo e(route('survey.qa',$answer)); ?>" class="view-tag"><i
+                                        class="ri-eye-fill align-bottom"></i></a>
+                                    <a href="<?php echo e(route('survey.single.csv',$answer)); ?>" class="export-tag">
+                                        <i class="fa-solid fa-file-export"></i>
+                                    </a>
+                                    
+                                            
+                                          
+                                            
                                             
                                             <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
@@ -168,8 +164,8 @@
                                                     Delete
                                                 </a>
                                             </li> -->
-                                        </ul>
-                                    </div>
+                                        
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -50,8 +50,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
-                            <select id="country" name="country" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="country" name="country" class="form-select select2" >
                                 <option selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>" <?php echo e($form->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
@@ -63,8 +62,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
-                            <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>" <?php echo e($organization->id == $form->organization_id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
@@ -89,8 +87,7 @@
                                 $organization_id = $form->branches->organization->id;
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
                             ?>
-                            <select id="branch" name="branch" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="branch" name="branch" class="form-select select2" >
                                 <option value="" selected>Choose Division</option>
                                 
                             </select>
@@ -114,21 +111,21 @@
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
-                            <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->before)); ?>" data-provider="flatpickr"
+                            <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',\App\Helpers\DateFormatter::formatDateRange($form->before))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">During Survey Date [From - To] </label>
-                            <input type="text" name="duringdate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->during)); ?>" data-provider="flatpickr"
+                            <input type="text" name="duringdate" class="form-control mt-2" value="<?php echo e(old('duringdate',\App\Helpers\DateFormatter::formatDateRange($form->during))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick during date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">After Survey Date [From - To] </label>
-                            <input type="text" name="afterdate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->after)); ?>" data-provider="flatpickr"
+                            <input type="text" name="afterdate" class="form-control mt-2" value="<?php echo e(old('afterdate',\App\Helpers\DateFormatter::formatDateRange($form->after))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>

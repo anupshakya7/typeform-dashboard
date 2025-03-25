@@ -24,7 +24,7 @@ class FormController extends Controller
     // }
     public function index(Request $request)
     {
-        $formsQuery = Form::with('organization','branches');
+        $formsQuery = Form::with('organization','branches')->withCount('answer');
 
         if($request->filled('search_title')){
             $formsQuery->where('form_title','like','%'.$request->search_title.'%');

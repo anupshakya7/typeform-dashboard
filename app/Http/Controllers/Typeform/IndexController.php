@@ -196,7 +196,7 @@ class IndexController extends Controller
     }
 
     public function overTimeScore($survey_id){
-        $survey = Form::with('answer')->where('form_id',$survey_id)->first();
+        $survey = Form::with('answer')->filterForm()->where('form_id',$survey_id)->first();
         $overTimeMeanTime = [];
 
         $pillars = [
@@ -218,7 +218,7 @@ class IndexController extends Controller
                 $startdate = Carbon::createFromFormat('d-m-Y',$date[0])->startOfDay();
                 $enddate = Carbon::createFromFormat('d-m-Y',$date[1])->endOfDay();
 
-                $answersInTimeRange = $survey->answer()->whereBetween('created_at',[$startdate,$enddate])->get();
+                $answersInTimeRange = $survey->answer()->filterSurvey()->whereBetween('created_at',[$startdate,$enddate])->get();
 
                 $overTimeMean = [];
                 foreach($pillars as $pillar){

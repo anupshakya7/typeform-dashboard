@@ -129,6 +129,7 @@
                                 <th>Survey ID</th>
                                 <th>Survey Name</th>
                                 <th>Country</th>
+                                <th>Webhook</th>
                                 <th>Organization</th>
                                 <th>Division</th>
                                 <th>Before Survey</th>
@@ -147,6 +148,8 @@
                                 <td>{{$form->form_id}}</td>
                                 <td>{{$form->form_title}}</td>
                                 <td>{{$form->country}}</td>
+                                <td>
+                                    {{$form->webhook == 0 && $form->answer_count == 0 ? 'Inactive':'Active'}}</td>
                                 <td>{{optional($form->organization)->name}}</td>
                                 <td>{{$form->branches ? optional($form->branches)->name : 'Head Office'}}</td>
                                 <td>{{$form->before}} </td>

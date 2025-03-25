@@ -64,13 +64,12 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered " style="width:100%">
+                        <table class="table nowrap align-middle table-bordered ">
                             <thead class="table-head">
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Organization</th>
                                     <th>Division Name</th>
-                                    <th>Country</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -81,7 +80,6 @@
                                         <td><?php echo e($branch->serial_no); ?></td>
                                         <td><?php echo e(optional($branch->organization)->name); ?></td>
                                         <td><?php echo e($branch->name); ?></td>
-                                        <td><?php echo e($branch->country); ?></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

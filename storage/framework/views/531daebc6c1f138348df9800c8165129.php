@@ -88,8 +88,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
-                            <select id="country" name="country" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="country" name="country" class="form-select select2" >
                                 <option value="" selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
@@ -101,8 +100,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
-                            <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>" <?php echo e(auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':''); ?> ><?php echo e($organization->name); ?></option>
@@ -124,8 +122,7 @@
                                 <span class="text-danger">*</span>
                                 <?php endif; ?>
                             </label>
-                            <select id="branch" name="branch" class="form-select select2" data-choices
-                                data-choices-sorting="true" disabled>
+                            <select id="branch" name="branch" class="form-select select2" disabled>
                                 <option value="" selected>Choose Division</option>
                             </select>
                         </div>
@@ -133,6 +130,9 @@
                     <!--end col-->
                     <div class="card-header align-items-center d-flex mb-3">
                         <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
+                    </div>
+                    <div class="note">
+                        <p>Note: Please enter the survey dates for each phase: before the project starts, during the project, and after completion. If a survey phase hasn’t been conducted yet, you can leave those dates empty.’ after Survey Timeline.</p>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
@@ -155,15 +155,60 @@
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>
-                    <div>
-                        <p class="note-tag">Note: Please pick the starting and ending date for survey.</p>
-                    </div>
+                    
                     <div class="btn-submit-container">
-
-                        <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-
+                        <button type="button" class="btn btn-blue btn-submit" data-bs-toggle="modal" data-bs-target="#exampleModal" >Submit</button>
                     </div>
-
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-overlay">
+                            <div class="modal-container">
+                    
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Note</h2>
+                                    <a class="close-button" data-bs-dismiss="modal" style="cursor: pointer !important;"><i class="fa-solid fa-xmark"></i></a>
+                                </div>
+                                    <div class="instruction-step">
+                                        <span class="step-number">1</span>
+                                        <span class="step-title">Go to your Typeform account</span>
+                                        <p class="step-description">Log in to your Typeform account where your survey form is hosted.</p>
+                                    </div>
+                                    
+                                    <div class="instruction-step">
+                                        <span class="step-number">2</span>
+                                        <span class="step-title">Navigate to the Connect section</span>
+                                        <p class="step-description">Select your form and go to the "Connect" section in the form editor.</p>
+                                    </div>
+                                    
+                                    <div class="instruction-step">
+                                        <span class="step-number">3</span>
+                                        <span class="step-title">Add the webhook URL</span>
+                                        <p class="step-description">In the webhook settings, add the following URL:</p>
+                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-New/public/answer</span>
+                                    </div>
+                                    
+                                    <div class="instruction-step border-0">
+                                        <span class="step-number">4</span>
+                                        <span class="step-title">Save and activate the webhook</span>
+                                        <p class="step-description">After adding the URL, save your changes and turn on the webhook to start receiving responses in real-time.</p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                        <label for="webhook"> "Have you added & activated Webhook URL in Typeform?"</label>  <input type="checkbox" name="webhook" id="webhook"> </p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                
+                                    
+                                    <button type="submit" class="confirm-button btn-blue">Submit</button>
+                                </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                     <!--end col-->
                 </div>
                 <!--end row-->
@@ -184,6 +229,13 @@
     </div>
 </div>
 
+
+
+<!-- Button trigger modal -->
+
+
+
+                    
 
 <?php $__env->stopSection(); ?>
 
@@ -214,6 +266,8 @@ document.addEventListener('DOMContentLoaded', function() {
         mode: 'range',
     });
 });
+
+
 $(document).ready(function() {
     $('#formSync').submit(function(e) {
         e.preventDefault();
@@ -342,7 +396,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
 
                     var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                     var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -364,12 +418,15 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
                 }
             })
     }
+});
 
-})
+function changeWebHookValue(value){
+    $("#webhook").val(value);
+}
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/form/create.blade.php ENDPATH**/ ?>

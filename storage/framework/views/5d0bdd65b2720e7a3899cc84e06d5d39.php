@@ -4,20 +4,35 @@
 <?php $__env->stopSection(); ?>
 
 
+
 <?php $__env->startSection('content'); ?>
+
+
+</div>
     <div class="row">
         <div class="col">
             <div class="h-100">
 
                 <!--greeting section -->
 
-                <div class="mb-3 pb-1">
+                <div>
                     <div>
-                        <h4 class="mb-1">Welcome back, <?php echo e(auth()->user()->name); ?></h4>
+                        <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     </div>
                 </div>
                 <!--end greeting section-->
 
+  <!-- about csb section--------========================================= -->
+  <div class="about-csb" style="background-image: url(<?php echo e(asset('build/images/csb-banner.jpg')); ?>)">
+  <h5>Community Strength Barometer (CSB)</h5>
+   <p>
+    The Community Strength Barometer (CSB) measures social cohesion, resilience, and well-being within communities, assessing engagement, support networks, and collective problem-solving.
+   </p>
+</div>
+
+
+                <!-- about csb section--------========================================= -->
+               
                 <!--card row section ==========================================================-->
 
                 <?php
@@ -146,7 +161,10 @@
 
                 <!--greeting section ends here -->
 
-                <div class="filter-section mb-3 d-flex justify-content-between align-items-center flex-wrap g-3">
+            
+<!--hidden filter section-->
+               
+                <div class="filter-section show-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
                     <div>
                         <h4><span class="badge bg-success lh-1"><?php echo e($formDetails->form_title); ?></span></h4>
                         <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
@@ -154,7 +172,7 @@
 
                     <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard">
+                            <div class="row gap-3 m-0 p-0 dashboard flex-nowrap">
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
                                         <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
@@ -183,7 +201,7 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php else: ?>
-                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
+                                    <input type="text" class="form-control organization-name" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
                                     <input type="hidden" name="organization" class="form-control" value="<?php echo e(old('organization',auth()->user()->organization_id)); ?>" id="organization" readonly>
                                     <?php endif; ?>
                                 </div>
@@ -243,7 +261,7 @@
                     </div>
                 </div>
 
-
+<!--hidden filter section-->
                 <!--bar graph section starts here-->
 
                 <div class="card">
@@ -289,25 +307,25 @@
                 <!-- radar and pie section -->
                 <div class="row">
                     <div class="col-sm-7 pb-4">
-                        <div class="card h-100">
+                        <div class="card h-100 " id="basic_radar_chart">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
                                 <h4 class="card-title mean-result-title">Mean Results</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <div class="dropdown">
-                                    <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img class="svg-icon" type="image/svg+xml"
-                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                        <li><a class="dropdown-item" href="#" data-type="pdf"
-                                                data-chart-id="basic_radar">Export as PDF</a></li>
-                                        <li><a class="dropdown-item" href="#" data-type="png"
-                                                data-chart-id="basic_radar">Export as PNG</a></li>
-                                    </ul>
-                                </div>
+                                    <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="basic_radar">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="basic_radar">Export as PNG</a></li>
+                                        </ul>
+                                    </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center">
@@ -562,8 +580,7 @@
                                     <h4 class="card-title results-by-pillar-table mb-0 flex-grow-1">Results By Pillar</h4>
                                     <div class="flex-shrink-0">
                                         <div class="d-flex flex-row gap-2 align-items-center">
-                                            <a href="<?php echo e(route('home.csv',['survey'=> request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
-                                                Export</a>
+                                            
                                             <!--info here-->
                                             <div class="dropdown">
                                         <a class="icon-frame" href="#" id="exportDropdown" role="button"
@@ -595,8 +612,8 @@
                                 <div class="card-body">
                                     <div class="live-preview">
                                         <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0">
-                                                <thead class="table-light">
+                                            <table class="table align-middle table-nowrap mb-0" id="pillar-table">
+                                                <thead class="table-head">
                                                     <tr>
 
                                                         <th scope="col" class="text-center"></th>
@@ -648,9 +665,115 @@
                     </div><!-- end col -->
 
                     <!--table section starts here -->
+                    <?php if($formDetails->during || $formDetails->after): ?>
+                    <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card mb-0">
+                            <div class="card-header align-items-center d-flex">
+                                <h4 class="card-title pillar-table-time-title mb-0 flex-grow-1">Results Over Time</h4>
+                                <div class="flex-shrink-0">
+                                    <div class="d-flex flex-row gap-2 align-items-center">
+                                        <!--info here-->
+                                        <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="pillar-table-time">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="pillar-table-time">Export as PNG</a></li>
+                                            
+                                        </ul>
+                                    </div>
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                    
+                                            <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- end card header -->
+                            <?php
+                                
+                            ?>
+                            <div class="card-body">
+                                <div class="live-preview">
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-nowrap mb-0" id="pillar-table-time">
+                                            <thead class="table-head">
+                                                <tr>
+
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Before</th>
+                                                    <th scope="col">During</th>
+                                                    <?php if($formDetails->after): ?>
+                                                    <th scope="col">After</th>
+                                                    <?php endif; ?>
+                                                    <th scope="col">% Change</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    $pillars = [
+                                                        'well_functioning_government' =>
+                                                            'Well-Functioning Government',
+                                                        'low_level_corruption' => 'Low Levels of Corruption',
+                                                        'equitable_distribution' =>
+                                                            'Equitable Distribution of Resources',
+                                                        'good_relations' => 'Good Relations with Neighbours',
+                                                        'free_flow' => 'Free Flow of Information',
+                                                        'high_levels' => 'High Levels of Human Capital',
+                                                        'sound_business' => 'Sound Business Environment',
+                                                        'acceptance_rights' => 'Acceptance of the Rights of Others',
+                                                    ];
+                                                ?>
+                                                <?php $__currentLoopData = $overTimeScores['before']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $overTimeScore): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
+                                                    </td>
+                                                    <td><?php echo e($overTimeScore); ?></td>
+                                                    <td><?php echo e($overTimeScores['during'][$key]); ?></td>
+                                                    <?php if($formDetails->after): ?>
+                                                    <td><?php echo e($overTimeScores['after'][$key]); ?></td>
+                                                    <?php endif; ?>
+                                                    <td class="trend-blue">
+                                                        <?php
+                                                            $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
+                                                            $overTimeScoreDivide = $overTimeScore > 0 ? $overTimeScore:1;
+                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScoreDivide;
+                                                        ?> 
+                                                        <span ><?php echo e($percentChange); ?>%
+                                                            <?php if($percentChange > 0): ?>
+                                                            <img class="trend-icon"
+                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php else: ?>
+                                                            <img class="trend-icon"
+                                                                src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php endif; ?>
+                                                    </td>
+
+                                                </tr>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </tbody>
+
+                                        </table>
+                                        <!-- end table -->
+                                    </div>
+                                    <!-- end table responsive -->
+                                </div>
+
+                            </div>
+                        </div><!-- end card-body -->
+                        </div><!-- end card -->
+                        
+                        </div>
                     <!-- end col -->
+                    <?php endif; ?>
                 </div>
                 <!--end row-->
 
@@ -805,7 +928,7 @@
                             console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -849,7 +972,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Branch</option>');
                         }
                     })
                 }
@@ -873,7 +996,7 @@
                             console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                             response.forms.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
@@ -889,7 +1012,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }
@@ -1004,8 +1127,8 @@
                     },
                     // colors: areachartSalesColors
                     colors: [
-                        '#6097CF', '#8B939C', '#67D36E', '#D2D4D7', '#1B68B7', '#A0CFFF', '#E58F87',
-                        '#D4DE86'
+                        '#002347', '#00366e', '#004994', '#0f64bc', '#107ec2', '#0c8cdb', '#4cacdc',
+                        '#74ccf8'
                     ]
                 };
                 if (salesForecastChart != "")
@@ -1410,7 +1533,182 @@
             //Chart Js Code End
 
         });
+
+        //Export All
+        document.addEventListener("DOMContentLoaded", function () {
+    const exportButton = document.getElementById('export-all');
+    const surveyTable = document.getElementById("survey-table");
+    const loader = document.querySelector('.download-spinner-container');
+    const mainpage = document.querySelector('body'); // Added dot for class selector
+
+    mainpage.style.display = 'block'; // Directly use loader, not loader.element
+
+
+    exportButton.addEventListener("click", function () {
+        exportButton.disabled = true;
+            // Show loader if it exists
+                
+            loader.style.display = 'block'; // Directly use loader, not loader.element
+                
+                
+                mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
+        if (surveyTable) surveyTable.style.display = "block";
+
+        const selectedCountry = document.getElementById('country').value;
+        const selectedOrganization = document.getElementById('organization').value;
+
+        $.ajax({
+            url: '/typeform/fecthallsurvey',
+            type: 'GET',
+            data: {
+                country: selectedCountry,
+                organization_id: selectedOrganization
+            },
+            dataType: 'json',
+            success: function (response) {
+                const surveyData = response.surveys;
+                updateTable(surveyData);
+
+                const charts = [
+                    { id: "sales-forecast-chart", title: "Mean Scores Values" },
+                    { id: "basic_radar_chart", title: "Mean Result" },
+                    { id: "simple_pie_chart", title: "Participants by Gender" },
+                    { id: "simple_pie_chart2", title: "Participants by Age" },
+                    { id: "sales-forecast-chart-2", title: "Positive Peace" },
+                    { id: "sales-forecast-chart-3", title: "Negative Peace" },
+                    { id: "multi_radar", title: "Results by pillars: Radar" },
+                    { id: "pillar-table", title: "Results by pillar: Table" },
+                    { id: "pillar-table-time", title: "Results Over Time: Table" },
+                    { id: "survey-table", title: "Survey Report: Table" }
+                ];
+
+            
+                
+
+                // Export charts and tables to PNG and PDF
+                exportChartsToPNGAndPDF(charts, function () {
+                    surveyTable.style.display = "none";
+                    loader.style.display = 'none';
+                    mainpage.style.overflow = 'visible';
+                    exportButton.disabled = false;
+                });
+            },
+            error: function (error) {
+                console.log('Error fetching data:', error);
+                exportButton.disabled = false;
+                surveyTable.style.display = "none";
+                loader.style.display = 'none';
+                mainpage.style.overflow = 'visible';
+            }
+        });
+    });
+});
+
+function updateTable(data) {
+    const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
+    tableBody.innerHTML = ""; // Clear existing table rows
+
+    // Populate the table with fetched data
+    data.forEach(function (item) {
+        const row = tableBody.insertRow();
+
+        // Assuming the response data contains the correct properties
+        row.insertCell(0).textContent = item.survey_data_id || 'N/A';
+        row.insertCell(1).textContent = item.survey_id || 'N/A';
+        row.insertCell(2).textContent = item.survey_name || 'N/A';
+        row.insertCell(3).textContent = item.survey_country || 'N/A';
+        row.insertCell(4).textContent = item.survey_organization || 'N/A';
+        row.insertCell(5).textContent = item.participant_name || 'N/A';
+        row.insertCell(6).textContent = item.age || 'N/A';
+        row.insertCell(7).textContent = item.gender || 'N/A';
+        row.insertCell(8).textContent = item.survey_date || 'N/A';
+    });
+}
+
+function exportChartsToPNGAndPDF(charts, callback) {
+    const jsPDF = window.jspdf.jsPDF;
+    const pdf = new jsPDF({ orientation: "portrait" });
+    let yOffset = 10; // Padding at the top
+    const xOffset = 25; // Padding on the left
+    const exportedImages = [];
+
+    const logo = document.querySelector(".logo img");
+    const logoData = logo ? logo.src : null;
+
+    // Add logo and title ("Community Strength Barometer") on the same line
+    if (logoData) {
+        pdf.addImage(logoData, "PNG", xOffset, yOffset, 20, 20); // Logo size
+        const titleText = "Community Strength Barometer: Report";
+        pdf.setFontSize(14);
+        pdf.text(titleText, xOffset + 25, yOffset + 15); // Align text next to the logo
+    }
+
+    // Add a light grey border after the logo and title
+    const titleYPosition = yOffset + 25; // Slightly move down after title
+    const pdfWidth = pdf.internal.pageSize.width;
+    pdf.setLineWidth(0.5); // Border thickness
+    pdf.setDrawColor(211, 211, 211); // Light grey color
+    pdf.line(xOffset, titleYPosition, pdfWidth - xOffset, titleYPosition); // Draw the border
+
+    // Add some padding below the border before the first chart
+    yOffset = titleYPosition + 20; // Increased space after the top border
+
+    const captureChart = (index) => {
+        if (index >= charts.length) {
+            generatePDF(exportedImages);
+            if (callback) callback(); // Ensure the callback is called
+            return;
+        }
+
+        const { id, title } = charts[index];
+        const chartElement = document.getElementById(id);
+
+        if (!chartElement) {
+            console.error(`Element with ID ${id} not found.`);
+            captureChart(index + 1); // Skip to the next chart
+            return;
+        }
+
+        html2canvas(chartElement).then(canvas => {
+            exportedImages.push({ title, imgData: canvas.toDataURL("image/png"), width: canvas.width, height: canvas.height });
+            captureChart(index + 1);
+        }).catch(error => {
+            console.error(`Error rendering chart "${title}":`, error);
+            captureChart(index + 1); // Skip to the next chart
+        });
+    };
+
+    const generatePDF = (images) => {
+        images.forEach((image, i) => {
+            if (i > 0 && yOffset + image.height > pdf.internal.pageSize.height - 20) {
+                pdf.addPage(); // Add a new page if the image doesn't fit
+                yOffset = 10; // Reset yOffset for the new page
+            }
+
+            const imgWidth = 130;
+            const aspectRatio = image.width / image.height;
+            const imgHeight = imgWidth / aspectRatio;
+
+            pdf.setFontSize(12);
+            pdf.text(image.title, xOffset, yOffset - 5); // Add chart title
+
+            // Add 1px light grey border around each image
+            pdf.setLineWidth(0.5);
+            pdf.setDrawColor(211, 211, 211);
+            pdf.rect(xOffset - 1, yOffset - 1, imgWidth + 2, imgHeight + 2); // Draw the border
+
+            pdf.addImage(image.imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
+            yOffset += imgHeight + 20; // Add spacing between charts
+        });
+
+        pdf.save("CSB_Report.pdf");
+    };
+
+    captureChart(0); // Start capturing charts
+}
     </script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
