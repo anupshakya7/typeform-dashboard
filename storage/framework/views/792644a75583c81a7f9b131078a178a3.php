@@ -222,8 +222,14 @@
                     <span class="step-title">Save and activate the webhook</span>
                     <p class="step-description">After adding the URL, save your changes and turn on the webhook to start receiving responses in real-time.</p>
                 </div>
-                <div class="modal-footer">
-                <button class="confirm-button btn-blue">Confirm Submission</button>
+                <div class="form-note">
+                    <p>
+                    "Have you added & activated Webhook URL in Typeform?"
+                    </p>
+                </div>
+                <div class="modal-footer ">
+                <button class="confirm-button btn-cancel" data-bs-dismiss="modal">No</button>
+                <button class="confirm-button btn-blue">Yes</button>
             </div>
             </div>
            

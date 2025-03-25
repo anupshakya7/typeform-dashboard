@@ -645,6 +645,18 @@ table td{
 .modal-footer {
     margin: 0px 0px 5px 0px;
     padding: 0;
+    display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: 10px;
+}
+.btn-cancel {
+    background-color: #c94f4a;
+    transition: all 0.3s ease;
+    color: white;
+}
+.btn-cancel:hover {
+    background-color: #bb3833;
 }
 
 .step-number {
@@ -736,3 +748,7 @@ table td{
     }
 }
 /**form  modal css ends here **/
+
+.form-note p {
+    font-weight: bold;
+}
