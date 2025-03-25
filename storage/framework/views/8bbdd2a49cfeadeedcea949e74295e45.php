@@ -575,8 +575,7 @@
                                     <h4 class="card-title results-by-pillar-table mb-0 flex-grow-1">Results By Pillar</h4>
                                     <div class="flex-shrink-0">
                                         <div class="d-flex flex-row gap-2 align-items-center">
-                                            <a href="<?php echo e(route('home.csv',['survey'=> request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
-                                                Export</a>
+                                            
                                             <!--info here-->
                                             <div class="dropdown">
                                         <a class="icon-frame" href="#" id="exportDropdown" role="button"
