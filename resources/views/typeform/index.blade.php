@@ -670,7 +670,7 @@
 
                     <!--table section starts here -->
 
-                    {{-- <div class="row">
+                    <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
@@ -683,131 +683,131 @@
 
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                </a>
-                <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                        </a>
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
-                    <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
-                </a>
-            </div>
-        </div>
-    </div><!-- end card header -->
+                                            <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- end card header -->
 
-    <div class="card-body">
-        <div class="live-preview">
-            <div class="table-responsive">
-                <table class="table align-middle table-nowrap mb-0">
-                    <thead class="table-light">
-                        <tr>
+                            <div class="card-body">
+                                <div class="live-preview">
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-nowrap mb-0">
+                                            <thead class="table-head">
+                                                <tr>
 
-                            <th scope="col"></th>
-                            <th scope="col">Before</th>
-                            <th scope="col">During</th>
-                            <th scope="col">% Change</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Before</th>
+                                                    <th scope="col">During</th>
+                                                    <th scope="col">% Change</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">Well-Functioning
-                                    Government</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                            </td>
+                                                    <td><span class="fw-medium pillar-text">Well-Functioning
+                                                            Government</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
+                                                    </td>
 
-                        </tr>
-                        <tr>
+                                                </tr>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">Low Levels of
-                                    Corruption</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                                    <td><span class="fw-medium pillar-text">Low Levels of
+                                                            Corruption</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                                </tr>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                    Resource</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
+                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                                            Resource</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
+                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                                </tr>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">Good Relations With
-                                    Neighbours</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                        src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                            </td>
+                                                    <td><span class="fw-medium pillar-text">Good Relations With
+                                                            Neighbours</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
+                                                    </td>
 
-                        </tr>
-                        <tr>
+                                                </tr>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">Free Flow Of
-                                    Information</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                                    <td><span class="fw-medium pillar-text">Free Flow Of
+                                                            Information</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                                </tr>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">High Levels Of Human
-                                    Capital</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
+                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
+                                                            Capital</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
+                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                                </tr>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">Sound Business
-                                    Environment</span>
-                            </td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                                    <td><span class="fw-medium pillar-text">Sound Business
+                                                            Environment</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
-                        <tr>
+                                                </tr>
+                                                <tr>
 
-                            <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                    Of
-                                    Others</span></td>
-                            <td>3.8</td>
-                            <td>3.8</td>
-                            <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                    src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
+                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
+                                                            Of
+                                                            Others</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
 
-                        </tr>
+                                                </tr>
 
-                    </tbody>
+                                            </tbody>
 
-                </table>
-                <!-- end table -->
-            </div>
-            <!-- end table responsive -->
-        </div>
+                                        </table>
+                                        <!-- end table -->
+                                    </div>
+                                    <!-- end table responsive -->
+                                </div>
 
-    </div>
-</div><!-- end card-body -->
-</div><!-- end card -->
-</div> --}}
+                            </div>
+                        </div><!-- end card-body -->
+                        </div><!-- end card -->
+                        </div>
                     <!-- end col -->
                 </div>
                 <!--end row-->
