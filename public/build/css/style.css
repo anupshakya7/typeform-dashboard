@@ -529,3 +529,35 @@ table td{
     margin-bottom: 25px !important;
     border-radius: 10px;
 }
+.view-tag {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #3934f5;
+    background-color: #a1d1ff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.view-tag:hover {
+    background-color: #88c5ff;
+}
+.export-tag {
+    padding: 8px 10px;
+    border-radius: 5px;
+    color: #075329;
+    background-color: #98ece1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.export-tag:hover {
+    background-color:#63c9bb;
+}
+.btn-info {
+    background-color: #155fb5 !important;
+    border: none;
+}
+.btn-info:hover {
+    background-color: #1056a5 !important;
+}

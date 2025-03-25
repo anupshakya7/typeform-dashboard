@@ -145,17 +145,15 @@
                                 <td><?php echo e($date); ?></td>
                                 <td>
                                     <?php if($answer->form): ?>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
+                                    <a href="<?php echo e(route('survey.qa',$answer)); ?>" class="view-tag"><i
+                                        class="ri-eye-fill align-bottom"></i></a>
+                                    <a href="<?php echo e(route('survey.single.csv',$answer)); ?>" class="export-tag">
+                                        <i class="fa-solid fa-file-export"></i>
+                                    </a>
+                                    
                                             
                                           
-                                            <li><a href="<?php echo e(route('survey.qa',$answer)); ?>" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
+                                            
                                             
                                             <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
@@ -166,8 +164,7 @@
                                                     Delete
                                                 </a>
                                             </li> -->
-                                        </ul>
-                                    </div>
+                                        
                                     <?php endif; ?>
                                 </td>
                             </tr>
