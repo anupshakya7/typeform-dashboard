@@ -158,7 +158,7 @@
                     </div>
                     
                     <div class="btn-submit-container">
-                        <button type="button" class="btn btn-blue btn-submit" >Submit</button>
+                        <button type="submit" class="btn btn-blue btn-submit" >Submit</button>
                     </div>
 
                     <!--end col-->
