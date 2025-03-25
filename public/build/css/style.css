@@ -554,13 +554,13 @@ table td{
 .export-tag:hover {
     background-color:#63c9bb;
 }
-.btn-info {
+/* .btn-info {
     background-color: #155fb5 !important;
     border: none;
 }
 .btn-info:hover {
     background-color: #1056a5 !important;
-}
+} */
 .download-spinner-container {
  
 }
