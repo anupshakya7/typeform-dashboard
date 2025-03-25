@@ -43,6 +43,7 @@ class IndexController extends Controller
         $positivePeace = $this->positiveNegative($country,$survey_id,'positive_peace');
         $negativePeace = $this->positiveNegative($country,$survey_id,'negative_peace');
         $pillarMeanScore = $this->pillarsMeanScore($country,$survey_id);
+        $overTimeScore = $this->overTimeScore($survey_id);
 
         $resultByPillar = [];
 
@@ -191,6 +192,59 @@ class IndexController extends Controller
         }
 
         return $pillarMeanCal;
+    }
+
+    public function overTimeScore($survey_id){
+        $survey = Form::with('answer')->where('form_id',$survey_id)->first();
+        $overTimeMean = [];
+
+        if($survey->before){
+            $date = explode(' to',$survey->before);
+            $startbefore = $date[0];
+            $endbefore = $date[1];
+        }
+
+        if($survey->during){
+            $date = explode(' to',$survey->during);
+            $startduring = $date[0];
+            $endduring = $date[1];
+        }
+
+        if($survey->after){
+            $date = explode(' to',$survey->after);
+            $startafter = $date[0];
+            $endafter = $date[1];
+        }
+
+        $pillars = [
+            'well_functioning_government',
+            'low_level_corruption',
+            'equitable_distribution',
+            'good_relations',
+            'free_flow',
+            'high_levels',
+            'sound_business',
+            'acceptance_rights'
+        ];
+
+        $timeTypes = ['before','during','after'];
+
+        foreach($timeTypes as $timeType){
+            if($survey->$timeType != null){
+                foreach($pillars as $pillar){
+                    $answerSum = $survey->answer()->sum($pillar);
+                    $answerCount = $survey->answer()->select($pillar)->count();
+                    
+                    $overTimeMean[$pillar] = $answerSum/$answerCount;
+                }
+
+            }else{
+                
+            }
+        }
+       
+
+        
     }
 
     /**
