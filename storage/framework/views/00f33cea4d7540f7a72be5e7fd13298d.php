@@ -159,9 +159,7 @@
                     </div>
                     
                     <div class="btn-submit-container">
-
-                        <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-
+                        <button type="submit" class="btn btn-blue btn-submit" >Submit</button>
                     </div>
 
                     <!--end col-->
@@ -183,6 +181,11 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Button trigger modal -->
+
 
 
 <?php $__env->stopSection(); ?>
