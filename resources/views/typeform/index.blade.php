@@ -24,7 +24,7 @@
 
   <!-- about csb section--------========================================= -->
   <div class="about-csb" style="background-image: url({{ asset('build/images/csb-banner.jpg') }})">
-  <h5>Community Strength Barometer - CSB</h5>
+  <h5>Community Strength Barometer (CSB)</h5>
    <p>
     The Community Strength Barometer (CSB) measures social cohesion, resilience, and well-being within communities, assessing engagement, support networks, and collective problem-solving.
    </p>
@@ -674,16 +674,25 @@
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
+                                <h4 class="card-title pillar-table-time-title mb-0 flex-grow-1">Results Over Time</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
+                                        <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="{{ URL::asset('build/icons/download.svg') }}"></img>
                                         </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="pillar-table-time">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="pillar-table-time">Export as PNG</a></li>
+                                            {{-- <li><a class="dropdown-item" href="#" data-type="excel"
+                                                    data-chart-id="pillar-table-time">Export as Excel</a></li> --}}
+                                        </ul>
+                                    </div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
@@ -698,7 +707,7 @@
                             <div class="card-body">
                                 <div class="live-preview">
                                     <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap mb-0">
+                                        <table class="table align-middle table-nowrap mb-0" id="pillar-table-time">
                                             <thead class="table-head">
                                                 <tr>
 
@@ -1530,12 +1539,23 @@
 
         //Export All
         document.addEventListener("DOMContentLoaded", function () {
-    const exportButton = document.getElementById("export-all");
-    const surveyTable = document.getElementById("survey-table"); // Define surveyTable
+    const exportButton = document.getElementById('export-all');
+    const surveyTable = document.getElementById("survey-table");
+    const loader = document.querySelector('.download-spinner-container');
+    const mainpage = document.querySelector('body'); // Added dot for class selector
+
+    mainpage.style.display = 'block'; // Directly use loader, not loader.element
+
 
     exportButton.addEventListener("click", function () {
-        exportButton.disabled = true; // Disable the export button
-        surveyTable.style.display = "block"; // Show the survey table
+        exportButton.disabled = true;
+            // Show loader if it exists
+                
+            loader.style.display = 'block'; // Directly use loader, not loader.element
+                
+                
+                mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
+        if (surveyTable) surveyTable.style.display = "block";
 
         const selectedCountry = document.getElementById('country').value;
         const selectedOrganization = document.getElementById('organization').value;
@@ -1549,8 +1569,8 @@
             },
             dataType: 'json',
             success: function (response) {
-                const surveyData = response.surveys; // Adjust according to the data structure
-                updateTable(surveyData); // Update the table with fetched data
+                const surveyData = response.surveys;
+                updateTable(surveyData);
 
                 const charts = [
                     { id: "sales-forecast-chart", title: "Mean Scores Values" },
@@ -1561,19 +1581,27 @@
                     { id: "sales-forecast-chart-3", title: "Negative Peace" },
                     { id: "multi_radar", title: "Results by pillars: Radar" },
                     { id: "pillar-table", title: "Results by pillar: Table" },
+                    { id: "pillar-table-time", title: "Results Over Time: Table" },
                     { id: "survey-table", title: "Survey Report: Table" }
                 ];
 
+            
+                
+
                 // Export charts and tables to PNG and PDF
                 exportChartsToPNGAndPDF(charts, function () {
-                    surveyTable.style.display = "none"; // Hide table after export is complete
-                    exportButton.disabled = false; // Re-enable the export button
+                    surveyTable.style.display = "none";
+                    loader.style.display = 'none';
+                    mainpage.style.overflow = 'visible';
+                    exportButton.disabled = false;
                 });
             },
             error: function (error) {
                 console.log('Error fetching data:', error);
-                exportButton.disabled = false; // Re-enable the export button
-                surveyTable.style.display = "none"; // Hide table on error
+                exportButton.disabled = false;
+                surveyTable.style.display = "none";
+                loader.style.display = 'none';
+                mainpage.style.overflow = 'visible';
             }
         });
     });

@@ -229,7 +229,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
             }
-            else if (chartId === "pillar-table") {
+            else if (chartId === "pillar-table-time") {
+                const chartTitle = document.querySelector('.pillar-table-time-title')?.innerText || "Overview";
+
+                if (exportType === "pdf") {
+
+                    exportToPDF(chartId,chartTitle);
+                } else if (exportType === "png") {
+                    exportToPNG(chartId,chartTitle);
+                } else if (exportType === "excel") {
+                    exportToExcel(chartId,chartTitle);
+                } else {
+                    console.error("Unsupported export type for chart2:", exportType);
+                }
+            }  else if (chartId === "pillar-table") {
                 const chartTitle = document.querySelector('.results-by-pillar-table')?.innerText || "Overview";
 
                 if (exportType === "pdf") {
@@ -707,3 +720,5 @@ if (btnshow && selectSurvey) {
     
   });
 }
+
+

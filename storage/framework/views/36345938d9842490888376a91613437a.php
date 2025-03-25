@@ -24,7 +24,7 @@
 
   <!-- about csb section--------========================================= -->
   <div class="about-csb" style="background-image: url(<?php echo e(asset('build/images/csb-banner.jpg')); ?>)">
-  <h5>Community Strength Barometer - CSB</h5>
+  <h5>Community Strength Barometer (CSB)</h5>
    <p>
     The Community Strength Barometer (CSB) measures social cohesion, resilience, and well-being within communities, assessing engagement, support networks, and collective problem-solving.
    </p>
@@ -677,9 +677,34 @@
                                         <a class="icon-frame" href="#"
                                             class="m-0 p-0 d-flex justify-content-center align-items-center">
 
+<<<<<<< HEAD
+                    <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card mb-0">
+                            <div class="card-header align-items-center d-flex">
+                                <h4 class="card-title pillar-table-time-title mb-0 flex-grow-1">Results Over Time</h4>
+                                <div class="flex-shrink-0">
+                                    <div class="d-flex flex-row gap-2 align-items-center">
+                                        <!--info here-->
+                                        <div class="dropdown">
+                                        <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
+                                        <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                            <li><a class="dropdown-item" href="#" data-type="pdf"
+                                                    data-chart-id="pillar-table-time">Export as PDF</a></li>
+                                            <li><a class="dropdown-item" href="#" data-type="png"
+                                                    data-chart-id="pillar-table-time">Export as PNG</a></li>
+                                            
+                                        </ul>
+                                    </div>
+=======
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+>>>>>>> master
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
@@ -688,6 +713,13 @@
                                     </div>
                                 </div>
                             </div><!-- end card header -->
+<<<<<<< HEAD
+
+                            <div class="card-body">
+                                <div class="live-preview">
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-nowrap mb-0" id="pillar-table-time">
+=======
                             <?php
                                 
                             ?>
@@ -695,20 +727,114 @@
                                 <div class="live-preview">
                                     <div class="table-responsive">
                                         <table class="table align-middle table-nowrap mb-0">
+>>>>>>> master
                                             <thead class="table-head">
                                                 <tr>
 
                                                     <th scope="col"></th>
                                                     <th scope="col">Before</th>
                                                     <th scope="col">During</th>
+<<<<<<< HEAD
+=======
                                                     <?php if($formDetails->after): ?>
                                                     <th scope="col">After</th>
                                                     <?php endif; ?>
+>>>>>>> master
                                                     <th scope="col">% Change</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< HEAD
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">Well-Functioning
+                                                            Government</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">Low Levels of
+                                                            Corruption</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
+                                                            Resource</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
+                                                            src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight"></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">Good Relations With
+                                                            Neighbours</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">Free Flow Of
+                                                            Information</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
+                                                            Capital</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
+                                                            src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight"></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">Sound Business
+                                                            Environment</span>
+                                                    </td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
+                                                            Of
+                                                            Others</span></td>
+                                                    <td>3.8</td>
+                                                    <td>3.8</td>
+                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
+                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
+
+                                                </tr>
+
+=======
                                                 <?php
                                                     $pillars = [
                                                         'well_functioning_government' =>
@@ -751,6 +877,7 @@
 
                                                 </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+>>>>>>> master
                                             </tbody>
 
                                         </table>
@@ -762,7 +889,10 @@
                             </div>
                         </div><!-- end card-body -->
                         </div><!-- end card -->
+<<<<<<< HEAD
+=======
                         
+>>>>>>> master
                         </div>
                     <!-- end col -->
                     <?php endif; ?>
@@ -1528,12 +1658,23 @@
 
         //Export All
         document.addEventListener("DOMContentLoaded", function () {
-    const exportButton = document.getElementById("export-all");
-    const surveyTable = document.getElementById("survey-table"); // Define surveyTable
+    const exportButton = document.getElementById('export-all');
+    const surveyTable = document.getElementById("survey-table");
+    const loader = document.querySelector('.download-spinner-container');
+    const mainpage = document.querySelector('body'); // Added dot for class selector
+
+    mainpage.style.display = 'block'; // Directly use loader, not loader.element
+
 
     exportButton.addEventListener("click", function () {
-        exportButton.disabled = true; // Disable the export button
-        surveyTable.style.display = "block"; // Show the survey table
+        exportButton.disabled = true;
+            // Show loader if it exists
+                
+            loader.style.display = 'block'; // Directly use loader, not loader.element
+                
+                
+                mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
+        if (surveyTable) surveyTable.style.display = "block";
 
         const selectedCountry = document.getElementById('country').value;
         const selectedOrganization = document.getElementById('organization').value;
@@ -1547,8 +1688,8 @@
             },
             dataType: 'json',
             success: function (response) {
-                const surveyData = response.surveys; // Adjust according to the data structure
-                updateTable(surveyData); // Update the table with fetched data
+                const surveyData = response.surveys;
+                updateTable(surveyData);
 
                 const charts = [
                     { id: "sales-forecast-chart", title: "Mean Scores Values" },
@@ -1559,19 +1700,27 @@
                     { id: "sales-forecast-chart-3", title: "Negative Peace" },
                     { id: "multi_radar", title: "Results by pillars: Radar" },
                     { id: "pillar-table", title: "Results by pillar: Table" },
+                    { id: "pillar-table-time", title: "Results Over Time: Table" },
                     { id: "survey-table", title: "Survey Report: Table" }
                 ];
 
+            
+                
+
                 // Export charts and tables to PNG and PDF
                 exportChartsToPNGAndPDF(charts, function () {
-                    surveyTable.style.display = "none"; // Hide table after export is complete
-                    exportButton.disabled = false; // Re-enable the export button
+                    surveyTable.style.display = "none";
+                    loader.style.display = 'none';
+                    mainpage.style.overflow = 'visible';
+                    exportButton.disabled = false;
                 });
             },
             error: function (error) {
                 console.log('Error fetching data:', error);
-                exportButton.disabled = false; // Re-enable the export button
-                surveyTable.style.display = "none"; // Hide table on error
+                exportButton.disabled = false;
+                surveyTable.style.display = "none";
+                loader.style.display = 'none';
+                mainpage.style.overflow = 'visible';
             }
         });
     });
