@@ -182,32 +182,58 @@
     </div>
 </div>
 
-{{--
+
 
 <!-- Button trigger modal -->
-{{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >
   Launch demo modal
 </button>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+  <div class="modal-overlay">
+        <div class="modal-container">
+
+            <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Note</h2>
+                <a class="close-button" data-bs-dismiss="modal" style="cursor: pointer !important;"><i class="fa-solid fa-xmark"></i></a>
+            </div>
+                <div class="instruction-step">
+                    <span class="step-number">1</span>
+                    <span class="step-title">Go to your Typeform account</span>
+                    <p class="step-description">Log in to your Typeform account where your survey form is hosted.</p>
+                </div>
+                
+                <div class="instruction-step">
+                    <span class="step-number">2</span>
+                    <span class="step-title">Navigate to the Connect section</span>
+                    <p class="step-description">Select your form and go to the "Connect" section in the form editor.</p>
+                </div>
+                
+                <div class="instruction-step">
+                    <span class="step-number">3</span>
+                    <span class="step-title">Add the webhook URL</span>
+                    <p class="step-description">In the webhook settings, add the following URL:</p>
+                    <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-New/public/answer</span>
+                </div>
+                
+                <div class="instruction-step border-0">
+                    <span class="step-number">4</span>
+                    <span class="step-title">Save and activate the webhook</span>
+                    <p class="step-description">After adding the URL, save your changes and turn on the webhook to start receiving responses in real-time.</p>
+                </div>
+                <div class="modal-footer">
+                <button class="confirm-button btn-blue">Confirm Submission</button>
+            </div>
+            </div>
+           
+        </div>
     </div>
   </div>
 </div>
-                    --}}
+                    
 {{-- --}}
 @endsection
 

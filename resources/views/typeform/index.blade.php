@@ -24,7 +24,7 @@
 
   <!-- about csb section--------========================================= -->
   <div class="about-csb" style="background-image: url({{ asset('build/images/csb-banner.jpg') }})">
-  <h5>Community Strength Barometer - CSB</h5>
+  <h5>Community Strength Barometer (CSB)</h5>
    <p>
     The Community Strength Barometer (CSB) measures social cohesion, resilience, and well-being within communities, assessing engagement, support networks, and collective problem-solving.
    </p>
@@ -1569,12 +1569,23 @@
 
         //Export All
         document.addEventListener("DOMContentLoaded", function () {
-    const exportButton = document.getElementById("export-all");
-    const surveyTable = document.getElementById("survey-table"); // Define surveyTable
+    const exportButton = document.getElementById('export-all');
+    const surveyTable = document.getElementById("survey-table");
+    const loader = document.querySelector('.download-spinner-container');
+    const mainpage = document.querySelector('body'); // Added dot for class selector
+
+    mainpage.style.display = 'block'; // Directly use loader, not loader.element
+
 
     exportButton.addEventListener("click", function () {
-        exportButton.disabled = true; // Disable the export button
-        surveyTable.style.display = "block"; // Show the survey table
+        exportButton.disabled = true;
+            // Show loader if it exists
+                
+            loader.style.display = 'block'; // Directly use loader, not loader.element
+                
+                
+                mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
+        if (surveyTable) surveyTable.style.display = "block";
 
         const selectedCountry = document.getElementById('country').value;
         const selectedOrganization = document.getElementById('organization').value;
@@ -1588,8 +1599,8 @@
             },
             dataType: 'json',
             success: function (response) {
-                const surveyData = response.surveys; // Adjust according to the data structure
-                updateTable(surveyData); // Update the table with fetched data
+                const surveyData = response.surveys;
+                updateTable(surveyData);
 
                 const charts = [
                     { id: "sales-forecast-chart", title: "Mean Scores Values" },
@@ -1603,16 +1614,23 @@
                     { id: "survey-table", title: "Survey Report: Table" }
                 ];
 
+            
+                
+
                 // Export charts and tables to PNG and PDF
                 exportChartsToPNGAndPDF(charts, function () {
-                    surveyTable.style.display = "none"; // Hide table after export is complete
-                    exportButton.disabled = false; // Re-enable the export button
+                    surveyTable.style.display = "none";
+                    loader.style.display = 'none';
+                    mainpage.style.overflow = 'visible';
+                    exportButton.disabled = false;
                 });
             },
             error: function (error) {
                 console.log('Error fetching data:', error);
-                exportButton.disabled = false; // Re-enable the export button
-                surveyTable.style.display = "none"; // Hide table on error
+                exportButton.disabled = false;
+                surveyTable.style.display = "none";
+                loader.style.display = 'none';
+                mainpage.style.overflow = 'visible';
             }
         });
     });
