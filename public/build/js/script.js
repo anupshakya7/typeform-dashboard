@@ -175,19 +175,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     exportToPDF(chartId,chartTitle);
                 } else if (exportType === "png") {
-                    exportToPNG(chartId,chartTitle);
+                    exportToPNGPie(chartId,chartTitle);
                 }  else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
             }
             else if (chartId === "simple_pie_chart2") {
-                const chartTitle = document.querySelector('.pie-gender-title')?.innerText || "Overview";
+                const chartTitle = document.querySelector('.pie-age-title')?.innerText || "Overview";
 
                 if (exportType === "pdf") {
 
                     exportToPDF(chartId,chartTitle);
                 } else if (exportType === "png") {
-                    exportToPNG(chartId,chartTitle);
+                    exportToPNGPie(chartId,chartTitle);
                 }  else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
@@ -604,6 +604,96 @@ function exportToPDFPnBar(chartId, chartTitle) {
     });
 }
 
+
+//piechart png download
+function exportToPNGPie(chartId, chartTitle) {
+    // Capture the logo (assuming the logo is an img element with a specific class or ID)
+    const logo = document.querySelector(".logo img"); // Adjust the selector to match your logo element
+    const logoData = logo ? logo.src : null;
+
+    // Capture the chart as an image with higher resolution
+    html2canvas(document.getElementById(chartId), {
+        scale: 2, // Increase scale for higher resolution
+        useCORS: true, // Allow cross-origin images (if needed)
+        backgroundColor: null
+    }).then(canvas => {
+        const ctx = canvas.getContext("2d");
+
+        // Create a new canvas to add logo, title, and chart image
+        const newCanvas = document.createElement("canvas");
+        const newCtx = newCanvas.getContext("2d");
+
+        // Set the new canvas dimensions
+        const padding = 50; // Padding around the content
+        const borderWidth = 1; // Border width
+        const logoSize = 120; // Logo size set to 60px x 60px
+        const titleHeight = 25; // Height of the title
+        const chartHeight = canvas.height;
+        const chartWidth = canvas.width;
+
+        // Calculate the total width and height of the new canvas
+        const totalWidth = chartWidth + 2 * padding + 2 * borderWidth;
+        const totalHeight = logoSize + titleHeight + chartHeight + 3 * padding + 2 * borderWidth;
+
+        newCanvas.width = totalWidth;
+        newCanvas.height = totalHeight;
+
+        // Fill the background with white
+        newCtx.fillStyle = "#FFFFFF";
+        newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+
+        // Draw the black border around the content
+        newCtx.strokeStyle = "#000000";
+        newCtx.lineWidth = borderWidth;
+        newCtx.strokeRect(borderWidth / 2, borderWidth / 2, totalWidth - borderWidth, totalHeight - borderWidth);
+
+        // Add logo to the new canvas (if available)
+        if (logoData) {
+            const logoImg = new Image();
+            logoImg.src = logoData;
+            logoImg.onload = () => {
+                // Draw the logo on the left with a size of 60px x 60px
+                newCtx.drawImage(logoImg, padding + borderWidth, padding + borderWidth, logoSize, logoSize);
+
+                // Add chart title to the right of the logo
+                newCtx.font = "bold 36px Arial"; // Slightly larger and bold font
+                newCtx.fillStyle = "#000000";
+                const titleX = padding + borderWidth + logoSize + 30; // 30px spacing between logo and title
+                const titleY = padding + borderWidth + logoSize / 2 + 5; // Center title vertically with logo
+                newCtx.fillText(chartTitle, titleX, titleY);
+
+                // Add the chart image below the title and logo
+                const chartX = padding + borderWidth;
+                const chartY = padding + borderWidth + logoSize + padding;
+                newCtx.drawImage(canvas, chartX, chartY, chartWidth, chartHeight);
+
+                // Create a link to download the image
+                const link = document.createElement("a");
+                link.href = newCanvas.toDataURL("image/png", 1.0); // Ensure high-quality PNG
+                link.download = `${chartTitle}.png`;
+                link.click();
+            };
+        } else {
+            // Add chart title to the new canvas (centered)
+            newCtx.font = "bold 36px Arial"; // Slightly larger and bold font
+            newCtx.fillStyle = "#000000";
+            const titleX = (totalWidth - newCtx.measureText(chartTitle).width) / 2;
+            const titleY = padding + borderWidth + titleHeight;
+            newCtx.fillText(chartTitle, titleX, titleY);
+
+            // Add the chart image below the title
+            const chartX = padding + borderWidth;
+            const chartY = padding + borderWidth + titleHeight + padding;
+            newCtx.drawImage(canvas, chartX, chartY, chartWidth, chartHeight);
+
+            // Create a link to download the image
+            const link = document.createElement("a");
+            link.href = newCanvas.toDataURL("image/png", 1.0); // Ensure high-quality PNG
+            link.download = `${chartTitle}.png`;
+            link.click();
+        }
+    });
+}
 
 //survey begin js
 const btnshow = document.querySelector('#show-data');
