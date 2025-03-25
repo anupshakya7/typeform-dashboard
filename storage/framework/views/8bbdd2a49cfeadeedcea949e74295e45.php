@@ -664,7 +664,7 @@
                     </div><!-- end col -->
 
                     <!--table section starts here -->
-
+                    <?php if($formDetails->during || $formDetails->after): ?>
                     <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
@@ -687,7 +687,9 @@
                                     </div>
                                 </div>
                             </div><!-- end card header -->
-
+                            <?php
+                                
+                            ?>
                             <div class="card-body">
                                 <div class="live-preview">
                                     <div class="table-responsive">
@@ -698,99 +700,55 @@
                                                     <th scope="col"></th>
                                                     <th scope="col">Before</th>
                                                     <th scope="col">During</th>
+                                                    <?php if($formDetails->after): ?>
+                                                    <th scope="col">After</th>
+                                                    <?php endif; ?>
                                                     <th scope="col">% Change</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php
+                                                    $pillars = [
+                                                        'well_functioning_government' =>
+                                                            'Well-Functioning Government',
+                                                        'low_level_corruption' => 'Low Levels of Corruption',
+                                                        'equitable_distribution' =>
+                                                            'Equitable Distribution of Resources',
+                                                        'good_relations' => 'Good Relations with Neighbours',
+                                                        'free_flow' => 'Free Flow of Information',
+                                                        'high_levels' => 'High Levels of Human Capital',
+                                                        'sound_business' => 'Sound Business Environment',
+                                                        'acceptance_rights' => 'Acceptance of the Rights of Others',
+                                                    ];
+                                                ?>
+                                                <?php $__currentLoopData = $overTimeScores['before']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $overTimeScore): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
 
-                                                    <td><span class="fw-medium pillar-text">Well-Functioning
-                                                            Government</span>
+                                                    <td><span class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                     </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                    <td><?php echo e($overTimeScore); ?></td>
+                                                    <td><?php echo e($overTimeScores['during'][$key]); ?></td>
+                                                    <?php if($formDetails->after): ?>
+                                                    <td><?php echo e($overTimeScores['after'][$key]); ?></td>
+                                                    <?php endif; ?>
+                                                    <td class="trend-blue">
+                                                        <?php
+                                                            $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
+                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScore;
+                                                        ?> 
+                                                        <span ><?php echo e($percentChange); ?>%
+                                                            <?php if($percentChange > 0): ?>
+                                                            <img class="trend-icon"
                                                                 src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php else: ?>
+                                                            <img class="trend-icon"
+                                                                src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php endif; ?>
                                                     </td>
 
                                                 </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Low Levels of
-                                                            Corruption</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                                            Resource</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Good Relations With
-                                                            Neighbours</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Free Flow Of
-                                                            Information</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
-                                                            Capital</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Sound Business
-                                                            Environment</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                                            Of
-                                                            Others</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>
 
                                         </table>
@@ -802,8 +760,10 @@
                             </div>
                         </div><!-- end card-body -->
                         </div><!-- end card -->
+                        
                         </div>
                     <!-- end col -->
+                    <?php endif; ?>
                 </div>
                 <!--end row-->
 

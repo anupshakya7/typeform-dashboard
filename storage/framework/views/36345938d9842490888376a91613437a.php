@@ -665,7 +665,19 @@
                     </div><!-- end col -->
 
                     <!--table section starts here -->
+                    <?php if($formDetails->during || $formDetails->after): ?>
+                    <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card mb-0">
+                            <div class="card-header align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
+                                <div class="flex-shrink-0">
+                                    <div class="d-flex flex-row gap-2 align-items-center">
+                                        <!--info here-->
+                                        <a class="icon-frame" href="#"
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
 
+<<<<<<< HEAD
                     <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
@@ -688,6 +700,11 @@
                                             
                                         </ul>
                                     </div>
+=======
+                                            <img class="svg-icon" type="image/svg+xml"
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                        </a>
+>>>>>>> master
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
@@ -696,22 +713,39 @@
                                     </div>
                                 </div>
                             </div><!-- end card header -->
+<<<<<<< HEAD
 
                             <div class="card-body">
                                 <div class="live-preview">
                                     <div class="table-responsive">
                                         <table class="table align-middle table-nowrap mb-0" id="pillar-table-time">
+=======
+                            <?php
+                                
+                            ?>
+                            <div class="card-body">
+                                <div class="live-preview">
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-nowrap mb-0">
+>>>>>>> master
                                             <thead class="table-head">
                                                 <tr>
 
                                                     <th scope="col"></th>
                                                     <th scope="col">Before</th>
                                                     <th scope="col">During</th>
+<<<<<<< HEAD
+=======
+                                                    <?php if($formDetails->after): ?>
+                                                    <th scope="col">After</th>
+                                                    <?php endif; ?>
+>>>>>>> master
                                                     <th scope="col">% Change</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< HEAD
                                                 <tr>
 
                                                     <td><span class="fw-medium pillar-text">Well-Functioning
@@ -800,6 +834,50 @@
 
                                                 </tr>
 
+=======
+                                                <?php
+                                                    $pillars = [
+                                                        'well_functioning_government' =>
+                                                            'Well-Functioning Government',
+                                                        'low_level_corruption' => 'Low Levels of Corruption',
+                                                        'equitable_distribution' =>
+                                                            'Equitable Distribution of Resources',
+                                                        'good_relations' => 'Good Relations with Neighbours',
+                                                        'free_flow' => 'Free Flow of Information',
+                                                        'high_levels' => 'High Levels of Human Capital',
+                                                        'sound_business' => 'Sound Business Environment',
+                                                        'acceptance_rights' => 'Acceptance of the Rights of Others',
+                                                    ];
+                                                ?>
+                                                <?php $__currentLoopData = $overTimeScores['before']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $overTimeScore): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <tr>
+
+                                                    <td><span class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
+                                                    </td>
+                                                    <td><?php echo e($overTimeScore); ?></td>
+                                                    <td><?php echo e($overTimeScores['during'][$key]); ?></td>
+                                                    <?php if($formDetails->after): ?>
+                                                    <td><?php echo e($overTimeScores['after'][$key]); ?></td>
+                                                    <?php endif; ?>
+                                                    <td class="trend-blue">
+                                                        <?php
+                                                            $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
+                                                            $overTimeScore = $overTimeScore > 0 ? $overTimeScore:1;
+                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScore;
+                                                        ?> 
+                                                        <span ><?php echo e($percentChange); ?>%
+                                                            <?php if($percentChange > 0): ?>
+                                                            <img class="trend-icon"
+                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php else: ?>
+                                                            <img class="trend-icon"
+                                                                src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php endif; ?>
+                                                    </td>
+
+                                                </tr>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+>>>>>>> master
                                             </tbody>
 
                                         </table>
@@ -811,8 +889,13 @@
                             </div>
                         </div><!-- end card-body -->
                         </div><!-- end card -->
+<<<<<<< HEAD
+=======
+                        
+>>>>>>> master
                         </div>
                     <!-- end col -->
+                    <?php endif; ?>
                 </div>
                 <!--end row-->
 

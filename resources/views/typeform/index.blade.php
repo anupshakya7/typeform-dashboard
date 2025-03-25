@@ -669,7 +669,7 @@
                     </div><!-- end col -->
 
                     <!--table section starts here -->
-
+                    @if($formDetails->during || $formDetails->after)
                     <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
@@ -701,7 +701,9 @@
                                     </div>
                                 </div>
                             </div><!-- end card header -->
-
+                            @php
+                                
+                            @endphp
                             <div class="card-body">
                                 <div class="live-preview">
                                     <div class="table-responsive">
@@ -712,99 +714,56 @@
                                                     <th scope="col"></th>
                                                     <th scope="col">Before</th>
                                                     <th scope="col">During</th>
+                                                    @if($formDetails->after)
+                                                    <th scope="col">After</th>
+                                                    @endif
                                                     <th scope="col">% Change</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @php
+                                                    $pillars = [
+                                                        'well_functioning_government' =>
+                                                            'Well-Functioning Government',
+                                                        'low_level_corruption' => 'Low Levels of Corruption',
+                                                        'equitable_distribution' =>
+                                                            'Equitable Distribution of Resources',
+                                                        'good_relations' => 'Good Relations with Neighbours',
+                                                        'free_flow' => 'Free Flow of Information',
+                                                        'high_levels' => 'High Levels of Human Capital',
+                                                        'sound_business' => 'Sound Business Environment',
+                                                        'acceptance_rights' => 'Acceptance of the Rights of Others',
+                                                    ];
+                                                @endphp
+                                                @foreach($overTimeScores['before'] as $key=> $overTimeScore)
                                                 <tr>
 
-                                                    <td><span class="fw-medium pillar-text">Well-Functioning
-                                                            Government</span>
+                                                    <td><span class="fw-medium pillar-text">{{$pillars[$key]}}</span>
                                                     </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
+                                                    <td>{{$overTimeScore}}</td>
+                                                    <td>{{$overTimeScores['during'][$key]}}</td>
+                                                    @if($formDetails->after)
+                                                    <td>{{$overTimeScores['after'][$key]}}</td>
+                                                    @endif
+                                                    <td class="trend-blue">
+                                                        @php
+                                                            $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
+                                                            $overTimeScore = $overTimeScore > 0 ? $overTimeScore:1;
+                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScore;
+                                                        @endphp 
+                                                        <span >{{$percentChange}}%
+                                                            @if($percentChange > 0)
+                                                            <img class="trend-icon"
                                                                 src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
+                                                            @else
+                                                            <img class="trend-icon"
+                                                                src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight">
+                                                            @endif
                                                     </td>
 
                                                 </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Low Levels of
-                                                            Corruption</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                                            Resource</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Good Relations With
-                                                            Neighbours</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Free Flow Of
-                                                            Information</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
-                                                            Capital</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Sound Business
-                                                            Environment</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                                            Of
-                                                            Others</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-
+                                                @endforeach
                                             </tbody>
 
                                         </table>
@@ -816,8 +775,10 @@
                             </div>
                         </div><!-- end card-body -->
                         </div><!-- end card -->
+                        
                         </div>
                     <!-- end col -->
+                    @endif
                 </div>
                 <!--end row-->
 

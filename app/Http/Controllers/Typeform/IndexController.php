@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Form;
 use App\Models\Organization;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -43,11 +44,11 @@ class IndexController extends Controller
         $positivePeace = $this->positiveNegative($country,$survey_id,'positive_peace');
         $negativePeace = $this->positiveNegative($country,$survey_id,'negative_peace');
         $pillarMeanScore = $this->pillarsMeanScore($country,$survey_id);
-        $overTimeScore = $this->overTimeScore($survey_id);
+        $overTimeScores = $this->overTimeScore($survey_id);
 
         $resultByPillar = [];
 
-        return view('typeform.index',compact('formDetails','countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','filterData','selectedCountrywithSurvey'));
+        return view('typeform.index',compact('formDetails','countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','overTimeScores','filterData','selectedCountrywithSurvey'));
     }
 
     public function topBoxData(){
@@ -196,25 +197,7 @@ class IndexController extends Controller
 
     public function overTimeScore($survey_id){
         $survey = Form::with('answer')->where('form_id',$survey_id)->first();
-        $overTimeMean = [];
-
-        if($survey->before){
-            $date = explode(' to',$survey->before);
-            $startbefore = $date[0];
-            $endbefore = $date[1];
-        }
-
-        if($survey->during){
-            $date = explode(' to',$survey->during);
-            $startduring = $date[0];
-            $endduring = $date[1];
-        }
-
-        if($survey->after){
-            $date = explode(' to',$survey->after);
-            $startafter = $date[0];
-            $endafter = $date[1];
-        }
+        $overTimeMeanTime = [];
 
         $pillars = [
             'well_functioning_government',
@@ -231,20 +214,29 @@ class IndexController extends Controller
 
         foreach($timeTypes as $timeType){
             if($survey->$timeType != null){
+                $date = explode(' to ',$survey->$timeType);
+                $startdate = Carbon::createFromFormat('d-m-Y',$date[0])->startOfDay();
+                $enddate = Carbon::createFromFormat('d-m-Y',$date[1])->endOfDay();
+
+                $answersInTimeRange = $survey->answer()->whereBetween('created_at',[$startdate,$enddate])->get();
+
+                $overTimeMean = [];
                 foreach($pillars as $pillar){
-                    $answerSum = $survey->answer()->sum($pillar);
-                    $answerCount = $survey->answer()->select($pillar)->count();
+                    $answerSum = $answersInTimeRange->sum($pillar);
+                    $answerCount = $answersInTimeRange->count();
                     
+                    $answerCount = max($answerCount,1);
+
                     $overTimeMean[$pillar] = $answerSum/$answerCount;
                 }
 
+                $overTimeMeanTime[$timeType] = $overTimeMean;
             }else{
-                
+                $overTimeMeanTime[$timeType] = 0;
             }
         }
-       
-
         
+        return $overTimeMeanTime;
     }
 
     /**
