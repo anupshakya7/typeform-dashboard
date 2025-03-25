@@ -4,7 +4,17 @@
 <?php $__env->stopSection(); ?>
 
 
+
 <?php $__env->startSection('content'); ?>
+
+<div class="download-spinner-container">
+<div class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+</div>
+</div>
     <div class="row">
         <div class="col">
             <div class="h-100">
