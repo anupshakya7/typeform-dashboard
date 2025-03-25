@@ -751,4 +751,7 @@ table td{
 
 .form-note p {
     font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: #0b795b;
 }
