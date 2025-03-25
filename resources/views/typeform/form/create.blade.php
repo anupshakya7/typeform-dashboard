@@ -122,8 +122,7 @@
                                 <span class="text-danger">*</span>
                                 @endif
                             </label>
-                            <select id="branch" name="branch" class="form-select select2" data-choices
-                                data-choices-sorting="true" disabled>
+                            <select id="branch" name="branch" class="form-select select2" disabled>
                                 <option value="" selected>Choose Division</option>
                             </select>
                         </div>

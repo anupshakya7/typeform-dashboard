@@ -50,8 +50,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
-                            <select id="country" name="country" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="country" name="country" class="form-select select2" >
                                 <option selected>Choose Country</option>
                                 @foreach ($countries as $country)
                                 <option value="{{$country['name']}}" {{$form->country == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
@@ -63,8 +62,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
-                            <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Choose Organization</option>
                                 @foreach($organizations as $organization)
                                 <option value="{{$organization->id}}" {{$organization->id == $form->organization_id ? 'selected':''}}>{{$organization->name}}</option>
@@ -89,8 +87,7 @@
                                 $organization_id = $form->branches->organization->id;
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
                             @endphp
-                            <select id="branch" name="branch" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="branch" name="branch" class="form-select select2" >
                                 <option value="" selected>Choose Division</option>
                                 {{-- @foreach($branches as $branch)
                                 <option value="{{$branch->id}}" {{$branch->id == $form->branch_id ? 'selected':''}}>{{$branch->name}}</option>
