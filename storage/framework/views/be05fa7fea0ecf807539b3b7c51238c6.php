@@ -110,21 +110,21 @@
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
-                            <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->before)); ?>" data-provider="flatpickr"
+                            <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',\App\Helpers\DateFormatter::formatDateRange($form->before))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">During Survey Date [From - To] </label>
-                            <input type="text" name="duringdate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->during)); ?>" data-provider="flatpickr"
+                            <input type="text" name="duringdate" class="form-control mt-2" value="<?php echo e(old('duringdate',\App\Helpers\DateFormatter::formatDateRange($form->during))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick during date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">After Survey Date [From - To] </label>
-                            <input type="text" name="afterdate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->after)); ?>" data-provider="flatpickr"
+                            <input type="text" name="afterdate" class="form-control mt-2" value="<?php echo e(old('afterdate',\App\Helpers\DateFormatter::formatDateRange($form->after))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>
