@@ -143,9 +143,9 @@
                                 <td><?php echo e($date); ?></td>
                                 <td>
                                     <?php if($answer->form): ?>
-                                    <a href="<?php echo e(route('survey.qa',$answer)); ?>" class="btn btn-soft-primary btn-sm dropdown"><i
+                                    <a href="<?php echo e(route('survey.qa',$answer)); ?>" class="view-tag"><i
                                         class="ri-eye-fill align-bottom"></i></a>
-                                    <a href="<?php echo e(route('survey.single.csv',$answer)); ?>" class="btn btn-soft-primary btn-sm dropdown">
+                                    <a href="<?php echo e(route('survey.single.csv',$answer)); ?>" class="export-tag">
                                         <i class="fa-solid fa-file-export"></i>
                                     </a>
                                     
