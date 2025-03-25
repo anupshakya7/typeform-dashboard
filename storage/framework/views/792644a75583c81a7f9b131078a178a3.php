@@ -88,8 +88,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
-                            <select id="country" name="country" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="country" name="country" class="form-select select2" >
                                 <option value="" selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
@@ -101,8 +100,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
-                            <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>" <?php echo e(auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':''); ?> ><?php echo e($organization->name); ?></option>
@@ -183,31 +181,6 @@
     </div>
 </div>
 
-
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <?php $__env->stopSection(); ?>
