@@ -121,8 +121,7 @@
                                 <span class="text-danger">*</span>
                                 <?php endif; ?>
                             </label>
-                            <select id="branch" name="branch" class="form-select select2" data-choices
-                                data-choices-sorting="true" disabled>
+                            <select id="branch" name="branch" class="form-select select2" disabled>
                                 <option value="" selected>Choose Division</option>
                             </select>
                         </div>
@@ -157,9 +156,58 @@
                     </div>
                     
                     <div class="btn-submit-container">
-                        <button type="submit" class="btn btn-blue btn-submit" >Submit</button>
+                        <button type="button" class="btn btn-blue btn-submit" data-bs-toggle="modal" data-bs-target="#exampleModal" >Submit</button>
                     </div>
-
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-overlay">
+                            <div class="modal-container">
+                    
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Note</h2>
+                                    <a class="close-button" data-bs-dismiss="modal" style="cursor: pointer !important;"><i class="fa-solid fa-xmark"></i></a>
+                                </div>
+                                    <div class="instruction-step">
+                                        <span class="step-number">1</span>
+                                        <span class="step-title">Go to your Typeform account</span>
+                                        <p class="step-description">Log in to your Typeform account where your survey form is hosted.</p>
+                                    </div>
+                                    
+                                    <div class="instruction-step">
+                                        <span class="step-number">2</span>
+                                        <span class="step-title">Navigate to the Connect section</span>
+                                        <p class="step-description">Select your form and go to the "Connect" section in the form editor.</p>
+                                    </div>
+                                    
+                                    <div class="instruction-step">
+                                        <span class="step-number">3</span>
+                                        <span class="step-title">Add the webhook URL</span>
+                                        <p class="step-description">In the webhook settings, add the following URL:</p>
+                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-New/public/answer</span>
+                                    </div>
+                                    
+                                    <div class="instruction-step border-0">
+                                        <span class="step-number">4</span>
+                                        <span class="step-title">Save and activate the webhook</span>
+                                        <p class="step-description">After adding the URL, save your changes and turn on the webhook to start receiving responses in real-time.</p>
+                                    </div>
+                                    <div>
+                                        <p for="webhook">
+                                        "Have you added & activated Webhook URL in Typeform?"  <input type="checkbox" name="webhook" id="webhook"> </p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                
+                                    
+                                    <button type="submit" class="confirm-button btn-blue">Submit</button>
+                                </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                     <!--end col-->
                 </div>
                 <!--end row-->
@@ -181,6 +229,12 @@
 </div>
 
 
+
+<!-- Button trigger modal -->
+
+
+
+                    
 
 <?php $__env->stopSection(); ?>
 
@@ -211,6 +265,8 @@ document.addEventListener('DOMContentLoaded', function() {
         mode: 'range',
     });
 });
+
+
 $(document).ready(function() {
     $('#formSync').submit(function(e) {
         e.preventDefault();
@@ -365,8 +421,11 @@ $(document).ready(function() {
                 }
             })
     }
+});
 
-})
+function changeWebHookValue(value){
+    $("#webhook").val(value);
+}
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/form/create.blade.php ENDPATH**/ ?>

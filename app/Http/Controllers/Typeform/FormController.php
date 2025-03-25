@@ -104,7 +104,7 @@ class FormController extends Controller
             'questions' => 'required|array',
         ]);
         
-        DB::transaction(function() use($validatedData){
+        DB::transaction(function() use($validatedData,$request){
             try {
                 //Formatting Date
                 $beforedate_start = $this->reformatDate(explode(' to ',$validatedData['beforedate'])[0]);
@@ -131,6 +131,7 @@ class FormController extends Controller
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
+                    'webhook' => $request->webhook ? 1:0,
                     'organization_id' => $validatedData['organization'],
                     'branch_id' => $branch_id,
                     'branch_level'=>$branchLevel,

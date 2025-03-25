@@ -749,8 +749,8 @@
                                                     <td class="trend-blue">
                                                         @php
                                                             $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
-                                                            $overTimeScore = $overTimeScore > 0 ? $overTimeScore:1;
-                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScore;
+                                                            $overTimeScoreDivide = $overTimeScore > 0 ? $overTimeScore:1;
+                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScoreDivide;
                                                         @endphp 
                                                         <span >{{$percentChange}}%
                                                             @if($percentChange > 0)
