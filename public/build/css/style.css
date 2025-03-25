@@ -562,5 +562,10 @@ table td{
     background-color: #1056a5 !important;
 }
 .download-spinner-container {
- 
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    display: none;
+    z-index: 99999;
+    background-color: rgba(103, 94, 114, 0.5);
 }
