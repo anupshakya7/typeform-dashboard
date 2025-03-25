@@ -83,7 +83,7 @@
                                             <?php
                                                 $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
                                             ?>
-                                            <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="80">
+                                            <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="45" style="border-radius:50%;height: 45px;">
                                         </td>
                                         <td><?php echo e($user->name); ?></td>
                                         <td><?php echo e($user->email); ?></td>

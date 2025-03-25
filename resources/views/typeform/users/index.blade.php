@@ -85,7 +85,7 @@
                                             @php
                                                 $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
                                             @endphp
-                                            <img src="{{$profile}}" alt="{{$user->name}}" width="80">
+                                            <img src="{{$profile}}" alt="{{$user->name}}" width="45" style="border-radius:50%;height: 45px;">
                                         </td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
