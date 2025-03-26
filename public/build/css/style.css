@@ -35,13 +35,12 @@ body{
 }
 
 .logo img {
-    height: 55px;
+    width: 100%;
 }
 .counter-value {
     font-size: 32px !important;
     color: white;
     font-weight: 500;
-    
 }
 .icon-frame {
     display: flex;
