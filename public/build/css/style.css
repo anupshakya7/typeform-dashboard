@@ -592,7 +592,7 @@ table td{
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     width: 90%;
     max-width: 600px;
-    max-height: 90vh;
+    /* max-height: 90vh; */
     overflow:hidden;
 }
 @media(max-width:767px) {
@@ -717,9 +717,7 @@ table td{
         width: 95%;
     }
     
-    .modal-header {
-        padding: 15px;
-    }
+    
     
     .modal-title {
         font-size: 1.3rem;
@@ -752,6 +750,20 @@ table td{
 .form-note p {
     font-weight: bold;
     font-size: 16px;
-    text-align: center;
-    color: #0b795b;
+    text-align: left;
+    color: #228cc5;
+}
+.delete-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.delete-modal-content {
+    width: 35%;
+    
+    @media(max-width:767px) {
+        width: 100%;
+        margin: 0px 10px;
+    }
 }
