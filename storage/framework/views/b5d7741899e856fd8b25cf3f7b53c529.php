@@ -43,12 +43,7 @@
                                 class="ri-file-download-line align-bottom me-1"></i>
 
                             Export</a>
-                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                        aria-controls="theme-settings-offcanvas">
-                            <img class="svg-icon" type="image/svg+xml"
-                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                        </a>
+                        
                     </div>
                 </div>
             </div>
@@ -462,7 +457,7 @@
                 var organizationVal = organization_id;
                 var branchVal = branch_id;
 
-                if (organizationVal !== '') {
+                if (organizationVal !== '' || countryVal !== '') {
                     $.ajax({
                         url: "<?php echo e(route('survey.get')); ?>",
                         method: 'GET',
