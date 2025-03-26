@@ -32,8 +32,8 @@
                 <div class="card-header">
                     <h5 class="card-title mb-0">About Us</h5>
                 </div>
-                <div class="card-body">
-                    <h2>Community Strength Barometer (CSB) </h2>
+                <div class="card-body" style="padding: 40px;text-align: justify;">
+                    <h3>Community Strength Barometer (CSB) </h3>
                     <p>
                         The Community Strength Barometer (CSB) Survey provides a comprehensive, data-driven approach to measuring societal resilience. Grounded in the empirically validated Pillars of Positive Peace, the survey captures a detailed portrait of community dynamics, offering objective insights into societal strengths and areas for development. 
                         <br>
@@ -43,7 +43,8 @@
                         <br>
                         Understanding these perceptions is essential for policymakers, organisations, and communities seeking to foster resilience, enhance social cohesion, and drive positive change. 
                     </p>
-                    <h2>Methodology</h2>
+                    <br>
+                    <h3>Methodology</h3>
                     <p>The study employs a six-point scale survey, covering ten questions related to different aspects of community life. Participating respondents will provide insights into their level of agreement with each statement. The data is analysed using median scores and percentage distributions for each question.</p>
                     
                     <p> Survey Methodology: </p>
@@ -51,8 +52,8 @@
                         <li>Average completion time: Under 5 minutes</li>
                         <li>Question design: Focused on cross-cultural applicability and ease of understanding </li>
                      </ul>
-                    
-                    <h2>Positive Peace & Community Strength </h2>
+                    <br>
+                    <h3>Positive Peace & Community Strength </h3>
                     <p>
                         Positive Peace refers to the attitudes, institutions, and structures that create and sustain peaceful societies. Unlike Negative Peace, which is simply the absence of violence or the threat of violence, Positive Peace encompasses the presence of conditions that foster societal well-being and harmony. 
                     </p>
@@ -67,9 +68,9 @@
                     <p>
                         For more information, please see IEP Reports  
                     </p>
+                    <br>
                     
-                    
-                    <h2>Positive Peace Framework </h2>
+                    <h3>Positive Peace Framework </h3>
                     
                     <p>The 8 Pillars of Positive Peace  </p>
                     <ol>
