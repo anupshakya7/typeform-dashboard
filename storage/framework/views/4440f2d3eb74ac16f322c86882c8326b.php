@@ -117,6 +117,7 @@
                                 <th>Survey ID</th>
                                 <th>Survey Name</th>
                                 <th>Country</th>
+                                <th>Webhook</th>
                                 <th>Organization</th>
                                 <th>Division</th>
                                 <th>Before Survey</th>
@@ -136,6 +137,8 @@
                                 <td><?php echo e($form->form_id); ?></td>
                                 <td><?php echo e($form->form_title); ?></td>
                                 <td><?php echo e($form->country); ?></td>
+                                <td>
+                                    <?php echo e($form->webhook == 1 ? 'Active':'Inactive'); ?></td>
                                 <td><?php echo e(optional($form->organization)->name); ?></td>
                                 <td><?php echo e($form->branches ? optional($form->branches)->name : 'Head Office'); ?></td>
                                 <td><?php echo e($form->before); ?> </td>
