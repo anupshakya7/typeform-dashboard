@@ -45,7 +45,7 @@
     </div>
     <!-- END layout-wrapper -->
 
-    @include('layouts.customizer')
+    @include('typeform.partials.customizer')
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
@@ -63,7 +63,24 @@
         var $=jQuery;
         $(document).ready(function(){
             $('.select2').select2();
+
+            $('a[data-bs-toggle="offcanvas"]').on('click',function(event){
+                event.preventDefault();
+
+                var title = $(this).data('title');
+                var content = $(this).data('content');
+
+                if(title && content){
+                    $('#info_title').text(title);
+                    $('#info_content').html(content);
+                }else{
+                    $('#info_title').html('');
+                    $('#info_content').html('');
+                }
+            });
         });
+
+
     </script>
 </body>
 
