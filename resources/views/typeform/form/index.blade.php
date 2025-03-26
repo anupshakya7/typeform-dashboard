@@ -151,7 +151,7 @@
                                 <!-- <td>
                                     {{$form->webhook == 1 ? 'Active':'Inactive'}}</td> -->
                                     <td>
-                                    <span class="{{ $form->webhook == 1 ? 'web-hook-active' : 'webhook-inactive' }}">{{ $form->webhook == 1 ? 'Active' : 'Inactive' }}</span>
+                                    <span class="{{ $form->webhook == 1 ? 'webhook-active' : 'webhook-inactive' }}">{{ $form->webhook == 1 ? 'Active' : 'Inactive' }}</span>
                                 </td>
                                 <td>{{optional($form->organization)->name}}</td>
                                 
