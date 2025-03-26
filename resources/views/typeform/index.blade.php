@@ -23,12 +23,12 @@
                 <!--end greeting section-->
 
   <!-- about csb section--------========================================= -->
-  <div class="about-csb" style="background-image: url({{ asset('build/images/csb-banner.jpg') }})">
+  <!-- <div class="about-csb" style="background-image: url({{ asset('build/images/csb-banner.jpg') }})">
   <h5>Community Strength Barometer (CSB)</h5>
    <p>
     The Community Strength Barometer (CSB) measures social cohesion, resilience, and well-being within communities, assessing engagement, support networks, and collective problem-solving.
    </p>
-</div>
+</div> -->
 
 
                 <!-- about csb section--------========================================= -->

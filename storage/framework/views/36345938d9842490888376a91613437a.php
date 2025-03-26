@@ -670,18 +670,6 @@
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Results Over Time</h4>
-                                <div class="flex-shrink-0">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <!--info here-->
-                                        <a class="icon-frame" href="#"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-<<<<<<< HEAD
-                    <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card mb-0">
-                            <div class="card-header align-items-center d-flex">
                                 <h4 class="card-title pillar-table-time-title mb-0 flex-grow-1">Results Over Time</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
@@ -700,11 +688,6 @@
                                             
                                         </ul>
                                     </div>
-=======
-                                            <img class="svg-icon" type="image/svg+xml"
-                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                        </a>
->>>>>>> master
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
 
@@ -713,128 +696,27 @@
                                     </div>
                                 </div>
                             </div><!-- end card header -->
-<<<<<<< HEAD
-
-                            <div class="card-body">
-                                <div class="live-preview">
-                                    <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap mb-0" id="pillar-table-time">
-=======
                             <?php
                                 
                             ?>
                             <div class="card-body">
                                 <div class="live-preview">
                                     <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap mb-0">
->>>>>>> master
+                                        <table class="table align-middle table-nowrap mb-0" id="pillar-table-time">
                                             <thead class="table-head">
                                                 <tr>
 
                                                     <th scope="col"></th>
                                                     <th scope="col">Before</th>
                                                     <th scope="col">During</th>
-<<<<<<< HEAD
-=======
                                                     <?php if($formDetails->after): ?>
                                                     <th scope="col">After</th>
                                                     <?php endif; ?>
->>>>>>> master
                                                     <th scope="col">% Change</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-<<<<<<< HEAD
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Well-Functioning
-                                                            Government</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Low Levels of
-                                                            Corruption</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Equitable Distribution Of
-                                                            Resource</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Good Relations With
-                                                            Neighbours</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%<img class="trend-icon"
-                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Free Flow Of
-                                                            Information</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">High Levels Of Human
-                                                            Capital</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-red"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Sound Business
-                                                            Environment</span>
-                                                    </td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td><span class="fw-medium pillar-text">Acceptance Of The Rights
-                                                            Of
-                                                            Others</span></td>
-                                                    <td>3.8</td>
-                                                    <td>3.8</td>
-                                                    <td class="trend-blue"><span >3.8%</span><img class="trend-icon"
-                                                            src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight"></td>
-
-                                                </tr>
-
-=======
                                                 <?php
                                                     $pillars = [
                                                         'well_functioning_government' =>
@@ -862,8 +744,8 @@
                                                     <td class="trend-blue">
                                                         <?php
                                                             $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
-                                                            $overTimeScore = $overTimeScore > 0 ? $overTimeScore:1;
-                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScore;
+                                                            $overTimeScoreDivide = $overTimeScore > 0 ? $overTimeScore:1;
+                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScoreDivide;
                                                         ?> 
                                                         <span ><?php echo e($percentChange); ?>%
                                                             <?php if($percentChange > 0): ?>
@@ -877,7 +759,6 @@
 
                                                 </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
->>>>>>> master
                                             </tbody>
 
                                         </table>
@@ -889,10 +770,7 @@
                             </div>
                         </div><!-- end card-body -->
                         </div><!-- end card -->
-<<<<<<< HEAD
-=======
                         
->>>>>>> master
                         </div>
                     <!-- end col -->
                     <?php endif; ?>
