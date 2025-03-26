@@ -2,7 +2,7 @@
 <div class="app-menu navbar-menu" >
     <!-- LOGO -->
     @php
-        $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/logo.png');
+        $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
    @endphp
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
@@ -112,7 +112,7 @@
                 @endif
                 {{-- Form Management --}}
 
-                 {{-- Answer Management --}}
+                 {{-- Survey Management --}}
                  @if(hasPermissionToRoute('survey.index'))
                  <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('survey.index')}}">
@@ -122,7 +122,15 @@
                 @endif
                 {{-- Survey Management --}}
 
-               
+                 {{-- About Us --}}
+                 @if(hasPermissionToRoute('about.index'))
+                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('about.index')}}">
+                    <i class="fa-regular fa-address-card"></i> <span>About Us</span>
+                    </a>
+                </li>
+                @endif
+                {{-- About Us --}}
 
             </ul>
         </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Typeform\AboutController;
 use App\Http\Controllers\Typeform\AnswerController;
 use App\Http\Controllers\Typeform\Auth\LoginController;
 use App\Http\Controllers\Typeform\BranchController;
@@ -88,6 +89,8 @@ Route::middleware('check_auth','check_route')->group(function(){
         Route::get('/survey/generate/csv/{survey}',[AnswerController::class,'generateIndividualCSV'])->name('survey.single.csv');
         Route::get('/fecthallsurvey', [AnswerController::class, 'fetchAllSurvey'])->name('survey.fecthallsurvey');
 
+        //About Us
+        Route::get('about',[AboutController::class,'index'])->name('about.index');
     });
 });
 //Get Answer WebHook
