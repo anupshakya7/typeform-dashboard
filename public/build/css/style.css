@@ -35,7 +35,7 @@ body{
 }
 
 .logo img {
-    width: 55px;
+    height: 55px;
 }
 .counter-value {
     font-size: 32px !important;
