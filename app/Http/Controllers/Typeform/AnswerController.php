@@ -106,6 +106,13 @@ class AnswerController extends Controller
         
         try{
             $answerCreated = Answer::create($DBData);
+            $checkWebHooks = Form::where('form_id',$formId)->first();
+
+            if($checkWebHooks->webhook == 0){
+                $checkWebHooks->update([
+                    'webhook'=>1
+                ]);
+            }
         }catch(\Exception $e){
             Log::error('Error creating answer: '.$e->getMessage());
             return $e->getMessage();

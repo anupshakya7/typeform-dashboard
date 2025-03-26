@@ -48,7 +48,7 @@
                                     <?php
                                         $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
                                     ?>
-                                    <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="80">
+                                    <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="50" height="50" style="object-fit:contain ">
                                 </td>
                             </tr>
                             <tr>

@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body">
-                <div class="mb-2">
+                <div class="mb-2 table-responsive">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <tr>
@@ -50,7 +50,7 @@
                                 <th>Logo</th>
                                 <td>
                                     <?php if($organization->logo): ?>
-                                    <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" width="80" alt="Logo">
+                                    <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" width="50" height="50" alt="Logo" style="border-radius:50%;object-fit:contain;">
                                     <?php endif; ?>
                                 </td>
                             </tr>

@@ -49,7 +49,7 @@
                                     @php
                                         $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
                                     @endphp
-                                    <img src="{{$profile}}" alt="{{$user->name}}" width="50" height="50">
+                                    <img src="{{$profile}}" alt="{{$user->name}}" width="50" height="50" style="object-fit:contain ">
                                 </td>
                             </tr>
                             <tr>

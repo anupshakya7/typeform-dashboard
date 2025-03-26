@@ -82,7 +82,7 @@
                                             <?php
                                                 $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
                                             ?>
-                                            <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="80">
+                                            <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="45" style="border-radius:50%;height: 45px;object-fit:contain;">
                                         </td>
                                         <td><?php echo e($user->name); ?></td>
                                         <td><?php echo e($user->email); ?></td>
@@ -202,5 +202,4 @@
         })
     </script>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/users/index.blade.php ENDPATH**/ ?>

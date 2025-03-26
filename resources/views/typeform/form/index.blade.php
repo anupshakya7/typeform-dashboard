@@ -149,7 +149,7 @@
                                 <td>{{$form->form_title}}</td>
                                 <td>{{$form->country}}</td>
                                 <td>
-                                    {{$form->webhook == 0 && $form->answer_count == 0 ? 'Inactive':'Active'}}</td>
+                                    {{$form->webhook == 1 ? 'Active':'Inactive'}}</td>
                                 <td>{{optional($form->organization)->name}}</td>
                                 <td>{{$form->branches ? optional($form->branches)->name : 'Head Office'}}</td>
                                 <td>{{$form->before}} </td>

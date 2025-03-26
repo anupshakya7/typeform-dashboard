@@ -88,7 +88,7 @@
                                         <td>
                                             @if ($organization->logo)
                                                 <img src="{{ asset('storage/' . $organization->logo) }}" alt="Logo"
-                                                    width="50" height="50" style="border-radius:50%;">
+                                                    width="50" height="50" style="border-radius:50%;object-fit:contain;">
                                             @endif
                                         </td>
                                         {{-- <td>{{ $organization->country }}</td> --}}

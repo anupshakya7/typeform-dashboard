@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="d-flex justify-content-center">
-                            <img src="{{asset('build/images/users/user-default.png')}}" alt="profile_image" width="150" height="150" id="profile_image" style="border-radius:50%;">
+                            <img src="{{asset('build/images/users/user-default.png')}}" alt="profile_image" width="150" height="150" id="profile_image" style="border-radius:50%;object-fit:contain;">
                         </div>
                         <div class="mb-3">
                             <label for="profile" class="form-label">Profile</label>

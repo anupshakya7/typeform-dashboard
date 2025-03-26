@@ -87,7 +87,7 @@
                                         <td>
                                             <?php if($organization->logo): ?>
                                                 <img src="<?php echo e(asset('storage/' . $organization->logo)); ?>" alt="Logo"
-                                                    width="80">
+                                                    width="50" height="50" style="border-radius:50%;object-fit:contain;">
                                             <?php endif; ?>
                                         </td>
                                         

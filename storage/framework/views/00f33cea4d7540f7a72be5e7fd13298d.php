@@ -194,8 +194,8 @@
                                         <p class="step-description">After adding the URL, save your changes and turn on the webhook to start receiving responses in real-time.</p>
                                     </div>
                                     <div>
-                                        <p for="webhook">
-                                        "Have you added & activated Webhook URL in Typeform?"  <input type="checkbox" name="webhook" id="webhook"> </p>
+                                        <p>
+                                        <label for="webhook"> "Have you added & activated Webhook URL in Typeform?"</label>  <input type="checkbox" name="webhook" id="webhook"> </p>
                                     </div>
                                     <div class="modal-footer ">
                                 

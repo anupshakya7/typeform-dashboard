@@ -129,6 +129,7 @@ function getImagePreview(event,divId){
     imageTag.src = image;
     imageTag.width = "100";
     imageTag.style.padding = "5px";
+    imageTag.style.objectFit = "contain";
     imageDiv.appendChild(imageTag);
 }
 </script>
