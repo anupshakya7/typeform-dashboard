@@ -2,7 +2,7 @@
 <div class="app-menu navbar-menu" >
     <!-- LOGO -->
     <?php
-        $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/logo.png');
+        $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
    ?>
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
@@ -122,7 +122,15 @@
                 <?php endif; ?>
                 
 
-               
+                 
+                 <?php if(hasPermissionToRoute('about.index')): ?>
+                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="<?php echo e(route('about.index')); ?>">
+                    <i class="fa-regular fa-address-card"></i> <span>About Us</span>
+                    </a>
+                </li>
+                <?php endif; ?>
+                
 
             </ul>
         </div>
