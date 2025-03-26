@@ -137,9 +137,14 @@
                                 <td><?php echo e($form->form_id); ?></td>
                                 <td><?php echo e($form->form_title); ?></td>
                                 <td><?php echo e($form->country); ?></td>
-                                <td>
-                                    <?php echo e($form->webhook == 1 ? 'Active':'Inactive'); ?></td>
+                                <!-- <td>
+                                    <?php echo e($form->webhook == 1 ? 'Active':'Inactive'); ?></td> -->
+                                    <td>
+                                    <span class="<?php echo e($form->webhook == 1 ? 'web-hook-active' : 'webhook-inactive'); ?>"><?php echo e($form->webhook == 1 ? 'Active' : 'Inactive'); ?></span>
+                                </td>
                                 <td><?php echo e(optional($form->organization)->name); ?></td>
+                                
+
                                 <td><?php echo e($form->branches ? optional($form->branches)->name : 'Head Office'); ?></td>
                                 <td><?php echo e($form->before); ?> </td>
                                 <td><?php echo e($form->during); ?></td>

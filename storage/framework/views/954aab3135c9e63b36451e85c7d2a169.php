@@ -51,7 +51,7 @@
                                 <th>Logo</th>
                                 <td>
                                     <?php if($organization->logo): ?>
-                                    <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" width="50" height="50" alt="Logo" style="border-radius:50%;">
+                                    <img src="<?php echo e(asset('storage/'.$organization->logo)); ?>" width="50" height="50" alt="Logo" style="border-radius:50%;object-fit:contain;">
                                     <?php endif; ?>
                                 </td>
                             </tr>

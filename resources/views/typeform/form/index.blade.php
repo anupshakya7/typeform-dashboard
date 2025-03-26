@@ -148,9 +148,14 @@
                                 <td>{{$form->form_id}}</td>
                                 <td>{{$form->form_title}}</td>
                                 <td>{{$form->country}}</td>
-                                <td>
-                                    {{$form->webhook == 1 ? 'Active':'Inactive'}}</td>
+                                <!-- <td>
+                                    {{$form->webhook == 1 ? 'Active':'Inactive'}}</td> -->
+                                    <td>
+                                    <span class="{{ $form->webhook == 1 ? 'web-hook-active' : 'webhook-inactive' }}">{{ $form->webhook == 1 ? 'Active' : 'Inactive' }}</span>
+                                </td>
                                 <td>{{optional($form->organization)->name}}</td>
+                                
+
                                 <td>{{$form->branches ? optional($form->branches)->name : 'Head Office'}}</td>
                                 <td>{{$form->before}} </td>
                                 <td>{{$form->during}}</td>

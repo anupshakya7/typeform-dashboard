@@ -282,15 +282,15 @@ function exportToPDF(chartId, chartTitle) {
         // Define margins and dimensions
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        const margin = 20; // Margin from the edges
-        const logoWidth = 30; // Width of the logo
-        const logoHeight = 30; // Height of the logo
-        const titleFontSize = 16;
+        const margin = 5; // Margin from the edges
+        const logoWidth = 100; // Width of the logo
+        const logoHeight = 20; // Height of the logo
+        const titleFontSize = 24;
         const titleLineHeight = 20; // Line height for the title
 
         // Add a black border around the content
-        pdf.setDrawColor(0); // Set border color to black
-        pdf.setLineWidth(1); // Set border thickness
+        pdf.setDrawColor(30,30,30); // Set border color to black
+        pdf.setLineWidth(0.2); // Set border thickness
         pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin); // Draw border
 
         // Add logo to the PDF (if available)
@@ -300,10 +300,14 @@ function exportToPDF(chartId, chartTitle) {
 
         // Add chart title to the PDF (after the logo, centered a bit higher)
         pdf.setFontSize(titleFontSize);
-        pdf.setTextColor(0); // Ensure text color is black
-        const titleX = margin + logoWidth + 20; // Position title after the logo with extra spacing
-        const titleY = margin + 30; // Move title a bit higher (adjust as needed)
-        pdf.text(chartTitle, titleX, titleY);
+        pdf.setTextColor(30,30,30); // Ensure text color is black
+        // Calculate title position (below logo + spacing)
+        const titleX = pdf.internal.pageSize.getWidth() / 2; // Center horizontally
+        const titleY = margin + logoHeight + 35; // Below logo + extra spacing
+
+        // Set alignment to center and add title
+        pdf.text(chartTitle, titleX, titleY, { align: 'center' });
+
 
         // Calculate the position for the chart image to center it
         const chartImgWidth = pageWidth - 2 * margin - 20; // Chart width (full width minus margins and padding)
@@ -313,6 +317,26 @@ function exportToPDF(chartId, chartTitle) {
 
         // Add chart image to the PDF
         pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight);
+
+         // ===== FOOTER =====
+         const footerY = pageHeight - margin - 15; // Start 15mm from bottom
+         const lineHeight = 5; // Space between lines
+         const rightPadding = margin + 10; // Right margin
+         const footerFontSize = 12;
+         // Left-aligned source (grey text)
+         pdf.setFontSize(footerFontSize);
+         pdf.setTextColor(100, 100, 100); // Grey
+         pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
+         
+         // Right-aligned organization (line 1)
+         pdf.setTextColor(100,100,100); // Black
+         const orgText = "[IEP-CSB]";
+         pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
+         
+         // Right-aligned email (line 2)
+         const emailText = "csb.economicsandpeace.org";
+         pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
+
 
         // Save the PDF
         pdf.save(`${chartTitle}.pdf`);
@@ -437,8 +461,7 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
     // Capture the chart as an image
     html2canvas(document.getElementById(chartId), {
         scale: 2, // Increase scale for higher resolution
-    useCORS: true, // Enable CORS if images are from external sources
-    backgroundColor: null // Ensures a transparent background
+        backgroundColor: null // Ensures a transparent background
     }).then(canvas => {
         const chartImgData = canvas.toDataURL("image/png");
 
@@ -449,39 +472,57 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
         // Define margins and dimensions
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        const margin = 20; // Margin from the edges
-        const logoWidth = 20; // Width of the logo
+        const margin = 5; // Margin from the edges
+        const logoWidth = 100; // Width of the logo
         const logoHeight = 20; // Height of the logo
-        const titleFontSize = 16;
+        const titleFontSize = 24;
         const titleLineHeight = 20; // Line height for the title
 
         // Add a black border around the content
-        pdf.setDrawColor(0); // Set border color to black
-        pdf.setLineWidth(1); // Set border thickness
+        pdf.setDrawColor(30, 30, 30); // Set border color to black
+        pdf.setLineWidth(0.2); // Set border thickness
         pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin); // Draw border
 
         // Add logo to the PDF (if available)
         if (logoData) {
-            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight); // Position logo inside the border
+            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight);
         }
 
-        // Add chart title to the PDF (after the logo, centered a bit higher)
+        // Add chart title to the PDF (centered below logo)
         pdf.setFontSize(titleFontSize);
-        pdf.setTextColor(0); // Ensure text color is black
-        const titleX = margin + logoWidth + 20; // Position title after the logo with extra spacing
-        const titleY = 43; // Move title a bit higher (adjust as needed)
-        pdf.text(chartTitle, titleX, titleY);
+        pdf.setTextColor(30, 30, 30); // Set text color to black
+        const titleX = pdf.internal.pageSize.getWidth() / 2; // Center horizontally
+        const titleY = margin + logoHeight + 35; // Below logo + extra spacing
+        pdf.text(chartTitle, titleX, titleY, { align: 'center' });
 
         // Calculate the position for the chart image to center it
-        const chartImgWidth = pageWidth - 2 * margin - 20; // Chart width (full width minus margins and padding)
+        const chartImgWidth = (pageWidth - 2 * margin) * 0.75; // 75% of available width
         const chartImgHeight = (chartImgWidth * canvas.height) / canvas.width; // Maintain aspect ratio
-        // const chartImgX = margin + 10; // Centered horizontally inside the border
-        // const chartImgY = titleY + titleLineHeight + 0; // Position below the title with some spacing
-        const chartImgX = margin + 10; // Set custom X position
-        const chartImgY = 10; // Set custom Y position
-        
+        const chartImgX = (pageWidth - chartImgWidth) / 2;
+        const chartImgY = 25; // Position below the title with spacing
+
         // Add chart image to the PDF
         pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight);
+
+        // ===== FOOTER =====
+        const footerY = pageHeight - margin - 15; // Start 15mm from bottom
+        const lineHeight = 5; // Space between lines
+        const rightPadding = margin + 10; // Right margin
+        const footerFontSize = 12;
+        
+        // Left-aligned source (grey text)
+        pdf.setFontSize(footerFontSize);
+        pdf.setTextColor(100, 100, 100); // Grey
+        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
+        
+        // Right-aligned organization (line 1)
+        pdf.setTextColor(100, 100, 100); // Grey
+        const orgText = "[IEP-CSB]";
+        pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
+        
+        // Right-aligned email (line 2)
+        const emailText = "csb.economicsandpeace.org";
+        pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
 
         // Save the PDF
         pdf.save(`${chartTitle}.pdf`);
@@ -489,15 +530,15 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
 }
 //for multi radar
 function exportToPDFMultiRadar(chartId, chartTitle) {
-    // Capture the logo (assuming the logo is an img element with a specific class or ID)
-    const logo = document.querySelector(".logo img"); // Adjust the selector to match your logo element
+    // Capture the logo
+    const logo = document.querySelector(".logo img");
     const logoData = logo ? logo.src : null;
 
     // Capture the chart as an image
     html2canvas(document.getElementById(chartId), {
-        scale: 2, // Increase scale for higher resolution
-    useCORS: true, // Enable CORS if images are from external sources
-    backgroundColor: null // Ensures a transparent background
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null
     }).then(canvas => {
         const chartImgData = canvas.toDataURL("image/png");
 
@@ -508,41 +549,58 @@ function exportToPDFMultiRadar(chartId, chartTitle) {
         // Define margins and dimensions
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        const margin = 20; // Margin from the edges
-        const logoWidth = 20; // Width of the logo
-        const logoHeight = 20; // Height of the logo
-        const titleFontSize = 16;
-        const titleLineHeight = 20; // Line height for the title
+        const margin = 5;
+        const logoWidth = 100;
+        const logoHeight = 20;
+        const titleFontSize = 24;
+        const titleLineHeight = 20;
 
-        // Add a black border around the content
-        pdf.setDrawColor(0); // Set border color to black
-        pdf.setLineWidth(1); // Set border thickness
-        pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin); // Draw border
+        // Add border
+        pdf.setDrawColor(30, 30, 30);
+        pdf.setLineWidth(0.2);
+        pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
 
-        // Add logo to the PDF (if available)
+        // Add logo
         if (logoData) {
-            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight); // Position logo inside the border
+            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight);
         }
 
-        // Add chart title to the PDF (after the logo, centered a bit higher)
+        // Add title (centered)
         pdf.setFontSize(titleFontSize);
-        pdf.setTextColor(0); // Ensure text color is black
-        const titleX = margin + logoWidth + 20; // Position title after the logo with extra spacing
-        const titleY = 43; // Move title a bit higher (adjust as needed)
-        pdf.text(chartTitle, titleX, titleY);
+        pdf.setTextColor(30, 30, 30);
+        const titleX = pdf.internal.pageSize.getWidth() / 2;
+        const titleY = margin + logoHeight + 35; // Reduced spacing below logo
+        pdf.text(chartTitle, titleX, titleY, { align: 'center' });
 
-        // Calculate the position for the chart image to center it
-        const chartImgWidth = pageWidth - 2 * margin - 20; // Chart width (full width minus margins and padding)
-        const chartImgHeight = (chartImgWidth * canvas.height) / canvas.width; // Maintain aspect ratio
-        // const chartImgX = margin + 10; // Centered horizontally inside the border
-        // const chartImgY = titleY + titleLineHeight + 0; // Position below the title with some spacing
-        const chartImgX = margin + 10; // Set custom X position
-        const chartImgY = 30; // Set custom Y position
+        // Calculate image dimensions (90% width - larger than before)
+        const chartImgWidth = (pageWidth - 2 * margin) * 0.9; // Increased from 0.75 to 0.9
+        const chartImgHeight = (chartImgWidth * canvas.height) / canvas.width;
         
-        // Add chart image to the PDF
+        // Position the image lower on the page
+        const chartImgX = (pageWidth - chartImgWidth) / 2;
+        const chartImgY = 40;// Reduced spacing below title
+
+        // Add chart image
         pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight);
 
-        // Save the PDF
+        // Footer
+        const footerY = pageHeight - margin - 15;
+        const lineHeight = 5;
+        const rightPadding = margin + 10;
+        const footerFontSize = 12;
+        
+        pdf.setFontSize(footerFontSize);
+        pdf.setTextColor(100, 100, 100);
+        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
+        
+        pdf.setTextColor(100, 100, 100);
+        const orgText = "[IEP-CSB]";
+        pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
+        
+        const emailText = "csb.economicsandpeace.org";
+        pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
+
+        // Save PDF
         pdf.save(`${chartTitle}.pdf`);
     });
 }
@@ -569,15 +627,15 @@ function exportToPDFPnBar(chartId, chartTitle) {
         // Define margins and dimensions
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        const margin = 20; // Margin from the edges
-        const logoWidth = 20;
+        const margin = 5; // Reduced margin for more content space
+        const logoWidth = 100; // Larger logo like other functions
         const logoHeight = 20;
-        const titleFontSize = 16;
+        const titleFontSize = 24; // Larger title font
         const titleLineHeight = 20;
 
-        // Add a black border around the content
-        pdf.setDrawColor(0);
-        pdf.setLineWidth(1);
+        // Add a black border around the content (consistent styling)
+        pdf.setDrawColor(30, 30, 30); // Dark gray border
+        pdf.setLineWidth(0.2); // Thinner border
         pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
 
         // Add logo (if available)
@@ -585,32 +643,43 @@ function exportToPDFPnBar(chartId, chartTitle) {
             pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight);
         }
 
-        // Add title
+        // Add title (centered like other functions)
         pdf.setFontSize(titleFontSize);
-        pdf.setTextColor(0);
-        const titleX = margin + logoWidth + 20;
-        const titleY = margin + 23;
-        pdf.text(chartTitle, titleX, titleY);
+        pdf.setTextColor(30, 30, 30); // Dark gray text
+        const titleX = pdf.internal.pageSize.getWidth() / 2;
+        const titleY = margin + logoHeight + 35; // Consistent spacing below logo
+        pdf.text(chartTitle, titleX, titleY, { align: 'center' });
 
-        // Calculate the image size to fit within the border
-        const maxChartWidth = pageWidth - 2 * margin - 40; // Reduce width to fit within the border
-        const maxChartHeight = pageHeight - titleY - titleLineHeight - margin - 30; // Reduce height to fit
-
-        // Maintain aspect ratio
-        let chartImgWidth = maxChartWidth;
-        let chartImgHeight = (canvas.height / canvas.width) * chartImgWidth;
-
-        if (chartImgHeight > maxChartHeight) {
-            chartImgHeight = maxChartHeight;
-            chartImgWidth = (canvas.width / canvas.height) * chartImgHeight;
-        }
-
-        // Center the image inside the border
-        const chartImgX = margin + ((pageWidth - 2 * margin - chartImgWidth) / 2);
-        const chartImgY = titleY + titleLineHeight + 10; // Add spacing below the title
+        // Calculate the image dimensions (75% width like other functions)
+        const chartImgWidth = (pageWidth - 2 * margin) * 0.5; // Reduced to 60% width
+        const chartImgHeight = (chartImgWidth * canvas.height) / canvas.width;
+        
+        // Center the image horizontally
+        const chartImgX = (pageWidth - chartImgWidth) / 2;
+        // Position below title with consistent spacing
+        const chartImgY = titleY + titleLineHeight;
 
         // Add the chart image
-        pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight, '', 'FAST');
+        pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight);
+
+        // ===== FOOTER (consistent with other functions) =====
+        const footerY = pageHeight - margin - 15;
+        const lineHeight = 5;
+        const rightPadding = margin + 10;
+        const footerFontSize = 12;
+        
+        // Left-aligned source
+        pdf.setFontSize(footerFontSize);
+        pdf.setTextColor(100, 100, 100); // Gray text
+        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
+        
+        // Right-aligned organization info
+        pdf.setTextColor(100, 100, 100);
+        const orgText = "[IEP-CSB]";
+        pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
+        
+        const emailText = "csb.economicsandpeace.org";
+        pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
 
         // Save the PDF
         pdf.save(`${chartTitle}.pdf`);
