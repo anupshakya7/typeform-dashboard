@@ -485,11 +485,6 @@ $(document).ready(function() {
                 $('#formIdMessage').text(xhr.responseJSON.message);
                 $('#formIdMessage').css('display', 'flex');
                 SyncIcon.removeClass("rotate");
-                // toastr.error('The form with this ID was not found.', 'Error', {
-                //     closeButton: true, 
-                //     progressBar: true, 
-                //     timeOut: 5000
-                // });
             }
         })
     })

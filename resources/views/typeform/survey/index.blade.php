@@ -41,7 +41,8 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <a href="{{route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey_form'=>request('survey_form')])}}" type="button" class="btn btn-success"><i
+                        <a href="{{route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey_form'=>request('survey_form')])}}" type="button" class="btn btn-success">
+                            <i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
                             Export</a>
@@ -146,7 +147,8 @@
                                     <a href="{{route('survey.qa',$answer)}}" class="view-tag"><i
                                         class="ri-eye-fill align-bottom"></i></a>
                                     <a href="{{route('survey.single.csv',$answer)}}" class="export-tag">
-                                        <i class="fa-solid fa-file-export"></i>
+                                    <i
+                                    class="ri-file-download-line"></i>
                                     </a>
                                     {{-- <div class="dropdown d-inline-block">
                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

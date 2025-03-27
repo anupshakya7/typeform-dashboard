@@ -8,7 +8,6 @@
 <?php $__env->startSection('content'); ?>
 
 
-</div>
     <div class="row">
         <div class="col">
             <div class="h-100">
@@ -162,17 +161,36 @@
                 <!--greeting section ends here -->
 
             
-<!--hidden filter section-->
+<!--initial filter section-->
                
-                <div class="filter-section show-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
+                <div class="filter-section show-filter mb-3">
+                    <div class="d-flex flex-eow justify-content-between">
                     <div>
                         <h4><span class="badge bg-success lh-1"><?php echo e($formDetails->form_title); ?></span></h4>
-                        <h5 style="font-size:14px;">Get insights, track trends, compare data, manage.</h5>
+                        <h5 style="font-size:16px;" class="mb-3">Get insights, track trends, compare data, manage.</h5>
+                    </div>
+                    <div class="p-0">
+                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                                          <div class="dropdown">
+                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#" id="export-all">Download
+                                                        Report</a></li>
+    
+                                            </ul>
+                                        </div>
+                                </div>
                     </div>
 
-                    <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
+                    <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard flex-nowrap">
+                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
                                         <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
@@ -234,34 +252,23 @@
                                     <?php endif; ?>
                                 </div>
                                 <div class="col-auto p-0">
-                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                          <div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-    
-                                            </ul>
-                                        </div>
+                                    <a href="#" class="view-insight-btn">
+                                        <span>View Insight</span>
+                                        <i class='bx bx-arrow-back bx-rotate-180' ></i>
+                                    </a>
                                 </div>
+                                
                             </div>
-                            <?php if(auth()->user()->role->name !== 'survey'): ?>
-                            <div class="note text-muted">
-                                <p>Note: Please select at least one project & choose branch, organization, country
-                                    respectively to filter data.</p>
+                            
                             </div>
-                            <?php endif; ?>
-                        </form>
 
-                    </div>
+                        </form>
+                        
                 </div>
 
-<!--hidden filter section-->
+<!--initial filter section-->
+
+
                 <!--bar graph section starts here-->
 
                 <div class="card">
@@ -1203,17 +1210,18 @@
                     <?php
                         $malePieChart = $participantDetails['genderWise']['male'];
                         $femalePieChart = $participantDetails['genderWise']['female'];
-
+                        $otherPieChart = $participantDetails['genderWise']['other'];
                     ?>
                     series: [<?php echo e($malePieChart); ?>,
-                        <?php echo e($femalePieChart); ?>
+                        <?php echo e($femalePieChart); ?>,
+                        <?php echo e($otherPieChart); ?>
 
                     ],
                     chart: {
-                        height: 192,
+                        height: 200,
                         type: 'pie',
                     },
-                    labels: ['Male', 'Female'],
+                    labels: ['Male', 'Female','Other'],
                     legend: {
                         position: 'right'
                     },
@@ -1222,7 +1230,7 @@
                             enabled: false,
                         }
                     },
-                    colors: ['#004994', '#0c8cdb']
+                    colors: ['#004994', '#0c8cdb','#74ccf8']
                 };
 
                 var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
@@ -1558,7 +1566,7 @@
 
                 const charts = [
                     { id: "sales-forecast-chart", title: "Mean Scores Values" },
-                    { id: "basic_radar_chart", title: "Mean Result" },
+                    { id: "basic_radar", title: "Mean Result" },
                     { id: "simple_pie_chart", title: "Participants by Gender" },
                     { id: "simple_pie_chart2", title: "Participants by Age" },
                     { id: "sales-forecast-chart-2", title: "Positive Peace" },
@@ -1613,37 +1621,84 @@ function updateTable(data) {
 }
 
 function exportChartsToPNGAndPDF(charts, callback) {
-    const jsPDF = window.jspdf.jsPDF;
+    const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: "portrait" });
-    let yOffset = 10; // Padding at the top
-    const xOffset = 25; // Padding on the left
-    const exportedImages = [];
-
+    
+    // Constants for styling - REDUCED MARGINS
+    const margin = 5; // Reduced from 15 to 10 (smaller border padding)
+    const logoWidth = 45;
+    let logoHeight; 
+        const titleFontSize = 16;
+    const chartTitleFontSize = 14;
+    const footerFontSize = 10;
+    const lineSpacing = 5;
+    const contentPadding = 5; // Padding inside the border
+    
     const logo = document.querySelector(".logo img");
-    const logoData = logo ? logo.src : null;
-
-    // Add logo and title ("Community Strength Barometer") on the same line
-    if (logoData) {
-        pdf.addImage(logoData, "PNG", xOffset, yOffset, 20, 20); // Logo size
-        const titleText = "Community Strength Barometer: Report";
-        pdf.setFontSize(14);
-        pdf.text(titleText, xOffset + 25, yOffset + 15); // Align text next to the logo
+    let logoData = null;
+    
+    if (logo) {
+        logoData = logo.src;
+        // Calculate height maintaining aspect ratio
+        const logoAspectRatio = logo.naturalHeight / logo.naturalWidth;
+        logoHeight = logoWidth * logoAspectRatio;
     }
-
-    // Add a light grey border after the logo and title
-    const titleYPosition = yOffset + 25; // Slightly move down after title
-    const pdfWidth = pdf.internal.pageSize.width;
-    pdf.setLineWidth(0.5); // Border thickness
-    pdf.setDrawColor(211, 211, 211); // Light grey color
-    pdf.line(xOffset, titleYPosition, pdfWidth - xOffset, titleYPosition); // Draw the border
-
-    // Add some padding below the border before the first chart
-    yOffset = titleYPosition + 20; // Increased space after the top border
-
-    const captureChart = (index) => {
+    
+    // Add header to first page
+    const addFirstPageHeader = (pdf) => {
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        
+        // Add logo
+        if (logoData) {
+            pdf.addImage(logoData, "PNG", margin + contentPadding, margin + contentPadding, logoWidth, logoHeight);
+        }
+        
+        // Add main title
+        pdf.setFontSize(titleFontSize);
+        pdf.setTextColor(30, 30, 30);
+        pdf.text("Community Strength Barometer Report", 
+                margin + contentPadding + logoWidth + 5, 
+                margin + contentPadding + 6);
+        
+        // Add page border (closer to edge now)
+        pdf.setDrawColor(30, 30, 30);
+        pdf.setLineWidth(0.2);
+        pdf.rect(margin, margin, 
+                pageWidth - 2 * margin, 
+                pdf.internal.pageSize.getHeight() - 2 * margin);
+        
+        // Add "Page 1" to first page
+        pdf.setFontSize(footerFontSize);
+        pdf.text("Page 1", pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
+    };
+    
+    // Add header to subsequent pages
+    const addSubsequentPageHeader = (pdf, pageNumber) => {
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        
+        // Add page border (same reduced padding)
+        pdf.setDrawColor(30, 30, 30);
+        pdf.setLineWidth(0.2);
+        pdf.rect(margin, margin, 
+                pageWidth - 2 * margin, 
+                pdf.internal.pageSize.getHeight() - 2 * margin);
+        
+        // Add page number
+        pdf.setFontSize(footerFontSize);
+        pdf.text(`Page ${pageNumber}`, pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
+    };
+    
+    // Initialize variables for positioning
+    let yOffset = margin + contentPadding + logoHeight + 25; // Start below header on first page
+    let currentPage = 1;
+    addFirstPageHeader(pdf);
+    
+    // Function to process charts sequentially
+    const processCharts = (index) => {
         if (index >= charts.length) {
-            generatePDF(exportedImages);
-            if (callback) callback(); // Ensure the callback is called
+            addFooter(pdf);
+            pdf.save("CSB_Report.pdf");
+            if (callback) callback();
             return;
         }
 
@@ -1652,46 +1707,73 @@ function exportChartsToPNGAndPDF(charts, callback) {
 
         if (!chartElement) {
             console.error(`Element with ID ${id} not found.`);
-            captureChart(index + 1); // Skip to the next chart
+            processCharts(index + 1);
             return;
         }
 
-        html2canvas(chartElement).then(canvas => {
-            exportedImages.push({ title, imgData: canvas.toDataURL("image/png"), width: canvas.width, height: canvas.height });
-            captureChart(index + 1);
+        html2canvas(chartElement, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: null
+        }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+            const aspectRatio = canvas.width / canvas.height;
+            // Calculate available width considering reduced margins
+            const availableWidth = pdf.internal.pageSize.getWidth() - 2 * (margin + contentPadding) - 10;
+            const imgWidth = availableWidth;
+            const imgHeight = imgWidth / aspectRatio;
+            
+            // Check if we need a new page (using reduced margin in calculation)
+            if (yOffset + imgHeight + 40 > pdf.internal.pageSize.getHeight() - (margin + contentPadding)) {
+                addFooter(pdf);
+                pdf.addPage();
+                currentPage++;
+                yOffset = margin + contentPadding + 15; // Adjusted for reduced margin
+                addSubsequentPageHeader(pdf, currentPage);
+            }
+            
+            // Add chart title
+            pdf.setFontSize(chartTitleFontSize);
+            pdf.setTextColor(30, 30, 30);
+            const titleX = pdf.internal.pageSize.getWidth() / 2;
+            pdf.text(title, titleX, yOffset, { align: 'center' });
+            yOffset += lineSpacing * 2;
+            
+            // Add chart with border (using contentPadding)
+            pdf.setDrawColor(211, 211, 211);
+            pdf.setLineWidth(0.5);
+            pdf.rect(margin + contentPadding + 5, yOffset, imgWidth, imgHeight);
+            pdf.addImage(imgData, "PNG", margin + contentPadding + 5, yOffset, imgWidth, imgHeight);
+            
+            yOffset += imgHeight + 15; // Reduced spacing after chart
+            
+            processCharts(index + 1);
         }).catch(error => {
             console.error(`Error rendering chart "${title}":`, error);
-            captureChart(index + 1); // Skip to the next chart
+            processCharts(index + 1);
         });
     };
-
-    const generatePDF = (images) => {
-        images.forEach((image, i) => {
-            if (i > 0 && yOffset + image.height > pdf.internal.pageSize.height - 20) {
-                pdf.addPage(); // Add a new page if the image doesn't fit
-                yOffset = 10; // Reset yOffset for the new page
-            }
-
-            const imgWidth = 130;
-            const aspectRatio = image.width / image.height;
-            const imgHeight = imgWidth / aspectRatio;
-
-            pdf.setFontSize(12);
-            pdf.text(image.title, xOffset, yOffset - 5); // Add chart title
-
-            // Add 1px light grey border around each image
-            pdf.setLineWidth(0.5);
-            pdf.setDrawColor(211, 211, 211);
-            pdf.rect(xOffset - 1, yOffset - 1, imgWidth + 2, imgHeight + 2); // Draw the border
-
-            pdf.addImage(image.imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
-            yOffset += imgHeight + 20; // Add spacing between charts
-        });
-
-        pdf.save("CSB_Report.pdf");
+    
+    // Add footer function (adjusted for reduced margin)
+    const addFooter = (pdf) => {
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const footerY = pdf.internal.pageSize.getHeight() - margin - contentPadding - 7;
+        
+        pdf.setFontSize(footerFontSize);
+        pdf.setTextColor(100, 100, 100);
+        
+        // Left-aligned source
+        pdf.text("Source: Positive Peace Survey 2024", margin + contentPadding + 5, footerY);
+        
+        // Right-aligned organization info
+        const orgText = "IEP-CSB";
+        const emailText = "csb.economicsandpeace.org";
+        pdf.text(orgText, pageWidth - margin - contentPadding - 5, footerY, { align: 'right' });
+        pdf.text(emailText, pageWidth - margin - contentPadding - 5, footerY + lineSpacing, { align: 'right' });
     };
-
-    captureChart(0); // Start capturing charts
+    
+    // Start processing charts
+    processCharts(0);
 }
     </script>
 

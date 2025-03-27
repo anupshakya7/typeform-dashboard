@@ -17,8 +17,7 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        // dd(session('country'));
-        if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
+        if($request->all() == [] && auth()->user()->role->name !== 'survey'){
             //Dropdown
             $countriesPath = public_path('build/js/countries/countries.json');
             $countries = json_decode(File::get($countriesPath),true);
@@ -28,7 +27,7 @@ class IndexController extends Controller
 
             return view('typeform.welcome.index',compact('countries','organizations','surveyForms'));
         }else{
-            $filterData = $request->all() == [] ? Form::filterForm()->where('form_id',session('survey_id'))->first():null;
+            $filterData = $request->all() == [] ? Form::filterForm()->latest()->first():null;
         
             //Dropdown
             $countriesPath = public_path('build/js/countries/countries.json');
@@ -41,11 +40,15 @@ class IndexController extends Controller
                 $country = auth()->user()->survey->country;
                 $survey_id = auth()->user()->survey->form_id;
             }else{
-                $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : session('country');
-                $survey_id = isset($request->survey) && $request->survey ? $request->survey : session('survey_id');
-                session(['country'=>$country,'survey_id'=>$survey_id]);
+                $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
+                $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
             }
 
+            //Store Survey_id in session
+            if(!session()->has('survey_id')){
+                session(['country'=>$country,'survey_id'=>$survey_id]);
+            }
+    
             $formDetails = Form::where('form_id',$survey_id)->first();
     
             $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
