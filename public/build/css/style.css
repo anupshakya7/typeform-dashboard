@@ -208,6 +208,7 @@ table th, table td {
 }
 .btn-success {
     background-color: #002347 !important;
+    transition: all 0.3s ease;
     border: none !important;
 }
 .aside-tag {
@@ -537,16 +538,21 @@ table td{
 .view-tag {
     padding: 5px 10px;
     border-radius: 5px;
-    color: #777777;
+    color: #585858;
     background-color: #dddddd;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+}
+.view-tag:hover , .export-tag:hover, .btn-soft-secondary:hover, .btn-success:hover {
+        transform: scale(1.1);
 }
 
 .btn-soft-secondary {
     color: #777777 !important;
     background-color: #dddddd !important;
+    transition: all 0.3s ease;
 }
 .btn-soft-secondary:hover {
     color: #777777 !important;
@@ -556,12 +562,13 @@ table td{
 .export-tag {
     padding: 8px 10px;
     border-radius: 5px;
-    color: #777777;
+    color: #585858;
     background-color: #dddddd;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    
+    transition: all 0.3s ease;
+
 }
 
 /* .btn-info {
