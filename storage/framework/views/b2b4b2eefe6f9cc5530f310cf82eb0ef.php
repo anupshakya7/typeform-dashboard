@@ -42,12 +42,7 @@
                 <!--info here-->
                 <a href="<?php echo e(route('form.csv',['search_title'=> request('search_title'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
                     Export</a>
-                <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                aria-controls="theme-settings-offcanvas">
-
-                    <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                </a>
+                
             </div>
         </div>
     </div>
@@ -137,9 +132,14 @@
                                 <td><?php echo e($form->form_id); ?></td>
                                 <td><?php echo e($form->form_title); ?></td>
                                 <td><?php echo e($form->country); ?></td>
-                                <td>
-                                    <?php echo e($form->webhook == 0 && $form->answer_count == 0 ? 'Inactive':'Active'); ?></td>
+                                <!-- <td>
+                                    <?php echo e($form->webhook == 1 ? 'Active':'Inactive'); ?></td> -->
+                                    <td>
+                                    <span class="<?php echo e($form->webhook == 1 ? 'webhook-active' : 'webhook-inactive'); ?>"><?php echo e($form->webhook == 1 ? 'Active' : 'Inactive'); ?></span>
+                                </td>
                                 <td><?php echo e(optional($form->organization)->name); ?></td>
+                                
+
                                 <td><?php echo e($form->branches ? optional($form->branches)->name : 'Head Office'); ?></td>
                                 <td><?php echo e($form->before); ?> </td>
                                 <td><?php echo e($form->during); ?></td>
@@ -315,7 +315,6 @@
                             organization_id: organizationVal
                         },
                         success: function(response) {
-                            console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
                             $('#branch').append('<option value="" selected>Choose Division</option>');
@@ -363,8 +362,8 @@
                 var countryVal = country_name;
                 var organizationVal = organization_id;
                 var branchVal = branch_id;
-                console.log(countryVal,organizationVal,branchVal);
-                if (organizationVal !== '') {
+
+                if (organizationVal !== '' || countryVal !=='') {
                     $.ajax({
                         url: "<?php echo e(route('survey.get')); ?>",
                         method: 'GET',
@@ -374,8 +373,6 @@
                             branch_id: branchVal
                         },
                         success: function(response) {
-
-                            console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
                             $('#survey').append('<option value="" selected>Choose Survey</option>');

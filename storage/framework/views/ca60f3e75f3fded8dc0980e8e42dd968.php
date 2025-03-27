@@ -1,16 +1,16 @@
 <!-- Modal Blur -->
 <div id="zoomInModal" class="modal fade zoomIn" tabindex="-1" aria-labelledby="zoomInModalLabel" aria-hidden="true"
   style="display: none;">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-header">
+  <div class="modal-dialog modal-dialog-centered delete-modal">
+      <div class="modal-content delete-modal-content">
+          <div class="modal-header border-0 mt-2">
               <h5 class="modal-title" id="zoomInModalLabel">Delete Modal</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form id="deleteForm" method="POST">
               <?php echo csrf_field(); ?>
               <?php echo method_field('DELETE'); ?>
-              <div class="modal-body">
+              <div class="modal-body px-0 py-2">
                   <h5 class="fs-16">
                       Are you sure you want to delete <span id="delete_item"></span>?
                   </h5>
