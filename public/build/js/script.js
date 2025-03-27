@@ -1,16 +1,3 @@
-
-
-
-//flatpicker js
-document.addEventListener('DOMContentLoaded', function () {
-    // Initialize Flatpickr
-    flatpickr('[data-provider="flatpickr"]', {
-        dateFormat: 'd M, Y',
-        enableTime: false, 
-        mode: 'range', 
-    });
-});
-
 //table text participants name truncate
 document.addEventListener('DOMContentLoaded', function () {
     const participantsNames = document.querySelectorAll('.participants-name');
