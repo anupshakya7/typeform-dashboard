@@ -248,7 +248,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
 function exportToPDF(chartId, chartTitle) {
     // Capture the logo (assuming the logo is an img element with a specific class or ID)
     const logo = document.querySelector(".logo img"); // Adjust the selector to match your logo element
@@ -329,6 +328,7 @@ function exportToPDF(chartId, chartTitle) {
         pdf.save(`${chartTitle}.pdf`);
     });
 }
+
 function exportToPNG(chartId, chartTitle) {
     // Capture elements
     const logo = document.querySelector(".logo img");
@@ -931,6 +931,11 @@ function exportToPNGPie(chartId, chartTitle) {
         alert("Error generating image. Please try again.");
     });
 }
+
+
+
+
+
 //survey begin js
 const btnshow = document.querySelector('#show-data');
 const selectSurvey = document.querySelector('.select-survey'); // Selects the first element with the class 'select-survey'
