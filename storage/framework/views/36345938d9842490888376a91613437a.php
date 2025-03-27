@@ -164,9 +164,27 @@
 <!--initial filter section-->
                
                 <div class="filter-section show-filter mb-3">
+                    <div class="d-flex flex-eow justify-content-between">
                     <div>
                         <h4><span class="badge bg-success lh-1"><?php echo e($formDetails->form_title); ?></span></h4>
                         <h5 style="font-size:16px;" class="mb-3">Get insights, track trends, compare data, manage.</h5>
+                    </div>
+                    <div class="p-0">
+                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                                          <div class="dropdown">
+                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#" id="export-all">Download
+                                                        Report</a></li>
+    
+                                            </ul>
+                                        </div>
+                                </div>
                     </div>
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
@@ -243,22 +261,7 @@
                             
                             
                         </form>
-                        <div class="p-0">
-                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                          <div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-    
-                                            </ul>
-                                        </div>
-                                </div>
+                        
                     </div>
                 </div>
 
