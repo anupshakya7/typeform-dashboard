@@ -126,7 +126,7 @@
                  <?php if(hasPermissionToRoute('about.index')): ?>
                  <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('about.index')); ?>">
-                    <i class="fa-regular fa-address-card"></i> <span>About Us</span>
+                    <i class='bx bxs-info-circle'></i> <span>About</span>
                     </a>
                 </li>
                 <?php endif; ?>
