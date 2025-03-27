@@ -64,11 +64,29 @@ class AnswerController extends Controller
 
         $formId = $allData['form_response']['form_id'];
         $eventId = $allData['event_id'];
-        $answers = $allData['form_response']['answers'];
+        $questions = $allData['form_response']['definition']['fields'];
+        $age=[];
+        $gender = [];
+        $ageType = ["18 to 24","25 to 44","45 to 64","65 or over"];
+        $genderType = ["Male","Female","Other"];
         
+
+        foreach($questions[1]['choices'] as $key=>$ages){
+            $age[$ages['id']] = $ageType[$key];
+        }
+        
+        foreach($questions[2]['choices'] as $key=>$genders){
+            $gender[$genders['id']] = $genderType[$key];
+        }
+        
+        
+        $answers = $allData['form_response']['answers'];
+
         $formData = [
             'event_id'=>$eventId,
-            'form_id'=>$formId
+            'form_id'=>$formId,
+            'age'=>$age[$answers[1]['choice']['id']],
+            'gender'=>$gender[$answers[2]['choice']['id']],
             ];
         
         $labelDBData = [
@@ -92,7 +110,14 @@ class AnswerController extends Controller
             ];
         $answersDBData = [];
         
+        
+        
         foreach($answers as $key => $answer){
+            
+            if($key == 1 || $key == 2){
+                continue;
+            }
+            
             if($answer['type'] == 'choice'){
                 $ans = $answer[$answer['type']]['label'];
             }else{

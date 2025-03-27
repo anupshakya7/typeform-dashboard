@@ -1143,7 +1143,7 @@
                         height: 500,
                         type: 'radar',
                         toolbar: {
-                            show: false
+                            show: true
                         }
                     },
                     colors: ['#0664bc'],
@@ -1202,17 +1202,18 @@
                     <?php
                         $malePieChart = $participantDetails['genderWise']['male'];
                         $femalePieChart = $participantDetails['genderWise']['female'];
-
+                        $otherPieChart = $participantDetails['genderWise']['other'];
                     ?>
                     series: [<?php echo e($malePieChart); ?>,
-                        <?php echo e($femalePieChart); ?>
+                        <?php echo e($femalePieChart); ?>,
+                        <?php echo e($otherPieChart); ?>
 
                     ],
                     chart: {
-                        height: 192,
+                        height: 200,
                         type: 'pie',
                     },
-                    labels: ['Male', 'Female'],
+                    labels: ['Male', 'Female','Other'],
                     legend: {
                         position: 'right'
                     },
@@ -1221,7 +1222,7 @@
                             enabled: false,
                         }
                     },
-                    colors: ['#004994', '#0c8cdb']
+                    colors: ['#004994', '#0c8cdb','#74ccf8']
                 };
 
                 var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);

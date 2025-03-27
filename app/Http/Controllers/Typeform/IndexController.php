@@ -99,10 +99,12 @@ class IndexController extends Controller
         //Gender Wise
         $male = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Male')->count();
         $female = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Female')->count();
+        $other = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Other')->count();
 
         $genderWise = [
             'male'=>$male,
             'female'=>$female,
+            'other'=>$other
         ];
         //Gender Wise
 
