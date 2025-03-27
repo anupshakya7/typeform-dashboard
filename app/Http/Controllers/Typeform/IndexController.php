@@ -17,38 +17,50 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        $filterData = $request->all() == [] ? Form::filterForm()->latest()->first():null;
+        if($request->all() == []){
+            //Dropdown
+            $countriesPath = public_path('build/js/countries/countries.json');
+            $countries = json_decode(File::get($countriesPath),true);
 
-        //Dropdown
-        $countriesPath = public_path('build/js/countries/countries.json');
-        $countries = json_decode(File::get($countriesPath),true);
-        $organizations = Organization::filterOrganization()->get();
-        $surveyForms = Form::filterForm()->get();
-        
-        //Survey id if no then latest form id
-        if(auth()->user()->role->name == "survey"){
-            $country = auth()->user()->survey->country;
-            $survey_id = auth()->user()->survey->form_id;
+            $organizations = Organization::filterOrganization()->get();
+            $surveyForms = Form::filterForm()->get();
+
+            return view('typeform.welcome.index',compact('countries','organizations','surveyForms'));
         }else{
-            $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
-            $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
+            $filterData = $request->all() == [] ? Form::filterForm()->latest()->first():null;
+        
+            //Dropdown
+            $countriesPath = public_path('build/js/countries/countries.json');
+            $countries = json_decode(File::get($countriesPath),true);
+            $organizations = Organization::filterOrganization()->get();
+            $surveyForms = Form::filterForm()->get();
+            
+            //Survey id if no then latest form id
+            if(auth()->user()->role->name == "survey"){
+                $country = auth()->user()->survey->country;
+                $survey_id = auth()->user()->survey->form_id;
+            }else{
+                $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : Form::latest()->first()->country;
+                $survey_id = isset($request->survey) && $request->survey ? $request->survey : Form::latest()->first()->form_id;
+            }
+    
+            $formDetails = Form::where('form_id',$survey_id)->first();
+    
+            $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
+    
+            $topBox = $this->topBoxData();
+            $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
+            $participantDetails = $this->participantDetails($survey_id);
+            $positivePeace = $this->positiveNegative($country,$survey_id,'positive_peace');
+            $negativePeace = $this->positiveNegative($country,$survey_id,'negative_peace');
+            $pillarMeanScore = $this->pillarsMeanScore($country,$survey_id);
+            $overTimeScores = $this->overTimeScore($survey_id);
+    
+            $resultByPillar = [];
+    
+            return view('typeform.index',compact('formDetails','countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','overTimeScores','filterData','selectedCountrywithSurvey'));
         }
-
-        $formDetails = Form::where('form_id',$survey_id)->first();
-
-        $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
-
-        $topBox = $this->topBoxData();
-        $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
-        $participantDetails = $this->participantDetails($survey_id);
-        $positivePeace = $this->positiveNegative($country,$survey_id,'positive_peace');
-        $negativePeace = $this->positiveNegative($country,$survey_id,'negative_peace');
-        $pillarMeanScore = $this->pillarsMeanScore($country,$survey_id);
-        $overTimeScores = $this->overTimeScore($survey_id);
-
-        $resultByPillar = [];
-
-        return view('typeform.index',compact('formDetails','countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','overTimeScores','filterData','selectedCountrywithSurvey'));
+       
     }
 
     public function topBoxData(){
@@ -99,10 +111,12 @@ class IndexController extends Controller
         //Gender Wise
         $male = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Male')->count();
         $female = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Female')->count();
+        $other = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Other')->count();
 
         $genderWise = [
             'male'=>$male,
             'female'=>$female,
+            'other'=>$other
         ];
         //Gender Wise
 
