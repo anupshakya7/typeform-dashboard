@@ -192,16 +192,16 @@
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
-                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
+                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e(auth()->user()->survey->country); ?>" readonly>
                                     <?php else: ?>
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
 
                                         <option value="" selected>Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country['name']); ?>"
-                                                <?php echo e((($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : ''); ?>>
-                                                <?php echo e($country['name']); ?></option>
+                                            <option value="<?php echo e($country->country); ?>"
+                                                <?php echo e((($filterData && $filterData->country == $country->country) || request('country') == $country->country) || ($selectedCountrywithSurvey == $country->country) ? 'selected' : ''); ?>>
+                                                <?php echo e($country->country); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php endif; ?>

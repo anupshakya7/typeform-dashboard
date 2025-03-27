@@ -192,16 +192,16 @@
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
                                 <div class="col-auto p-0">
                                     @if(auth()->user()->role->name == 'survey')
-                                        <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
+                                        <input type="text" class="form-control" name="country" id="country" value="{{auth()->user()->survey->country}}" readonly>
                                     @else
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
 
                                         <option value="" selected>Country</option>
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country['name'] }}"
-                                                {{ (($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : '' }}>
-                                                {{ $country['name'] }}</option>
+                                            <option value="{{ $country->country }}"
+                                                {{ (($filterData && $filterData->country == $country->country) || request('country') == $country->country) || ($selectedCountrywithSurvey == $country->country) ? 'selected' : '' }}>
+                                                {{ $country->country }}</option>
                                         @endforeach
                                     </select>
                                     @endif

@@ -41,8 +41,8 @@
                                         aria-label="Default select example">
                                         <option value="" selected>Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country['name']); ?>">
-                                                <?php echo e($country['name']); ?></option>
+                                            <option value="<?php echo e($country->country); ?>">
+                                                <?php echo e($country->country); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php endif; ?>

@@ -20,8 +20,9 @@ class IndexController extends Controller
         // dd(session('country'));
         if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
             //Dropdown
-            $countriesPath = public_path('build/js/countries/countries.json');
-            $countries = json_decode(File::get($countriesPath),true);
+            // $countriesPath = public_path('build/js/countries/countries.json');
+            // $countries = json_decode(File::get($countriesPath),true);
+            $countries = Form::select('country')->filterForm()->distinct()->get();
 
             $organizations = Organization::filterOrganization()->get();
             $surveyForms = Form::filterForm()->get();
@@ -31,8 +32,11 @@ class IndexController extends Controller
             $filterData = $request->all() == [] ? Form::filterForm()->where('form_id',session('survey_id'))->first():null;
         
             //Dropdown
-            $countriesPath = public_path('build/js/countries/countries.json');
-            $countries = json_decode(File::get($countriesPath),true);
+            // $countriesPath = public_path('build/js/countries/countries.json');
+            // $countries = json_decode(File::get($countriesPath),true);
+
+            $countries = Form::select('country')->filterForm()->distinct()->get();
+
             $organizations = Organization::filterOrganization()->get();
             $surveyForms = Form::filterForm()->get();
             

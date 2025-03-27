@@ -24,7 +24,6 @@ class BranchSeeder extends Seeder
             DB::table('branches')->insert([
                 'organization_id'=>$organizationIds->random(),
                 'name'=>$faker->companySuffix.' Branch',
-                'country'=>$faker->country,
                 'created_at'=>now(),
                 'updated_at'=>now(),
             ]);
