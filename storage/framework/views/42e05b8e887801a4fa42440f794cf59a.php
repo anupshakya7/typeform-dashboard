@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
 
+
 </head>
 
 <?php $__env->startSection('body'); ?>
@@ -44,7 +45,7 @@
     </div>
     <!-- END layout-wrapper -->
 
-    <?php echo $__env->make('layouts.customizer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('typeform.partials.customizer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <!-- JAVASCRIPT -->
     <?php echo $__env->make('layouts.vendor-scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -62,7 +63,24 @@
         var $=jQuery;
         $(document).ready(function(){
             $('.select2').select2();
+
+            $('a[data-bs-toggle="offcanvas"]').on('click',function(event){
+                event.preventDefault();
+
+                var title = $(this).data('title');
+                var content = $(this).data('content');
+
+                if(title && content){
+                    $('#info_title').text(title);
+                    $('#info_content').html(content);
+                }else{
+                    $('#info_title').html('');
+                    $('#info_content').html('');
+                }
+            });
         });
+
+
     </script>
 </body>
 

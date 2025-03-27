@@ -39,16 +39,12 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <a href="<?php echo e(route('survey.csv')); ?>" type="button" class="btn btn-success"><i
+                        <a href="<?php echo e(route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey_form'=>request('survey_form')])); ?>" type="button" class="btn btn-success">
+                            <i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
-                            Export</button>
-                        <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                        aria-controls="theme-settings-offcanvas">
-                            <img class="svg-icon" type="image/svg+xml"
-                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                        </a>
+                            Export</a>
+                        
                     </div>
                 </div>
             </div>
@@ -72,20 +68,23 @@
                                 </select>
                             </div>
                             <div class="col-auto"> 
-                                <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
+                                <select class="form-select select2" name="organization" id="organization" aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Organization</option>
                                     <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($organization->id); ?>" <?php echo e(request('organization') == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select> 
                             </div>
+                            <div class="col-auto"> 
+                                <select class="form-select select2" name="branch" id="branch" aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                    <option value="" selected>Division</option>
+                                </select> 
+                            </div>
                             <div class="col-auto">
-                                <div class="col-auto"> <select class="form-select select2" name="survey_form" onchange="this.form.submit()" aria-label="Default select example">
+                                <div class="col-auto"> <select class="form-select select2" name="survey" id="survey" onchange="this.form.submit()" aria-label="Default select example" disabled>
                                         <option value="" selected>Survey</option>
-                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($surveyForm->form_title); ?>" <?php echo e(request('survey_form') == $surveyForm->form_title ? 'selected':''); ?>><?php echo e($surveyForm->form_title); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select> </div>
+                                    </select> 
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -105,6 +104,7 @@
                                 <th>Survey Name</th>
                                 <th>Survey Country</th>
                                 <th>Survey Organization</th>
+                                <th>Survey Branch</th>
                                 <th>Participants Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>
@@ -124,6 +124,7 @@
                                 <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
                                 <td><?php echo e($answer->form ? optional($answer->form)->country : 'No Country'); ?></td>
                                 <td><?php echo e($answer->form ? optional($answer->form)->organization->name : 'No Organization'); ?></td>
+                                <td><?php echo e(optional($answer->form)->branches ? optional($answer->form)->branches->name : 'Head Office'); ?></td>
                                 <td>
                                     <span class="participants-name">
                                         <?php echo e($answer->name); ?>
@@ -137,20 +138,17 @@
                                 ?>
                                 <td><?php echo e($date); ?></td>
                                 <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="<?php echo e(route('survey.show',$answer)); ?>" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                            </li>
-                                            <?php if($answer->form): ?>
-                                            <li><a href="<?php echo e(route('survey.qa',$answer)); ?>" class="dropdown-item"><i
-                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i> QA</a>
-                                            </li>
-                                            <?php endif; ?>
+                                    <?php if($answer->form): ?>
+                                    <a href="<?php echo e(route('survey.qa',$answer)); ?>" class="view-tag"><i
+                                        class="ri-eye-fill align-bottom"></i></a>
+                                    <a href="<?php echo e(route('survey.single.csv',$answer)); ?>" class="export-tag">
+                                    <i
+                                    class="ri-file-download-line"></i>
+                                    </a>
+                                    
+                                            
+                                          
+                                            
                                             
                                             <!-- <li><a class="dropdown-item edit-item-btn"><i
                                                         class="ri-pencil-fill align-bottom me-2 text-muted"></i>
@@ -161,8 +159,8 @@
                                                     Delete
                                                 </a>
                                             </li> -->
-                                        </ul>
-                                    </div>
+                                        
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -367,6 +365,136 @@
             document.getElementById('survey_search').submit();
         },800);
     }
+
+    $(document).ready(function(){
+        function getQueryParams(param){
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        var country_name = getQueryParams('country');
+        var organization_id = getQueryParams('organization');
+        var branch_id = getQueryParams('branch');
+
+        if(country_name !== null){
+                filterSurvey();
+            }
+
+            if(organization_id !== null){
+                filterBranch();
+                filterSurvey();
+            }
+
+            if(branch_id !== null){
+                filterSurvey();
+            }
+
+            $(document).on('change','#organization',function(){
+                filterBranch();
+                filterSurvey();
+            });
+
+
+            function filterBranch(callback) {
+                var organizationVal = organization_id;
+
+                if (organizationVal !== '') {
+                    $.ajax({
+                        url: "<?php echo e(route('branch.get')); ?>",
+                        method: 'GET',
+                        data: {
+                            organization_id: organizationVal
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            $('#branch').prop('disabled', false);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Division</option>');
+
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                        
+                            var branchList = response.branches.filter(function(branch){
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                                    return branchIds.includes(branch.id.toString());
+                                }
+
+                                return true;
+                            });
+                            
+                            branchList.forEach(function(branchItem) {
+                                // $('#branch').append(new Option(branch.name,
+                                // branch.id));
+                                var option = new Option(branchItem.name, branchItem.id);
+                                $('#branch').append(option);
+
+                                if (branch_id && branch_id == branchItem.id) {
+                                    $(option).prop('selected', true);
+                                }
+                            });
+
+                            if (callback && typeof callback == 'function') {
+                                callback();
+                            }
+
+                            isFirstLoad = false;
+                        },
+                        error: function(xhr, status, error) {
+                            $('#branch').prop('disabled', true);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                        }
+                    })
+                }else{
+                    $('#branch').prop('disabled', true);
+                    $('#branch').html('');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                }
+            }
+
+            function filterSurvey() {
+                var countryVal = country_name;
+                var organizationVal = organization_id;
+                var branchVal = branch_id;
+
+                if (organizationVal !== '' || countryVal !== '') {
+                    $.ajax({
+                        url: "<?php echo e(route('survey.get')); ?>",
+                        method: 'GET',
+                        data: {
+                            country: countryVal,
+                            organization_id: organizationVal,
+                            branch_id: branchVal
+                        },
+                        success: function(response) {
+
+                            console.log(response);
+                            $('#survey').prop('disabled', false);
+                            $('#survey').html('');
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            response.forms.forEach(function(formItem) {
+                                // $('#survey').append(new Option(form.form_title,
+                                // form.id));
+                                var option = new Option(formItem.form_title, formItem.form_id);
+                                $('#survey').append(option);
+
+                                if (survey && survey == formItem.form_id) {
+                                    $(option).prop('selected', true);
+                                }
+                            });
+
+                        },
+                        error: function(xhr, status, error) {
+                            $('#survey').prop('disabled', true);
+                            $('#survey').html('');
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                        }
+                    })
+                }
+            }
+    }); 
 </script>
 
 <?php $__env->stopSection(); ?>
