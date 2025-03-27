@@ -285,8 +285,7 @@
                         </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace (Bar Chart)" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
@@ -328,8 +327,7 @@
                                     </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center">
-
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Community Resilience Across the Pillars of Positive Peace (Radar plot)" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul><li>Well-functioning Government</li><li>Sound Business Environment</li><li>Equitable Distribution of Resources</li><li>Acceptance of the Rights of Others</li><li>Good Relations with Neighbours</li><li>Free Flow of Information</li><li>High Levels of Human Capital</li><li>Low Levels of Corruption</li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
@@ -369,7 +367,7 @@
                                         <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                             data-bs-target="#theme-settings-offcanvas"
                                             aria-controls="theme-settings-offcanvas"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Participation by Gender " data-content="<p>Distribution of survey participants by gender</p>">
 
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
@@ -411,7 +409,7 @@
                                         <a class="icon-frame" href="" data-bs-toggle="offcanvas"
                                             data-bs-target="#theme-settings-offcanvas"
                                             aria-controls="theme-settings-offcanvas"
-                                            class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                            class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Participation by Age" data-content="<p>Distribution of survey participants by age</p>">
 
                                             <img class="svg-icon" type="image/svg+xml"
                                                 src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
@@ -465,8 +463,7 @@
                                             <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                                 data-bs-target="#theme-settings-offcanvas"
                                                 aria-controls="theme-settings-offcanvas"
-                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Positive Peace" data-content="<p>Positive Peace refers to the attitudes, institutions, and structures that foster and sustain peaceful societies. Higher scores in Positive Peace signify greater resilience, enabling societies to better protect their citizens from adverse shocks—whether political, environmental, or economic.</p>">
                                                 <img class="svg-icon" type="image/svg+xml"
                                                     src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
@@ -509,7 +506,7 @@
                                             <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                                 data-bs-target="#theme-settings-offcanvas"
                                                 aria-controls="theme-settings-offcanvas"
-                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Negative Peace" data-content="<p>Negative Peace refers to the absence of direct violence or fear of violence.</p><p>Higher scores in Negative Peace indicate a greater absence of conflict and violence, suggesting a stable environment with low levels of direct harm or societal unrest. </p>">
 
                                                 <img class="svg-icon" type="image/svg+xml"
                                                     src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
@@ -552,15 +549,17 @@
                                             data-chart-id="multi_radar">Export as PNG</a></li>
                                 </ul>
                             </div>
+                            
                                     <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                         data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
-                                        class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                        class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Results by Pillars" data-content="<p>The radar plot visualises the eight Pillars of Positive Peace, comparing community response mean scores against country and global averages. It provides insights into community perceptions of these pillars in relation to broader trends.</p>">
 
                                         <img class="svg-icon" type="image/svg+xml"
                                             src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
+                                    
                                 </div>
                             </div>
                         </div><!-- end card header -->
@@ -571,7 +570,7 @@
                         </div><!-- end card-body -->
                     </div><!-- end card -->
 
-                    <!--area radar chart section starts here -->
+                    <!--area radar chart section ends here -->
 
                     <div class="row mb-4">
                         <div class="col-xl-12">
@@ -596,15 +595,7 @@
                                             
                                         </ul>
                                     </div>
-                                            <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                                data-bs-target="#theme-settings-offcanvas"
-                                                aria-controls="theme-settings-offcanvas"
-                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                                            </a>
+                                    
                                         </div>
                                     </div>
                                 </div><!-- end card header -->
@@ -688,11 +679,7 @@
                                             
                                         </ul>
                                     </div>
-                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                        aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
-
-                                            <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-                                        </a>
+                                        
                                     </div>
                                 </div>
                             </div><!-- end card header -->

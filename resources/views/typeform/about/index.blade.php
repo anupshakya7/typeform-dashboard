@@ -22,7 +22,7 @@
 
     {{-- <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">About Us</h4>
+            <h4 class="fs-16 mb-1">About</h4>
         </div>
     </div> --}}
 
@@ -33,10 +33,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">About Us</h5>
+                <div class="card-header" style="padding: 20px 40px;"> 
+                    <h5 class="card-title mb-0 " style="font-size:23px;font-weight:550;">About</h5>
                 </div>
-                <div class="card-body" style="padding: 40px;text-align: justify;">
+                <div class="card-body" style="padding: 25px 40px;">
                     <h3>Community Strength Barometer (CSB) </h3>
                     <p>
                         The Community Strength Barometer (CSB) Survey provides a comprehensive, data-driven approach to measuring societal resilience. Grounded in the empirically validated Pillars of Positive Peace, the survey captures a detailed portrait of community dynamics, offering objective insights into societal strengths and areas for development. 
@@ -47,7 +47,7 @@
                         <br>
                         Understanding these perceptions is essential for policymakers, organisations, and communities seeking to foster resilience, enhance social cohesion, and drive positive change. 
                     </p>
-                    <br>
+                    <hr>
                     <h3>Methodology</h3>
                     <p>The study employs a six-point scale survey, covering ten questions related to different aspects of community life. Participating respondents will provide insights into their level of agreement with each statement. The data is analysed using median scores and percentage distributions for each question.</p>
                     
@@ -56,7 +56,7 @@
                         <li>Average completion time: Under 5 minutes</li>
                         <li>Question design: Focused on cross-cultural applicability and ease of understanding </li>
                      </ul>
-                    <br>
+                    <hr>
                     <h3>Positive Peace & Community Strength </h3>
                     <p>
                         Positive Peace refers to the attitudes, institutions, and structures that create and sustain peaceful societies. Unlike Negative Peace, which is simply the absence of violence or the threat of violence, Positive Peace encompasses the presence of conditions that foster societal well-being and harmony. 
@@ -72,7 +72,7 @@
                     <p>
                         For more information, please see IEP Reports  
                     </p>
-                    <br>
+                    <hr>
                     
                     <h3>Positive Peace Framework </h3>
                     
@@ -121,7 +121,7 @@
                             </p>
                         </li>
                         <li>
-                            Low Levels of Corruptio
+                            Low Levels of corruption
                             <p>
                                 In societies with high levels of corruption, resources are inefficiently allocated, often leading to a lack of funding for essential services, which in turn can lead to dissatisfaction and civil unrest. Low corruption can enhance confidence and trust in institutions as well as improve the efficiency of business and the competitiveness of the country.  
                             </p>

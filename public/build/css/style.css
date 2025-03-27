@@ -72,7 +72,7 @@ table th, table td {
     text-wrap: nowrap;
 }
 .table-head {
-    background-color: #0bb39c;
+    background-color: #002347;
     color: #fff;
 }
 .participants-name {
@@ -202,7 +202,15 @@ table th, table td {
     justify-content: center;
 
 }
-
+#back-to-top {
+ background-color: #002347 !important;
+ border: none !important;
+}
+.btn-success {
+    background-color: #002347 !important;
+    transition: all 0.3s ease;
+    border: none !important;
+}
 .aside-tag {
     padding: 0.5rem 1.5rem;
     font-size: 9px;
@@ -530,28 +538,39 @@ table td{
 .view-tag {
     padding: 5px 10px;
     border-radius: 5px;
-    color: #3934f5;
-    background-color: #a1d1ff;
+    color: #585858;
+    background-color: #dddddd;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
 }
-.view-tag:hover {
-    background-color: #88c5ff;
+.view-tag:hover , .export-tag:hover, .btn-soft-secondary:hover, .btn-success:hover {
+        transform: scale(1.1);
 }
+
+.btn-soft-secondary {
+    color: #777777 !important;
+    background-color: #dddddd !important;
+    transition: all 0.3s ease;
+}
+.btn-soft-secondary:hover {
+    color: #777777 !important;
+    background-color: #dddddd !important;
+}
+
 .export-tag {
     padding: 8px 10px;
     border-radius: 5px;
-    color: #075329;
-    background-color: #98ece1;
+    color: #585858;
+    background-color: #dddddd;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    
+    transition: all 0.3s ease;
+
 }
-.export-tag:hover {
-    background-color:#63c9bb;
-}
+
 /* .btn-info {
     background-color: #155fb5 !important;
     border: none;
