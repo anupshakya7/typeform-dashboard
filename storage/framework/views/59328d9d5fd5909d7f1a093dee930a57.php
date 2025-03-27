@@ -7,7 +7,6 @@
             <div class="h-100">
 
                 <!--greeting section -->
-
                 <div>
                     <div>
                         <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>

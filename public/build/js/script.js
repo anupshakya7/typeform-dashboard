@@ -130,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const chartId = this.getAttribute("data-chart-id"); // Get the chart ID
             
 
-
             // Nested if-else for chartId and exportType
             if (chartId === "sales-forecast-chart") {
                 const chartTitle = document.querySelector('.mean-score-bar-title')?.innerText || "Overview";
