@@ -46,13 +46,7 @@
 
                         Export</a>
 
-                    <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
-                        data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                        aria-controls="theme-settings-offcanvas">
-
-                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                    </a>
+                    
                 </div>
             </div>
         </div>
@@ -88,7 +82,7 @@
                                         <td>
                                             <?php if($organization->logo): ?>
                                                 <img src="<?php echo e(asset('storage/' . $organization->logo)); ?>" alt="Logo"
-                                                    width="50" height="50" style="border-radius:50%;">
+                                                    width="50" height="50" style="border-radius:50%;object-fit:contain;">
                                             <?php endif; ?>
                                         </td>
                                         

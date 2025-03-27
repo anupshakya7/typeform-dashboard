@@ -22,7 +22,7 @@
 
     {{-- <div class="mb-3 pb-1 d-flex align-items-center flex-row">
         <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">About Us</h4>
+            <h4 class="fs-16 mb-1">About</h4>
         </div>
     </div> --}}
 
@@ -33,10 +33,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">About Us</h5>
+                <div class="card-header" style="padding: 20px 40px;"> 
+                    <h5 class="card-title mb-0 " style="font-size:23px;font-weight:550;">About</h5>
                 </div>
-                <div class="card-body" style="padding: 40px;text-align: justify;">
+                <div class="card-body" style="padding: 25px 40px;text-align: justify;">
                     <h3>Community Strength Barometer (CSB) </h3>
                     <p>
                         The Community Strength Barometer (CSB) Survey provides a comprehensive, data-driven approach to measuring societal resilience. Grounded in the empirically validated Pillars of Positive Peace, the survey captures a detailed portrait of community dynamics, offering objective insights into societal strengths and areas for development. 
