@@ -189,7 +189,8 @@
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="{{ route('home.index') }}" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+
                                 <div class="col-auto p-0">
                                     @if(auth()->user()->role->name == 'survey')
                                         <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
@@ -261,10 +262,10 @@
                                 
                             </div>
                             
-                            
+                            </div>
+
                         </form>
                         
-                    </div>
                 </div>
 
 <!--initial filter section-->
@@ -1171,7 +1172,7 @@
                         height: 500,
                         type: 'radar',
                         toolbar: {
-                            show: true
+                            show: false
                         }
                     },
                     colors: ['#0664bc'],
@@ -1675,7 +1676,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         pdf.setFontSize(titleFontSize);
         pdf.setTextColor(30, 30, 30);
         pdf.text("Community Strength Barometer Report", 
-                margin + contentPadding + logoWidth + 10, 
+                margin + contentPadding + logoWidth + 5, 
                 margin + contentPadding + 6);
         
         // Add page border (closer to edge now)
@@ -1687,7 +1688,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         // Add "Page 1" to first page
         pdf.setFontSize(footerFontSize);
-        pdf.text("Page 1", pageWidth - margin - contentPadding - 20, margin + contentPadding + 7);
+        pdf.text("Page 1", pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
     };
     
     // Add header to subsequent pages
@@ -1703,7 +1704,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         // Add page number
         pdf.setFontSize(footerFontSize);
-        pdf.text(`Page ${pageNumber}`, pageWidth - margin - contentPadding - 20, margin + contentPadding + 10);
+        pdf.text(`Page ${pageNumber}`, pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
     };
     
     // Initialize variables for positioning

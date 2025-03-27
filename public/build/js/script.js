@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     exportToPDFMeanRadar(chartId,chartTitle);
                 } else if (exportType === "png") {
-                    exportToPNG(chartId,chartTitle);
+                    exportToPNGMeanRadar(chartId,chartTitle);
                 }  else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     exportToPDFPnBar(chartId,chartTitle);
                 }  else if (exportType === "png") {
-                    exportToPNG(chartId,chartTitle);
+                    exportToPNGPP(chartId,chartTitle);
                 } else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     exportToPDFPnBar(chartId,chartTitle);
                 } else if (exportType === "png") {
-                    exportToPNG(chartId,chartTitle);
+                    exportToPNGPP(chartId,chartTitle);
                 } else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     exportToPDFMultiRadar(chartId,chartTitle);
                 } else if (exportType === "png") {
-                    exportToPNG(chartId,chartTitle);
+                    exportToPNGMultiRadar(chartId,chartTitle);
                 }  else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
@@ -748,7 +748,170 @@ function exportToPDFPnBar(chartId, chartTitle) {
     });
 }
 
+//for mean radar png
+function exportToPNGMeanRadar(chartId, chartTitle) {
+    // Capture elements
+    const logo = document.querySelector(".logo img");
+    const logoData = logo ? logo.src : null;
 
+    // Create canvas with dimensions matching A4 landscape at high DPI
+    const pxPerMM = 5; // Higher resolution
+    const canvasWidth = 297 * pxPerMM; // A4 width in mm (1485px)
+    const canvasHeight = 210 * pxPerMM; // A4 height in mm (1050px)
+    
+    // Capture chart with higher quality
+    html2canvas(document.getElementById(chartId), {
+        scale: 3, // Increased scale for better quality
+        useCORS: true,
+        backgroundColor: null,
+        logging: false
+    }).then(chartCanvas => {
+        // Create final composition canvas
+        const finalCanvas = document.createElement("canvas");
+        finalCanvas.width = canvasWidth;
+        finalCanvas.height = canvasHeight;
+        const ctx = finalCanvas.getContext("2d");
+
+        // White background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        // Design parameters (match PDF exactly)
+        const margin = 5 * pxPerMM; // 5mm margin
+        const contentWidth = canvasWidth - 2 * margin;
+        const contentHeight = canvasHeight - 2 * margin;
+        
+        // Add border (match PDF style)
+        ctx.strokeStyle = "#1E1E1E"; // RGB 30,30,30
+        ctx.lineWidth = 1; // 1px border
+        ctx.strokeRect(margin, margin, contentWidth, contentHeight);
+
+
+   
+
+        // Add logo (top left)
+        if (logoData) {
+            const logoImg = new Image();
+            logoImg.src = logoData;
+            logoImg.onload = () => {
+                const logoWidth = 100 * pxPerMM; // 100mm
+                const logoHeight = 20 * pxPerMM; // 20mm
+                ctx.drawImage(
+                    logoImg, 
+                    margin + 10, 
+                    margin + 10, 
+                    logoWidth, 
+                    logoHeight
+                );
+
+                // Add title (match PDF styling)
+                const titleFontSize = 42; // 24pt
+                ctx.font = `${titleFontSize}px 'Arial'`;
+                ctx.fillStyle = "#333"; // Dark gray
+                ctx.textAlign = "center";
+                const titleY = margin + logoHeight + 20 * pxPerMM; // 35mm below logo
+                ctx.fillText(chartTitle, canvasWidth / 2, titleY);
+
+                // Calculate chart dimensions (80% width with more spacing)
+                const chartWidth = contentWidth * 0.9; // Larger than PDF's 75%
+                const chartHeight = (chartWidth * chartCanvas.height) / chartCanvas.width;
+                const chartX = (canvasWidth - chartWidth) / 2;
+                const chartY = 30; // Extra spacing below title
+
+                // Add chart with shadow effect (like PDF)
+                ctx.shadowColor = "rgba(0,0,0,0.1)";
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetY = 5;
+                ctx.drawImage(chartCanvas, chartX, chartY, chartWidth, chartHeight);
+                ctx.shadowColor = "transparent"; // Reset shadow
+
+                // Add footer (match PDF exactly)
+                const footerY = canvasHeight - margin - 15 * pxPerMM;
+                const footerFontSize = 24; // 12pt
+                
+                // Source text (left)
+                ctx.font = `${footerFontSize}px 'Arial'`;
+                ctx.fillStyle = "#646464"; // Gray
+                ctx.textAlign = "left";
+                ctx.fillText(
+                    "Source: Positive Peace Survey 2024",
+                    margin + 10,
+                    footerY
+                );
+                
+                // Organization info (right)
+                ctx.textAlign = "right";
+                ctx.fillText(
+                    "[IEP-CSB]",
+                    canvasWidth - margin - 10,
+                    footerY
+                );
+                
+                ctx.fillText(
+                    "csb.economicsandpeace.org",
+                    canvasWidth - margin - 10,
+                    footerY + 5 * pxPerMM
+                );
+
+                // Final export
+                const link = document.createElement("a");
+                link.download = `${chartTitle.replace(/[/\\?%*:|"<>]/g, '-')}.png`;
+                link.href = finalCanvas.toDataURL("image/png", 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+        } else {
+            // Fallback version without logo
+            const titleFontSize = 24;
+            ctx.font = `bold ${titleFontSize}px 'Arial'`;
+            ctx.fillStyle = "#1E1E1E";
+            ctx.textAlign = "center";
+            const titleY = margin + 50 * pxPerMM;
+            ctx.fillText(chartTitle, canvasWidth / 2, titleY);
+
+            // Add larger chart (80% width)
+            const chartWidth = contentWidth * 0.8;
+            const chartHeight = (chartWidth * chartCanvas.height) / chartCanvas.width;
+            const chartX = (canvasWidth - chartWidth) / 2;
+            const chartY = titleY + 20 * pxPerMM;
+            
+            // Add chart with subtle shadow
+            ctx.shadowColor = "rgba(0,0,0,0.1)";
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 5;
+            ctx.drawImage(chartCanvas, chartX, chartY, chartWidth, chartHeight);
+            ctx.shadowColor = "transparent";
+
+            // Add footer
+            const footerY = canvasHeight - margin - 15 * pxPerMM;
+            ctx.font = "16px 'Arial'";
+            ctx.fillStyle = "#646464";
+            ctx.textAlign = "right";
+            ctx.fillText(
+                "[IEP-CSB]",
+                canvasWidth - margin - 10,
+                footerY
+            );
+            ctx.fillText(
+                "csb.economicsandpeace.org",
+                canvasWidth - margin - 10,
+                footerY + 5 * pxPerMM
+            );
+
+            // Export
+            const link = document.createElement("a");
+            link.download = `${chartTitle.replace(/[/\\?%*:|"<>]/g, '-')}.png`;
+            link.href = finalCanvas.toDataURL("image/png", 1.0);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }).catch(error => {
+        console.error("PNG export error:", error);
+        alert("Error generating image. Please try again.");
+    });
+}
 //piechart png download
 function exportToPNGPie(chartId, chartTitle) {
     // Capture elements
@@ -811,8 +974,8 @@ function exportToPNGPie(chartId, chartTitle) {
                 ctx.fillText(chartTitle, canvasWidth / 2, titleY);
 
                 // Calculate chart dimensions maintaining original aspect ratio
-                const maxChartWidth = contentWidth * 0.9;
-                const maxChartHeight = contentHeight * 0.6;
+                const maxChartWidth = contentWidth * 0.7;
+                const maxChartHeight = contentHeight * 0.5;
                 
                 // Calculate dimensions that fit within bounds while maintaining aspect ratio
                 const chartAspectRatio = chartCanvas.width / chartCanvas.height;
@@ -932,9 +1095,335 @@ function exportToPNGPie(chartId, chartTitle) {
     });
 }
 
+//png multi radar
+function exportToPNGMultiRadar(chartId, chartTitle) {
+    // Capture elements
+    const logo = document.querySelector(".logo img");
+    const logoData = logo ? logo.src : null;
+
+    // Create canvas with dimensions matching A4 landscape at high DPI
+    const pxPerMM = 5; // Higher resolution
+    const canvasWidth = 297 * pxPerMM; // A4 width in mm (1485px)
+    const canvasHeight = 210 * pxPerMM; // A4 height in mm (1050px)
+    
+    // Capture chart with higher quality
+    html2canvas(document.getElementById(chartId), {
+        scale: 3, // Increased scale for better quality
+        useCORS: true,
+        backgroundColor: null,
+        logging: false
+    }).then(chartCanvas => {
+        // Create final composition canvas
+        const finalCanvas = document.createElement("canvas");
+        finalCanvas.width = canvasWidth;
+        finalCanvas.height = canvasHeight;
+        const ctx = finalCanvas.getContext("2d");
+
+        // White background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        // Design parameters (match PDF exactly)
+        const margin = 5 * pxPerMM; // 5mm margin
+        const contentWidth = canvasWidth - 2 * margin;
+        const contentHeight = canvasHeight - 2 * margin;
+        
+        // Add border (match PDF style)
+        ctx.strokeStyle = "#1E1E1E"; // RGB 30,30,30
+        ctx.lineWidth = 1; // 1px border
+        ctx.strokeRect(margin, margin, contentWidth, contentHeight);
 
 
+   
 
+        // Add logo (top left)
+        if (logoData) {
+            const logoImg = new Image();
+            logoImg.src = logoData;
+            logoImg.onload = () => {
+                const logoWidth = 100 * pxPerMM; // 100mm
+                const logoHeight = 20 * pxPerMM; // 20mm
+                ctx.drawImage(
+                    logoImg, 
+                    margin + 10, 
+                    margin + 10, 
+                    logoWidth, 
+                    logoHeight
+                );
+
+                // Add title (match PDF styling)
+                const titleFontSize = 42; // 24pt
+                ctx.font = `${titleFontSize}px 'Arial'`;
+                ctx.fillStyle = "#333"; // Dark gray
+                ctx.textAlign = "center";
+                const titleY = margin + logoHeight + 20 * pxPerMM; // 35mm below logo
+                ctx.fillText(chartTitle, canvasWidth / 2, titleY);
+
+                // Calculate chart dimensions (80% width with more spacing)
+                const chartWidth = contentWidth * 1; // Larger than PDF's 75%
+                const chartHeight = (chartWidth * chartCanvas.height) / chartCanvas.width;
+                const chartX = (canvasWidth - chartWidth) / 2;
+                const chartY = 100; // Extra spacing below title
+
+                // Add chart with shadow effect (like PDF)
+                ctx.shadowColor = "rgba(0,0,0,0.1)";
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetY = 5;
+                ctx.drawImage(chartCanvas, chartX, chartY, chartWidth, chartHeight);
+                ctx.shadowColor = "transparent"; // Reset shadow
+
+                // Add footer (match PDF exactly)
+                const footerY = canvasHeight - margin - 15 * pxPerMM;
+                const footerFontSize = 24; // 12pt
+                
+                // Source text (left)
+                ctx.font = `${footerFontSize}px 'Arial'`;
+                ctx.fillStyle = "#646464"; // Gray
+                ctx.textAlign = "left";
+                ctx.fillText(
+                    "Source: Positive Peace Survey 2024",
+                    margin + 10,
+                    footerY
+                );
+                
+                // Organization info (right)
+                ctx.textAlign = "right";
+                ctx.fillText(
+                    "[IEP-CSB]",
+                    canvasWidth - margin - 10,
+                    footerY
+                );
+                
+                ctx.fillText(
+                    "csb.economicsandpeace.org",
+                    canvasWidth - margin - 10,
+                    footerY + 5 * pxPerMM
+                );
+
+                // Final export
+                const link = document.createElement("a");
+                link.download = `${chartTitle.replace(/[/\\?%*:|"<>]/g, '-')}.png`;
+                link.href = finalCanvas.toDataURL("image/png", 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+        } else {
+            // Fallback version without logo
+            const titleFontSize = 24;
+            ctx.font = `bold ${titleFontSize}px 'Arial'`;
+            ctx.fillStyle = "#1E1E1E";
+            ctx.textAlign = "center";
+            const titleY = margin + 50 * pxPerMM;
+            ctx.fillText(chartTitle, canvasWidth / 2, titleY);
+
+            // Add larger chart (80% width)
+            const chartWidth = contentWidth * 0.8;
+            const chartHeight = (chartWidth * chartCanvas.height) / chartCanvas.width;
+            const chartX = (canvasWidth - chartWidth) / 2;
+            const chartY = titleY + 20 * pxPerMM;
+            
+            // Add chart with subtle shadow
+            ctx.shadowColor = "rgba(0,0,0,0.1)";
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 5;
+            ctx.drawImage(chartCanvas, chartX, chartY, chartWidth, chartHeight);
+            ctx.shadowColor = "transparent";
+
+            // Add footer
+            const footerY = canvasHeight - margin - 15 * pxPerMM;
+            ctx.font = "16px 'Arial'";
+            ctx.fillStyle = "#646464";
+            ctx.textAlign = "right";
+            ctx.fillText(
+                "[IEP-CSB]",
+                canvasWidth - margin - 10,
+                footerY
+            );
+            ctx.fillText(
+                "csb.economicsandpeace.org",
+                canvasWidth - margin - 10,
+                footerY + 5 * pxPerMM
+            );
+
+            // Export
+            const link = document.createElement("a");
+            link.download = `${chartTitle.replace(/[/\\?%*:|"<>]/g, '-')}.png`;
+            link.href = finalCanvas.toDataURL("image/png", 1.0);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }).catch(error => {
+        console.error("PNG export error:", error);
+        alert("Error generating image. Please try again.");
+    });
+}
+
+//png pp
+function exportToPNGPP(chartId, chartTitle) {
+    // Capture elements
+    const logo = document.querySelector(".logo img");
+    const logoData = logo ? logo.src : null;
+
+    // Create canvas with dimensions matching A4 landscape at high DPI
+    const pxPerMM = 5; // Higher resolution
+    const canvasWidth = 297 * pxPerMM; // A4 width in mm (1485px)
+    const canvasHeight = 210 * pxPerMM; // A4 height in mm (1050px)
+    
+    // Capture chart with higher quality
+    html2canvas(document.getElementById(chartId), {
+        scale: 3, // Increased scale for better quality
+        useCORS: true,
+        backgroundColor: null,
+        logging: false
+    }).then(chartCanvas => {
+        // Create final composition canvas
+        const finalCanvas = document.createElement("canvas");
+        finalCanvas.width = canvasWidth;
+        finalCanvas.height = canvasHeight;
+        const ctx = finalCanvas.getContext("2d");
+
+        // White background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        // Design parameters (match PDF exactly)
+        const margin = 5 * pxPerMM; // 5mm margin
+        const contentWidth = canvasWidth - 2 * margin;
+        const contentHeight = canvasHeight - 2 * margin;
+        
+        // Add border (match PDF style)
+        ctx.strokeStyle = "#1E1E1E"; // RGB 30,30,30
+        ctx.lineWidth = 1; // 1px border
+        ctx.strokeRect(margin, margin, contentWidth, contentHeight);
+
+
+   
+
+        // Add logo (top left)
+        if (logoData) {
+            const logoImg = new Image();
+            logoImg.src = logoData;
+            logoImg.onload = () => {
+                const logoWidth = 100 * pxPerMM; // 100mm
+                const logoHeight = 20 * pxPerMM; // 20mm
+                ctx.drawImage(
+                    logoImg, 
+                    margin + 10, 
+                    margin + 10, 
+                    logoWidth, 
+                    logoHeight
+                );
+
+                // Add title (match PDF styling)
+                const titleFontSize = 42; // 24pt
+                ctx.font = `${titleFontSize}px 'Arial'`;
+                ctx.fillStyle = "#333"; // Dark gray
+                ctx.textAlign = "center";
+                const titleY = margin + logoHeight + 35 * pxPerMM; // 35mm below logo
+                ctx.fillText(chartTitle, canvasWidth / 2, titleY);
+
+                // Calculate chart dimensions (80% width with more spacing)
+                const chartWidth = contentWidth * 0.5; // Larger than PDF's 75%
+                const chartHeight = (chartWidth * chartCanvas.height) / chartCanvas.width;
+                const chartX = (canvasWidth - chartWidth) / 2;
+                const chartY = titleY + 20 * pxPerMM; // Extra spacing below title
+
+                // Add chart with shadow effect (like PDF)
+                ctx.shadowColor = "rgba(0,0,0,0.1)";
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetY = 5;
+                ctx.drawImage(chartCanvas, chartX, chartY, chartWidth, chartHeight);
+                ctx.shadowColor = "transparent"; // Reset shadow
+
+                // Add footer (match PDF exactly)
+                const footerY = canvasHeight - margin - 15 * pxPerMM;
+                const footerFontSize = 24; // 12pt
+                
+                // Source text (left)
+                ctx.font = `${footerFontSize}px 'Arial'`;
+                ctx.fillStyle = "#646464"; // Gray
+                ctx.textAlign = "left";
+                ctx.fillText(
+                    "Source: Positive Peace Survey 2024",
+                    margin + 10,
+                    footerY
+                );
+                
+                // Organization info (right)
+                ctx.textAlign = "right";
+                ctx.fillText(
+                    "[IEP-CSB]",
+                    canvasWidth - margin - 10,
+                    footerY
+                );
+                
+                ctx.fillText(
+                    "csb.economicsandpeace.org",
+                    canvasWidth - margin - 10,
+                    footerY + 5 * pxPerMM
+                );
+
+                // Final export
+                const link = document.createElement("a");
+                link.download = `${chartTitle.replace(/[/\\?%*:|"<>]/g, '-')}.png`;
+                link.href = finalCanvas.toDataURL("image/png", 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+        } else {
+            // Fallback version without logo
+            const titleFontSize = 24;
+            ctx.font = `bold ${titleFontSize}px 'Arial'`;
+            ctx.fillStyle = "#1E1E1E";
+            ctx.textAlign = "center";
+            const titleY = margin + 50 * pxPerMM;
+            ctx.fillText(chartTitle, canvasWidth / 2, titleY);
+
+            // Add larger chart (80% width)
+            const chartWidth = contentWidth * 0.4;
+            const chartHeight = (chartWidth * chartCanvas.height) / chartCanvas.width;
+            const chartX = (canvasWidth - chartWidth) / 2;
+            const chartY = titleY + 20 * pxPerMM;
+            
+            // Add chart with subtle shadow
+            ctx.shadowColor = "rgba(0,0,0,0.1)";
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 5;
+            ctx.drawImage(chartCanvas, chartX, chartY, chartWidth, chartHeight);
+            ctx.shadowColor = "transparent";
+
+            // Add footer
+            const footerY = canvasHeight - margin - 15 * pxPerMM;
+            ctx.font = "16px 'Arial'";
+            ctx.fillStyle = "#646464";
+            ctx.textAlign = "right";
+            ctx.fillText(
+                "[IEP-CSB]",
+                canvasWidth - margin - 10,
+                footerY
+            );
+            ctx.fillText(
+                "csb.economicsandpeace.org",
+                canvasWidth - margin - 10,
+                footerY + 5 * pxPerMM
+            );
+
+            // Export
+            const link = document.createElement("a");
+            link.download = `${chartTitle.replace(/[/\\?%*:|"<>]/g, '-')}.png`;
+            link.href = finalCanvas.toDataURL("image/png", 1.0);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }).catch(error => {
+        console.error("PNG export error:", error);
+        alert("Error generating image. Please try again.");
+    });
+}
 
 //survey begin js
 const btnshow = document.querySelector('#show-data');

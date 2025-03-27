@@ -15,11 +15,35 @@
                 </div>
                 <!--end greeting section-->
                
-                <div class="filter-section show-filter mb-3 d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap g-2">
+              <!--initial filter section-->
+               
+              <div class="filter-section filter-active show-filter mb-3">
+                    <div class="d-flex flex-eow justify-content-between align-items-center mb-3">
+                    <div>
+                        <h5 style="font-size:16px;">Get insights, track trends, compare data, manage.</h5>
+                    </div>
+                    <div class="p-0">
+                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+                                          <div class="dropdown">
+                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#" id="export-all">Download
+                                                        Report</a></li>
+    
+                                            </ul>
+                                        </div>
+                                </div>
+                    </div>
 
-                    <div class="mt-3 mt-lg-0 d-flex flex-grow-1 justify-content-sm-end justify-content-start">
+                    <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="{{ route('home.index') }}" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard flex-nowrap">
+                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+
                                 <div class="col-auto p-0">
                                     @if(auth()->user()->role->name == 'survey')
                                         <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
@@ -80,26 +104,21 @@
                                     @endif
                                 </div>
                                 <div class="col-auto p-0">
-                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                          <div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-    
-                                            </ul>
-                                        </div>
+                                    <a href="#" class="view-insight-btn">
+                                        <span>View Insight</span>
+                                        <i class='bx bx-arrow-back bx-rotate-180' ></i>
+                                    </a>
                                 </div>
+                                
                             </div>
-                        </form>
+                            
+                            </div>
 
-                    </div>
+                        </form>
+                        
                 </div>
+
+<!--initial filter section-->
                
                 <!--end row-->
 

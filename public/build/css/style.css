@@ -826,3 +826,6 @@ table td{
 .view-insight-btn:hover {
     transform: scale(1.1);
 }
+.filter-active {
+    z-index: 9999;
+}
