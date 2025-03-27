@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDF(chartId,chartTitle);
+                    exportToPDFPnBar(chartId,chartTitle);
                 } else if (exportType === "png") {
                     exportToPNGPie(chartId,chartTitle);
                 }  else {
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDF(chartId,chartTitle);
+                    exportToPDFPnBar(chartId,chartTitle);
                 } else if (exportType === "png") {
                     exportToPNGPie(chartId,chartTitle);
                 }  else {
