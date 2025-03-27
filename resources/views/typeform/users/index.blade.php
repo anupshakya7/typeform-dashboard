@@ -38,16 +38,17 @@
                         User</a>
                 </div>
             </div>
-            <div class="flex-shrink-0">
+            {{--  <div class="flex-shrink-0">
                 <div class="d-flex flex-row gap-2 align-items-center">
                     <!--info here-->
-                    {{-- <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
+                  <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
                         data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                         aria-controls="theme-settings-offcanvas">
                         <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
-                    </a> --}}
+                    </a> 
                 </div>
             </div>
+            --}}
         </div>
     </div>
 
