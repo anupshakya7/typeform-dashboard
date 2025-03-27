@@ -41,8 +41,8 @@
                                         aria-label="Default select example">
                                         <option value="" selected>Country</option>
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country['name'] }}">
-                                                {{ $country['name'] }}</option>
+                                            <option value="{{ $country->country }}">
+                                                {{ $country->country }}</option>
                                         @endforeach
                                     </select>
                                     @endif
