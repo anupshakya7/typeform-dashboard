@@ -7,7 +7,6 @@
 <?php $__env->startSection('content'); ?>
 
 
-</div>
     <div class="row">
         <div class="col">
             <div class="h-100">
