@@ -548,6 +548,7 @@
                                             data-chart-id="multi_radar">Export as PNG</a></li>
                                 </ul>
                             </div>
+                            
                                     <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                         data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas"
@@ -557,6 +558,7 @@
                                             src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
+                                    
                                 </div>
                             </div>
                         </div><!-- end card header -->
@@ -567,7 +569,7 @@
                         </div><!-- end card-body -->
                     </div><!-- end card -->
 
-                    <!--area radar chart section starts here -->
+                    <!--area radar chart section ends here -->
 
                     <div class="row mb-4">
                         <div class="col-xl-12">
@@ -592,7 +594,7 @@
                                             
                                         </ul>
                                     </div>
-                                            
+                                    
                                         </div>
                                     </div>
                                 </div><!-- end card header -->
