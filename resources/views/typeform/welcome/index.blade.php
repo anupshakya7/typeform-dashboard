@@ -104,10 +104,10 @@
                                     @endif
                                 </div>
                                 <div class="col-auto p-0">
-                                    <a href="#" class="view-insight-btn">
+                                    <button href="#" class="view-insight-btn">
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
-                                    </a>
+                                    </button>
                                 </div>
                                 
                             </div>
