@@ -1,11 +1,11 @@
-@extends('typeform.layout.web')
-@section('title')
-    @lang('translation.crm')
-@endsection
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.crm'); ?>
+<?php $__env->stopSection(); ?>
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
     <div class="row">
@@ -16,7 +16,7 @@
 
                 <div>
                     <div>
-                        <h4>Welcome back, {{ auth()->user()->name }}</h4>
+                        <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     </div>
                 </div>
                 <!--end greeting section-->     
@@ -30,76 +30,74 @@
                     </div>
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
-                        <form action="{{ route('home.index') }}" method="GET">
+                        <form action="<?php echo e(route('home.index')); ?>" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
 
                                 <div class="col-auto p-0">
-                                    @if(auth()->user()->role->name == 'survey')
-                                        <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
-                                    @else
+                                    <?php if(auth()->user()->role->name == 'survey'): ?>
+                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
+                                    <?php else: ?>
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
                                         <option value="" selected>Country</option>
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country['name'] }}">
-                                                {{ $country['name'] }}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($country['name']); ?>">
+                                                <?php echo e($country['name']); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                    @endif
-                                    {{-- <div id="country_hidden">
-
-                                    </div> --}}
+                                    <?php endif; ?>
+                                    
                                 </div>
                                 <div class="col-auto p-0">
-                                    @if(auth()->user()->role->name == 'superadmin')
+                                    <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                     <select class="form-select select2" id="organization" name="organization"
                                         aria-label="Default select example">
                                         <option value="" selected>Organization</option>
-                                        @foreach ($organizations as $organization)
-                                            <option value="{{ $organization->id }}">
-                                                {{ $organization->name }}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($organization->id); ?>">
+                                                <?php echo e($organization->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                    @else
-                                    <input type="text" class="form-control organization-name" value="{{auth()->user()->organization->name}}" readonly>
-                                    <input type="hidden" name="organization" class="form-control" value="{{old('organization',auth()->user()->organization_id)}}" id="organization" readonly>
-                                    @endif
+                                    <?php else: ?>
+                                    <input type="text" class="form-control organization-name" value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
+                                    <input type="hidden" name="organization" class="form-control" value="<?php echo e(old('organization',auth()->user()->organization_id)); ?>" id="organization" readonly>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div class="col-auto p-0">
-                                    @if(auth()->user()->role->name == 'survey')
-                                    <input type="text" class="form-control" value="{{auth()->user()->branch_id != null ? auth()->user()->branch->name :''}}" readonly>
-                                    <input type="hidden" name="branch" class="form-control" value="{{old('branch',auth()->user()->branch_id)}}" id="branch" readonly>
-                                    @else
+                                    <?php if(auth()->user()->role->name == 'survey'): ?>
+                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->branch_id != null ? auth()->user()->branch->name :''); ?>" readonly>
+                                    <input type="hidden" name="branch" class="form-control" value="<?php echo e(old('branch',auth()->user()->branch_id)); ?>" id="branch" readonly>
+                                    <?php else: ?>
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
                                         <option value="" selected>Division</option>
                                     </select>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                                 <div class="col-auto p-0">
-                                    @if(auth()->user()->role->name == 'survey')
-                                        <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
-                                        <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
-                                    @else
+                                    <?php if(auth()->user()->role->name == 'survey'): ?>
+                                        <input type="text" class="form-control" value="<?php echo e(auth()->user()->survey->form_title); ?>" readonly>
+                                        <input type="hidden" name="survey" class="form-control" value="<?php echo e(old('survey',auth()->user()->form_id)); ?>" id="branch" readonly>
+                                    <?php else: ?>
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example" disabled>
                                         <option value="" selected>Survey</option>
-                                        @foreach ($surveyForms as $surveyForm)
-                                            <option value="{{ $surveyForm->form_title }}">
-                                                {{ $surveyForm->form_title }}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($surveyForm->form_title); ?>">
+                                                <?php echo e($surveyForm->form_title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
-                                @if(auth()->user()->role->name !== 'survey')
+                                <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
-                                    <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" {{request('survey') ? '' :'disabled'}}>
+                                    <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
                                 </div>
-                                @endif
+                                <?php endif; ?>
                             </div>
                             
                             </div>
@@ -115,22 +113,22 @@
 
         </div> <!-- end col -->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
     <!-- apexcharts -->
-    <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
     <script>
         $(document).ready(function() {
-            var branch_id = {!! json_encode($filterData->branch_id ?? null) !!};
-            var survey_id = {!! json_encode($filterData->form_id ?? null) !!};
+            var branch_id = <?php echo json_encode($filterData->branch_id ?? null); ?>;
+            var survey_id = <?php echo json_encode($filterData->form_id ?? null); ?>;
 
             //Parameters
             var country = getQueryParams('country');
@@ -175,7 +173,7 @@
 
                 if (organizationVal !== '') {
                     $.ajax({
-                        url: "{{ route('branch.get') }}",
+                        url: "<?php echo e(route('branch.get')); ?>",
                         method: 'GET',
                         data: {
                             organization_id: organizationVal
@@ -186,8 +184,8 @@
                             $('#branch').html('');
                             $('#branch').append('<option value="" selected>Select Division</option>');
 
-                            var userRole = @json(auth()->user()->role->name);
-                            var userBranchId = @json(auth()->user()->branch_id);
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
                         
                             var branchList = response.branches.filter(function(branch){
                                 if(userRole == "branch"){
@@ -240,7 +238,7 @@
 
                 if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
-                        url: "{{ route('survey.get') }}",
+                        url: "<?php echo e(route('survey.get')); ?>",
                         method: 'GET',
                         data: {
                             country: countryVal,
@@ -295,4 +293,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/welcome/index.blade.php ENDPATH**/ ?>

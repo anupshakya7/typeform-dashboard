@@ -190,13 +190,13 @@
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="{{ route('home.index') }}" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
-
                                 <div class="col-auto p-0">
                                     @if(auth()->user()->role->name == 'survey')
                                         <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
                                     @else
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
+
                                         <option value="" selected>Country</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country['name'] }}"
@@ -253,13 +253,14 @@
                                     </select>
                                     @endif
                                 </div>
+                                @if(auth()->user()->role->name !== 'survey')
                                 <div class="col-auto p-0">
                                     <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" {{request('survey') ? '' :'disabled'}}>
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
                                 </div>
-                                
+                                @endif
                             </div>
                             
                             </div>
@@ -1060,7 +1061,12 @@
                             });
 
                             if(response.forms.length > 0){
-                                $('#filter_btn').prop('disabled',false);
+                                let surveyVal2 = $('#survey').val();
+                                if(surveyVal2 !== ""){
+                                    $('#filter_btn').prop('disabled',false);
+                                }else{
+                                    $('#filter_btn').prop('disabled',true);
+                                }
                             }else{
                                 $('#filter_btn').prop('disabled',true);
                             }
