@@ -28,7 +28,7 @@
     <!--end greeting section-->
     <!--form section top -->
     <div class="form-top-bar mb-4">
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center justify-content-start">
             <div class="flex-shrink-0">
                 <div class="d-flex gap-1 flex-wrap">
 
@@ -37,7 +37,7 @@
                         Role</a>
                 </div>
             </div>
-            <div class="flex-shrink-0">
+          <div class="flex-shrink-0">
                 <div class="d-flex flex-row gap-2 align-items-center">
                     <!--info here-->
                     
@@ -45,6 +45,7 @@
             </div>
         </div>
     </div>
+    
 
     <!--form section starts here -->
 
