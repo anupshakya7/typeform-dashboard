@@ -181,6 +181,8 @@
                                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                                 <li><a class="dropdown-item" href="#" id="export-all">Download
                                                         Report</a></li>
+                                                <li><a class="dropdown-item" href="{{route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])}}" >
+                                                        Export Survey Data</a></li>
     
                                             </ul>
                                         </div>
@@ -761,7 +763,7 @@
                                                         @php
                                                             $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
                                                             $overTimeScoreDivide = $overTimeScore > 0 ? $overTimeScore:1;
-                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScoreDivide;
+                                                            $percentChange = round(($choosenDate-$overTimeScore)/$overTimeScoreDivide,1);
                                                         @endphp 
                                                         <span >{{$percentChange}}%
                                                             @if($percentChange > 0)

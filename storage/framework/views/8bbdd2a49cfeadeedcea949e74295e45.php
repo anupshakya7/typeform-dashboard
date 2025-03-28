@@ -180,6 +180,8 @@
                                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                                 <li><a class="dropdown-item" href="#" id="export-all">Download
                                                         Report</a></li>
+                                                <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])); ?>" >
+                                                        Export Survey Data</a></li>
     
                                             </ul>
                                         </div>
@@ -739,7 +741,7 @@
                                                         <?php
                                                             $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
                                                             $overTimeScoreDivide = $overTimeScore > 0 ? $overTimeScore:1;
-                                                            $percentChange = ($choosenDate-$overTimeScore)/$overTimeScoreDivide;
+                                                            $percentChange = round(($choosenDate-$overTimeScore)/$overTimeScoreDivide,1);
                                                         ?> 
                                                         <span ><?php echo e($percentChange); ?>%
                                                             <?php if($percentChange > 0): ?>
@@ -779,8 +781,8 @@
 
         <div class="card-body">
                                     <div class="live-preview">
-                                        <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0" id="survey-table" style="display: none;">
+                                        <div class="table-responsive" >
+                                            <table class="table align-middle table-nowrap mb-0"  id="survey-table" style="display:none;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th scope="col">Survey Data ID</th>
