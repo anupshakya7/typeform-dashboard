@@ -801,8 +801,8 @@
 
         <div class="card-body">
                                     <div class="live-preview">
-                                        <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0" id="survey-table" style="display: none;">
+                                        <div class="table-responsive" >
+                                            <table class="table align-middle table-nowrap mb-0"  id="survey-table">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th scope="col">Survey Data ID</th>

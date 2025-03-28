@@ -2,42 +2,31 @@
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('translation.crm'); ?>
 <?php $__env->stopSection(); ?>
+
+
+
 <?php $__env->startSection('content'); ?>
+
+
     <div class="row">
         <div class="col">
             <div class="h-100">
 
                 <!--greeting section -->
+
                 <div>
                     <div>
                         <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     </div>
                 </div>
-                <!--end greeting section-->
-               
-              <!--initial filter section-->
-               
-              <div class="filter-section filter-active show-filter mb-3">
-                    <div class="d-flex flex-eow justify-content-between align-items-center mb-3">
+                <!--end greeting section-->     
+            
+            <!--initial filter section-->
+                <div class="filter-section show-filter mb-3">
+                    <div class="d-flex flex-eow justify-content-between">
                     <div>
-                        <h5 style="font-size:16px;">Get insights, track trends, compare data, manage.</h5>
+                        <h5 style="font-size:16px;" class="mb-3">Get insights, track trends, compare data, manage.</h5>
                     </div>
-                    <div class="p-0">
-                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                          <div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-    
-                                            </ul>
-                                        </div>
-                                </div>
                     </div>
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
@@ -52,8 +41,8 @@
                                         aria-label="Default select example">
                                         <option value="" selected>Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country['name']); ?>">
-                                                <?php echo e($country['name']); ?></option>
+                                            <option value="<?php echo e($country->country); ?>">
+                                                <?php echo e($country->country); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php endif; ?>
@@ -92,7 +81,7 @@
                                         <input type="hidden" name="survey" class="form-control" value="<?php echo e(old('survey',auth()->user()->form_id)); ?>" id="branch" readonly>
                                     <?php else: ?>
                                     <select class="form-select select2" name="survey" id="survey"
-                                        aria-label="Default select example" onchange="this.form.submit()">
+                                        aria-label="Default select example" disabled>
                                         <option value="" selected>Survey</option>
                                         <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($surveyForm->form_title); ?>">
@@ -101,13 +90,14 @@
                                     </select>
                                     <?php endif; ?>
                                 </div>
+                                <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
-                                    <a href="#" class="view-insight-btn">
+                                    <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
-                                    </a>
+                                    </button>
                                 </div>
-                                
+                                <?php endif; ?>
                             </div>
                             
                             </div>
@@ -115,10 +105,7 @@
                         </form>
                         
                 </div>
-
-<!--initial filter section-->
-               
-                <!--end row-->
+            <!--initial filter section-->
 
 
                 <!--table section starts here -->
@@ -155,40 +142,31 @@
             filterBranch();
             filterSurvey();
 
-            //Filter Organizations
-            // $('#country').change(function() {
-            //     filterOrganization();
-            // });
-
-            // $('#country').change(function(){
-            //     filterSurvey();
-            // });
-
-            // $('#organization').change(function() {
-            //     filterSurvey();
-            //     filterBranch();
-            // });
-
-            // $('#branch').change(function() {
-            //     filterSurvey();
-            // });
-
 
             $(document).on('change', '#country', function() {
                 filterSurvey();
             });
             $(document).on('change', '#organization', function() {
                 $('#branch').prop('disabled', true);
+                $('#branch').html('');
                 $('#branch').html('<option value="" selected>Choose Branch</option>');
+                
                 filterBranch(function() {
                     filterSurvey();
                 });
-
             });
             $(document).on('change', '#branch', function() {
                 filterSurvey();
             });
 
+            $(document).on('change', '#survey', function() {
+                let surveyValue = $('#survey').val();
+                if(surveyValue!==""){
+                    $('#filter_btn').prop('disabled',false);
+                }else{
+                    $('#filter_btn').prop('disabled', true);
+                }
+            });
 
             function filterBranch(callback) {
                 var organizationVal = $('#organization').val();
@@ -208,7 +186,6 @@
 
                             var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
-
                         
                             var branchList = response.branches.filter(function(branch){
                                 if(userRole == "branch"){
@@ -254,12 +231,12 @@
                 }
             }
 
-            function filterSurvey() {
+            function filterSurvey(){ 
                 var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
 
-                if (organizationVal !== '') {
+                if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
                         url: "<?php echo e(route('survey.get')); ?>",
                         method: 'GET',
@@ -269,7 +246,6 @@
                             branch_id: branchVal
                         },
                         success: function(response) {
-                            console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
                             $('#survey').append('<option value="" selected>Select Survey</option>');
@@ -283,6 +259,17 @@
                                     $(option).prop('selected', true);
                                 }
                             });
+
+                            if(response.forms.length > 0){
+                                let surveyVal2 = $('#survey').val();
+                                if(surveyVal2 !== ""){
+                                    $('#filter_btn').prop('disabled',false);
+                                }else{
+                                    $('#filter_btn').prop('disabled',true);
+                                }
+                            }else{
+                                $('#filter_btn').prop('disabled',true);
+                            }
 
                         },
                         error: function(xhr, status, error) {
@@ -298,7 +285,6 @@
                 var urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
             }
-
         });
     </script>
 
