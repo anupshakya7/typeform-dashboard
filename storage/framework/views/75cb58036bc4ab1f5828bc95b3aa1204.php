@@ -39,7 +39,7 @@
                 <!-- container-fluid -->
             </div>
             <!-- End Page-content -->
-            <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make('typeform.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         <!-- end main content-->
     </div>

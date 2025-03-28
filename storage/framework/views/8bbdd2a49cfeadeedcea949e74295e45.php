@@ -779,11 +779,11 @@
 
         </div> <!-- end col -->
 
-        <div class="card-body">
+        <div class="card-body" id="survey-data" style="display:none;">
                                     <div class="live-preview">
                                         <div class="table-responsive" >
-                                            <table class="table align-middle table-nowrap mb-0"  id="survey-table" style="display:none;">
-                                                <thead class="table-light">
+                                            <table class="table align-middle table-nowrap mb-0"  id="survey-table" >
+                                                <thead class="table-head">
                                                     <tr>
                                                         <th scope="col">Survey Data ID</th>
                                                         <th scope="col">Survey ID</th>
@@ -1593,6 +1593,7 @@
         document.addEventListener("DOMContentLoaded", function () {
     const exportButton = document.getElementById('export-all');
     const surveyTable = document.getElementById("survey-table");
+    const surveydata = document.getElementById("survey-data");
     const loader = document.querySelector('.download-spinner-container');
     const mainpage = document.querySelector('body'); // Added dot for class selector
 
@@ -1607,7 +1608,7 @@
                 
                 
                 mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
-        if (surveyTable) surveyTable.style.display = "block";
+        if (surveydata) surveydata.style.display = "block";
 
         const selectedCountry = document.getElementById('country').value;
         const selectedOrganization = document.getElementById('organization').value;
@@ -1625,7 +1626,7 @@
                 updateTable(surveyData);
 
                 const charts = [
-                    { id: "sales-forecast-chart", title: "Mean Scores Values" },
+                    { id: "sales-forecast-chart", title: "Survey mean score across pillars of Positive Peace" },
                     { id: "basic_radar", title: "Mean Result" },
                     { id: "simple_pie_chart", title: "Participants by Gender" },
                     { id: "simple_pie_chart2", title: "Participants by Age" },
@@ -1642,7 +1643,7 @@
 
                 // Export charts and tables to PNG and PDF
                 exportChartsToPNGAndPDF(charts, function () {
-                    surveyTable.style.display = "none";
+                    surveydata.style.display = "none";
                     loader.style.display = 'none';
                     mainpage.style.overflow = 'visible';
                     exportButton.disabled = false;
@@ -1718,7 +1719,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         pdf.setTextColor(30, 30, 30);
         pdf.text("Community Strength Barometer Report", 
                 margin + contentPadding + logoWidth + 5, 
-                margin + contentPadding + 6);
+                margin + contentPadding + 18);
         
         // Add page border (closer to edge now)
         pdf.setDrawColor(30, 30, 30);
@@ -1822,14 +1823,14 @@ function exportChartsToPNGAndPDF(charts, callback) {
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100);
         
-        // Left-aligned source
-        pdf.text("Source: Positive Peace Survey 2024", margin + contentPadding + 5, footerY);
-        
-        // Right-aligned organization info
+       // Left-aligned organization info
         const orgText = "IEP-CSB";
-        const emailText = "csb.economicsandpeace.org";
-        pdf.text(orgText, pageWidth - margin - contentPadding - 5, footerY, { align: 'right' });
-        pdf.text(emailText, pageWidth - margin - contentPadding - 5, footerY + lineSpacing, { align: 'right' });
+        const emailText = "Positive Peace Survey 2024";Source: 
+        pdf.text(orgText, margin + contentPadding + 5, footerY);
+        pdf.text(emailText, margin + contentPadding + 5, footerY + lineSpacing);
+
+        // Right-aligned source
+        pdf.text("csb.economicsandpeace.org", pageWidth - margin - contentPadding - 5, footerY + 4, { align: 'right' });
     };
     
     // Start processing charts
