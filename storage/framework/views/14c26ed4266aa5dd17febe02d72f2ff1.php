@@ -2,7 +2,13 @@
 <div class="app-menu navbar-menu" >
     <!-- LOGO -->
     <?php
-        $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
+
+        if(auth()->user()->role->name == 'superadmin'){
+            $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
+        }else{
+            $organizationLogo = auth()->user()->organization->logo ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
+        }
+    
    ?>
     <div class="navbar-brand-box">
         <!-- Dark Logo-->

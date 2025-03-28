@@ -67,7 +67,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="permission" class="form-label">Permission<span class="text-danger">*</span></label>
-                                    <select id="permission" name="permission[]" class="form-select select2">
+                                    <select id="permission" name="permission[]" class="form-select select2" multiple>
                                         <option value="">Choose Permission</option>
                                         @foreach($permissions as $permission)
                                         <option value="{{$permission->id}}" {{ in_array($permission->id,$role->permissions->pluck('id')->toArray()) ? 'selected':'' }}>

@@ -37,16 +37,7 @@
                         User</a>
                 </div>
             </div>
-            <div class="flex-shrink-0">
-                <div class="d-flex flex-row gap-2 align-items-center">
-                    <!--info here-->
-                    <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
-                        data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                        aria-controls="theme-settings-offcanvas">
-                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-                    </a>
-                </div>
-            </div>
+            
         </div>
     </div>
 
@@ -64,6 +55,7 @@
                             <thead class="table-head">
                                 <tr>
                                     <th>S.No.</th>
+                                    <th>Profile</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Organization</th>
@@ -77,10 +69,16 @@
                                 <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><?php echo e($user->serial_no); ?></td>
+                                        <td>
+                                            <?php
+                                                $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
+                                            ?>
+                                            <img src="<?php echo e($profile); ?>" alt="<?php echo e($user->name); ?>" width="45" style="border-radius:50%;height: 45px;object-fit:contain;">
+                                        </td>
                                         <td><?php echo e($user->name); ?></td>
                                         <td><?php echo e($user->email); ?></td>
                                         <td><?php echo e(optional($user->organization)->name); ?></td>
-                                        <td><span class="btn btn-sm btn-danger"><?php echo e(optional($user->role)->name); ?></span></td>
+                                        <td><span class="role-batch"><?php echo e(optional($user->role)->name); ?></span></td>
                                         
                                         <td>
                                             <div class="dropdown d-inline-block">
@@ -195,5 +193,4 @@
         })
     </script>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/users/index.blade.php ENDPATH**/ ?>

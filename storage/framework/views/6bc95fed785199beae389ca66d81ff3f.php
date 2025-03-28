@@ -40,6 +40,28 @@
         <div class="live-preview">
 
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-center">
+                            <?php
+                                $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
+                            ?>
+                            <img src="<?php echo e($profile); ?>" alt="profile_image" width="150" height="150" id="profile_image" style="border-radius:50%;object-fit:contain;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile" class="form-label">Profile</label>
+                            <input type="file" name="profile" class="form-control" value="<?php echo e(old('profile')); ?>" id="profile" onchange="getImagePreview(event,'profile_image')">
+                            <?php $__errorArgs = ['profile'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger ms-1"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
@@ -197,6 +219,14 @@ unset($__errorArgs, $__bag); ?>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
+function getImagePreview(event,divId){
+    var image = URL.createObjectURL(event.target.files[0]);
+    var imageTag = document.getElementById(divId);
+
+    imageTag.src = image;
+    imageTag.style.borderRadius = "50%";
+    imageDiv.appendChild(imageTag);
+}
 $(document).ready(function(){
     $('#formUserOrganizationLevel').hide();
     $('#formUserBranchLevel').hide();

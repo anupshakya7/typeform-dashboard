@@ -188,18 +188,19 @@
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
-                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
+                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e(auth()->user()->survey->country); ?>" readonly>
                                     <?php else: ?>
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
+
                                         <option value="" selected>Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country['name']); ?>"
-                                                <?php echo e((($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : ''); ?>>
-                                                <?php echo e($country['name']); ?></option>
+                                            <option value="<?php echo e($country->country); ?>"
+                                                <?php echo e((($filterData && $filterData->country == $country->country) || request('country') == $country->country) || ($selectedCountrywithSurvey == $country->country) ? 'selected' : ''); ?>>
+                                                <?php echo e($country->country); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php endif; ?>
@@ -249,19 +250,20 @@
                                     </select>
                                     <?php endif; ?>
                                 </div>
+                                <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
                                     <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
                                 </div>
-                                
+                                <?php endif; ?>
                             </div>
                             
-                            
+                            </div>
+
                         </form>
                         
-                    </div>
                 </div>
 
 <!--initial filter section-->
@@ -271,7 +273,7 @@
 
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Mean Scores Values</h4>
+                        <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Survey mean score across pillars of Positive Peace</h4>
                         <div class="flex-shrink-0">
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <!--info here-->
@@ -290,7 +292,7 @@
                         </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace (Bar Chart)" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
@@ -332,7 +334,7 @@
                                     </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Community Resilience Across the Pillars of Positive Peace (Radar plot)" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul><li>Well-functioning Government</li><li>Sound Business Environment</li><li>Equitable Distribution of Resources</li><li>Acceptance of the Rights of Others</li><li>Good Relations with Neighbours</li><li>Free Flow of Information</li><li>High Levels of Human Capital</li><li>Low Levels of Corruption</li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Community Resilience Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul><li>Well-functioning Government</li><li>Sound Business Environment</li><li>Equitable Distribution of Resources</li><li>Acceptance of the Rights of Others</li><li>Good Relations with Neighbours</li><li>Free Flow of Information</li><li>High Levels of Human Capital</li><li>Low Levels of Corruption</li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
@@ -868,9 +870,13 @@
                 
                 // $('#survey').html('');
                 // $('#survey').append('<option value="" selected>Select Survey</option>');
-                filterBranch(function() {
-                    filterSurvey();
-                });
+                
+                // filterBranch(function() {
+                //     filterSurvey();
+                // });
+                filterBranch();
+
+                filterSurvey();
                 // filterBtn();
 
             });
@@ -1011,6 +1017,7 @@
                 var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
+                console.log(countryVal,organizationVal);
 
                 if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
@@ -1037,7 +1044,12 @@
                             });
 
                             if(response.forms.length > 0){
-                                $('#filter_btn').prop('disabled',false);
+                                let surveyVal2 = $('#survey').val();
+                                if(surveyVal2 !== ""){
+                                    $('#filter_btn').prop('disabled',false);
+                                }else{
+                                    $('#filter_btn').prop('disabled',true);
+                                }
                             }else{
                                 $('#filter_btn').prop('disabled',true);
                             }
@@ -1049,6 +1061,10 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
+                }else{
+                    $('#survey').prop('disabled', true);
+                    $('#survey').html('');
+                    $('#survey').append('<option value="" selected>Select Survey</option>');
                 }
             }
 
@@ -1193,7 +1209,7 @@
                         height: 500,
                         type: 'radar',
                         toolbar: {
-                            show: true
+                            show: false
                         }
                     },
                     colors: ['#0664bc'],
@@ -1272,7 +1288,7 @@
                             enabled: false,
                         }
                     },
-                    colors: ['#004994', '#0c8cdb','#74ccf8']
+                    colors: ['#004994', '#0c8cdb','#87bce3']
                 };
 
                 var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
@@ -1699,7 +1715,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         pdf.setFontSize(titleFontSize);
         pdf.setTextColor(30, 30, 30);
         pdf.text("Community Strength Barometer Report", 
-                margin + contentPadding + logoWidth + 10, 
+                margin + contentPadding + logoWidth + 5, 
                 margin + contentPadding + 6);
         
         // Add page border (closer to edge now)
@@ -1711,7 +1727,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         // Add "Page 1" to first page
         pdf.setFontSize(footerFontSize);
-        pdf.text("Page 1", pageWidth - margin - contentPadding - 20, margin + contentPadding + 7);
+        pdf.text("Page 1", pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
     };
     
     // Add header to subsequent pages
@@ -1727,7 +1743,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         // Add page number
         pdf.setFontSize(footerFontSize);
-        pdf.text(`Page ${pageNumber}`, pageWidth - margin - contentPadding - 20, margin + contentPadding + 10);
+        pdf.text(`Page ${pageNumber}`, pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
     };
     
     // Initialize variables for positioning

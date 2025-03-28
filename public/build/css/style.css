@@ -841,3 +841,19 @@ table td{
 .filter-active {
     z-index: 9999;
 }
+    */
+
+    #survey-table {
+        width: 100%;
+        table-layout: fixed; /* Ensures columns distribute evenly */
+        border-collapse: collapse; /* Removes spacing between table cells */
+    }
+    
+    #survey-table th,
+    #survey-table td {
+        word-wrap: break-word; /* Ensures text wraps within cell */
+        overflow: hidden; /* Prevents overflow */
+        text-overflow: ellipsis; /* Shows "..." for overflow text */
+        white-space: normal; /* Allows content to wrap */
+    }
+    

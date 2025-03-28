@@ -39,4 +39,4 @@
     <div class="offcanvas-footer border-top p-3 text-center">
         <p class="p-0 m-0">© CSB: <a href="<?php echo e(route('home.index')); ?>" target="_blank" class="text-decoration-underline">Survey Data Source</a></p>
     </div>
-</div><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/layouts/customizer.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/partials/customizer.blade.php ENDPATH**/ ?>
