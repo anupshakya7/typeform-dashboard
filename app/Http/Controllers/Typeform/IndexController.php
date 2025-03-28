@@ -18,7 +18,8 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         // dd(session('country'));
-        if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
+        // if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
+        if($request->all() == [] && auth()->user()->role->name !== 'survey'){
             //Dropdown
             // $countriesPath = public_path('build/js/countries/countries.json');
             // $countries = json_decode(File::get($countriesPath),true);

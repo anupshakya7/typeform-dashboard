@@ -856,4 +856,36 @@ table td{
         text-overflow: ellipsis; /* Shows "..." for overflow text */
         white-space: normal; /* Allows content to wrap */
     }
-    
+   /* The overlay */
+
+
+   body {
+    position: relative; /* Required for absolute positioning of the overlay */
+    margin: 0;
+    height: 100vh; /* Ensure body covers full viewport height */
+  }
+  
+  body.overlay-active::before {
+    content: "";
+    position: fixed; /* Use fixed to cover the entire viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 99999;
+    /* REMOVE pointer-events: none - we want to block interactions */
+}
+
+/* Elements that SHOULD be interactable despite overlay */
+.overlay-active .filter-section,
+.overlay-active .select2-dropdown {
+    position: relative; /* or keep absolute if needed */
+    z-index: 100000; /* Higher than overlay */
+    pointer-events: auto !important; /* Force allow interactions */
+}
+
+/* Lock all other interactions when overlay is active */
+.overlay-active {
+    pointer-events: none;
+}

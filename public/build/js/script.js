@@ -1,3 +1,4 @@
+
 //table text participants name truncate
 document.addEventListener('DOMContentLoaded', function () {
     const participantsNames = document.querySelectorAll('.participants-name');
