@@ -104,7 +104,7 @@ class IndexController extends Controller
 
             $mean = $sum / $count;
 
-            $meanPillarScore[$pillar] = round($mean,2);
+            $meanPillarScore[$pillar] = round($mean,1);
         }
 
         return $meanPillarScore;
@@ -166,7 +166,7 @@ class IndexController extends Controller
                 return $form->answer->count();
             });
     
-            $positiveMeanCal[$type] = $count > 0 ? round($sum/$count,2) : 0;
+            $positiveMeanCal[$type] = $count > 0 ? round($sum/$count,1) : 0;
         }
         
         return $positiveMeanCal;
@@ -206,7 +206,7 @@ class IndexController extends Controller
                 $count= $formsCountry->sum(function($form){
                     return $form->answer->count();
                 });
-                $singlePillarMeanCal[$pillar] = $count > 0 ? round($sum/$count,2) : 0;
+                $singlePillarMeanCal[$pillar] = $count > 0 ? round($sum/$count,1) : 0;
             }
 
             $pillarMeanCal[$type] = $singlePillarMeanCal;
@@ -247,7 +247,7 @@ class IndexController extends Controller
                     
                     $answerCount = max($answerCount,1);
 
-                    $overTimeMean[$pillar] = $answerSum/$answerCount;
+                    $overTimeMean[$pillar] = round($answerSum/$answerCount,1);
                 }
 
                 $overTimeMeanTime[$timeType] = $overTimeMean;

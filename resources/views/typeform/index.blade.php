@@ -276,7 +276,7 @@
 
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Mean Scores Values</h4>
+                        <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Survey mean score across pillars of Positive Peace</h4>
                         <div class="flex-shrink-0">
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <!--info here-->
@@ -295,7 +295,7 @@
                         </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace (Bar Chart)" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="{{ URL::asset('build/icons/info.svg') }}"></img>
 
@@ -337,7 +337,7 @@
                                     </div>
                                 <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Community Resilience Across the Pillars of Positive Peace (Radar plot)" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul><li>Well-functioning Government</li><li>Sound Business Environment</li><li>Equitable Distribution of Resources</li><li>Acceptance of the Rights of Others</li><li>Good Relations with Neighbours</li><li>Free Flow of Information</li><li>High Levels of Human Capital</li><li>Low Levels of Corruption</li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Community Resilience Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul><li>Well-functioning Government</li><li>Sound Business Environment</li><li>Equitable Distribution of Resources</li><li>Acceptance of the Rights of Others</li><li>Good Relations with Neighbours</li><li>Free Flow of Information</li><li>High Levels of Human Capital</li><li>Low Levels of Corruption</li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
                                         src="{{ URL::asset('build/icons/info.svg') }}"></img>
 
@@ -892,9 +892,13 @@
                 
                 // $('#survey').html('');
                 // $('#survey').append('<option value="" selected>Select Survey</option>');
-                filterBranch(function() {
-                    filterSurvey();
-                });
+                
+                // filterBranch(function() {
+                //     filterSurvey();
+                // });
+                filterBranch();
+
+                filterSurvey();
                 // filterBtn();
 
             });
@@ -1035,6 +1039,7 @@
                 var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
+                console.log(countryVal,organizationVal);
 
                 if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
@@ -1078,6 +1083,10 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
+                }else{
+                    $('#survey').prop('disabled', true);
+                    $('#survey').html('');
+                    $('#survey').append('<option value="" selected>Select Survey</option>');
                 }
             }
 
@@ -1300,7 +1309,7 @@
                             enabled: false,
                         }
                     },
-                    colors: ['#004994', '#0c8cdb','#74ccf8']
+                    colors: ['#004994', '#0c8cdb','#87bce3']
                 };
 
                 var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
