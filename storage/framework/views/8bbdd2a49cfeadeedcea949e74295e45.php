@@ -188,18 +188,19 @@
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                            <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
-                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e($filterData->country); ?>" readonly>
+                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e(auth()->user()->survey->country); ?>" readonly>
                                     <?php else: ?>
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
+
                                         <option value="" selected>Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country['name']); ?>"
-                                                <?php echo e((($filterData && $filterData->country == $country['name']) || request('country') == $country['name']) || ($selectedCountrywithSurvey == $country['name']) ? 'selected' : ''); ?>>
-                                                <?php echo e($country['name']); ?></option>
+                                            <option value="<?php echo e($country->country); ?>"
+                                                <?php echo e((($filterData && $filterData->country == $country->country) || request('country') == $country->country) || ($selectedCountrywithSurvey == $country->country) ? 'selected' : ''); ?>>
+                                                <?php echo e($country->country); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php endif; ?>
@@ -249,19 +250,20 @@
                                     </select>
                                     <?php endif; ?>
                                 </div>
+                                <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
                                     <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
                                 </div>
-                                
+                                <?php endif; ?>
                             </div>
                             
-                            
+                            </div>
+
                         </form>
                         
-                    </div>
                 </div>
 
 <!--initial filter section-->
@@ -1037,7 +1039,12 @@
                             });
 
                             if(response.forms.length > 0){
-                                $('#filter_btn').prop('disabled',false);
+                                let surveyVal2 = $('#survey').val();
+                                if(surveyVal2 !== ""){
+                                    $('#filter_btn').prop('disabled',false);
+                                }else{
+                                    $('#filter_btn').prop('disabled',true);
+                                }
                             }else{
                                 $('#filter_btn').prop('disabled',true);
                             }
@@ -1193,7 +1200,7 @@
                         height: 500,
                         type: 'radar',
                         toolbar: {
-                            show: true
+                            show: false
                         }
                     },
                     colors: ['#0664bc'],
@@ -1699,7 +1706,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         pdf.setFontSize(titleFontSize);
         pdf.setTextColor(30, 30, 30);
         pdf.text("Community Strength Barometer Report", 
-                margin + contentPadding + logoWidth + 10, 
+                margin + contentPadding + logoWidth + 5, 
                 margin + contentPadding + 6);
         
         // Add page border (closer to edge now)
@@ -1711,7 +1718,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         // Add "Page 1" to first page
         pdf.setFontSize(footerFontSize);
-        pdf.text("Page 1", pageWidth - margin - contentPadding - 20, margin + contentPadding + 7);
+        pdf.text("Page 1", pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
     };
     
     // Add header to subsequent pages
@@ -1727,7 +1734,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         // Add page number
         pdf.setFontSize(footerFontSize);
-        pdf.text(`Page ${pageNumber}`, pageWidth - margin - contentPadding - 20, margin + contentPadding + 10);
+        pdf.text(`Page ${pageNumber}`, pageWidth - margin - contentPadding - 15, margin + contentPadding + 5);
     };
     
     // Initialize variables for positioning
