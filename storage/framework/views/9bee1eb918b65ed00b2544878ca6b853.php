@@ -41,7 +41,7 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <a href="<?php echo e(route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey_form'=>request('survey_form')])); ?>" type="button" class="btn btn-success">
+                        <a href="<?php echo e(route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey')])); ?>" type="button" class="btn btn-success">
                             <i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
@@ -377,6 +377,7 @@
         var country_name = getQueryParams('country');
         var organization_id = getQueryParams('organization');
         var branch_id = getQueryParams('branch');
+        var survey_id = getQueryParams('survey');
 
         if(country_name !== null){
                 filterSurvey();
@@ -482,7 +483,7 @@
                                 var option = new Option(formItem.form_title, formItem.form_id);
                                 $('#survey').append(option);
 
-                                if (survey && survey == formItem.form_id) {
+                                if (survey_id && survey_id == formItem.form_id) {
                                     $(option).prop('selected', true);
                                 }
                             });

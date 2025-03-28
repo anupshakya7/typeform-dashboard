@@ -289,6 +289,7 @@
             var country_name = getQueryParams('country');
             var organization_id = getQueryParams('organization');
             var branch_id = getQueryParams('branch');
+            var survey_id = getQueryParams('survey');
 
             if(country_name !== null){
                 filterSurvey();
@@ -382,7 +383,7 @@
                                 var option = new Option(formItem.form_title, formItem.form_id);
                                 $('#survey').append(option);
 
-                                if (survey && survey == formItem.form_id) {
+                                if (survey_id && survey_id == formItem.form_id) {
                                     $(option).prop('selected', true);
                                 }
                             });

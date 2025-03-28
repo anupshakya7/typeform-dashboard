@@ -309,19 +309,21 @@ function exportToPDF(chartId, chartTitle) {
          const lineHeight = 5; // Space between lines
          const rightPadding = margin + 10; // Right margin
          const footerFontSize = 12;
-         // Left-aligned source (grey text)
-         pdf.setFontSize(footerFontSize);
-         pdf.setTextColor(100, 100, 100); // Grey
-         pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
-         
-         // Right-aligned organization (line 1)
-         pdf.setTextColor(100,100,100); // Black
-         const orgText = "[IEP-CSB]";
-         pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
-         
-         // Right-aligned email (line 2)
-         const emailText = "csb.economicsandpeace.org";
-         pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
+
+         // Left-aligned organization (line 1)
+        pdf.setFontSize(footerFontSize);
+        pdf.setTextColor(100, 100, 100); // Black
+        const orgText = "[IEP-CSB]";
+        pdf.text(orgText, margin + 10, footerY, { align: 'left' });
+
+        // Left-aligned source (line 2, grey text)
+        pdf.setTextColor(100, 100, 100); // Grey
+        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY + lineHeight, { align: 'left' });
+
+        // Right-aligned email (line 2)
+        const emailText = "csb.economicsandpeace.org";
+        pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
+
 
 
         // Save the PDF
@@ -408,30 +410,20 @@ function exportToPNG(chartId, chartTitle) {
                 // Add footer (match PDF exactly)
                 const footerY = canvasHeight - margin - 15 * pxPerMM;
                 const footerFontSize = 24; // 12pt
-                
-                // Source text (left)
+
+                // Organization info (left, first line)
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText(
-                    "Source: Positive Peace Survey 2024",
-                    margin + 10,
-                    footerY
-                );
-                
-                // Organization info (right)
+                ctx.fillText("[IEP-CSB]", margin + 10, footerY);
+
+                // Source text (left, second line)
+                ctx.fillText("Source: Positive Peace Survey 2024", margin + 10, footerY + 5 * pxPerMM);
+
+                // Email (right)
                 ctx.textAlign = "right";
-                ctx.fillText(
-                    "[IEP-CSB]",
-                    canvasWidth - margin - 10,
-                    footerY
-                );
-                
-                ctx.fillText(
-                    "csb.economicsandpeace.org",
-                    canvasWidth - margin - 10,
-                    footerY + 5 * pxPerMM
-                );
+                ctx.fillText("csb.economicsandpeace.org", canvasWidth - margin - 10, footerY + 5 * pxPerMM);
+
 
                 // Final export
                 const link = document.createElement("a");
@@ -572,19 +564,20 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
         const rightPadding = margin + 10; // Right margin
         const footerFontSize = 12;
         
-        // Left-aligned source (grey text)
+        // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
-        pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
-        
-        // Right-aligned organization (line 1)
-        pdf.setTextColor(100, 100, 100); // Grey
+        pdf.setTextColor(100, 100, 100); // Black
         const orgText = "[IEP-CSB]";
-        pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
-        
+        pdf.text(orgText, margin + 10, footerY, { align: 'left' });
+
+        // Left-aligned source (line 2, grey text)
+        pdf.setTextColor(100, 100, 100); // Grey
+        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY + lineHeight, { align: 'left' });
+
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
         pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
+
 
         // Save the PDF
         pdf.save(`${chartTitle}.pdf`);
@@ -651,16 +644,20 @@ function exportToPDFMultiRadar(chartId, chartTitle) {
         const rightPadding = margin + 10;
         const footerFontSize = 12;
         
+        // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
-        pdf.setTextColor(100, 100, 100);
-        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
-        
-        pdf.setTextColor(100, 100, 100);
+        pdf.setTextColor(100, 100, 100); // Black
         const orgText = "[IEP-CSB]";
-        pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
-        
+        pdf.text(orgText, margin + 10, footerY, { align: 'left' });
+
+        // Left-aligned source (line 2, grey text)
+        pdf.setTextColor(100, 100, 100); // Grey
+        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY + lineHeight, { align: 'left' });
+
+        // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
         pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
+
 
         // Save PDF
         pdf.save(`${chartTitle}.pdf`);
@@ -730,16 +727,17 @@ function exportToPDFPnBar(chartId, chartTitle) {
         const rightPadding = margin + 10;
         const footerFontSize = 12;
         
-        // Left-aligned source
+        // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
-        pdf.setTextColor(100, 100, 100); // Gray text
-        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY);
-        
-        // Right-aligned organization info
-        pdf.setTextColor(100, 100, 100);
+        pdf.setTextColor(100, 100, 100); // Black
         const orgText = "[IEP-CSB]";
-        pdf.text(orgText, pageWidth - rightPadding, footerY, { align: 'right' });
-        
+        pdf.text(orgText, margin + 10, footerY, { align: 'left' });
+
+        // Left-aligned source (line 2, grey text)
+        pdf.setTextColor(100, 100, 100); // Grey
+        pdf.text("Source: [Positive Peace Survey 2024]", margin + 10, footerY + lineHeight, { align: 'left' });
+
+        // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
         pdf.text(emailText, pageWidth - rightPadding, footerY + lineHeight, { align: 'right' });
 
@@ -828,30 +826,20 @@ function exportToPNGMeanRadar(chartId, chartTitle) {
                 // Add footer (match PDF exactly)
                 const footerY = canvasHeight - margin - 15 * pxPerMM;
                 const footerFontSize = 24; // 12pt
-                
-                // Source text (left)
+
+                // Organization info (left, first line)
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText(
-                    "Source: Positive Peace Survey 2024",
-                    margin + 10,
-                    footerY
-                );
-                
-                // Organization info (right)
+                ctx.fillText("[IEP-CSB]", margin + 10, footerY);
+
+                // Source text (left, second line)
+                ctx.fillText("Source: Positive Peace Survey 2024", margin + 10, footerY + 5 * pxPerMM);
+
+                // Email (right)
                 ctx.textAlign = "right";
-                ctx.fillText(
-                    "[IEP-CSB]",
-                    canvasWidth - margin - 10,
-                    footerY
-                );
-                
-                ctx.fillText(
-                    "csb.economicsandpeace.org",
-                    canvasWidth - margin - 10,
-                    footerY + 5 * pxPerMM
-                );
+                ctx.fillText("csb.economicsandpeace.org", canvasWidth - margin - 10, footerY + 5 * pxPerMM);
+
 
                 // Final export
                 const link = document.createElement("a");
@@ -1000,30 +988,20 @@ function exportToPNGPie(chartId, chartTitle) {
                 // Add footer (match PDF exactly)
                 const footerY = canvasHeight - margin - 15 * pxPerMM;
                 const footerFontSize = 24; // 12pt
-                
-                // Source text (left)
+
+                // Organization info (left, first line)
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText(
-                    "Source: Positive Peace Survey 2024",
-                    margin + 10,
-                    footerY
-                );
-                
-                // Organization info (right)
+                ctx.fillText("[IEP-CSB]", margin + 10, footerY);
+
+                // Source text (left, second line)
+                ctx.fillText("Source: Positive Peace Survey 2024", margin + 10, footerY + 5 * pxPerMM);
+
+                // Email (right)
                 ctx.textAlign = "right";
-                ctx.fillText(
-                    "[IEP-CSB]",
-                    canvasWidth - margin - 10,
-                    footerY
-                );
-                
-                ctx.fillText(
-                    "csb.economicsandpeace.org",
-                    canvasWidth - margin - 10,
-                    footerY + 5 * pxPerMM
-                );
+                ctx.fillText("csb.economicsandpeace.org", canvasWidth - margin - 10, footerY + 5 * pxPerMM);
+
 
                 // Final export
                 const link = document.createElement("a");
@@ -1175,30 +1153,20 @@ function exportToPNGMultiRadar(chartId, chartTitle) {
                 // Add footer (match PDF exactly)
                 const footerY = canvasHeight - margin - 15 * pxPerMM;
                 const footerFontSize = 24; // 12pt
-                
-                // Source text (left)
+
+                // Organization info (left, first line)
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText(
-                    "Source: Positive Peace Survey 2024",
-                    margin + 10,
-                    footerY
-                );
-                
-                // Organization info (right)
+                ctx.fillText("[IEP-CSB]", margin + 10, footerY);
+
+                // Source text (left, second line)
+                ctx.fillText("Source: Positive Peace Survey 2024", margin + 10, footerY + 5 * pxPerMM);
+
+                // Email (right)
                 ctx.textAlign = "right";
-                ctx.fillText(
-                    "[IEP-CSB]",
-                    canvasWidth - margin - 10,
-                    footerY
-                );
-                
-                ctx.fillText(
-                    "csb.economicsandpeace.org",
-                    canvasWidth - margin - 10,
-                    footerY + 5 * pxPerMM
-                );
+                ctx.fillText("csb.economicsandpeace.org", canvasWidth - margin - 10, footerY + 5 * pxPerMM);
+
 
                 // Final export
                 const link = document.createElement("a");
@@ -1340,30 +1308,20 @@ function exportToPNGPP(chartId, chartTitle) {
                 // Add footer (match PDF exactly)
                 const footerY = canvasHeight - margin - 15 * pxPerMM;
                 const footerFontSize = 24; // 12pt
-                
-                // Source text (left)
+
+                // Organization info (left, first line)
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText(
-                    "Source: Positive Peace Survey 2024",
-                    margin + 10,
-                    footerY
-                );
-                
-                // Organization info (right)
+                ctx.fillText("[IEP-CSB]", margin + 10, footerY);
+
+                // Source text (left, second line)
+                ctx.fillText("Source: Positive Peace Survey 2024", margin + 10, footerY + 5 * pxPerMM);
+
+                // Email (right)
                 ctx.textAlign = "right";
-                ctx.fillText(
-                    "[IEP-CSB]",
-                    canvasWidth - margin - 10,
-                    footerY
-                );
-                
-                ctx.fillText(
-                    "csb.economicsandpeace.org",
-                    canvasWidth - margin - 10,
-                    footerY + 5 * pxPerMM
-                );
+                ctx.fillText("csb.economicsandpeace.org", canvasWidth - margin - 10, footerY + 5 * pxPerMM);
+
 
                 // Final export
                 const link = document.createElement("a");
