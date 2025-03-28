@@ -180,6 +180,8 @@
                                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                                 <li><a class="dropdown-item" href="#" id="export-all">Download
                                                         Report</a></li>
+                                                <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])); ?>" >
+                                                        Export Survey Data</a></li>
     
                                             </ul>
                                         </div>
