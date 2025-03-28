@@ -151,9 +151,12 @@
                 $('#branch').html('');
                 $('#branch').html('<option value="" selected>Choose Branch</option>');
                 
-                filterBranch(function() {
-                    filterSurvey();
-                });
+                // filterBranch(function() {
+                //     filterSurvey();
+                // });
+
+                filterBranch();
+                filterSurvey();
             });
             $(document).on('change', '#branch', function() {
                 filterSurvey();
