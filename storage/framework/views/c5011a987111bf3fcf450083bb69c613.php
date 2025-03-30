@@ -29,7 +29,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header" style="padding: 20px 40px;"> 
-                    <h5 class="card-title mb-0 " style="font-size:23px;font-weight:550;">About</h5>
+                    <h5 class="card-title mb-0 d-flex flex-row align-content-center" style="font-size:23px;font-weight:550;"><i class='bx bxs-info-circle' style="margin-right: 5px;font-size: 24px;"></i><span>About</span></h5>
                 </div>
                 <div class="card-body" style="padding: 25px 40px;">
                     <h3>Community Strength Barometer (CSB) </h3>

@@ -66,8 +66,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="route" class="form-label">Route<span class="text-danger">*</span></label>
-                                    <select id="route" name="route[]" class="form-select select2" data-choices
-                                        data-choices-sorting="true" multiple>
+                                    <select id="route" name="route[]" class="form-select select2" multiple>
                                         <option value="">Choose Permission</option>
                                         @foreach($routeDetails as $route)
                                         <option value="{{$route['name']}}" {{in_array($route['name'],$permission->routes->pluck('route')->toArray()) ? 'selected':''}} >

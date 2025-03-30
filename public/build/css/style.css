@@ -35,6 +35,8 @@ body{
 }
 .logo img {
     width: 100%;
+    height: 80px;
+    object-fit: contain;
 }
 .counter-value {
     font-size: 32px !important;
@@ -194,8 +196,9 @@ table th, table td {
     /* padding: .625rem 1.5rem; */
     border-bottom: 1px solid #f3f3f3;
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
+    padding: 10px;
 }
 .vertical .navbar-brand-box {
     
