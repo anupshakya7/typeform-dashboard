@@ -39,7 +39,7 @@
                 <!-- container-fluid -->
             </div>
             <!-- End Page-content -->
-            @include('layouts.footer')
+            @include('typeform.partials.footer')
         </div>
         <!-- end main content-->
     </div>

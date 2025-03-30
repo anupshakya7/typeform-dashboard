@@ -18,6 +18,106 @@
                         <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     </div>
                 </div>
+
+                <div class="row">
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-regular fa-file"></i>
+                        <p class="mb-0">Survey Conducted</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
+                            data-target="0">0</span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <p class="mb-0">Country Involved</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
+                            data-target="0">0</span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <p class="mb-0">Organizations</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
+                            data-target="0">0</span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-solid fa-user"></i>
+                        <p class="mb-0">People</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
+                            data-target="0">0</span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+</div> <!-- end row-->
+                <!-- end row-->
                 <!--end greeting section-->     
             
             <!--initial filter section-->
@@ -288,6 +388,16 @@
                 return urlParams.get(param);
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Check if current page is homepage (root '/' or '')
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      document.body.classList.add('overlay-active');
+    } else {
+      document.body.classList.remove('overlay-active');
+    }
+  });
+
     </script>
 
 
