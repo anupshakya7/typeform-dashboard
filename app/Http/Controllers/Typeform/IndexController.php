@@ -17,18 +17,16 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        // dd(session('country'));
-        // if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
-        if($request->all() == [] && auth()->user()->role->name !== 'survey'){
+        if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
             //Dropdown
-            // $countriesPath = public_path('build/js/countries/countries.json');
-            // $countries = json_decode(File::get($countriesPath),true);
             $countries = Form::select('country')->filterForm()->distinct()->get();
 
             $organizations = Organization::filterOrganization()->get();
             $surveyForms = Form::filterForm()->get();
 
-            return view('typeform.welcome.index',compact('countries','organizations','surveyForms'));
+            $topBox = $this->topBoxData();
+
+            return view('typeform.welcome.index',compact('countries','organizations','surveyForms','topBox'));
         }else{
             $filterData = $request->all() == [] ? Form::filterForm()->where('form_id',session('survey_id'))->first():null;
         
@@ -55,7 +53,7 @@ class IndexController extends Controller
     
             $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
     
-            $topBox = $this->topBoxData();
+            $topBox = $this->topBoxData($survey_id);
             $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
             $participantDetails = $this->participantDetails($survey_id);
             $positivePeace = $this->positiveNegative($country,$survey_id,'positive_peace');
@@ -70,11 +68,11 @@ class IndexController extends Controller
        
     }
 
-    public function topBoxData(){
+    public function topBoxData($surveyValue=null){
         $surveys = Form::filterForm()->count();
         $countries = Form::select('country')->distinct()->filterForm()->get()->count();
         $organizations = Organization::filterOrganization()->count();
-        $people = Answer::filterSurvey()->count();
+        $people = $surveyValue !== null ? Answer::filterSurvey()->where('form_id',$surveyValue)->count() : Answer::filterSurvey()->count();
 
         return [
             'survey'=>$surveys,

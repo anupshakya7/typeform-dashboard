@@ -63,7 +63,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="{{ $topBox['survey'] }}">{{ $topBox['survey'] }}</span>
                     </h4>
                 </div>
             </div><!-- end card body -->
@@ -87,7 +87,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="{{ $topBox['countries'] }}">{{ $topBox['countries'] }}</span>
                     </h4>
                 </div>
             </div><!-- end card body -->
@@ -111,7 +111,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="{{ $topBox['organizations'] }}">{{ $topBox['organizations'] }}</span>
                     </h4>
                 </div>
             </div><!-- end card body -->
@@ -135,7 +135,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="{{ $topBox['people'] }}">{{ $topBox['people'] }}</span>
                     </h4>
                 </div>
             </div><!-- end card body -->
