@@ -155,7 +155,7 @@
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                        <div class="row gap-5 m-0 p-0 dashboard flex-nowra align-items-center">
 
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
@@ -216,13 +216,12 @@
                                 </div>
                                 <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
-                                    <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
+                                    
+                                <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?> >
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
-                                    <!-- <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
-  <button class="btn btn-primary" type="button" disabled>Disabled button</button>
-</span> -->
+                                    
 
                                 </div>
                                 <?php endif; ?>
@@ -292,10 +291,20 @@
 
             $(document).on('change', '#survey', function() {
                 let surveyValue = $('#survey').val();
+
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
+                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                 }else{
                     $('#filter_btn').prop('disabled', true);
+                    $('#filter_btn').attr({
+                        'tabindex': '0',
+                        'data-bs-toggle': 'popover',
+                        'data-bs-trigger': 'hover focus',
+                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-placement' : 'top'
+                    }).popover();
+
                 }
             });
 
@@ -395,8 +404,16 @@
                                 let surveyVal2 = $('#survey').val();
                                 if(surveyVal2 !== ""){
                                     $('#filter_btn').prop('disabled',false);
+                                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                                 }else{
                                     $('#filter_btn').prop('disabled',true);
+                                    $('#filter_btn').attr({
+                                        'tabindex': '0',
+                                        'data-bs-toggle': 'popover',
+                                        'data-bs-trigger': 'hover focus',
+                                        'data-bs-content': 'Please Select Survey first !',
+                                        'data-bs-placement' : 'top'
+                                    }).popover();
                                 }
                             }else{
                                 $('#filter_btn').prop('disabled',true);

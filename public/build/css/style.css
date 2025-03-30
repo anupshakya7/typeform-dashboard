@@ -899,3 +899,14 @@ table td{
     font-size: 23px;
     font-weight: 600;
 }
+.popover {
+    z-index: 9999999999999999999999;
+    box-shadow:  none !important;
+    border: 1px solid #aaaaaa;
+    --vz-popover-arrow-border : 1px solid #d1d1d1;
+}
+.popover-body {
+    padding: 10px 16px !important;
+    color: rgb(179, 56, 56) !important;
+
+}

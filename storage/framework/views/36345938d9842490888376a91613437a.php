@@ -141,14 +141,13 @@
                                 </div>
                                 <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
-                                    <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
+                                <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?> >
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
-                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
-  <button class="btn btn-primary" type="button" disabled>Disabled button</button>
-</span>
+                                    
                                 </div>
+
                                 <?php endif; ?>
                             </div>
                             
@@ -818,64 +817,23 @@
                 let surveyValue = $('#survey').val();
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
+                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                 }else{
                     $('#filter_btn').prop('disabled', true);
+                    $('#filter_btn').attr({
+                        'tabindex': '0',
+                        'data-bs-toggle': 'popover',
+                        'data-bs-trigger': 'hover focus',
+                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-placement': 'top'
+
+                    }).popover();
+
                 }
             });
 
-            // function filterBtn(){
-            //     let countryValue = $('#country').val();
-            //     let organizationValue = $('#organization').val();
-            //     let branchValue = $('#branch').val();
-            //     let surveyValue = $('#survey').val();
-                
-            //     console.log(countryValue,organizationValue,branchValue,surveyValue);
-            //     if(surveyValue!==""){
-            //         if(countryValue !== "" || organizationValue !== ""){
-            //             $('#filter_btn').prop('disabled',false);
-            //         }else{
-            //             $('#filter_btn').prop('disabled', true);
-            //         }
-            //     }else{
-            //         $('#filter_btn').prop('disabled',true);
-            //     }
-            // }
-
-
-            // function filterOrganization() {
-            //     var countryVal = $('#country').val();
-
-            //     if (countryVal !== '') {
-            //         $.ajax({
-            //             url: "<?php echo e(route('organization.get')); ?>",
-            //             method: 'GET',
-            //             data: {
-            //                 country: countryVal
-            //             },
-            //             success: function(response) {
-            //                 console.log(response);
-            //                 $('#organization').prop('disabled', false);
-            //                 $('#organization').html('');
-            //                 $('#organization').append('<option selected>Choose Organization</option>');
-            //                 response.organizations.forEach(function(organizationItem) {
-            //                     // $('#organization').append(new Option(organization.name,
-            //                     //     organization.id));
-            //                     var option = new Option(organizationItem.name, organizationItem.id);
-            //                     $('#organization').append(option);
-
-            //                     if (organization && organization == organizationItem.id) {
-            //                         $(option).prop('selected', true);
-            //                     }
-            //                 })
-            //             },
-            //             error: function(xhr, status, error) {
-            //                 $('#organization').prop('disabled', true);
-            //                 $('#organization').html('');
-            //                 $('#organization').append('<option selected>Choose Organization</option>');
-            //             }
-            //         })
-            //     }
-            // }
+            
+            
 
             function filterBranch(callback) {
                 var organizationVal = $('#organization').val();
@@ -974,8 +932,17 @@
                                 let surveyVal2 = $('#survey').val();
                                 if(surveyVal2 !== ""){
                                     $('#filter_btn').prop('disabled',false);
+                                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                                 }else{
                                     $('#filter_btn').prop('disabled',true);
+                                    $('#filter_btn').attr({
+                                        'tabindex': '0',
+                                        'data-bs-toggle': 'popover',
+                                        'data-bs-trigger': 'hover focus',
+                                        'data-bs-content': 'Please Select Survey First !',
+                                        'data-bs-placement' : 'top'
+                                        
+                                    }).popover();
                                 }
                             }else{
                                 $('#filter_btn').prop('disabled',true);
