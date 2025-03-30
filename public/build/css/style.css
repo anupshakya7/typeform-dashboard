@@ -872,7 +872,7 @@ table td{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: rgba(0, 0, 0, 0.82);
     z-index: 99999;
     /* REMOVE pointer-events: none - we want to block interactions */
 }
@@ -881,7 +881,7 @@ table td{
 .overlay-active .filter-section,
 .overlay-active .select2-dropdown {
     position: relative; /* or keep absolute if needed */
-    z-index: 100000; /* Higher than overlay */
+    z-index: 99999999; /* Higher than overlay */
     pointer-events: auto !important; /* Force allow interactions */
 }
 
@@ -891,4 +891,11 @@ table td{
 }
 .footer {
     position: static !important;
+}
+.people-card {
+    height: 89%;
+}
+.project-title {
+    font-size: 23px;
+    font-weight: 600;
 }

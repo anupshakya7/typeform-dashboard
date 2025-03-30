@@ -42,132 +42,18 @@
                     }
                 ?>
 
-                <div class="row">
-                    <div class="col-xl-<?php echo e($columns); ?> col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate stat-card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <i class="fa-regular fa-file"></i>
-                                        <p class="mb-0">
-                                            Survey Conducted</p>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-
-                                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                            data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
-                                    </h4>
-
-
-
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-xl-<?php echo e($columns); ?> col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate stat-card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <i class="fa-solid fa-earth-americas"></i>
-                                        <p class="mb-0">
-                                            Country Involved</p>
-                                    </div>
-                                    <div class="flex-shrink-0">
-
-                                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                    <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
-                                            data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
-                                    </h4>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <?php if(auth()->user()->role->name == 'superadmin' || auth()->user()->role->name == 'krizmatic'): ?>
-                    <div class="col-xl-<?php echo e($columns); ?> col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate stat-card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <i class="fa-solid fa-building-columns"></i>
-                                        <p class="mb-0">
-                                            Organizations</p>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                            data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
-                                    </h4>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <?php endif; ?>
-                    <div class="col-xl-<?php echo e($columns); ?> col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate stat-card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <i class="fa-solid fa-user"></i>
-                                        <p class="mb-0">
-                                            People</p>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                                            data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
-                                    </h4>
-
-
-
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-
-
-                </div> <!-- end row-->
+               
 
                 <!--greeting section ends here -->
 
             
 <!--initial filter section-->
-               
-                <div class="filter-section show-filter mb-3">
-                    <div class="d-flex flex-eow justify-content-between">
-                    <div>
-                        <h4><span class="badge bg-success lh-1"><?php echo e($formDetails->form_title); ?></span></h4>
-                        <h5 style="font-size:16px;" class="mb-3">Get insights, track trends, compare data, manage.</h5>
+<div class="row">
+               <div class="col-12 col-sm-8">
+               <div class="filter-section show-filter mb-3">
+                    <div class="d-flex flex-row justify-content-between align-content-center mb-2">
+                    <div class="d-flex align-content-center">
+                        <h5 class="m-0" style="font-size:16px;">Get insights, track trends, compare data, manage.</h5>
                     </div>
                     <div class="p-0">
                                           <!-- Dropdown for exporting as PDF, PNG, or Excel -->
@@ -259,6 +145,9 @@
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
+                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+  <button class="btn btn-primary" type="button" disabled>Disabled button</button>
+</span>
                                 </div>
                                 <?php endif; ?>
                             </div>
@@ -268,10 +157,45 @@
                         </form>
                         
                 </div>
+               </div>
+               <div class="col-12 col-sm-4">
+               <div class="card card-animate stat-card people-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex flex-row gap-2 align-items-center">
+                                        <i class="fa-solid fa-user"></i>
+                                        <p class="mb-0">
+                                            People</p>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                            aria-controls="theme-settings-offcanvas">
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-end justify-content-between mt-4">
+                                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
+                                            data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
+                                    </h4>
 
+
+
+                                </div>
+                            </div><!-- end card body -->
+                        </div>
+               </div>
+</div>
+                
 <!--initial filter section-->
 
+<!--project title --survey-title section -->
 
+<div class="title-container mb-3">
+<h4><span class="project-title"><?php echo e($formDetails->form_title); ?></span></h4>
+
+</div>
+<!--project title --survey-title section -->
                 <!--bar graph section starts here-->
 
                 <div class="card">

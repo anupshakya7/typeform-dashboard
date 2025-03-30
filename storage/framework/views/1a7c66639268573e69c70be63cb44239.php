@@ -6,9 +6,33 @@
 
 
 <?php $__env->startSection('content'); ?>
+<style>
+       .container-fluid {
+       position: relative;
+       }
+       .highlight-area {
+        position: absolute;
+    z-index: 999999;
+    background-color: none;
+    border-radius: 10px;
+    padding: 20px 7px;
+    width: 100%;
+    background-color: white;
+       }
+       .footer {
+        position: absolute !important;
+       margin-left: var(--vz-vertical-menu-width);
+       bottom: 40px;
+    padding: 20px .75rem;
+    right: 0;
+    color: var(--vz-footer-color);
+    left: 0;
+    height: 60px;
+    background-color: none;
+    z-index: -1;}
+</style>
 
-
-    <div class="row">
+    <div class="row highlight-area">
         <div class="col">
             <div class="h-100">
 
@@ -196,6 +220,10 @@
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
+                                    <!-- <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+  <button class="btn btn-primary" type="button" disabled>Disabled button</button>
+</span> -->
+
                                 </div>
                                 <?php endif; ?>
                             </div>
