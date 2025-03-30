@@ -5,9 +5,33 @@
 
 
 <?php $__env->startSection('content'); ?>
+<style>
+       .container-fluid {
+       position: relative;
+       }
+       .highlight-area {
+        position: absolute;
+    z-index: 999999;
+    background-color: none;
+    border-radius: 10px;
+    padding: 20px 7px;
+    width: 100%;
+    background-color: white;
+       }
+       .footer {
+        position: absolute !important;
+       margin-left: var(--vz-vertical-menu-width);
+       bottom: 40px;
+    padding: 20px .75rem;
+    right: 0;
+    color: var(--vz-footer-color);
+    left: 0;
+    height: 60px;
+    background-color: none;
+    z-index: -1;}
+</style>
 
-
-    <div class="row">
+    <div class="row highlight-area">
         <div class="col">
             <div class="h-100">
 
@@ -18,6 +42,106 @@
                         <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     </div>
                 </div>
+
+                <div class="row">
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-regular fa-file"></i>
+                        <p class="mb-0">Survey Conducted</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
+                            data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <p class="mb-0">Country Involved</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
+                            data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <p class="mb-0">Organizations</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
+                            data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-xl-3 col-md-6">
+        <!-- card -->
+        <div class="card card-animate stat-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex flex-row gap-2 align-items-center">
+                        <i class="fa-solid fa-user"></i>
+                        <p class="mb-0">People</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                            aria-controls="theme-settings-offcanvas">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
+                            data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
+                    </h4>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+</div> <!-- end row-->
+                <!-- end row-->
                 <!--end greeting section-->     
             
             <!--initial filter section-->
@@ -40,8 +164,8 @@
                                         aria-label="Default select example">
                                         <option value="" selected>Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country['name']); ?>">
-                                                <?php echo e($country['name']); ?></option>
+                                            <option value="<?php echo e($country->country); ?>">
+                                                <?php echo e($country->country); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php endif; ?>
@@ -91,10 +215,13 @@
                                 </div>
                                 <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
-                                    <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
+                                    
+                                <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?> >
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
+                                    
+
                                 </div>
                                 <?php endif; ?>
                             </div>
@@ -140,6 +267,7 @@
             //filterOrganization();
             filterBranch();
             filterSurvey();
+            filterBtn();
 
 
             $(document).on('change', '#country', function() {
@@ -150,22 +278,39 @@
                 $('#branch').html('');
                 $('#branch').html('<option value="" selected>Choose Branch</option>');
                 
-                filterBranch(function() {
-                    filterSurvey();
-                });
+                // filterBranch(function() {
+                //     filterSurvey();
+                // });
+
+                filterBranch();
+                filterSurvey();
             });
             $(document).on('change', '#branch', function() {
                 filterSurvey();
             });
 
             $(document).on('change', '#survey', function() {
+                filterBtn();
+            });
+
+            function filterBtn(){
                 let surveyValue = $('#survey').val();
+
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
+                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                 }else{
                     $('#filter_btn').prop('disabled', true);
+                    $('#filter_btn').attr({
+                        'tabindex': '0',
+                        'data-bs-toggle': 'popover',
+                        'data-bs-trigger': 'hover focus',
+                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-placement' : 'top'
+                    }).popover();
+
                 }
-            });
+            }
 
             function filterBranch(callback) {
                 var organizationVal = $('#organization').val();
@@ -263,8 +408,16 @@
                                 let surveyVal2 = $('#survey').val();
                                 if(surveyVal2 !== ""){
                                     $('#filter_btn').prop('disabled',false);
+                                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                                 }else{
                                     $('#filter_btn').prop('disabled',true);
+                                    $('#filter_btn').attr({
+                                        'tabindex': '0',
+                                        'data-bs-toggle': 'popover',
+                                        'data-bs-trigger': 'hover focus',
+                                        'data-bs-content': 'Please Select Survey first !',
+                                        'data-bs-placement' : 'top'
+                                    }).popover();
                                 }
                             }else{
                                 $('#filter_btn').prop('disabled',true);
@@ -285,6 +438,16 @@
                 return urlParams.get(param);
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Check if current page is homepage (root '/' or '')
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      document.body.classList.add('overlay-active');
+    } else {
+      document.body.classList.remove('overlay-active');
+    }
+  });
+
     </script>
 
 
