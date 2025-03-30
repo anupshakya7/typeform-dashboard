@@ -2,10 +2,7 @@
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('translation.crm'); ?>
 <?php $__env->stopSection(); ?>
-
-
-
-<?php $__env->startSection('content'); ?>
+<?php $__env->startSection('css'); ?>
 <style>
        .container-fluid {
        position: relative;
@@ -31,7 +28,10 @@
     background-color: none;
     z-index: -1;}
 </style>
+<?php $__env->stopSection(); ?>
 
+
+<?php $__env->startSection('content'); ?>
     <div class="row highlight-area">
         <div class="col">
             <div class="h-100">
@@ -155,7 +155,7 @@
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                        <div class="row gap-5 m-0 p-0 dashboard flex-nowra align-items-center">
+                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
 
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'survey'): ?>
@@ -268,6 +268,7 @@
             //filterOrganization();
             filterBranch();
             filterSurvey();
+            filterBtn();
 
 
             $(document).on('change', '#country', function() {
@@ -290,6 +291,10 @@
             });
 
             $(document).on('change', '#survey', function() {
+                filterBtn();
+            });
+
+            function filterBtn(){
                 let surveyValue = $('#survey').val();
 
                 if(surveyValue!==""){
@@ -306,7 +311,7 @@
                     }).popover();
 
                 }
-            });
+            }
 
             function filterBranch(callback) {
                 var organizationVal = $('#organization').val();

@@ -2,10 +2,7 @@
 @section('title')
     @lang('translation.crm')
 @endsection
-
-
-
-@section('content')
+@section('css')
 <style>
        .container-fluid {
        position: relative;
@@ -31,7 +28,10 @@
     background-color: none;
     z-index: -1;}
 </style>
+@endsection
 
+
+@section('content')
     <div class="row highlight-area">
         <div class="col">
             <div class="h-100">
