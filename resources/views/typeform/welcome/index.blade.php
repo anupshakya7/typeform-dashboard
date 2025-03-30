@@ -155,7 +155,7 @@
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="{{ route('home.index') }}" method="GET">
-                        <div class="row gap-5 m-0 p-0 dashboard flex-nowra align-items-center">
+                        <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
 
                                 <div class="col-auto p-0">
                                     @if(auth()->user()->role->name == 'survey')
@@ -270,6 +270,7 @@
             //filterOrganization();
             filterBranch();
             filterSurvey();
+            filterBtn();
 
 
             $(document).on('change', '#country', function() {
@@ -292,6 +293,10 @@
             });
 
             $(document).on('change', '#survey', function() {
+                filterBtn();
+            });
+
+            function filterBtn(){
                 let surveyValue = $('#survey').val();
 
                 if(surveyValue!==""){
@@ -308,7 +313,7 @@
                     }).popover();
 
                 }
-            });
+            }
 
             function filterBranch(callback) {
                 var organizationVal = $('#organization').val();

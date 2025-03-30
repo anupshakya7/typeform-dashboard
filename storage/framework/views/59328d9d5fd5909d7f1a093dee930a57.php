@@ -5,9 +5,33 @@
 
 
 <?php $__env->startSection('content'); ?>
+<style>
+       .container-fluid {
+       position: relative;
+       }
+       .highlight-area {
+        position: absolute;
+    z-index: 999999;
+    background-color: none;
+    border-radius: 10px;
+    padding: 20px 7px;
+    width: 100%;
+    background-color: white;
+       }
+       .footer {
+        position: absolute !important;
+       margin-left: var(--vz-vertical-menu-width);
+       bottom: 40px;
+    padding: 20px .75rem;
+    right: 0;
+    color: var(--vz-footer-color);
+    left: 0;
+    height: 60px;
+    background-color: none;
+    z-index: -1;}
+</style>
 
-
-    <div class="row">
+    <div class="row highlight-area">
         <div class="col">
             <div class="h-100">
 
@@ -191,10 +215,13 @@
                                 </div>
                                 <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
-                                    <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?>>
+                                    
+                                <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?> >
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
+                                    
+
                                 </div>
                                 <?php endif; ?>
                             </div>
@@ -240,6 +267,7 @@
             //filterOrganization();
             filterBranch();
             filterSurvey();
+            filterBtn();
 
 
             $(document).on('change', '#country', function() {
@@ -262,13 +290,27 @@
             });
 
             $(document).on('change', '#survey', function() {
+                filterBtn();
+            });
+
+            function filterBtn(){
                 let surveyValue = $('#survey').val();
+
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
+                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                 }else{
                     $('#filter_btn').prop('disabled', true);
+                    $('#filter_btn').attr({
+                        'tabindex': '0',
+                        'data-bs-toggle': 'popover',
+                        'data-bs-trigger': 'hover focus',
+                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-placement' : 'top'
+                    }).popover();
+
                 }
-            });
+            }
 
             function filterBranch(callback) {
                 var organizationVal = $('#organization').val();
@@ -366,8 +408,16 @@
                                 let surveyVal2 = $('#survey').val();
                                 if(surveyVal2 !== ""){
                                     $('#filter_btn').prop('disabled',false);
+                                    $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
                                 }else{
                                     $('#filter_btn').prop('disabled',true);
+                                    $('#filter_btn').attr({
+                                        'tabindex': '0',
+                                        'data-bs-toggle': 'popover',
+                                        'data-bs-trigger': 'hover focus',
+                                        'data-bs-content': 'Please Select Survey first !',
+                                        'data-bs-placement' : 'top'
+                                    }).popover();
                                 }
                             }else{
                                 $('#filter_btn').prop('disabled',true);
