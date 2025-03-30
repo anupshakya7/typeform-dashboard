@@ -889,3 +889,6 @@ table td{
 .overlay-active {
     pointer-events: none;
 }
+.footer {
+    position: static !important;
+}

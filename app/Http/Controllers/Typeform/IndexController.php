@@ -51,7 +51,7 @@ class IndexController extends Controller
                 session(['country'=>$country,'survey_id'=>$survey_id]);
             }
 
-            $formDetails = Form::where('form_id',$survey_id)->first();
+            $formDetails = Form::with('organization')->where('form_id',$survey_id)->first();
     
             $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
     
