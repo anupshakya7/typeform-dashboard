@@ -212,7 +212,7 @@
                                         <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
                                     @else
                                     <select class="form-select select2" name="survey" id="survey"
-                                        aria-label="Default select example" disabled>
+                                        aria-label="Default select example">
                                         <option value="" selected>Survey</option>
                                         @foreach ($surveyForms as $surveyForm)
                                             <option value="{{ $surveyForm->form_title }}">
@@ -388,7 +388,7 @@
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
 
-                if (organizationVal !== '' || countryVal !='') {
+                // if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
                         url: "{{ route('survey.get') }}",
                         method: 'GET',
@@ -438,7 +438,7 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
-                }
+                // }
             }
 
             function getQueryParams(param) {
@@ -448,13 +448,15 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-    // Check if current page is homepage (root '/' or '')
-    if (window.location.pathname === '/' || window.location.pathname === '') {
-      document.body.classList.add('overlay-active');
-    } else {
-      document.body.classList.remove('overlay-active');
-    }
-  });
+            // Check if current page is homepage (root '/' or '')
+
+            // if (window.location.pathname === '/' || window.location.pathname === '') {
+            //   document.body.classList.add('overlay-active');
+            // } else {
+            //   document.body.classList.remove('overlay-active');
+            // }
+            document.body.classList.add('overlay-active');
+        });
 
     </script>
 

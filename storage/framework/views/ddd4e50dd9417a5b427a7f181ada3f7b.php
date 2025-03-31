@@ -1,10 +1,7 @@
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('translation.crm'); ?>
 <?php $__env->stopSection(); ?>
-
-
-
-<?php $__env->startSection('content'); ?>
+<?php $__env->startSection('css'); ?>
 <style>
        .container-fluid {
        position: relative;
@@ -30,7 +27,10 @@
     background-color: none;
     z-index: -1;}
 </style>
+<?php $__env->stopSection(); ?>
 
+
+<?php $__env->startSection('content'); ?>
     <div class="row highlight-area">
         <div class="col">
             <div class="h-100">
@@ -440,13 +440,14 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-    // Check if current page is homepage (root '/' or '')
-    if (window.location.pathname === '/' || window.location.pathname === '') {
-      document.body.classList.add('overlay-active');
-    } else {
-      document.body.classList.remove('overlay-active');
-    }
-  });
+            console.log(window.location.pathname);
+            // Check if current page is homepage (root '/' or '')
+            if (window.location.pathname === '/' || window.location.pathname === '') {
+              document.body.classList.add('overlay-active');
+            } else {
+              document.body.classList.remove('overlay-active');
+            }
+        });
 
     </script>
 

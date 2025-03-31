@@ -85,7 +85,7 @@
                                         <option value="" selected>Organization</option>
                                         @foreach ($organizations as $organization)
                                             <option value="{{ $organization->id }}"
-                                                {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : '' }}>
+                                                {{ (($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id) || ($selectedOrganizationwithSurvey == $organization->id) ? 'selected' : '' }}>
                                                 {{ $organization->name }}</option>
                                         @endforeach
                                     </select>
@@ -112,7 +112,7 @@
                                         <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
                                     @else
                                     <select class="form-select select2" name="survey" id="survey"
-                                        aria-label="Default select example" disabled>
+                                        aria-label="Default select example">
                                         <option value="" selected>Survey</option>
                                         @foreach ($surveyForms as $surveyForm)
                                             <option value="{{ $surveyForm->form_title }}"
@@ -923,7 +923,7 @@
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
                 console.log(countryVal,organizationVal);
 
-                if (organizationVal !== '' || countryVal !='') {
+                // if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
                         url: "{{ route('survey.get') }}",
                         method: 'GET',
@@ -974,11 +974,11 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
-                }else{
-                    $('#survey').prop('disabled', true);
-                    $('#survey').html('');
-                    $('#survey').append('<option value="" selected>Select Survey</option>');
-                }
+                // }else{
+                //     $('#survey').prop('disabled', true);
+                //     $('#survey').html('');
+                //     $('#survey').append('<option value="" selected>Select Survey</option>');
+                // }
             }
 
             function getQueryParams(param) {
