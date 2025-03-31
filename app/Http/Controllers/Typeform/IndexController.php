@@ -52,6 +52,7 @@ class IndexController extends Controller
             $formDetails = Form::with('organization')->where('form_id',$survey_id)->first();
     
             $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
+            $selectedOrganizationwithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('organization_id')->first():null;
     
             $topBox = $this->topBoxData($survey_id);
             $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
@@ -63,7 +64,7 @@ class IndexController extends Controller
     
             $resultByPillar = [];
     
-            return view('typeform.index',compact('formDetails','countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','overTimeScores','filterData','selectedCountrywithSurvey'));
+            return view('typeform.index',compact('formDetails','countries','organizations','surveyForms','topBox','meanScore','participantDetails','positivePeace','negativePeace','pillarMeanScore','overTimeScores','filterData','selectedCountrywithSurvey','selectedOrganizationwithSurvey'));
         }
        
     }
