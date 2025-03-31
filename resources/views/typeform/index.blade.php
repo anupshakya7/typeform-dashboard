@@ -50,9 +50,9 @@
 <!--initial filter section-->
 <div class="row mb-3">
                <div class="col-12 col-sm-10 col-md-9">
-               <div class="filter-section show-filter d-flex flex-column align-content-stretch justify-content-center h-100">
+               <div class="filter-section show-filter d-flex flex-column align-content-stretch justify-content-start h-100">
                     <div class="mb-2">
-                        <h5 class="my-1" style="font-size:16px;">You are viewing insights for <b>{{ $formDetails->form_title }}</b>. Use the filters below to switch between different surveys or refine your results by Country or Organisation.</h5>
+                        <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for <b>{{ $formDetails->form_title }}</b>. <br><span>Use the filters below to switch between different surveys or refine your results by Country or Organisation.</span></h5>
                     </div>
                     
 
@@ -156,11 +156,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column gap-2 mt-4">
+                                <div class="gap-2 mt-4">
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                             data-target="{{ $topBox['people'] }}">{{ $topBox['people'] }}</span>
                                     </h4>
-                                    <p>Total number of respondents who participated in the survey.</p>
 
 
 

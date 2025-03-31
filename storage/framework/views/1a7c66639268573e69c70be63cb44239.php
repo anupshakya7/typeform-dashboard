@@ -44,10 +44,10 @@
                     </div>
                 </div>
 
-                <div class="row g-3 mb-3">
+                <div class="row">
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
@@ -61,18 +61,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                     </h4>
-                    <p>Total number of surveys conducted.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-1 align-items-center">
@@ -86,18 +85,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
                             data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
                     </h4>
-                    <p>Total number of countries where the survey was conducted.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
@@ -111,18 +109,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class="mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
                     </h4>
-                    <p>Total number of organisations conducting the survey.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
@@ -136,11 +133,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                     </h4>
-                    <p>Total number of respondents who participated in the survey.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
@@ -210,7 +206,7 @@
                                         <input type="hidden" name="survey" class="form-control" value="<?php echo e(old('survey',auth()->user()->form_id)); ?>" id="branch" readonly>
                                     <?php else: ?>
                                     <select class="form-select select2" name="survey" id="survey"
-                                        aria-label="Default select example" disabled>
+                                        aria-label="Default select example">
                                         <option value="" selected>Survey</option>
                                         <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($surveyForm->form_title); ?>">
@@ -311,7 +307,7 @@
                         'tabindex': '0',
                         'data-bs-toggle': 'popover',
                         'data-bs-trigger': 'hover focus',
-                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-content': 'Select survey to view insights!',
                         'data-bs-placement' : 'top'
                     }).popover();
 
@@ -386,7 +382,7 @@
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
 
-                if (organizationVal !== '' || countryVal !='') {
+                // if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
                         url: "<?php echo e(route('survey.get')); ?>",
                         method: 'GET',
@@ -421,7 +417,7 @@
                                         'tabindex': '0',
                                         'data-bs-toggle': 'popover',
                                         'data-bs-trigger': 'hover focus',
-                                        'data-bs-content': 'Please Select Survey first !',
+                                        'data-bs-content': 'Select survey to view insights!',
                                         'data-bs-placement' : 'top'
                                     }).popover();
                                 }
@@ -436,7 +432,7 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
-                }
+                // }
             }
 
             function getQueryParams(param) {
@@ -446,13 +442,15 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-    // Check if current page is homepage (root '/' or '')
-    if (window.location.pathname === '/' || window.location.pathname === '') {
-      document.body.classList.add('overlay-active');
-    } else {
-      document.body.classList.remove('overlay-active');
-    }
-  });
+            // Check if current page is homepage (root '/' or '')
+
+            // if (window.location.pathname === '/' || window.location.pathname === '') {
+            //   document.body.classList.add('overlay-active');
+            // } else {
+            //   document.body.classList.remove('overlay-active');
+            // }
+            document.body.classList.add('overlay-active');
+        });
 
     </script>
 

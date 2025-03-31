@@ -312,6 +312,8 @@ table th, table td {
 }
 .offcanvas {
     width: 300px !important;
+    z-index: 999999999999999999999 !important;
+    position: fixed !important;
 }
 .bg-offcanvas {
     background-color: #537cf0 !important;
@@ -881,7 +883,7 @@ table td{
 }
 
 /* Elements that SHOULD be interactable despite overlay */
-.overlay-active .filter-section,
+.overlay-active .filter-section, .highlight-area,.offcanvas,
 .overlay-active .select2-dropdown {
     position: relative; /* or keep absolute if needed */
     z-index: 99999999; /* Higher than overlay */

@@ -44,10 +44,10 @@
                     </div>
                 </div>
 
-                <div class="row g-3 mb-3">
+                <div class="row">
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
@@ -61,18 +61,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="{{ $topBox['survey'] }}">{{ $topBox['survey'] }}</span>
                     </h4>
-                    <p>Total number of surveys conducted.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-1 align-items-center">
@@ -86,18 +85,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
                             data-target="{{ $topBox['countries'] }}">{{ $topBox['countries'] }}</span>
                     </h4>
-                    <p>Total number of countries where the survey was conducted.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
@@ -111,18 +109,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class="mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="{{ $topBox['organizations'] }}">{{ $topBox['organizations'] }}</span>
                     </h4>
-                    <p>Total number of organisations conducting the survey.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card h-100">
+        <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
@@ -136,11 +133,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column gap-1 mt-2">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="{{ $topBox['people'] }}">{{ $topBox['people'] }}</span>
                     </h4>
-                    <p>Total number of respondents who participated in the survey.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
