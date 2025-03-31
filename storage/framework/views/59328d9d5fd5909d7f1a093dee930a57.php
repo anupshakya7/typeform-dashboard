@@ -1,10 +1,7 @@
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('translation.crm'); ?>
 <?php $__env->stopSection(); ?>
-
-
-
-<?php $__env->startSection('content'); ?>
+<?php $__env->startSection('css'); ?>
 <style>
        .container-fluid {
        position: relative;
@@ -30,7 +27,10 @@
     background-color: none;
     z-index: -1;}
 </style>
+<?php $__env->stopSection(); ?>
 
+
+<?php $__env->startSection('content'); ?>
     <div class="row highlight-area">
         <div class="col">
             <div class="h-100">
