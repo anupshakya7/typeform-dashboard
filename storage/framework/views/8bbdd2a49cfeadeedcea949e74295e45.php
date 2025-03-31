@@ -47,32 +47,13 @@
 
             
 <!--initial filter section-->
-<div class="row">
-               <div class="col-12 col-sm-8">
-               <div class="filter-section show-filter mb-3">
-                    <div class="d-flex flex-row justify-content-between align-content-center mb-2">
-                    <div class="d-flex align-content-center">
-                        <h5 class="m-0" style="font-size:16px;">Get insights, track trends, compare data, manage.</h5>
+<div class="row mb-3">
+               <div class="col-12 col-sm-10 col-md-9">
+               <div class="filter-section show-filter d-flex flex-column align-content-stretch justify-content-center h-100">
+                    <div class="mb-2">
+                        <h5 class="my-1" style="font-size:16px;">You are viewing insights for <b><?php echo e($formDetails->form_title); ?></b>. Use the filters below to switch between different surveys or refine your results by Country or Organisation.</h5>
                     </div>
-                    <div class="p-0">
-                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                          <div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-                                                <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])); ?>" >
-                                                        Export Survey Data</a></li>
-    
-                                            </ul>
-                                        </div>
-                                </div>
-                    </div>
+                    
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
@@ -156,26 +137,27 @@
                         
                 </div>
                </div>
-               <div class="col-12 col-sm-4">
-               <div class="card card-animate stat-card people-card">
+               <div class="col-12 col-sm-2 col-md-3">
+               <div class="card card-animate stat-card people-card h-100">
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <i class="fa-solid fa-user"></i>
-                                        <p class="mb-0">
-                                            People</p>
+                                    <div class="d-flex flex-row gap-3 align-items-center">
+                                        <i class="fa-solid fa-user" style="font-size:18px;"></i>
+                                        <p class="mb-0" style="font-size:18px;">
+                                            Survey Participants</p>
                                     </div>
                                     <div class="flex-shrink-0">
                                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                             aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
+                                            <i class='bx bx-info-circle' style="font-size:24px;"></i>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
+                                <div class="d-flex flex-column gap-2 mt-4">
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                             data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                                     </h4>
+                                    <p>Total number of respondents who participated in the survey.</p>
 
 
 
@@ -189,8 +171,24 @@
 
 <!--project title --survey-title section -->
 
-<div class="title-container mb-3">
+<div class="title-container mb-3 d-flex flex-row justify-content-between">
 <h4><span class="project-title"><?php echo e($formDetails->form_title); ?></span></h4>
+<!-- Dropdown for exporting as PDF, PNG, or Excel -->
+<div class="dropdown">
+                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#" id="export-all">Download
+                                                        Report</a></li>
+                                                <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])); ?>" >
+                                                        Export Survey Data</a></li>
+    
+                                            </ul>
+                                        </div>
 
 </div>
 <!--project title --survey-title section -->
@@ -527,7 +525,20 @@
                                             
                                         </ul>
                                     </div>
-                                    
+                                
+                                             <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                                data-bs-target="#theme-settings-offcanvas"
+                                                aria-controls="theme-settings-offcanvas"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center" 
+                                                data-title="Results by Pillar Table" 
+                                                data-content="<p>This table compares community response mean scores across the eight Pillars of Positive Peace, alongside country and global averages. It provides insights into community perceptions of these pillars in relation to broader trends.</p>">
+
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+
+                                            </a>
+                                            
+                                            
                                         </div>
                                     </div>
                                 </div><!-- end card header -->
@@ -611,6 +622,15 @@
                                             
                                         </ul>
                                     </div>
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas" 
+                                        class="m-0 p-0 d-flex justify-content-center align-items-center"
+                                        data-title="Results Over Time" 
+                                        data-content="<p>This Results over time shows the change in community perceptions of the eight Pillars of Positive Peace over time. The percentage change in pillar scores is calculated based on different survey periods, reflecting improvements or declines in perceptions.</p>"
+                                        >
+
+                                            <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+                                        </a> 
                                         
                                     </div>
                                 </div>
@@ -823,7 +843,7 @@
                         'tabindex': '0',
                         'data-bs-toggle': 'popover',
                         'data-bs-trigger': 'hover focus',
-                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-content': 'Select survey to view insights!',
                         'data-bs-placement': 'top'
 
                     }).popover();
@@ -938,7 +958,7 @@
                                         'tabindex': '0',
                                         'data-bs-toggle': 'popover',
                                         'data-bs-trigger': 'hover focus',
-                                        'data-bs-content': 'Please Select Survey First !',
+                                        'data-bs-content': 'Select survey to view insights!',
                                         'data-bs-placement' : 'top'
                                         
                                     }).popover();

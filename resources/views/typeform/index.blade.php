@@ -533,7 +533,9 @@
                                              <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
                                                 data-bs-target="#theme-settings-offcanvas"
                                                 aria-controls="theme-settings-offcanvas"
-                                                class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center" 
+                                                data-title="Results by Pillar Table" 
+                                                data-content="<p>This table compares community response mean scores across the eight Pillars of Positive Peace, alongside country and global averages. It provides insights into community perceptions of these pillars in relation to broader trends.</p>">
 
                                                 <img class="svg-icon" type="image/svg+xml"
                                                     src="{{ URL::asset('build/icons/info.svg') }}"></img>
@@ -626,7 +628,11 @@
                                         </ul>
                                     </div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                        aria-controls="theme-settings-offcanvas" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                                        aria-controls="theme-settings-offcanvas" 
+                                        class="m-0 p-0 d-flex justify-content-center align-items-center"
+                                        data-title="Results Over Time" 
+                                        data-content="<p>This Results over time shows the change in community perceptions of the eight Pillars of Positive Peace over time. The percentage change in pillar scores is calculated based on different survey periods, reflecting improvements or declines in perceptions.</p>"
+                                        >
 
                                             <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
                                         </a> 
