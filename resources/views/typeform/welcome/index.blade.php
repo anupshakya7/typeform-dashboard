@@ -443,6 +443,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< Updated upstream
     // Check if current page is homepage (root '/' or '')
 
     // if (window.location.pathname === '/' || window.location.pathname === '') {
@@ -452,6 +453,16 @@
     // }
     document.body.classList.add('overlay-active');
   });
+=======
+            console.log(window.location.pathname);
+            // Check if current page is homepage (root '/' or '')
+            if (window.location.pathname === '/' || window.location.pathname === '') {
+              document.body.classList.add('overlay-active');
+            } else {
+              document.body.classList.remove('overlay-active');
+            }
+        });
+>>>>>>> Stashed changes
 
     </script>
 
