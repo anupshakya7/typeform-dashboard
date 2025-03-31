@@ -51,16 +51,19 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <i class="fa-regular fa-file"></i>
-                        <p class="mb-0">Survey Conducted</p>
+                        <p class="mb-0">Surveys</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Surveys" 
+                            data-content="<p>Total number of surveys conducted.</p>"
+                            >
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                     </h4>
@@ -73,18 +76,21 @@
         <div class="card card-animate stat-card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex flex-row gap-2 align-items-center">
+                    <div class="d-flex flex-row gap-1 align-items-center">
                         <i class="fa-solid fa-earth-americas"></i>
-                        <p class="mb-0">Country Involved</p>
+                        <p class="mb-0">Countries</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Countries" 
+                            data-content="<p>Total number of countries where the survey was conducted.</p>"
+                            >
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
                             data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
                     </h4>
@@ -99,16 +105,19 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <i class="fa-solid fa-building-columns"></i>
-                        <p class="mb-0">Organizations</p>
+                        <p class="mb-0">Organisations</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Organisations" 
+                            data-content="<p>Total number of organisations conducting the survey.</p>"
+                            >
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class="mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
                     </h4>
@@ -123,16 +132,19 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <i class="fa-solid fa-user"></i>
-                        <p class="mb-0">People</p>
+                        <p class="mb-0">Survey Participants</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Survey Participants" 
+                            data-content="<p>Total number of respondents who participated in the survey.</p>"
+                            >
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class=" mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                     </h4>
@@ -148,7 +160,8 @@
                 <div class="filter-section show-filter mb-3">
                     <div class="d-flex flex-eow justify-content-between">
                     <div>
-                        <h5 style="font-size:16px;" class="mb-3">Get insights, track trends, compare data, manage.</h5>
+                        <h5 style="font-size:16px;" class="mb-3">Select a Survey to View Insights</h5>
+                        <p>Choose a survey to explore detailed insights. Use the filters to narrow results by <b>Country</b> or <b>Organisation</b>.</p>
                     </div>
                     </div>
 
@@ -305,7 +318,7 @@
                         'tabindex': '0',
                         'data-bs-toggle': 'popover',
                         'data-bs-trigger': 'hover focus',
-                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-content': 'Select survey to view insights!',
                         'data-bs-placement' : 'top'
                     }).popover();
 
@@ -339,8 +352,6 @@
 
                                 return true;
                             });
-
-                            console.log(branchList);
                             
                             if (isFirstLoad) {
                                 branchList.forEach(function(branchItem) {
@@ -393,7 +404,31 @@
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
                             $('#survey').append('<option value="" selected>Select Survey</option>');
-                            response.forms.forEach(function(formItem) {
+
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                            console.log('before survey filter',response.forms);
+
+                            var formList = response.forms.filter(function(form){
+                                if(userRole == "branch"){
+                                    var branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id => id.trim());
+                                    
+                                    if(form.branch_id !== null){
+                                        console.log(branchIds.includes(form.branch_id.toString()));
+                                        return branchIds.includes(form.branch_id.toString());
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            });
+
+                            console.log("after survey filter",formList);
+
+                            
+
+                            formList.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
                                 var option = new Option(formItem.form_title, formItem.form_id);
@@ -415,7 +450,7 @@
                                         'tabindex': '0',
                                         'data-bs-toggle': 'popover',
                                         'data-bs-trigger': 'hover focus',
-                                        'data-bs-content': 'Please Select Survey first !',
+                                        'data-bs-content': 'Select survey to view insights!',
                                         'data-bs-placement' : 'top'
                                     }).popover();
                                 }

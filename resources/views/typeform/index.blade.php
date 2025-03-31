@@ -151,7 +151,10 @@
                                     </div>
                                     <div class="flex-shrink-0">
                                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
+                                            aria-controls="theme-settings-offcanvas"
+                                            data-title="Survey Participants" 
+                                            data-content="<p>Total number of respondents who participated in the survey.</p>"
+                                            >
                                             <i class='bx bx-info-circle' style="font-size:24px;"></i>
                                         </div>
                                     </div>
@@ -941,7 +944,25 @@
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
                             $('#survey').append('<option value="" selected>Select Survey</option>');
-                            response.forms.forEach(function(formItem) {
+
+
+                            var userRole = @json(auth()->user()->role->name);
+                            var userBranchId = @json(auth()->user()->branch_id);
+
+                            var formList = response.forms.filter((form)=>{
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
+
+                                    if(form.branch_id !== null){
+                                        return branchIds.includes(form.branch_id.toString());
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            });
+
+                            formList.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
                                 var option = new Option(formItem.form_title, formItem.form_id);

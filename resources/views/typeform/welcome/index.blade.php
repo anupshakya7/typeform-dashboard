@@ -56,7 +56,10 @@
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Surveys" 
+                            data-content="<p>Total number of surveys conducted.</p>"
+                            >
                             <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
@@ -80,7 +83,10 @@
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Countries" 
+                            data-content="<p>Total number of countries where the survey was conducted.</p>"
+                            >
                             <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
@@ -104,7 +110,10 @@
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Organisations" 
+                            data-content="<p>Total number of organisations conducting the survey.</p>"
+                            >
                             <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
@@ -128,7 +137,10 @@
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                            aria-controls="theme-settings-offcanvas">
+                            aria-controls="theme-settings-offcanvas"
+                            data-title="Survey Participants" 
+                            data-content="<p>Total number of respondents who participated in the survey.</p>"
+                            >
                             <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
@@ -343,8 +355,6 @@
 
                                 return true;
                             });
-
-                            console.log(branchList);
                             
                             if (isFirstLoad) {
                                 branchList.forEach(function(branchItem) {
@@ -397,7 +407,31 @@
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
                             $('#survey').append('<option value="" selected>Select Survey</option>');
-                            response.forms.forEach(function(formItem) {
+
+                            var userRole = @json(auth()->user()->role->name);
+                            var userBranchId = @json(auth()->user()->branch_id);
+
+                            console.log('before survey filter',response.forms);
+
+                            var formList = response.forms.filter(function(form){
+                                if(userRole == "branch"){
+                                    var branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id => id.trim());
+                                    
+                                    if(form.branch_id !== null){
+                                        console.log(branchIds.includes(form.branch_id.toString()));
+                                        return branchIds.includes(form.branch_id.toString());
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            });
+
+                            console.log("after survey filter",formList);
+
+                            
+
+                            formList.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
                                 var option = new Option(formItem.form_title, formItem.form_id);

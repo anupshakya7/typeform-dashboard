@@ -51,8 +51,9 @@ class AnswerController extends Controller
         
         $answers = PaginationHelper::addSerialNo($answers);
 
-        $countriesPath = public_path('build/js/countries/countries.json');
-        $countries = json_decode(File::get($countriesPath),true);
+        // $countriesPath = public_path('build/js/countries/countries.json');
+        // $countries = json_decode(File::get($countriesPath),true);
+        $countries = Form::select('country')->filterForm()->distinct()->get();
         $organizations = Organization::filterOrganization()->get();
         $surveyForms = Form::filterForm()->get();
 

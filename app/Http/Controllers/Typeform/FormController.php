@@ -47,8 +47,9 @@ class FormController extends Controller
         
         $forms = PaginationHelper::addSerialNo($forms);
 
-        $countriesPath = public_path('build/js/countries/countries.json');
-        $countries = json_decode(File::get($countriesPath),true);
+        // $countriesPath = public_path('build/js/countries/countries.json');
+        // $countries = json_decode(File::get($countriesPath),true);
+        $countries = Form::select('country')->filterForm()->distinct()->get();
         $organizations = Organization::filterOrganization()->get();
         $branches = Branch::filterBranch()->get();
         $surveys = Form::filterForm()->get();

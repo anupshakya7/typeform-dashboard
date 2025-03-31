@@ -62,7 +62,7 @@
         $(document).ready(function(){
             $('.select2').select2();
 
-            $('a[data-bs-toggle="offcanvas"]').on('click',function(event){
+            $('a[data-bs-toggle="offcanvas"],div[data-bs-toggle="offcanvas"]').on('click',function(event){
                 event.preventDefault();
 
                 var title = $(this).data('title');

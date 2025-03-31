@@ -37,12 +37,7 @@
                         User</a>
                 </div>
             </div>
-            <div class="flex-shrink-0">
-                <div class="d-flex flex-row gap-2 align-items-center">
-                    <!--info here-->
-                    
-                </div>
-            </div>
+            
         </div>
     </div>
 

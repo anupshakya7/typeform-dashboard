@@ -70,7 +70,7 @@
                                 <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Country </option>
                                     @foreach($countries as $country)
-                                        <option value="{{$country['name']}}" {{request('country') == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
+                                        <option value="{{$country->country}}" {{request('country') == $country->country ? 'selected':''}}>{{$country->country}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -490,7 +490,24 @@
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
                             $('#survey').append('<option value="" selected>Choose Survey</option>');
-                            response.forms.forEach(function(formItem) {
+
+                            var userRole = @json(auth()->user()->role->name);
+                            var userBranchId = @json(auth()->user()->branch_id);
+
+                            var formList = response.forms.filter((form)=>{
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
+
+                                    if(form.branch_id !== null){
+                                        return branchIds.includes(form.branch_id.toString());
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            });
+
+                            formList.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
                                 var option = new Option(formItem.form_title, formItem.form_id);

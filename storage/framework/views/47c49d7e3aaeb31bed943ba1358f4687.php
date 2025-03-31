@@ -61,7 +61,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center"
+                        <table class="table nowrap align-middle table-bordered text-center"
                             style="width:100%">
                             <thead class="table-head">
                                 <tr>

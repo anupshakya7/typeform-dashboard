@@ -21,7 +21,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('role','organization')->filterUser()->paginate(10);
+        $users = User::with('role','organization')->whereDoesntHave('role',function($query){
+            $query->where('name','krizmatic');
+        })->filterUser()->paginate(10);
+
         $users = PaginationHelper::addSerialNo($users);
 
         return view('typeform.users.index',compact('users'));
@@ -121,9 +124,9 @@ class UserController extends Controller
             $profilePicName = Str::uuid().'.'.$profilePic->getClientOriginalExtension();
 
             $profilePath = $profilePic->storeAs('build/profile',$profilePicName,'public');
-        }
 
-        $validatedData['avatar'] = $profilePath ?? null;
+            $validatedData['avatar'] = $profilePath;
+        }
 
         $role = Role::where('name','branch')->pluck('id')->first();
 

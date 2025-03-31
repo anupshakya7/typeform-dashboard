@@ -84,7 +84,7 @@
                                 <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Country </option>
                                     @foreach($countries as $country)
-                                        <option value="{{$country['name']}}" {{request('country') == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
+                                        <option value="{{$country->country}}" {{request('country') == $country->country ? 'selected':''}}>{{$country->country}}</option>
                                     @endforeach
                                 </select> </div>
                             <div class="col-auto">
