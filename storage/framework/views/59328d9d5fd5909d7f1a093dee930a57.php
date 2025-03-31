@@ -441,11 +441,13 @@
 
         document.addEventListener('DOMContentLoaded', function() {
     // Check if current page is homepage (root '/' or '')
-    if (window.location.pathname === '/' || window.location.pathname === '') {
-      document.body.classList.add('overlay-active');
-    } else {
-      document.body.classList.remove('overlay-active');
-    }
+
+    // if (window.location.pathname === '/' || window.location.pathname === '') {
+    //   document.body.classList.add('overlay-active');
+    // } else {
+    //   document.body.classList.remove('overlay-active');
+    // }
+    document.body.classList.add('overlay-active');
   });
 
     </script>
