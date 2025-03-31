@@ -49,8 +49,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
-                            <select id="country" name="country" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="country" name="country" class="form-select select2" >
                                 <option selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>" <?php echo e($form->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
@@ -62,8 +61,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
-                            <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>" <?php echo e($organization->id == $form->organization_id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
@@ -74,21 +72,22 @@
                     <!--end col-->
                     <div class="col-md-12" id="setBranchDiv">
                         <div class="my-3">
-                            <label for="setBranch" class="form-label">Would you like to set this form to the branch of this organization?</label>
+                            <label for="setBranch" class="form-label">Would you like to set this form to the division of this organization?</label>
                             <input type="checkbox" <?php echo e($form->branch_id ? 'checked':''); ?> class="ms-2" id="setBranch"/>
                         </div>
                     </div>
                     <?php if($form->branch_id): ?>
                     <div class="col-md-6" id="branchDiv">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Branch</label>
+                            <label for="branch" class="form-label">Division <?php if(auth()->user()->role->name=='branch'): ?>
+                                <span class="text-danger">*</span>
+                                <?php endif; ?></label>
                             <?php
                                 $organization_id = $form->branches->organization->id;
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
                             ?>
-                            <select id="branch" name="branch" class="form-select select2" data-choices
-                                data-choices-sorting="true">
-                                <option value="" selected>Choose Branch</option>
+                            <select id="branch" name="branch" class="form-select select2" >
+                                <option value="" selected>Choose Division</option>
                                 
                             </select>
                         </div>
@@ -96,10 +95,10 @@
                     <?php else: ?>
                     <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Branch</label>
+                            <label for="branch" class="form-label">Division</label>
                             <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true" disabled>
-                                <option value="" selected>Choose Branch</option>
+                                <option value="" selected>Choose Division</option>
                             </select>
                         </div>
                     </div>
@@ -111,21 +110,21 @@
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
-                            <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->before)); ?>" data-provider="flatpickr"
+                            <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',\App\Helpers\DateFormatter::formatDateRange($form->before))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">During Survey Date [From - To] </label>
-                            <input type="text" name="duringdate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->during)); ?>" data-provider="flatpickr"
+                            <input type="text" name="duringdate" class="form-control mt-2" value="<?php echo e(old('duringdate',\App\Helpers\DateFormatter::formatDateRange($form->during))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick during date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">After Survey Date [From - To] </label>
-                            <input type="text" name="afterdate" class="form-control mt-2" value="<?php echo e(old('beforedate',$form->after)); ?>" data-provider="flatpickr"
+                            <input type="text" name="afterdate" class="form-control mt-2" value="<?php echo e(old('afterdate',\App\Helpers\DateFormatter::formatDateRange($form->after))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>
@@ -356,7 +355,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
 
                     <?php
                         $selectedBranchId = $form->branches !== null ? json_encode($form->branches->id) : 'null';
@@ -364,7 +363,20 @@ $(document).ready(function() {
 
                     
                     var selectedItem = <?php echo $selectedBranchId; ?>;
-                    response.branches.forEach(function(branch) {
+                    
+                    var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                    var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                    var branchList = response.branches.filter(function(branch){
+                        if(userRole == "branch"){
+                            let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                            return branchIds.includes(branch.id.toString());
+                        }
+
+                        return true;
+                    });
+                    
+                    branchList.forEach(function(branch) {
                         // $('#organization').append(new Option(organization.name, organization.id));
                         var option = new Option(branch.name,branch.id);
                         
@@ -378,13 +390,13 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
                 }
             })
         }else{
             $('#branch').prop('disabled', true);
             $('#branch').html('');
-            $('#branch').append('<option value="" selected>Choose Branch</option>');
+            $('#branch').append('<option value="" selected>Choose Division</option>');
         }
         
     }

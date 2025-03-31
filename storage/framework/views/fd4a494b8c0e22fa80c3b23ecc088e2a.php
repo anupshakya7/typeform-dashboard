@@ -12,6 +12,152 @@
 <!-- 'nano' theme -->
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+  .checkbox-wrapper-55 input[type="checkbox"] {
+    visibility: hidden;
+    display: none;
+  }
+
+  .checkbox-wrapper-55 *,
+  .checkbox-wrapper-55 ::after,
+  .checkbox-wrapper-55 ::before {
+    box-sizing: border-box;
+  }
+
+  .checkbox-wrapper-55 .rocker {
+    display: inline-block;
+    position: relative;
+    /*
+    SIZE OF SWITCH
+    ==============
+    All sizes are in em - therefore
+    changing the font-size here
+    will change the size of the switch.
+    See .rocker-small below as example.
+    */
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #888;
+    width: 7em;
+    height: 4em;
+    overflow: hidden;
+    border-bottom: 0.5em solid #eee;
+  }
+
+  .checkbox-wrapper-55 .rocker-small {
+    font-size: 0.75em;
+  }
+
+  .checkbox-wrapper-55 .rocker::before {
+    content: "";
+    position: absolute;
+    top: 0.5em;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #999;
+    border: 0.5em solid #eee;
+    border-bottom: 0;
+  }
+
+  .checkbox-wrapper-55 .switch-left,
+  .checkbox-wrapper-55 .switch-right {
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5em;
+    width: 3em;
+    transition: 0.2s;
+    user-select: none;
+  }
+
+  .checkbox-wrapper-55 .switch-left {
+    height: 2.4em;
+    width: 2.75em;
+    left: 0.85em;
+    bottom: 0.4em;
+    background-color: #ddd;
+    transform: rotate(15deg) skewX(15deg);
+  }
+
+  .checkbox-wrapper-55 .switch-right {
+    right: 0.5em;
+    bottom: 0;
+    background-color: #bd5757;
+    color: #fff;
+  }
+
+  .checkbox-wrapper-55 .switch-left::before,
+  .checkbox-wrapper-55 .switch-right::before {
+    content: "";
+    position: absolute;
+    width: 0.4em;
+    height: 2.45em;
+    bottom: -0.45em;
+    background-color: #ccc;
+    transform: skewY(-65deg);
+  }
+
+  .checkbox-wrapper-55 .switch-left::before {
+    left: -0.4em;
+  }
+
+  .checkbox-wrapper-55 .switch-right::before {
+    right: -0.375em;
+    background-color: transparent;
+    transform: skewY(65deg);
+  }
+
+  .checkbox-wrapper-55 input:checked + .switch-left {
+    background-color: #0084d0;
+    color: #fff;
+    bottom: 0px;
+    left: 0.5em;
+    height: 2.5em;
+    width: 3em;
+    transform: rotate(0deg) skewX(0deg);
+  }
+
+  .checkbox-wrapper-55 input:checked + .switch-left::before {
+    background-color: transparent;
+    width: 3.0833em;
+  }
+
+  .checkbox-wrapper-55 input:checked + .switch-left + .switch-right {
+    background-color: #ddd;
+    color: #888;
+    bottom: 0.4em;
+    right: 0.8em;
+    height: 2.4em;
+    width: 2.75em;
+    transform: rotate(-15deg) skewX(-15deg);
+  }
+
+  .checkbox-wrapper-55 input:checked + .switch-left + .switch-right::before {
+    background-color: #ccc;
+  }
+
+  /* Keyboard Users */
+  .checkbox-wrapper-55 input:focus + .switch-left {
+    color: #333;
+  }
+
+  .checkbox-wrapper-55 input:checked:focus + .switch-left {
+    color: #fff;
+  }
+
+  .checkbox-wrapper-55 input:focus + .switch-left + .switch-right {
+    color: #fff;
+  }
+
+  .checkbox-wrapper-55 input:checked:focus + .switch-left + .switch-right {
+    color: #333;
+  }
+</style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <!--greeting section -->
@@ -87,8 +233,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
-                            <select id="country" name="country" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="country" name="country" class="form-select select2" >
                                 <option value="" selected>Choose Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
@@ -100,11 +245,10 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
-                            <select id="organization" name="organization" class="form-select select2" data-choices
-                                data-choices-sorting="true">
+                            <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Choose Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
+                                <option value="<?php echo e($organization->id); ?>" <?php echo e(auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':''); ?> ><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
@@ -112,22 +256,28 @@
                     <!--end col-->
                     <div class="col-md-12" id="setBranchDiv" style="display: none;">
                         <div class="my-3">
-                            <label for="setBranch" class="form-label">Would you like to set this form to the branch of this organization?</label>
-                            <input type="checkbox" class="ms-2" id="setBranch"/>
+                            <label for="setBranch" class="form-label">Would you like to set this form to the division of this organization?</label>
+                            <input type="checkbox" class="ms-2" id="setBranch" <?php if(auth()->user()->role->name=='branch'): ?>checked <?php endif; ?> />
                         </div>
                     </div>
                     <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Branch</label>
-                            <select id="branch" name="branch" class="form-select select2" data-choices
-                                data-choices-sorting="true" disabled>
-                                <option value="" selected>Choose Branch</option>
+                            <label for="branch" class="form-label">Division
+                                <?php if(auth()->user()->role->name=='branch'): ?>
+                                <span class="text-danger">*</span>
+                                <?php endif; ?>
+                            </label>
+                            <select id="branch" name="branch" class="form-select select2" disabled>
+                                <option value="" selected>Choose Division</option>
                             </select>
                         </div>
                     </div>
                     <!--end col-->
                     <div class="card-header align-items-center d-flex mb-3">
                         <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
+                    </div>
+                    <div class="note">
+                        <p>Note: Please enter the survey dates for each phase: before the project starts, during the project, and after completion. If a survey phase hasn’t been conducted yet, you can leave those dates empty.’ after Survey Timeline.</p>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
@@ -150,15 +300,73 @@
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>
-                    <div>
-                        <p class="note-tag">Note: Please pick the starting and ending date for survey.</p>
-                    </div>
+                    
                     <div class="btn-submit-container">
-
-                        <button type="submit" class="btn btn-blue btn-submit">Submit</button>
-
+                        <button type="button" class="btn btn-blue btn-submit" data-bs-toggle="modal" data-bs-target="#exampleModal" >Submit</button>
                     </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-overlay">
+                            <div class="modal-container">
+                    
+                                <div class="modal-content custom-modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Note</h2>
+                                    <a class="close-button" data-bs-dismiss="modal" style="cursor: pointer !important;"><i class="fa-solid fa-xmark"></i></a>
+                                </div>
+                                    <div class="instruction-step">
+                                        <span class="step-number">1</span>
+                                        <span class="step-title">Go to your Typeform account</span>
+                                        <p class="step-description">Log in to your Typeform account where your survey form is hosted.</p>
+                                    </div>
+                                    
+                                    <div class="instruction-step">
+                                        <span class="step-number">2</span>
+                                        <span class="step-title">Navigate to the Connect section</span>
+                                        <p class="step-description">Select your form and go to the "Connect" section in the form editor.</p>
+                                    </div>
+                                    
+                                    <div class="instruction-step">
+                                        <span class="step-number">3</span>
+                                        <span class="step-title">Add the webhook URL</span>
+                                        <p class="step-description">In the webhook settings, add the following URL:</p>
+                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-New/public/answer</span>
+                                    </div>
+                                    
+                                    <div class="instruction-step border-0">
+                                        <span class="step-number">4</span>
+                                        <span class="step-title">Save and activate the webhook</span>
+                                        <p class="step-description">After adding the URL, save your changes and turn on the webhook to start receiving responses in real-time.</p>
+                                    </div>
+                                    <div calss="d-flex flex-row">
+                                        <p class="webhook-url m-0 mb-2 d-flex align-items-center gap-3 align-items-center">
+                                            <label for="webhook" class="m-0 flex-shrink-0">
+                                                "Have you added & activated Webhook URL in Typeform?"
+                                            </label> 
+                                            <span class="checkbox-wrapper-55 flex-shrink-0">
+                                                <label class="rocker rocker-small m-0 p-0">
+                                                    <input type="checkbox" name="webhook" id="webhook">
+                                                    <span class="switch-left">Yes</span>
+                                                    <span class="switch-right">No</span>
+                                                </label>
+                    </span>
+                                                            <!-- <input type="checkbox" name="webhook" id="webhook">  -->
 
+                                        </p>
+
+                                    </div>
+                                    <div class="modal-footer ">
+                                
+                                    
+                                    <button type="submit" class="confirm-button btn-blue">Submit</button>
+                                </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                     <!--end col-->
                 </div>
                 <!--end row-->
@@ -179,6 +387,13 @@
     </div>
 </div>
 
+
+
+<!-- Button trigger modal -->
+
+
+
+                    
 
 <?php $__env->stopSection(); ?>
 
@@ -209,6 +424,8 @@ document.addEventListener('DOMContentLoaded', function() {
         mode: 'range',
     });
 });
+
+
 $(document).ready(function() {
     $('#formSync').submit(function(e) {
         e.preventDefault();
@@ -263,11 +480,6 @@ $(document).ready(function() {
                 $('#formIdMessage').text(xhr.responseJSON.message);
                 $('#formIdMessage').css('display', 'flex');
                 SyncIcon.removeClass("rotate");
-                // toastr.error('The form with this ID was not found.', 'Error', {
-                //     closeButton: true, 
-                //     progressBar: true, 
-                //     timeOut: 5000
-                // });
             }
         })
     })
@@ -301,8 +513,14 @@ $(document).ready(function() {
     //     }
     // });
 
+    checkBoxBranch();
+
     //Filter Branches
     $('#organization,#setBranch').change(function() {
+        checkBoxBranch();
+    });
+
+    function checkBoxBranch(){
         var organizationVal = $('#organization').val();
         
         if (organizationVal !== '') {
@@ -319,7 +537,7 @@ $(document).ready(function() {
         }else{
             $('#setBranchDiv').css('display','none');
         }
-    });
+    }
 
     function branch(organizationVal){
         $.ajax({
@@ -331,20 +549,37 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
-                    response.branches.forEach(function(branch) {
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
+
+                    var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                    var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                   
+                    var branchList = response.branches.filter(function(branch){
+                        if(userRole == "branch"){
+                            let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                            return branchIds.includes(branch.id.toString());
+                        }
+
+                        return true;
+                    });
+
+                    branchList.forEach(function(branch) {
                         $('#branch').append(new Option(branch.name, branch.id));
                     })
                 },
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Choose Division</option>');
                 }
             })
     }
+});
 
-})
+function changeWebHookValue(value){
+    $("#webhook").val(value);
+}
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/form/create.blade.php ENDPATH**/ ?>

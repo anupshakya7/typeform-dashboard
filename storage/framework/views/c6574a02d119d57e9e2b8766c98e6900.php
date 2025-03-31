@@ -101,7 +101,7 @@
                                         <option value="" selected>Organization</option>
                                         <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($organization->id); ?>"
-                                                <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id ? 'selected' : ''); ?>>
+                                                <?php echo e((($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id) || ($selectedOrganizationwithSurvey == $organization->id) ? 'selected' : ''); ?>>
                                                 <?php echo e($organization->name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
@@ -128,7 +128,7 @@
                                         <input type="hidden" name="survey" class="form-control" value="<?php echo e(old('survey',auth()->user()->form_id)); ?>" id="branch" readonly>
                                     <?php else: ?>
                                     <select class="form-select select2" name="survey" id="survey"
-                                        aria-label="Default select example" disabled>
+                                        aria-label="Default select example">
                                         <option value="" selected>Survey</option>
                                         <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($surveyForm->form_title); ?>"
@@ -903,7 +903,7 @@
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
                 console.log(countryVal,organizationVal);
 
-                if (organizationVal !== '' || countryVal !='') {
+                // if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
                         url: "<?php echo e(route('survey.get')); ?>",
                         method: 'GET',
@@ -954,11 +954,11 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
-                }else{
-                    $('#survey').prop('disabled', true);
-                    $('#survey').html('');
-                    $('#survey').append('<option value="" selected>Select Survey</option>');
-                }
+                // }else{
+                //     $('#survey').prop('disabled', true);
+                //     $('#survey').html('');
+                //     $('#survey').append('<option value="" selected>Select Survey</option>');
+                // }
             }
 
             function getQueryParams(param) {

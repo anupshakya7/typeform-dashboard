@@ -39,14 +39,9 @@
         <div class="flex-shrink-0">
             <div class="d-flex flex-row gap-2 align-items-center">
                 <!--info here-->
-                <a href="<?php echo e(route('form.csv')); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
+                <a href="<?php echo e(route('form.csv',['search_title'=> request('search_title'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
                     Export</a>
-                <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                aria-controls="theme-settings-offcanvas">
-
-                    <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                </a>
+                
             </div>
         </div>
     </div>
@@ -78,7 +73,6 @@
                                         <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select> </div>
-                            <?php if(auth()->user()->role->name =='superadmin'): ?>
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
@@ -88,7 +82,21 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select> </div>
                             </div>
-                            <?php endif; ?>
+                            <div class="col-auto">
+                                <div class="col-auto"> 
+                                    <select class="form-select select2" name="branch" id="branch" aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                        <option value="" selected>Division</option>
+                                        
+                                    </select> </div>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="col-auto"> 
+                                    <select class="form-select select2" name="survey" id="survey" aria-label="Default select example" onchange="this.form.submit()" disabled>
+                                        <option value="" selected>Survey</option>
+                                        
+                                    </select> </div>
+                            </div>
                     </div>
                 </form>
                 </div>
@@ -103,6 +111,7 @@
                                 <th>Survey ID</th>
                                 <th>Survey Name</th>
                                 <th>Country</th>
+                                <th>Webhook</th>
                                 <th>Organization</th>
                                 <th>Division</th>
                                 <th>Before Survey</th>
@@ -122,8 +131,15 @@
                                 <td><?php echo e($form->form_id); ?></td>
                                 <td><?php echo e($form->form_title); ?></td>
                                 <td><?php echo e($form->country); ?></td>
+                                <!-- <td>
+                                    <?php echo e($form->webhook == 1 ? 'Active':'Inactive'); ?></td> -->
+                                    <td>
+                                    <span class="<?php echo e($form->webhook == 1 ? 'webhook-active' : 'webhook-inactive'); ?>"><?php echo e($form->webhook == 1 ? 'Active' : 'Inactive'); ?></span>
+                                </td>
                                 <td><?php echo e(optional($form->organization)->name); ?></td>
-                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Main Branch'); ?></td>
+                                
+
+                                <td><?php echo e($form->branches ? optional($form->branches)->name : 'Head Office'); ?></td>
                                 <td><?php echo e($form->before); ?> </td>
                                 <td><?php echo e($form->during); ?></td>
                                 <td><?php echo e($form->after); ?></td>
@@ -262,6 +278,125 @@
                 document.getElementById('form_search').submit();
             },800);
         }
+
+        $(document).ready(function(){
+            function getQueryParams(param) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            var country_name = getQueryParams('country');
+            var organization_id = getQueryParams('organization');
+            var branch_id = getQueryParams('branch');
+            var survey_id = getQueryParams('survey');
+
+            if(country_name !== null){
+                filterSurvey();
+            }
+
+            if(organization_id !== null){
+                filterBranch();
+                filterSurvey();
+            }
+
+            if(branch_id !== null){
+                filterSurvey();
+            }
+
+
+            function filterBranch(callback) {
+                var organizationVal = organization_id;
+
+                if (organizationVal !== '') {
+                    $.ajax({
+                        url: "<?php echo e(route('branch.get')); ?>",
+                        method: 'GET',
+                        data: {
+                            organization_id: organizationVal
+                        },
+                        success: function(response) {
+                            $('#branch').prop('disabled', false);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Division</option>');
+
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                        
+                            var branchList = response.branches.filter(function(branch){
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
+                                    return branchIds.includes(branch.id.toString());
+                                }
+
+                                return true;
+                            });
+                            
+                            branchList.forEach(function(branchItem) {
+                                // $('#branch').append(new Option(branch.name,
+                                // branch.id));
+                                var option = new Option(branchItem.name, branchItem.id);
+                                $('#branch').append(option);
+
+                                if (branch_id && branch_id == branchItem.id) {
+                                    $(option).prop('selected', true);
+                                }
+                            });
+
+                            if (callback && typeof callback == 'function') {
+                                callback();
+                            }
+
+                            isFirstLoad = false;
+                        },
+                        error: function(xhr, status, error) {
+                            $('#branch').prop('disabled', true);
+                            $('#branch').html('');
+                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                        }
+                    })
+                }
+            }
+
+            function filterSurvey() {
+                var countryVal = country_name;
+                var organizationVal = organization_id;
+                var branchVal = branch_id;
+
+                if (organizationVal !== '' || countryVal !=='') {
+                    $.ajax({
+                        url: "<?php echo e(route('survey.get')); ?>",
+                        method: 'GET',
+                        data: {
+                            country: countryVal,
+                            organization_id: organizationVal,
+                            branch_id: branchVal
+                        },
+                        success: function(response) {
+                            $('#survey').prop('disabled', false);
+                            $('#survey').html('');
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            response.forms.forEach(function(formItem) {
+                                // $('#survey').append(new Option(form.form_title,
+                                // form.id));
+                                var option = new Option(formItem.form_title, formItem.form_id);
+                                $('#survey').append(option);
+
+                                if (survey_id && survey_id == formItem.form_id) {
+                                    $(option).prop('selected', true);
+                                }
+                            });
+
+                        },
+                        error: function(xhr, status, error) {
+                            $('#survey').prop('disabled', true);
+                            $('#survey').html('');
+                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                        }
+                    })
+                }
+            }
+        });
 </script>
 
 <?php $__env->stopSection(); ?>
