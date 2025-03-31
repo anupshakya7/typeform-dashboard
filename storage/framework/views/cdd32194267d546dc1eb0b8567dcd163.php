@@ -50,7 +50,7 @@
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" >
-                                <option selected>Choose Country</option>
+                                <option selected>Select Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>" <?php echo e($form->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -62,7 +62,7 @@
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
-                                <option value="" selected>Choose Organization</option>
+                                <option value="" selected>Select Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>" <?php echo e($organization->id == $form->organization_id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -87,7 +87,7 @@
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
                             ?>
                             <select id="branch" name="branch" class="form-select select2" >
-                                <option value="" selected>Choose Division</option>
+                                <option value="" selected>Select Division</option>
                                 
                             </select>
                         </div>
@@ -98,7 +98,7 @@
                             <label for="branch" class="form-label">Division</label>
                             <select id="branch" name="branch" class="form-select select2" data-choices
                                 data-choices-sorting="true" disabled>
-                                <option value="" selected>Choose Division</option>
+                                <option value="" selected>Select Division</option>
                             </select>
                         </div>
                     </div>
@@ -273,7 +273,7 @@ $(document).ready(function() {
         $('#setBranchDiv').css('display','none');
         $('#branch').prop('disabled', true);
         $('#branch').html('');
-        $('#branch').append('<option value="" selected>Choose Branch</option>');
+        $('#branch').append('<option value="" selected>Select Branch</option>');
     }
 
 
@@ -355,7 +355,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
 
                     <?php
                         $selectedBranchId = $form->branches !== null ? json_encode($form->branches->id) : 'null';
@@ -390,13 +390,13 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                 }
             })
         }else{
             $('#branch').prop('disabled', true);
             $('#branch').html('');
-            $('#branch').append('<option value="" selected>Choose Division</option>');
+            $('#branch').append('<option value="" selected>Select Division</option>');
         }
         
     }

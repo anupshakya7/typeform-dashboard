@@ -41,9 +41,8 @@
                         <div class="mb-3">
                             <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
                             @if(auth()->user()->role->name == 'superadmin')
-                            <select id="organization_id" name="organization_id" class="form-select" data-choices
-                                data-choices-sorting="true">
-                                <option selected>Choose Organization</option>
+                            <select id="organization_id" name="organization_id" class="form-select select2">
+                                <option selected>Select Organization</option>
                                 @foreach($organizations as $organization)
                                 <option value="{{$organization->id}}">{{$organization->name}}</option>
                                 @endforeach

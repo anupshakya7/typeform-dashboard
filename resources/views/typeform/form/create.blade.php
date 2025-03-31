@@ -235,7 +235,7 @@
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" >
-                                <option value="" selected>Choose Country</option>
+                                <option value="" selected>Select Country</option>
                                 @foreach ($countries as $country)
                                 <option value="{{$country['name']}}">{{$country['name']}}</option>
                                 @endforeach
@@ -247,7 +247,7 @@
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
-                                <option value="" selected>Choose Organization</option>
+                                <option value="" selected>Select Organization</option>
                                 @foreach($organizations as $organization)
                                 <option value="{{$organization->id}}" {{auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':'' }} >{{$organization->name}}</option>
                                 @endforeach
@@ -269,7 +269,7 @@
                                 @endif
                             </label>
                             <select id="branch" name="branch" class="form-select select2" disabled>
-                                <option value="" selected>Choose Division</option>
+                                <option value="" selected>Select Division</option>
                             </select>
                         </div>
                     </div>
@@ -554,7 +554,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
 
                     var userRole = @json(auth()->user()->role->name);
                     var userBranchId = @json(auth()->user()->branch_id);
@@ -576,7 +576,7 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                 }
             })
     }

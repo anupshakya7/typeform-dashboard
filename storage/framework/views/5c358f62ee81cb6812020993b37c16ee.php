@@ -68,15 +68,15 @@
                             </div>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Country </option>
+                                    <option value="" selected>Select Country </option>
                                     <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                        <option value="<?php echo e($country->country); ?>" <?php echo e(request('country') == $country->country ? 'selected':''); ?>><?php echo e($country->country); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select> </div>
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Organization</option>
+                                        <option value="" selected>Select Organization</option>
                                         <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($organization->id); ?>" <?php echo e(request('organization') == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -85,7 +85,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="branch" id="branch" aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Select Division</option>
                                         
                                     </select> </div>
                             </div>
@@ -93,7 +93,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="survey" id="survey" aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                         
                                     </select> </div>
                             </div>
@@ -317,7 +317,7 @@
                         success: function(response) {
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -352,7 +352,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
                         }
                     })
                 }
@@ -375,7 +375,7 @@
                         success: function(response) {
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                             response.forms.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
@@ -391,7 +391,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }

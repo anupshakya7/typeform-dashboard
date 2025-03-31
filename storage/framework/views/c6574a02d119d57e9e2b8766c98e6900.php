@@ -47,32 +47,26 @@
 
             
 <!--initial filter section-->
-<div class="row">
-               <div class="col-12 col-sm-8">
-               <div class="filter-section show-filter mb-3">
-                    <div class="d-flex flex-row justify-content-between align-content-center mb-2">
-                    <div class="d-flex align-content-center">
-                        <h5 class="m-0" style="font-size:16px;">Get insights, track trends, compare data, manage.</h5>
+<div class="row mb-3">
+               <div class="col-12 col-sm-10 col-md-9">
+               <div class="filter-section show-filter d-flex flex-column align-content-stretch justify-content-start h-100">
+                    <div class="mb-2">
+                         <?php
+                            $user = auth()->user()->role->name;
+                            if($user == 'superadmin'){
+                                $lastText = ' or Organisation';
+                            }elseif($user == 'organization'){
+                                $lastText = ' or Division';
+                            }else{
+                                $lastText = '';
+                            }
+                        ?>
+                        <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for <b><?php echo e($formDetails->form_title); ?></b>. 
+                        <?php if($user!=='survey'): ?>
+                        <br><span>Use the filters below to switch between different surveys or refine your results by Country<?php echo e($lastText); ?>.</span></h5>
+                        <?php endif; ?>
                     </div>
-                    <div class="p-0">
-                                          <!-- Dropdown for exporting as PDF, PNG, or Excel -->
-                                          <div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-                                                <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])); ?>" >
-                                                        Export Survey Data</a></li>
-    
-                                            </ul>
-                                        </div>
-                                </div>
-                    </div>
+                    
 
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
@@ -84,7 +78,7 @@
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
 
-                                        <option value="" selected>Country</option>
+                                        <option value="" selected>Select Country</option>
                                         <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($country->country); ?>"
                                                 <?php echo e((($filterData && $filterData->country == $country->country) || request('country') == $country->country) || ($selectedCountrywithSurvey == $country->country) ? 'selected' : ''); ?>>
@@ -98,7 +92,7 @@
                                     <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                     <select class="form-select select2" id="organization" name="organization"
                                         aria-label="Default select example">
-                                        <option value="" selected>Organization</option>
+                                        <option value="" selected>Select Organization</option>
                                         <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($organization->id); ?>"
                                                 <?php echo e((($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id) || ($selectedOrganizationwithSurvey == $organization->id) ? 'selected' : ''); ?>>
@@ -118,7 +112,7 @@
                                     <?php else: ?>
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Select Division</option>
                                     </select>
                                     <?php endif; ?>
                                 </div>
@@ -129,7 +123,7 @@
                                     <?php else: ?>
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example">
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                         <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($surveyForm->form_title); ?>"
                                                 <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?>>
@@ -156,23 +150,26 @@
                         
                 </div>
                </div>
-               <div class="col-12 col-sm-4">
-               <div class="card card-animate stat-card people-card">
+               <div class="col-12 col-sm-2 col-md-3">
+               <div class="card card-animate stat-card people-card h-100">
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-row gap-2 align-items-center">
-                                        <i class="fa-solid fa-user"></i>
-                                        <p class="mb-0">
-                                            People</p>
+                                    <div class="d-flex flex-row gap-3 align-items-center">
+                                        <i class="fa-solid fa-user" style="font-size:18px;"></i>
+                                        <p class="mb-0" style="font-size:18px;">
+                                            Survey Participants</p>
                                     </div>
                                     <div class="flex-shrink-0">
                                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                                            aria-controls="theme-settings-offcanvas">
-                                            <i class="fa-solid fa-ellipsis"></i>
+                                            aria-controls="theme-settings-offcanvas"
+                                            data-title="Survey Participants" 
+                                            data-content="<p>Total number of respondents who participated in the survey.</p>"
+                                            >
+                                            <i class='bx bx-info-circle' style="font-size:24px;"></i>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
+                                <div class="gap-2 mt-4">
                                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                                             data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                                     </h4>
@@ -189,8 +186,24 @@
 
 <!--project title --survey-title section -->
 
-<div class="title-container mb-3">
+<div class="title-container mb-3 d-flex flex-row justify-content-between">
 <h4><span class="project-title"><?php echo e($formDetails->form_title); ?></span></h4>
+<!-- Dropdown for exporting as PDF, PNG, or Excel -->
+<div class="dropdown">
+                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#" id="export-all">Download
+                                                        Report</a></li>
+                                                <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])); ?>" >
+                                                        Export Survey Data</a></li>
+    
+                                            </ul>
+                                        </div>
 
 </div>
 <!--project title --survey-title section -->
@@ -527,7 +540,20 @@
                                             
                                         </ul>
                                     </div>
-                                    
+                                
+                                             <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                                data-bs-target="#theme-settings-offcanvas"
+                                                aria-controls="theme-settings-offcanvas"
+                                                class="m-0 p-0 d-flex justify-content-center align-items-center" 
+                                                data-title="Results by Pillar Table" 
+                                                data-content="<p>This table compares community response mean scores across the eight Pillars of Positive Peace, alongside country and global averages. It provides insights into community perceptions of these pillars in relation to broader trends.</p>">
+
+                                                <img class="svg-icon" type="image/svg+xml"
+                                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+
+                                            </a>
+                                            
+                                            
                                         </div>
                                     </div>
                                 </div><!-- end card header -->
@@ -611,6 +637,15 @@
                                             
                                         </ul>
                                     </div>
+                                        <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
+                                        aria-controls="theme-settings-offcanvas" 
+                                        class="m-0 p-0 d-flex justify-content-center align-items-center"
+                                        data-title="Results Over Time" 
+                                        data-content="<p>This Results over time shows the change in community perceptions of the eight Pillars of Positive Peace over time. The percentage change in pillar scores is calculated based on different survey periods, reflecting improvements or declines in perceptions.</p>"
+                                        >
+
+                                            <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+                                        </a> 
                                         
                                     </div>
                                 </div>
@@ -791,7 +826,7 @@
             $(document).on('change', '#organization', function() {
                 $('#branch').prop('disabled', true);
                 $('#branch').html('');
-                $('#branch').html('<option value="" selected>Choose Branch</option>');
+                $('#branch').html('<option value="" selected>Select Division</option>');
                 
                 // $('#survey').html('');
                 // $('#survey').append('<option value="" selected>Select Survey</option>');
@@ -823,7 +858,7 @@
                         'tabindex': '0',
                         'data-bs-toggle': 'popover',
                         'data-bs-trigger': 'hover focus',
-                        'data-bs-content': 'Please Select Survey First !',
+                        'data-bs-content': 'Select survey to view insights!',
                         'data-bs-placement': 'top'
 
                     }).popover();
@@ -891,7 +926,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Select Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
                         }
                     })
                 }
@@ -916,7 +951,25 @@
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
                             $('#survey').append('<option value="" selected>Select Survey</option>');
-                            response.forms.forEach(function(formItem) {
+
+
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                            var formList = response.forms.filter((form)=>{
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
+
+                                    if(form.branch_id !== null){
+                                        return branchIds.includes(form.branch_id.toString());
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            });
+
+                            formList.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
                                 var option = new Option(formItem.form_title, formItem.form_id);
@@ -938,7 +991,7 @@
                                         'tabindex': '0',
                                         'data-bs-toggle': 'popover',
                                         'data-bs-trigger': 'hover focus',
-                                        'data-bs-content': 'Please Select Survey First !',
+                                        'data-bs-content': 'Select survey to view insights!',
                                         'data-bs-placement' : 'top'
                                         
                                     }).popover();

@@ -39,7 +39,7 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <a href="<?php echo e(route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey_form'=>request('survey_form')])); ?>" type="button" class="btn btn-success">
+                        <a href="<?php echo e(route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey')])); ?>" type="button" class="btn btn-success">
                             <i
                                 class="ri-file-download-line align-bottom me-1"></i>
 
@@ -59,17 +59,18 @@
                                 <div class="search-box"> <input type="text" class="form-control" id="searchProductList" name="search_participant" value="<?php echo e(request('search_participant')); ?>" onkeyup="debounceSeach()"
                                         placeholder="Search Participants"> <i class="ri-search-line search-icon"></i> </div>
                             </div>
+                            <?php if(auth()->user()->role->name !== "survey"): ?>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Country </option>
+                                    <option value="" selected>Select Country</option>
                                     <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($country['name']); ?>" <?php echo e(request('country') == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                        <option value="<?php echo e($country->country); ?>" <?php echo e(request('country') == $country->country ? 'selected':''); ?>><?php echo e($country->country); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="organization" id="organization" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Organization</option>
+                                    <option value="" selected>Select Organization</option>
                                     <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($organization->id); ?>" <?php echo e(request('organization') == $organization->id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -77,15 +78,16 @@
                             </div>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="branch" id="branch" aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Division</option>
+                                    <option value="" selected>Select Division</option>
                                 </select> 
                             </div>
                             <div class="col-auto">
                                 <div class="col-auto"> <select class="form-select select2" name="survey" id="survey" onchange="this.form.submit()" aria-label="Default select example" disabled>
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                     </select> 
                                 </div>
                             </div>
+                            <?php endif; ?>
                         </div>
                     </form>
                    
@@ -375,6 +377,7 @@
         var country_name = getQueryParams('country');
         var organization_id = getQueryParams('organization');
         var branch_id = getQueryParams('branch');
+        var survey_id = getQueryParams('survey');
 
         if(country_name !== null){
                 filterSurvey();
@@ -409,7 +412,7 @@
                             console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -444,13 +447,13 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
                         }
                     })
                 }else{
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                 }
             }
 
@@ -473,14 +476,31 @@
                             console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
-                            response.forms.forEach(function(formItem) {
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
+
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
+
+                            var formList = response.forms.filter((form)=>{
+                                if(userRole == "branch"){
+                                    let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
+
+                                    if(form.branch_id !== null){
+                                        return branchIds.includes(form.branch_id.toString());
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            });
+
+                            formList.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
                                 var option = new Option(formItem.form_title, formItem.form_id);
                                 $('#survey').append(option);
 
-                                if (survey && survey == formItem.form_id) {
+                                if (survey_id && survey_id == formItem.form_id) {
                                     $(option).prop('selected', true);
                                 }
                             });
@@ -489,7 +509,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }

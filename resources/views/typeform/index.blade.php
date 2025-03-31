@@ -52,7 +52,20 @@
                <div class="col-12 col-sm-10 col-md-9">
                <div class="filter-section show-filter d-flex flex-column align-content-stretch justify-content-start h-100">
                     <div class="mb-2">
-                        <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for <b>{{ $formDetails->form_title }}</b>. <br><span>Use the filters below to switch between different surveys or refine your results by Country or Organisation.</span></h5>
+                         @php
+                            $user = auth()->user()->role->name;
+                            if($user == 'superadmin'){
+                                $lastText = ' or Organisation';
+                            }elseif($user == 'organization'){
+                                $lastText = ' or Division';
+                            }else{
+                                $lastText = '';
+                            }
+                        @endphp
+                        <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for <b>{{ $formDetails->form_title }}</b>. 
+                        @if($user!=='survey')
+                        <br><span>Use the filters below to switch between different surveys or refine your results by Country{{$lastText}}.</span></h5>
+                        @endif
                     </div>
                     
 
@@ -66,7 +79,7 @@
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
 
-                                        <option value="" selected>Country</option>
+                                        <option value="" selected>Select Country</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->country }}"
                                                 {{ (($filterData && $filterData->country == $country->country) || request('country') == $country->country) || ($selectedCountrywithSurvey == $country->country) ? 'selected' : '' }}>
@@ -82,7 +95,7 @@
                                     @if(auth()->user()->role->name == 'superadmin')
                                     <select class="form-select select2" id="organization" name="organization"
                                         aria-label="Default select example">
-                                        <option value="" selected>Organization</option>
+                                        <option value="" selected>Select Organization</option>
                                         @foreach ($organizations as $organization)
                                             <option value="{{ $organization->id }}"
                                                 {{ (($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id) || ($selectedOrganizationwithSurvey == $organization->id) ? 'selected' : '' }}>
@@ -102,7 +115,7 @@
                                     @else
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Select Division</option>
                                     </select>
                                     @endif
                                 </div>
@@ -113,7 +126,7 @@
                                     @else
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example">
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                         @foreach ($surveyForms as $surveyForm)
                                             <option value="{{ $surveyForm->form_title }}"
                                                 {{ ($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }}>
@@ -819,7 +832,7 @@
             $(document).on('change', '#organization', function() {
                 $('#branch').prop('disabled', true);
                 $('#branch').html('');
-                $('#branch').html('<option value="" selected>Choose Branch</option>');
+                $('#branch').html('<option value="" selected>Select Division</option>');
                 
                 // $('#survey').html('');
                 // $('#survey').append('<option value="" selected>Select Survey</option>');
@@ -919,7 +932,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Select Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
                         }
                     })
                 }

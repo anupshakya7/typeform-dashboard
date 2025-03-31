@@ -46,7 +46,7 @@
                 {{-- Dashboard --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('home.index')}}">
-                    <i class="fa-solid fa-gauge"></i> <span>@lang('translation.dashboards')</span>
+                    <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
                     </a>
                 </li>
                 {{-- Dashboard --}}

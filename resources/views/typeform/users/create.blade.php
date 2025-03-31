@@ -139,9 +139,8 @@
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="role" class="form-label">Role<span class="text-danger">*</span></label>
-                            <select id="role" name="role_id" class="form-select" data-choices
-                                data-choices-sorting="true">
-                                <option selected>Choose Role</option>
+                            <select id="role" name="role_id" class="form-select select2">
+                                <option selected>Select Role</option>
                                 @foreach($roles as $role)
                                 <option value="{{$role->id}}" data-rolename="{{$role->name}}">{{$role->name}}</option>
                                 @endforeach
@@ -169,7 +168,7 @@
                             <label for="field_dropdown" class="form-label title_level"><span class="text-danger">*</span></label>
                             <select id="field_dropdown" class="form-select" data-choices
                                 data-choices-sorting="true">
-                                {{-- <option selected>Choose Role</option>
+                                {{-- <option selected>Select Role</option>
                                 @foreach($roles as $role)
                                 <option value="{{$role->id}}">{{$role->name}}</option>
                                 @endforeach --}}
@@ -278,7 +277,7 @@ $(document).ready(function(){
         if(roleVal == "organization"){
             $('#formUserOrganizationLevel').html(`
                 <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Choose Organization</h5>
+                    <h5 class="card-title mb-0">Select Organization</h5>
 
                 </div>
                 
@@ -290,7 +289,7 @@ $(document).ready(function(){
                                         <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                         <select id="organization" name="organization_id" class="form-select" data-choices
                                             data-choices-sorting="true">
-                                            <option value="" selected>Choose Organization</option>
+                                            <option value="" selected>Select Organization</option>
                                             @foreach ($organizations as $organization)
                                             <option value="{{ $organization->id }}">
                                                 {{ $organization->name }}</option>
@@ -307,7 +306,7 @@ $(document).ready(function(){
         }else if(roleVal == "branch"){
             $('#formUserBranchLevel').html(`
                     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">Choose Branch</h5>
+                        <h5 class="card-title mb-0">Select Divisions</h5>
 
                     </div>
                     
@@ -326,7 +325,7 @@ $(document).ready(function(){
                                             <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                             <select id="organization" name="organization_id" class="form-select" data-choices
                                                 data-choices-sorting="true">
-                                                <option value="" selected>Choose Organization</option>
+                                                <option value="" selected>Select Organization</option>
                                                 @foreach ($organizations as $organization)
                                                 <option value="{{ $organization->id }}">
                                                     {{ $organization->name }}</option>
@@ -337,10 +336,10 @@ $(document).ready(function(){
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="branch" class="form-label title_level">Branch<span class="text-danger">*</span></label>
+                                            <label for="branch" class="form-label title_level">Division<span class="text-danger">*</span></label>
                                             <select id="branch" name="branch_id[]" class="form-select select2" data-choices
                                                 data-choices-sorting="true" multiple disabled>
-                                                <option value="" selected>Choose Branch</option>
+                                                <option value="" selected>Select Division</option>
                                             </select>
                                         </div>
                                     </div>
@@ -353,7 +352,7 @@ $(document).ready(function(){
         if(roleVal == "survey"){
             $('#formUserSurveyLevel').html(`
                     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">Choose Survey</h5>
+                        <h5 class="card-title mb-0">Select Survey</h5>
 
                     </div>
                     
@@ -372,7 +371,7 @@ $(document).ready(function(){
                                         <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                         <select id="organization" name="organization_id" class="form-select" data-choices
                                             data-choices-sorting="true">
-                                            <option value="" selected>Choose Organization</option>
+                                            <option value="" selected>Select Organization</option>
                                             @foreach ($organizations as $organization)
                                             <option value="{{ $organization->id }}">
                                                 {{ $organization->name }}</option>
@@ -383,10 +382,10 @@ $(document).ready(function(){
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="branch" class="form-label title_level">Branch</label>
+                                        <label for="branch" class="form-label title_level">Division</label>
                                         <select id="branch" name="branch_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
-                                            <option value="" selected>Choose Branch</option>
+                                            <option value="" selected>Select Branch</option>
                                         </select>
                                     </div>
                                 </div>
@@ -396,7 +395,7 @@ $(document).ready(function(){
                                         <label for="survey" class="form-label title_level">Survey<span class="text-danger">*</span></label>
                                         <select id="survey" name="form_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
-                                            <option value="" selected>Choose Survey</option>
+                                            <option value="" selected>Select Survey</option>
                                         </select>
                                     </div>
                                 </div>
@@ -447,7 +446,7 @@ $(document).ready(function(){
                     console.log(response);
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                     response.branches.forEach(function(branchItem) {
                         // $('#branch').append(new Option(branch.name,
                         // branch.id));
@@ -458,7 +457,7 @@ $(document).ready(function(){
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                 }
             })
         }
@@ -480,7 +479,7 @@ $(document).ready(function(){
                     console.log(response);
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
-                    $('#survey').append('<option value="" selected>Choose Survey</option>');
+                    $('#survey').append('<option value="" selected>Select Survey</option>');
                     response.forms.forEach(function(formItem) {
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
@@ -491,7 +490,7 @@ $(document).ready(function(){
                 error: function(xhr, status, error) {
                     $('#survey').prop('disabled', true);
                     $('#survey').html('');
-                    $('#survey').append('<option value="" selected>Choose Survey</option>');
+                    $('#survey').append('<option value="" selected>Select Survey</option>');
                 }
             })
         }

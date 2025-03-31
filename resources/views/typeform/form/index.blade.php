@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Country </option>
+                                    <option value="" selected>Select Country </option>
                                     @foreach($countries as $country)
                                         <option value="{{$country->country}}" {{request('country') == $country->country ? 'selected':''}}>{{$country->country}}</option>
                                     @endforeach
@@ -90,7 +90,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
-                                        <option value="" selected>Organization</option>
+                                        <option value="" selected>Select Organization</option>
                                         @foreach($organizations as $organization)
                                         <option value="{{$organization->id}}" {{request('organization') == $organization->id ? 'selected':''}}>{{$organization->name}}</option>
                                         @endforeach
@@ -99,7 +99,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="branch" id="branch" aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Select Division</option>
                                         {{-- @foreach($branches as $branch)
                                         <option value="{{$branch->id}}" {{request('branch') == $branch->id ? 'selected':''}}>{{$branch->name}}</option>
                                         @endforeach --}}
@@ -109,7 +109,7 @@
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="survey" id="survey" aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                         {{-- @foreach($surveys as $survey)
                                         <option value="{{$survey->form_id}}" {{request('survey') == $survey->form_id ? 'selected':''}}>{{$survey->form_title}}</option>
                                         @endforeach --}}
@@ -452,7 +452,7 @@
                         success: function(response) {
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = @json(auth()->user()->role->name);
                             var userBranchId = @json(auth()->user()->branch_id);
@@ -487,7 +487,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
                         }
                     })
                 }
@@ -510,7 +510,7 @@
                         success: function(response) {
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                             response.forms.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
@@ -526,7 +526,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }

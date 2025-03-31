@@ -66,9 +66,10 @@
                                 <div class="search-box"> <input type="text" class="form-control" id="searchProductList" name="search_participant" value="{{request('search_participant')}}" onkeyup="debounceSeach()"
                                         placeholder="Search Participants"> <i class="ri-search-line search-icon"></i> </div>
                             </div>
+                            @if(auth()->user()->role->name !== "survey")
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Country </option>
+                                    <option value="" selected>Select Country</option>
                                     @foreach($countries as $country)
                                         <option value="{{$country->country}}" {{request('country') == $country->country ? 'selected':''}}>{{$country->country}}</option>
                                     @endforeach
@@ -76,7 +77,7 @@
                             </div>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="organization" id="organization" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Organization</option>
+                                    <option value="" selected>Select Organization</option>
                                     @foreach($organizations as $organization)
                                     <option value="{{$organization->id}}" {{request('organization') == $organization->id ? 'selected':''}}>{{$organization->name}}</option>
                                     @endforeach
@@ -84,15 +85,16 @@
                             </div>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="branch" id="branch" aria-label="Default select example" onchange="this.form.submit()" disabled>
-                                    <option value="" selected>Division</option>
+                                    <option value="" selected>Select Division</option>
                                 </select> 
                             </div>
                             <div class="col-auto">
                                 <div class="col-auto"> <select class="form-select select2" name="survey" id="survey" onchange="this.form.submit()" aria-label="Default select example" disabled>
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                     </select> 
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </form>
                    
@@ -425,7 +427,7 @@
                             console.log(response);
                             $('#branch').prop('disabled', false);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
 
                             var userRole = @json(auth()->user()->role->name);
                             var userBranchId = @json(auth()->user()->branch_id);
@@ -460,13 +462,13 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Choose Division</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
                         }
                     })
                 }else{
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                 }
             }
 
@@ -489,7 +491,7 @@
                             console.log(response);
                             $('#survey').prop('disabled', false);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
 
                             var userRole = @json(auth()->user()->role->name);
                             var userBranchId = @json(auth()->user()->branch_id);
@@ -522,7 +524,7 @@
                         error: function(xhr, status, error) {
                             $('#survey').prop('disabled', true);
                             $('#survey').html('');
-                            $('#survey').append('<option value="" selected>Choose Survey</option>');
+                            $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
                 }

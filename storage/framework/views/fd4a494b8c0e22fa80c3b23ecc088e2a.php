@@ -234,7 +234,7 @@
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" >
-                                <option value="" selected>Choose Country</option>
+                                <option value="" selected>Select Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -246,7 +246,7 @@
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
-                                <option value="" selected>Choose Organization</option>
+                                <option value="" selected>Select Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>" <?php echo e(auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':''); ?> ><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -268,7 +268,7 @@
                                 <?php endif; ?>
                             </label>
                             <select id="branch" name="branch" class="form-select select2" disabled>
-                                <option value="" selected>Choose Division</option>
+                                <option value="" selected>Select Division</option>
                             </select>
                         </div>
                     </div>
@@ -549,7 +549,7 @@ $(document).ready(function() {
                 success: function(response) {
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
 
                     var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                     var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
@@ -571,7 +571,7 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Division</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                 }
             })
     }

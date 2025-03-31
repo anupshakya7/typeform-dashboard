@@ -162,7 +162,17 @@
                     <div class="d-flex flex-eow justify-content-between">
                     <div>
                         <h5 style="font-size:16px;" class="mb-3">Select a Survey to View Insights</h5>
-                        <p>Choose a survey to explore detailed insights. Use the filters to narrow results by <b>Country</b> or <b>Organisation</b>.</p>
+                        @php
+                            $user = auth()->user()->role->name;
+                            if($user == 'superadmin'){
+                                $lastText = ' or <b>Organisation</b>';
+                            }elseif($user == 'organization'){
+                                $lastText = ' or <b>Division</b>';
+                            }else{
+                                $lastText = '';
+                            }
+                        @endphp
+                        <p>Choose a survey to explore detailed insights. Use the filters to narrow results by <b>Country</b>{!!$lastText!!}.</p>
                     </div>
                     </div>
 
@@ -176,7 +186,7 @@
                                     @else
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
-                                        <option value="" selected>Country</option>
+                                        <option value="" selected>Select Country</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->country }}">
                                                 {{ $country->country }}</option>
@@ -191,7 +201,7 @@
                                     @if(auth()->user()->role->name == 'superadmin')
                                     <select class="form-select select2" id="organization" name="organization"
                                         aria-label="Default select example">
-                                        <option value="" selected>Organization</option>
+                                        <option value="" selected>Select Organization</option>
                                         @foreach ($organizations as $organization)
                                             <option value="{{ $organization->id }}">
                                                 {{ $organization->name }}</option>
@@ -210,7 +220,7 @@
                                     @else
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
-                                        <option value="" selected>Division</option>
+                                        <option value="" selected>Select Division</option>
                                     </select>
                                     @endif
                                 </div>
@@ -221,7 +231,7 @@
                                     @else
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example">
-                                        <option value="" selected>Survey</option>
+                                        <option value="" selected>Select Survey</option>
                                         @foreach ($surveyForms as $surveyForm)
                                             <option value="{{ $surveyForm->form_title }}">
                                                 {{ $surveyForm->form_title }}</option>
@@ -292,7 +302,7 @@
             $(document).on('change', '#organization', function() {
                 $('#branch').prop('disabled', true);
                 $('#branch').html('');
-                $('#branch').html('<option value="" selected>Choose Branch</option>');
+                $('#branch').html('<option value="" selected>Select Division</option>');
                 
                 // filterBranch(function() {
                 //     filterSurvey();
@@ -383,7 +393,7 @@
                         error: function(xhr, status, error) {
                             $('#branch').prop('disabled', true);
                             $('#branch').html('');
-                            $('#branch').append('<option value="" selected>Select Branch</option>');
+                            $('#branch').append('<option value="" selected>Select Division</option>');
                         }
                     })
                 }

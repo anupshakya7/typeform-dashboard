@@ -2,7 +2,13 @@
 <div class="app-menu navbar-menu" >
     <!-- LOGO -->
     <?php
-        $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
+
+        if(auth()->user()->role->name == 'superadmin'){
+            $organizationLogo = auth()->user()->organization ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
+        }else{
+            $organizationLogo = auth()->user()->organization->logo ? asset('storage/'.auth()->user()->organization->logo) :  URL::asset('build/images/iep_logo.png');
+        }
+    
    ?>
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
@@ -40,7 +46,7 @@
                 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="<?php echo e(route('home.index')); ?>">
-                    <i class="fa-solid fa-gauge"></i> <span><?php echo app('translator')->get('translation.dashboards'); ?></span>
+                    <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
                     </a>
                 </li>
                 

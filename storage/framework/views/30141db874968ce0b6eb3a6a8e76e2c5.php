@@ -157,9 +157,8 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="role" class="form-label">Role<span class="text-danger">*</span></label>
-                            <select id="role" name="role_id" class="form-select" data-choices
-                                data-choices-sorting="true">
-                                <option selected>Choose Role</option>
+                            <select id="role" name="role_id" class="form-select select2">
+                                <option selected>Select Role</option>
                                 <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($role->id); ?>" data-rolename="<?php echo e($role->name); ?>" <?php echo e($user->role_id == $role->id ? 'selected':''); ?>><?php echo e($role->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -271,7 +270,7 @@ $(document).ready(function(){
         if(roleVal == "organization"){
             $('#formUserOrganizationLevel').html(`
                 <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Choose Organization</h5>
+                    <h5 class="card-title mb-0">Select Organization</h5>
 
                 </div>
                 
@@ -283,7 +282,7 @@ $(document).ready(function(){
                                         <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                         <select id="organization" name="organization_id" class="form-select" data-choices
                                             data-choices-sorting="true">
-                                            <option value="" selected>Choose Organization</option>
+                                            <option value="" selected>Select Organization</option>
                                             <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>>
                                                 <?php echo e($organization->name); ?></option>
@@ -300,7 +299,7 @@ $(document).ready(function(){
         }else if(roleVal == "branch"){
             $('#formUserBranchLevel').html(`
                     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">Choose Branch</h5>
+                        <h5 class="card-title mb-0">Select Divisions</h5>
 
                     </div>
                     
@@ -319,7 +318,7 @@ $(document).ready(function(){
                                             <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                             <select id="organization" name="organization_id" class="form-select" data-choices
                                                 data-choices-sorting="true">
-                                                <option value="" selected>Choose Organization</option>
+                                                <option value="" selected>Select Organization</option>
                                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>>
                                                     <?php echo e($organization->name); ?></option>
@@ -333,7 +332,7 @@ $(document).ready(function(){
                                             <label for="branch" class="form-label title_level">Division<span class="text-danger">*</span></label>
                                             <select id="branch" name="branch_id[]" class="form-select select2" data-choices
                                                 data-choices-sorting="true" multiple disabled>
-                                                <option value="" selected>Choose Branch</option>
+                                                <option value="" selected>Select Division</option>
                                             </select>
                                         </div>
                                     </div>
@@ -346,7 +345,7 @@ $(document).ready(function(){
         if(roleVal == "survey"){
             $('#formUserSurveyLevel').html(`
                     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">Choose Survey</h5>
+                        <h5 class="card-title mb-0">Select Survey</h5>
 
                     </div>
                     
@@ -365,7 +364,7 @@ $(document).ready(function(){
                                         <label for="organization" class="form-label title_level">Organization<span class="text-danger">*</span></label>
                                         <select id="organization" name="organization_id" class="form-select" data-choices
                                             data-choices-sorting="true">
-                                            <option value="" selected>Choose Organization</option>
+                                            <option value="" selected>Select Organization</option>
                                             <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>>
                                                 <?php echo e($organization->name); ?></option>
@@ -379,7 +378,7 @@ $(document).ready(function(){
                                         <label for="branch" class="form-label title_level">Division</label>
                                         <select id="branch" name="branch_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
-                                            <option value="" selected>Choose Branch</option>
+                                            <option value="" selected>Select Division</option>
                                         </select>
                                     </div>
                                 </div>
@@ -389,7 +388,7 @@ $(document).ready(function(){
                                         <label for="survey" class="form-label title_level">Survey<span class="text-danger">*</span></label>
                                         <select id="survey" name="form_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
-                                            <option value="" selected>Choose Survey</option>
+                                            <option value="" selected>Select Survey</option>
                                         </select>
                                     </div>
                                 </div>
@@ -422,7 +421,7 @@ $(document).ready(function(){
                     console.log(response);
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="">Choose Branch</option>');
+                    $('#branch').append('<option value="">Select Division</option>');
 
                     var userBranchIds = <?php echo json_encode(is_array($user->branch_id)? $user->branch_id : explode(', ', $user->branch_id)) ?>;
                     
@@ -454,7 +453,7 @@ $(document).ready(function(){
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
-                    $('#branch').append('<option value="" selected>Choose Branch</option>');
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                 }
             })
         }
@@ -477,7 +476,7 @@ $(document).ready(function(){
                     console.log(response);
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
-                    $('#survey').append('<option value="" selected>Choose Survey</option>');
+                    $('#survey').append('<option value="" selected>Select Survey</option>');
 
                     var surveyId = <?php echo json_encode($user->form_id, 15, 512) ?>;
 
@@ -496,7 +495,7 @@ $(document).ready(function(){
                 error: function(xhr, status, error) {
                     $('#survey').prop('disabled', true);
                     $('#survey').html('');
-                    $('#survey').append('<option value="" selected>Choose Survey</option>');
+                    $('#survey').append('<option value="" selected>Select Survey</option>');
                 }
             })
         }
