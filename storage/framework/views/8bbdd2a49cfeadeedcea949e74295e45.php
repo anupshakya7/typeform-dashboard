@@ -943,8 +943,6 @@
                             var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
 
-                            console.log("before filter",response.forms);
-
                             var formList = response.forms.filter((form)=>{
                                 if(userRole == "branch"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
