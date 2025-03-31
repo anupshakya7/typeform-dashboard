@@ -44,99 +44,103 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row g-3 mb-3">
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card">
+        <div class="card card-animate stat-card h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <i class="fa-regular fa-file"></i>
-                        <p class="mb-0">Survey Conducted</p>
+                        <p class="mb-0">Surveys</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                             aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class="d-flex flex-column gap-1 mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                     </h4>
+                    <p>Total number of surveys conducted.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card">
+        <div class="card card-animate stat-card h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
-                    <div class="d-flex flex-row gap-2 align-items-center">
+                    <div class="d-flex flex-row gap-1 align-items-center">
                         <i class="fa-solid fa-earth-americas"></i>
-                        <p class="mb-0">Country Involved</p>
+                        <p class="mb-0">Countries</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                             aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class="d-flex flex-column gap-1 mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
                             data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
                     </h4>
+                    <p>Total number of countries where the survey was conducted.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card">
+        <div class="card card-animate stat-card h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <i class="fa-solid fa-building-columns"></i>
-                        <p class="mb-0">Organizations</p>
+                        <p class="mb-0">Organisations</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                             aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class="d-flex flex-column gap-1 mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
                     </h4>
+                    <p>Total number of organisations conducting the survey.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
     <div class="col-xl-3 col-md-6">
         <!-- card -->
-        <div class="card card-animate stat-card">
+        <div class="card card-animate stat-card h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <i class="fa-solid fa-user"></i>
-                        <p class="mb-0">People</p>
+                        <p class="mb-0">Survey Participants</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                             aria-controls="theme-settings-offcanvas">
-                            <i class="fa-solid fa-ellipsis"></i>
+                            <i class='bx bx-info-circle' style="font-size:20px"></i>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
+                <div class="d-flex flex-column gap-1 mt-2">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
                             data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                     </h4>
+                    <p>Total number of respondents who participated in the survey.</p>
                 </div>
             </div><!-- end card body -->
         </div><!-- end card -->
@@ -149,7 +153,8 @@
                 <div class="filter-section show-filter mb-3">
                     <div class="d-flex flex-eow justify-content-between">
                     <div>
-                        <h5 style="font-size:16px;" class="mb-3">Get insights, track trends, compare data, manage.</h5>
+                        <h5 style="font-size:16px;" class="mb-3">Select a Survey to View Insights</h5>
+                        <p>Choose a survey to explore detailed insights. Use the filters to narrow results by <b>Country</b> or <b>Organisation</b>.</p>
                     </div>
                     </div>
 
