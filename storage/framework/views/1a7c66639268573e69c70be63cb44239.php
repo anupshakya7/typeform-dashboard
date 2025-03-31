@@ -63,7 +63,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="<?php echo e($topBox['survey']); ?>"><?php echo e($topBox['survey']); ?></span>
                     </h4>
                 </div>
             </div><!-- end card body -->
@@ -87,7 +87,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary "><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="<?php echo e($topBox['countries']); ?>"><?php echo e($topBox['countries']); ?></span>
                     </h4>
                 </div>
             </div><!-- end card body -->
@@ -111,7 +111,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="<?php echo e($topBox['organizations']); ?>"><?php echo e($topBox['organizations']); ?></span>
                     </h4>
                 </div>
             </div><!-- end card body -->
@@ -135,7 +135,7 @@
                 </div>
                 <div class="d-flex align-items-end justify-content-between mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                            data-target="0">0</span>
+                            data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                     </h4>
                 </div>
             </div><!-- end card body -->
