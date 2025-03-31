@@ -906,7 +906,7 @@ table td{
     z-index: 9999999999999999999999;
     box-shadow:  none !important;
     border: 1px solid #aaaaaa;
-    --vz-popover-arrow-border : 1px solid #d1d1d1;
+    --vz-popover-arrow-border : 1px solid #aaaaaa;
 }
 .popover-body {
     padding: 10px 16px !important;
