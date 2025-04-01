@@ -705,7 +705,7 @@
                                                         @php
                                                             $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
                                                             $overTimeScoreDivide = $overTimeScore > 0 ? $overTimeScore:1;
-                                                            $percentChange = round(($choosenDate-$overTimeScore)/$overTimeScoreDivide,1);
+                                                            $percentChange = round((($choosenDate-$overTimeScore)/$overTimeScoreDivide)*100,1);
                                                         @endphp 
                                                         <span >{{$percentChange}}%
                                                             @if($percentChange > 0)

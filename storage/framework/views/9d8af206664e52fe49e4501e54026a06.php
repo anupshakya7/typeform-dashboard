@@ -41,7 +41,7 @@
                             <label for="organization_id" class="form-label">Organization<span class="text-danger">*</span></label>
                             <?php if(auth()->user()->role->name == 'superadmin'): ?>
                             <select id="organization_id" name="organization_id" class="form-select select2">
-                                <option selected>Choose Organization</option>
+                                <option selected>Select Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($organization->id); ?>"><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
