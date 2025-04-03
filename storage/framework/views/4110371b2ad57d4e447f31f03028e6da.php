@@ -175,7 +175,9 @@
 
                 var deleteForm = document.getElementById('deleteForm');
 
-                deleteForm.action = window.location.href + '/' + itemId;
+                var baseUrl = window.location.origin+window.location.pathname;
+    
+                deleteForm.action = baseUrl+ '/' + itemId;
 
             })
         })

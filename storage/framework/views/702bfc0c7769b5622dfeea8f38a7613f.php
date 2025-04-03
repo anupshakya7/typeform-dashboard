@@ -18,29 +18,28 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Update Permission</h4>
-        <p class="text-muted mb-0">Note: Please update Permission.</p>
+        <h4 class="fs-16 mb-1">Create Role</h4>
+        <p class="text-muted mb-0">Note: Please create Role.</p>
     </div>
 </div>
 
 
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Permission</h5>
+        <h5 class="card-title mb-0">Role</h5>
         <a class="btn btn-info" onclick="history.back(); return false;">
                 <i class="ri-arrow-left-line"></i> Back
             </a>
     </div>
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="<?php echo e(route('permission.update',$permission)); ?>" method="POST" enctype="multipart/form-data">
+            <form id="mainForm" action="<?php echo e(route('role.store')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
-                <?php echo method_field('PUT'); ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                            <input type="text" value="<?php echo e(old('name',$permission->name)); ?>" name="name" class="form-control" placeholder="Name" id="name">
+                            <input type="text" name="name" class="form-control" placeholder="Name" id="name">
                             <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -99,4 +98,4 @@ unset($__errorArgs, $__bag); ?>
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/prateeklalwani/Desktop/Typeform Main/typeform-dashboard/resources/views/typeform/permission/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/roles/create.blade.php ENDPATH**/ ?>

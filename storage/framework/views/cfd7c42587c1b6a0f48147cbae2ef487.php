@@ -45,13 +45,7 @@
 
                         Export</a>
 
-                    <a class="icon-frame" href="#" class="m-0 p-0 d-flex justify-content-center align-items-center"
-                        data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
-                        aria-controls="theme-settings-offcanvas">
-
-                        <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                    </a>
+                    
                 </div>
             </div>
         </div>
@@ -67,7 +61,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="scroll-horizontal" class="table nowrap align-middle table-bordered text-center"
+                        <table class="table nowrap align-middle table-bordered text-center"
                             style="width:100%">
                             <thead class="table-head">
                                 <tr>
@@ -87,7 +81,7 @@
                                         <td>
                                             <?php if($organization->logo): ?>
                                                 <img src="<?php echo e(asset('storage/' . $organization->logo)); ?>" alt="Logo"
-                                                    width="80">
+                                                    width="50" height="50" style="border-radius:50%;object-fit:contain;">
                                             <?php endif; ?>
                                         </td>
                                         
@@ -197,8 +191,10 @@
                     'Deleting this item will permanently remove it from the system, <span class="text-danger"> along with all associated user details who are part of this company</span';
 
                 var deleteForm = document.getElementById('deleteForm');
-
-                deleteForm.action = window.location.href + '/' + itemId;
+                
+                var baseUrl = window.location.origin+window.location.pathname;
+    
+                deleteForm.action = baseUrl+ '/' + itemId;
 
             })
         })

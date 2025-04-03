@@ -203,8 +203,10 @@
                 document.getElementById('delete_item_description').innerHTML = 'Deleting this item will permanently remove it from the system.';
 
                 var deleteForm = document.getElementById('deleteForm');
-
-                deleteForm.action = window.location.href + '/' + itemId;
+                
+                var baseUrl = window.location.origin+window.location.pathname;
+    
+                deleteForm.action = baseUrl+ '/' + itemId;
 
             })
         })

@@ -744,35 +744,35 @@
         </div> <!-- end col -->
 
         <div class="card-body" id="survey-data" style="display:none;">
-                                    <div class="live-preview">
-                                        <div class="table-responsive" >
-                                            <table class="table align-middle table-nowrap mb-0"  id="survey-table" >
-                                                <thead class="table-head">
-                                                    <tr>
-                                                        <th scope="col">Survey Data ID</th>
-                                                        <th scope="col">Survey ID</th>
-                                                        <th scope="col">Survey Name</th>
-                                                        <th scope="col">Survey Country</th>
-                                                        <th scope="col">Survey Organization</th>
-                                                        <th scope="col">Participants Name</th>
-                                                        <th scope="col">Age</th>
-                                                        <th scope="col">Gender</th>
-                                                        <th scope="col">Survey Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- Rows will be populated dynamically by Ajax -->
-                                                </tbody>
-                                            </table>
-                                            <!-- end table -->
-                                            <!-- Survey table -->
-                                            
-                                        </div>
-                                        <!-- end table responsive -->
+            <div class="live-preview">
+                <div class="table-responsive" >
+                    <table class="table align-middle table-nowrap mb-0"  id="survey-table" >
+                        <thead class="table-head">
+                            <tr>
+                                <th scope="col">Survey Data ID</th>
+                                <th scope="col">Survey ID</th>
+                                <th scope="col">Survey Name</th>
+                                <th scope="col">Survey Country</th>
+                                <th scope="col">Survey Organization</th>
+                                <th scope="col">Participants Name</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Survey Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be populated dynamically by Ajax -->
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                    <!-- Survey table -->
+                    
+                </div>
+                <!-- end table responsive -->
 
-                            </div>
+            </div>
 
-                        </div>
+        </div>
     </div>
 @endsection
 
@@ -1550,19 +1550,20 @@
 
     exportButton.addEventListener("click", function () {
         exportButton.disabled = true;
-            // Show loader if it exists
+        
+        // Show loader if it exists
+        loader.style.display = 'block'; // Directly use loader, not loader.element
                 
-            loader.style.display = 'block'; // Directly use loader, not loader.element
                 
-                
-                mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
+        mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
         if (surveydata) surveydata.style.display = "block";
 
         const selectedCountry = document.getElementById('country').value;
         const selectedOrganization = document.getElementById('organization').value;
-
+        
         $.ajax({
-            url: '/typeform/fecthallsurvey',
+            // url: '/typeform/fecthallsurvey',
+            url:'{{route('survey.fecthallsurvey')}}',
             type: 'GET',
             data: {
                 country: selectedCountry,
