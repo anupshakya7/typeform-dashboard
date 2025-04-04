@@ -493,9 +493,9 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                     <li><a class="dropdown-item" href="#" data-type="pdf"
-                                            data-chart-id="multi_radar">Export as PDF</a></li>
+                                            data-chart-id="multi_mean_radar">Export as PDF</a></li>
                                     <li><a class="dropdown-item" href="#" data-type="png"
-                                            data-chart-id="multi_radar">Export as PNG</a></li>
+                                            data-chart-id="multi_mean_radar">Export as PNG</a></li>
                                 </ul>
                             </div>
                             
@@ -514,7 +514,7 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                             <canvas id="multi_mean_radar" style="max-height: 500px;"></canvas>
+                             <canvas id="multi_mean_radar"  style="max-height:420px;"></canvas>
                             <!--<div id="multi_radar" data-colors='["--vz-danger", "--vz-success", "--vz-primary"]'-->
                             <!--    class="apex-charts" dir="ltr"></div>-->
                         </div><!-- end card-body -->
@@ -1744,7 +1744,7 @@
                     { id: "simple_pie_chart2", title: "Participants by Age" },
                     { id: "sales-forecast-chart-2", title: "Positive Peace" },
                     { id: "sales-forecast-chart-3", title: "Negative Peace" },
-                    { id: "multi_radar", title: "Results by pillars: Radar" },
+                    { id: "multi_mean_radar", title: "Results by pillars: Radar" },
                     { id: "pillar-table", title: "Results by pillar: Table" },
                     { id: "pillar-table-time", title: "Results Over Time: Table" },
                     { id: "survey-table", title: "Survey Report: Table" }
@@ -2032,14 +2032,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
             } 
-            else if (chartId === "multi_radar") {
+            else if (chartId === "multi_mean_radar") {
                 const chartTitle = document.querySelector('.results-by-pillar-radar')?.innerText || "Overview";
 
                 if (exportType === "pdf") {
 
-                    exportToPDFMultiRadar(chartId,chartTitle);
+                    exportToPDF(chartId,chartTitle);
                 } else if (exportType === "png") {
-                    exportToPNGMultiRadar(chartId,chartTitle);
+                    exportToPNG(chartId,chartTitle);
                 }  else {
                     console.error("Unsupported export type for chart2:", exportType);
                 }
@@ -2083,7 +2083,7 @@ function exportToPDF(chartId, chartTitle) {
 
     // Capture the chart as an image
     html2canvas(document.getElementById(chartId), {
-        scale: 2, // Increase scale for higher resolution
+        scale: 1, // Increase scale for higher resolution
     useCORS: true, // Enable CORS if images are from external sources
     backgroundColor: null
     }).then(canvas => {
@@ -2374,14 +2374,14 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
         pdf.setFontSize(titleFontSize);
         pdf.setTextColor(30, 30, 30); // Set text color to black
         const titleX = pdf.internal.pageSize.getWidth() / 2; // Center horizontally
-        const titleY = margin + logoHeight + 35; // Below logo + extra spacing
+        const titleY = margin + logoHeight + 30; // Below logo + extra spacing
         pdf.text(chartTitle, titleX, titleY, { align: 'center' });
 
         // Calculate the position for the chart image to center it
         const chartImgWidth = (pageWidth - 2 * margin) * 0.75; // 75% of available width
         const chartImgHeight = (chartImgWidth * canvas.height) / canvas.width; // Maintain aspect ratio
         const chartImgX = (pageWidth - chartImgWidth) / 2;
-        const chartImgY = 25; // Position below the title with spacing
+        const chartImgY = 40; // Position below the title with spacing
 
         // Add chart image to the PDF
         pdf.addImage(chartImgData, "PNG", chartImgX, chartImgY, chartImgWidth, chartImgHeight);
@@ -2639,10 +2639,10 @@ function exportToPNGMeanRadar(chartId, chartTitle) {
                 ctx.fillText(chartTitle, canvasWidth / 2, titleY);
 
                 // Calculate chart dimensions (80% width with more spacing)
-                const chartWidth = contentWidth * 0.9; // Larger than PDF's 75%
+                const chartWidth = contentWidth * 0.8; // Larger than PDF's 75%
                 const chartHeight = (chartWidth * chartCanvas.height) / chartCanvas.width;
                 const chartX = (canvasWidth - chartWidth) / 2;
-                const chartY = 30; // Extra spacing below title
+                const chartY = 150; // Extra spacing below title
 
                 // Add chart with shadow effect (like PDF)
                 ctx.shadowColor = "rgba(0,0,0,0.1)";
