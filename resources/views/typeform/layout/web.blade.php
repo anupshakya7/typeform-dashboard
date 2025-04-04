@@ -9,7 +9,7 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico')}}">
 
-    @include('layouts.head-css')
+    @include('typeform.partials.head-css')
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css"> -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
@@ -19,7 +19,7 @@
 </head>
 
 @section('body')
-    @include('layouts.body')
+    @include('typeform.partials.body')
 @show
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -45,7 +45,7 @@
     @include('typeform.partials.customizer')
 
     <!-- JAVASCRIPT -->
-    @include('layouts.vendor-scripts')
+    @include('typeform.partials.vendor-scripts')
    
     <script src="{{ URL::asset('build/js/script.js')}}"></script>
 

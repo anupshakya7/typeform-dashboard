@@ -281,8 +281,9 @@
                                 </div>
                             </div><!-- end card header -->
                             <div class="card-body">
-                                <div id="basic_radar" data-colors='["--vz-success"]' class="apex-charts" dir="ltr">
-                                </div>
+                                 <canvas id="basic_radar" style="max-height: 500px;"></canvas>
+                                <!--<div id="basic_radar" data-colors='["--vz-success"]' class="apex-charts" dir="ltr">-->
+                                <!--</div>-->
                             </div><!-- end card-body -->
                         </div><!-- end card -->
                     </div>
@@ -510,8 +511,9 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                            <div id="multi_radar" data-colors='["--vz-danger", "--vz-success", "--vz-primary"]'
-                                class="apex-charts" dir="ltr"></div>
+                             <canvas id="multi_mean_radar" style="max-height: 500px;"></canvas>
+                            <!--<div id="multi_radar" data-colors='["--vz-danger", "--vz-success", "--vz-primary"]'-->
+                            <!--    class="apex-charts" dir="ltr"></div>-->
                         </div><!-- end card-body -->
                     </div><!-- end card -->
 
@@ -1136,76 +1138,147 @@
             }
 
             // Mean Radar Chart
-            var chartRadarBasicColors = getChartColorsArray("basic_radar");
-            if (chartRadarBasicColors) {
-                var options = {
-                    series: [{
-                        name: 'Mean',
-                        data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
-                            "<?php echo e($meanScore['low_level_corruption']); ?>",
-                            " <?php echo e($meanScore['equitable_distribution']); ?>",
-                            "<?php echo e($meanScore['good_relations']); ?>",
-                            "<?php echo e($meanScore['free_flow']); ?>",
-                            "<?php echo e($meanScore['high_levels']); ?>",
-                            "<?php echo e($meanScore['sound_business']); ?>",
-                            "<?php echo e($meanScore['acceptance_rights']); ?>"
-                        ],
-                    }],
-                    chart: {
-                        height: 500,
-                        type: 'radar',
-                        toolbar: {
-                            show: false
+            // var chartRadarBasicColors = getChartColorsArray("basic_radar");
+            // if (chartRadarBasicColors) {
+            //     var options = {
+            //         series: [{
+            //             name: 'Mean',
+            //             data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
+            //                 "<?php echo e($meanScore['low_level_corruption']); ?>",
+            //                 " <?php echo e($meanScore['equitable_distribution']); ?>",
+            //                 "<?php echo e($meanScore['good_relations']); ?>",
+            //                 "<?php echo e($meanScore['free_flow']); ?>",
+            //                 "<?php echo e($meanScore['high_levels']); ?>",
+            //                 "<?php echo e($meanScore['sound_business']); ?>",
+            //                 "<?php echo e($meanScore['acceptance_rights']); ?>"
+            //             ],
+            //         }],
+            //         chart: {
+            //             height: 500,
+            //             type: 'radar',
+            //             toolbar: {
+            //                 show: false
+            //             }
+            //         },
+            //         colors: ['#0664bc'],
+            //         xaxis: {
+            //             categories: [
+            //                 'Well-functioning Government',
+            //                 'Low Levels Of Corruption',
+            //                 'Equitable Distribution Of Resources',
+            //                 'Good Relations With Neighbors',
+            //                 'Free Flow Of Information',
+            //                 'High Levels Of Human Capital',
+            //                 'Sound Business Environment',
+            //                 'Acceptance Of The Rights Of Others'
+            //             ]
+            //         },
+            //         tooltip: {
+            //             enabled: true,
+            //             shared: false,
+            //             followCursor: true,
+            //             theme: 'dark',
+            //             custom: function({
+            //                 series,
+            //                 seriesIndex,
+            //                 dataPointIndex,
+            //                 w
+            //             }) {
+            //                 let value = series[seriesIndex][dataPointIndex].toFixed(2);
+            //                 return `<div style="background:#222;padding:8px;border-radius:5px;color:white;">
+            //                 <strong style="color:#007bff;">${value} points</strong>
+            //             </div>`;
+            //             }
+            //         },
+            //         stroke: {
+            //             width: 2 // Increases line thickness to improve interaction
+            //         },
+            //         fill: {
+            //             opacity: 0.2 // Ensures data is visible while keeping tooltip accessible
+            //         },
+            //         markers: {
+            //             size: 5, // Makes data points larger for better hover detection
+            //             hover: {
+            //                 size: 8 // Ensures tooltip appears when hovering over points
+            //             }
+            //         }
+
+            //     };
+
+            //     var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
+            //     chart.render();
+            // }
+            
+            //Charts Js
+            const ctx = document.getElementById('basic_radar');
+
+            new Chart(ctx, {
+            type: 'radar',
+                data: {
+                    labels: [ 'Well-functioning Government',
+                                'Low Levels Of Corruption',
+                                'Equitable Distribution Of Resources',
+                                'Good Relations With Neighbors',
+                                'Free Flow Of Information',
+                                'High Levels Of Human Capital',
+                                'Sound Business Environment',
+                                'Acceptance Of The Rights Of Others'],
+                    datasets: [{
+                    label: 'Mean Results',
+                    data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
+                                "<?php echo e($meanScore['low_level_corruption']); ?>",
+                                " <?php echo e($meanScore['equitable_distribution']); ?>",
+                                "<?php echo e($meanScore['good_relations']); ?>",
+                                "<?php echo e($meanScore['free_flow']); ?>",
+                                "<?php echo e($meanScore['high_levels']); ?>",
+                                "<?php echo e($meanScore['sound_business']); ?>",
+                                "<?php echo e($meanScore['acceptance_rights']); ?>"],
+                    borderWidth: 3,
+                    borderColor:'#0564bd',
+                    fill: true,
+                    }
+                    ]
+                },
+                options: {
+                    plugins:{
+                        legend:{
+                            position:'bottom',
+                            align:'center',
+                            labels:{
+                                padding:20,
+                                font:{
+                                    size:14
+                                }
+                            }
                         }
-                    },
-                    colors: ['#0664bc'],
-                    xaxis: {
-                        categories: [
-                            'Well-functioning Government',
-                            'Low Levels Of Corruption',
-                            'Equitable Distribution Of Resources',
-                            'Good Relations With Neighbors',
-                            'Free Flow Of Information',
-                            'High Levels Of Human Capital',
-                            'Sound Business Environment',
-                            'Acceptance Of The Rights Of Others'
-                        ]
-                    },
-                    tooltip: {
-                        enabled: true,
-                        shared: false,
-                        followCursor: true,
-                        theme: 'dark',
-                        custom: function({
-                            series,
-                            seriesIndex,
-                            dataPointIndex,
-                            w
-                        }) {
-                            let value = series[seriesIndex][dataPointIndex].toFixed(2);
-                            return `<div style="background:#222;padding:8px;border-radius:5px;color:white;">
-                            <strong style="color:#007bff;">${value} points</strong>
-                        </div>`;
-                        }
-                    },
-                    stroke: {
-                        width: 2 // Increases line thickness to improve interaction
-                    },
-                    fill: {
-                        opacity: 0.2 // Ensures data is visible while keeping tooltip accessible
-                    },
-                    markers: {
-                        size: 5, // Makes data points larger for better hover detection
-                        hover: {
-                            size: 8 // Ensures tooltip appears when hovering over points
+                    },  
+                    scales: {
+                    r:{
+                        min:0,
+                        max:6,
+                        ticks:{
+                            display:true,
+                            stepSize:1,
+                            backdropColor:'rgba(255, 255, 255, 0.8)'
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' // Customize grid lines color if needed
+                        },
+                        pointLabels:{
+                            font:{
+                                size:12
+                            }
+                        },
+                        angleLines:{
+                            display:true
                         }
                     }
-
-                };
-
-                var chart = new ApexCharts(document.querySelector("#basic_radar"), options);
-                chart.render();
-            }
+                        // y: {
+                    //     beginAtZero: true
+                    // }
+                    }
+                }
+            });
 
             //Piechart Gender
             var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
@@ -1464,68 +1537,158 @@
             //Pillars Result Radar Chart
             var chartHeight = window.innerWidth <= 768 ? 800 : 600; // 400px for mobile and 600px for desktop
 
-            var chartRadarMultiColors = getChartColorsArray("multi_radar");
-            if (chartRadarMultiColors) {
-                var options = {
-                    series: [{
-                            name: 'Mean',
-                            data: [
-                                <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    "<?php echo e($means); ?>",
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            ],
-                        },
-                        {
-                            name: 'Country Mean',
-                            data: [
-                                <?php $__currentLoopData = $pillarMeanScore['countryMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    "<?php echo e($means); ?>",
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            ],
-                        },
-                        {
-                            name: 'Global Mean',
-                            data: [
-                                <?php $__currentLoopData = $pillarMeanScore['globalMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    "<?php echo e($means); ?>",
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            ],
+            // var chartRadarMultiColors = getChartColorsArray("multi_radar");
+            // if (chartRadarMultiColors) {
+            //     var options = {
+            //         series: [{
+            //                 name: 'Mean',
+            //                 data: [
+            //                     <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            //                         "<?php echo e($means); ?>",
+            //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            //                 ],
+            //             },
+            //             {
+            //                 name: 'Country Mean',
+            //                 data: [
+            //                     <?php $__currentLoopData = $pillarMeanScore['countryMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            //                         "<?php echo e($means); ?>",
+            //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            //                 ],
+            //             },
+            //             {
+            //                 name: 'Global Mean',
+            //                 data: [
+            //                     <?php $__currentLoopData = $pillarMeanScore['globalMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            //                         "<?php echo e($means); ?>",
+            //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            //                 ],
+            //             }
+            //         ],
+            //         chart: {
+            //             height: chartHeight,
+            //             type: 'radar',
+            //             dropShadow: {
+            //                 enabled: true,
+            //                 blur: 1,
+            //                 left: 1,
+            //                 top: 1
+            //             },
+            //             toolbar: {
+            //                 show: false
+            //             },
+            //         },
+            //         stroke: {
+            //             width: 2
+            //         },
+            //         fill: {
+            //             opacity: 0.2
+            //         },
+            //         markers: {
+            //             size: 4
+            //         },
+            //         colors: ['#0f64bc', '#fb9f68', '#38b8a0'],
+            //         xaxis: {
+            //             categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government',
+            //                 'Low Levels of Corruption', 'Equitable Distribution Of Resource',
+            //                 'Good Relations With Neighbours', 'Free Flow Of Information',
+            //                 'High Levels Of Human Capital', 'Sound Business Environment'
+            //             ]
+            //         }
+            //     };
+            //     var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
+            //     chart.render();
+            // }
+            
+            //Charts Js
+            const multi_mean_radar = document.getElementById('multi_mean_radar');
+
+            new Chart(multi_mean_radar, {
+            type: 'radar',
+            data: {
+                labels: [ 'Well-functioning Government',
+                            'Low Levels Of Corruption',
+                            'Equitable Distribution Of Resources',
+                            'Good Relations With Neighbors',
+                            'Free Flow Of Information',
+                            'High Levels Of Human Capital',
+                            'Sound Business Environment',
+                            'Acceptance Of The Rights Of Others'],
+                <?php
+                    $labelType = [
+                        'mean'=>'Mean',
+                        'countryMean'=>'Country Mean',
+                        'globalMean'=>'Global Mean',
+                    ];
+                    
+                    $chartColorType = [
+                        'mean'=>'#0f64bd',
+                        'countryMean'=>'#fb9f68',
+                        'globalMean'=>'#39b9a0',
+                    ];
+                ?>
+                datasets: [
+                <?php $__currentLoopData = $pillarMeanScore; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$mean): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    {
+                    label: '<?php echo e($labelType[$key]); ?>',
+                    data: ["<?php echo e($mean['well_functioning_government']); ?>",
+                                "<?php echo e($mean['low_level_corruption']); ?>",
+                                " <?php echo e($mean['equitable_distribution']); ?>",
+                                "<?php echo e($mean['good_relations']); ?>",
+                                "<?php echo e($mean['free_flow']); ?>",
+                                "<?php echo e($mean['high_levels']); ?>",
+                                "<?php echo e($mean['sound_business']); ?>",
+                                "<?php echo e($mean['acceptance_rights']); ?>"],
+                    borderWidth: 3,
+                    borderColor:'<?php echo e($chartColorType[$key]); ?>',
+                    fill: true,
+                    },
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            ]
+            },
+            options: {
+                plugins:{
+                    legend:{
+                        position:'bottom',
+                        align:'center',
+                        labels:{
+                            padding:20,
+                            font:{
+                                size:14
+                            }
                         }
-                    ],
-                    chart: {
-                        height: chartHeight,
-                        type: 'radar',
-                        dropShadow: {
-                            enabled: true,
-                            blur: 1,
-                            left: 1,
-                            top: 1
-                        },
-                        toolbar: {
-                            show: false
-                        },
                     },
-                    stroke: {
-                        width: 2
-                    },
-                    fill: {
-                        opacity: 0.2
-                    },
-                    markers: {
-                        size: 4
-                    },
-                    colors: ['#0f64bc', '#fb9f68', '#38b8a0'],
-                    xaxis: {
-                        categories: ['Acceptance Of The Rights Of Others', 'Well-Functioning Government',
-                            'Low Levels of Corruption', 'Equitable Distribution Of Resource',
-                            'Good Relations With Neighbours', 'Free Flow Of Information',
-                            'High Levels Of Human Capital', 'Sound Business Environment'
-                        ]
+                    beforeDraw: (chart) => {
+                    chart.data.datasets.reverse();
                     }
-                };
-                var chart = new ApexCharts(document.querySelector("#multi_radar"), options);
-                chart.render();
+                },  
+                scales: {
+                r:{
+                    min:0,
+                    max:6,
+                    ticks:{
+                        display:true,
+                        stepSize:1,
+                        backdropColor:'rgba(255, 255, 255, 0.8)'
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)' // Customize grid lines color if needed
+                    },
+                    pointLabels:{
+                        font:{
+                            size:12
+                        }
+                    },
+                    angleLines:{
+                        display:true
+                    }
+                }
+                    // y: {
+                //     beginAtZero: true
+                // }
+                }
             }
+            });
 
 
 
