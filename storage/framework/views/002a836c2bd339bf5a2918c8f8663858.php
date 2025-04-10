@@ -116,7 +116,7 @@ unset($__errorArgs, $__bag); ?>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center">
-                        <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> CSB. Institute for Economics and Peace.</p>
+                        <p class="mb-0 text-muted">Copyright &copy; <script>document.write(new Date().getFullYear())</script> CSB - Institute for Economics and Peace.</p>
                     </div>
                 </div>
             </div>

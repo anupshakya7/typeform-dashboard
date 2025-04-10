@@ -22,7 +22,7 @@ class Branch extends Model
         
         if($role == "survey"){
             $query->where('id',$user->branch_id);
-        }elseif($role == "branch"){
+        }elseif($role == "division"){
             $query->whereIn('id',$branchIds);
         }elseif($role == "organization"){
             $query->where('organization_id',$user->organization_id);

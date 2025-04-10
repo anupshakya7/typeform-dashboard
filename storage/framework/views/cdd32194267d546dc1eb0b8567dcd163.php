@@ -1,20 +1,19 @@
-@extends('typeform.layout.web')
-@section('title') @lang('translation.crm') @endsection
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.crm'); ?> <?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
     integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/classic.min.css')); ?>" />
 <!-- 'classic' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/monolith.min.css')); ?>" />
 <!-- 'monolith' theme -->
-<link rel="stylesheet" href="{{ URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css') }}" />
+<link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/@simonwep/pickr/themes/nano.min.css')); ?>" />
 <!-- 'nano' theme -->
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!--greeting section -->
 
 <div class="card" id="formForm">
@@ -26,14 +25,14 @@
     </div><!-- end card header -->
     <div class="card-body">
         <div class="live-preview">
-            <form id="mainForm" action="{{route('form.update',$form)}}" method="POST">
-                @csrf
-                @method('PUT')
+            <form id="mainForm" action="<?php echo e(route('form.update',$form)); ?>" method="POST">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="formId" class="form-label">Survey Id<span class="text-danger">*</span></label>
-                            <input type="text" name="formId" value="{{old('formId',$form->form_id)}}" class="form-control" placeholder="Form Id" id="formId"
+                            <input type="text" name="formId" value="<?php echo e(old('formId',$form->form_id)); ?>" class="form-control" placeholder="Form Id" id="formId"
                                 readonly>
                         </div>
                     </div>
@@ -41,7 +40,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="form_name" class="form-label">Survey Name<span class="text-danger">*</span></label>
-                            <input type="text" name="form_name" value="{{old('form_name',$form->form_title)}}" class="form-control" placeholder="Form Name"
+                            <input type="text" name="form_name" value="<?php echo e(old('form_name',$form->form_title)); ?>" class="form-control" placeholder="Form Name"
                                 id="form_name">
                         </div>
                     </div>
@@ -52,9 +51,9 @@
 
                             <select id="country" name="country" class="form-select select2" >
                                 <option selected>Select Country</option>
-                                @foreach ($countries as $country)
-                                <option value="{{$country['name']}}" {{$form->country == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country['name']); ?>" <?php echo e($form->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
@@ -64,9 +63,9 @@
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Select Organization</option>
-                                @foreach($organizations as $organization)
-                                <option value="{{$organization->id}}" {{$organization->id == $form->organization_id ? 'selected':''}}>{{$organization->name}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($organization->id); ?>" <?php echo e($organization->id == $form->organization_id ? 'selected':''); ?>><?php echo e($organization->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
@@ -74,28 +73,26 @@
                     <div class="col-md-12" id="setBranchDiv">
                         <div class="my-3">
                             <label for="setBranch" class="form-label">Would you like to set this form to the division of this organization?</label>
-                            <input type="checkbox" {{$form->branch_id ? 'checked':''}} class="ms-2" id="setBranch"/>
+                            <input type="checkbox" <?php echo e($form->branch_id ? 'checked':''); ?> class="ms-2" id="setBranch"/>
                         </div>
                     </div>
-                    @if($form->branch_id)
+                    <?php if($form->branch_id): ?>
                     <div class="col-md-6" id="branchDiv">
                         <div class="mb-3">
-                            <label for="branch" class="form-label">Division @if(auth()->user()->role->name=='division')
+                            <label for="branch" class="form-label">Division <?php if(auth()->user()->role->name=='division'): ?>
                                 <span class="text-danger">*</span>
-                                @endif</label>
-                            @php
+                                <?php endif; ?></label>
+                            <?php
                                 $organization_id = $form->branches->organization->id;
                                 $branches = \App\Models\Branch::where('organization_id',$organization_id)->get();
-                            @endphp
+                            ?>
                             <select id="branch" name="branch" class="form-select select2" >
                                 <option value="" selected>Select Division</option>
-                                {{-- @foreach($branches as $branch)
-                                <option value="{{$branch->id}}" {{$branch->id == $form->branch_id ? 'selected':''}}>{{$branch->name}}</option>
-                                @endforeach --}}
+                                
                             </select>
                         </div>
                     </div>
-                    @else
+                    <?php else: ?>
                     <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
                             <label for="branch" class="form-label">Division</label>
@@ -105,7 +102,7 @@
                             </select>
                         </div>
                     </div>
-                    @endif
+                    <?php endif; ?>
                     <!--end col-->
                     <div class="card-header align-items-center d-flex mb-3">
                         <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
@@ -113,21 +110,21 @@
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">Before Survey Date [From - To]<span class="text-danger">*</span></label>
-                            <input type="text" name="beforedate" class="form-control mt-2" value="{{old('beforedate',\App\Helpers\DateFormatter::formatDateRange($form->before))}}" data-provider="flatpickr"
+                            <input type="text" name="beforedate" class="form-control mt-2" value="<?php echo e(old('beforedate',\App\Helpers\DateFormatter::formatDateRange($form->before))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick before date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">During Survey Date [From - To] </label>
-                            <input type="text" name="duringdate" class="form-control mt-2" value="{{old('duringdate',\App\Helpers\DateFormatter::formatDateRange($form->during))}}" data-provider="flatpickr"
+                            <input type="text" name="duringdate" class="form-control mt-2" value="<?php echo e(old('duringdate',\App\Helpers\DateFormatter::formatDateRange($form->during))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick during date range">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label class="form-label mb-0">After Survey Date [From - To] </label>
-                            <input type="text" name="afterdate" class="form-control mt-2" value="{{old('afterdate',\App\Helpers\DateFormatter::formatDateRange($form->after))}}" data-provider="flatpickr"
+                            <input type="text" name="afterdate" class="form-control mt-2" value="<?php echo e(old('afterdate',\App\Helpers\DateFormatter::formatDateRange($form->after))); ?>" data-provider="flatpickr"
                                 data-date-format="d M, Y" data-range-date="true" placeholder="Pick after date range">
                         </div>
                     </div>
@@ -160,22 +157,22 @@
     </div>
 </div>
 
-{{-- --}}
-@endsection
+
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-<script src="{{ URL::asset('build/js/app.js') }}"></script>
-<script src="{{ URL::asset('build/libs/@simonwep/pickr/pickr.min.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/form-pickers.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/libs/@simonwep/pickr/pickr.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('build/js/pages/form-pickers.init.js')); ?>"></script>
 
 
 <!-- Flatpickr JS -->
@@ -196,8 +193,8 @@ $(document).ready(function() {
     //     var formId = $('#form_id').val();
     //     var SyncIcon = $('#syncBtnIcon');
     //     SyncIcon.addClass("rotate");
-    //     var url = "{{route('form.get')}}";
-    //     var apiKey = @json(config('services.api.key'));
+    //     var url = "<?php echo e(route('form.get')); ?>";
+    //     var apiKey = <?php echo json_encode(config('services.api.key'), 15, 512) ?>;
     //     var questions = [];
 
     //     $.ajax({
@@ -259,7 +256,7 @@ $(document).ready(function() {
     //     organization(countryVal);
     // }
     
-    var organizationVals = @json($form->organization->id);
+    var organizationVals = <?php echo json_encode($form->organization->id, 15, 512) ?>;
 
     if (organizationVals !== '') {
         $('#setBranchDiv').css('display','block');
@@ -317,7 +314,7 @@ $(document).ready(function() {
 
     // function organization(countryVal){
     //     $.ajax({
-    //             url: "{{route('organization.get')}}",
+    //             url: "<?php echo e(route('organization.get')); ?>",
     //             method: 'GET',
     //             data: {
     //                 country: countryVal
@@ -327,7 +324,7 @@ $(document).ready(function() {
     //                 $('#organization').prop('disabled', false);
     //                 $('#organization').html('');
     //                 $('#organization').append('<option value="" selected>Choose Organization</option>');
-    //                 var selectedItem = @json($form->organization->id);
+    //                 var selectedItem = <?php echo json_encode($form->organization->id, 15, 512) ?>;
     //                 response.organizations.forEach(function(organization) {
     //                     // $('#organization').append(new Option(organization.name, organization.id));
     //                     var option = new Option(organization.name,organization.id);
@@ -350,7 +347,7 @@ $(document).ready(function() {
     function branch(organizationVal){
         if(organizationVal){
             $.ajax({
-                url: "{{route('branch.get')}}",
+                url: "<?php echo e(route('branch.get')); ?>",
                 method: 'GET',
                 data: {
                     organization_id: organizationVal
@@ -360,15 +357,15 @@ $(document).ready(function() {
                     $('#branch').html('');
                     $('#branch').append('<option value="" selected>Select Division</option>');
 
-                    @php
+                    <?php
                         $selectedBranchId = $form->branches !== null ? json_encode($form->branches->id) : 'null';
-                    @endphp
+                    ?>
 
                     
-                    var selectedItem = {!! $selectedBranchId !!};
+                    var selectedItem = <?php echo $selectedBranchId; ?>;
                     
-                    var userRole = @json(auth()->user()->role->name);
-                    var userBranchId = @json(auth()->user()->branch_id);
+                    var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                    var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
 
                     var branchList = response.branches.filter(function(branch){
                         if(userRole == "division"){
@@ -411,7 +408,7 @@ $(document).ready(function() {
 
     // function organization(countryVal){
     //     $.ajax({
-    //         url:"{{route('organization.get')}}",
+    //         url:"<?php echo e(route('organization.get')); ?>",
     //         method:'GET',
     //         data:{
     //             country:countryVal
@@ -429,7 +426,7 @@ $(document).ready(function() {
 
     // function branch(organizationVal){
     //     $.ajax({
-    //         url:"{{route('branch.get')}}",
+    //         url:"<?php echo e(route('branch.get')); ?>",
     //         method:'GET',
     //         data:{organization_id:organizationVal},
     //         success:function(response){
@@ -449,7 +446,7 @@ $(document).ready(function() {
         
     //     organizations.forEach(org=>{
     //         const option = new Option(org.name,org.id);
-    //         const selectedItems = @json($form->organization->id ?? null);
+    //         const selectedItems = <?php echo json_encode($form->organization->id ?? null, 15, 512) ?>;
     //         if(selectedItems && selectedItems == org.id) option.selected == true;
     //         select.append(option);
     //     }); 
@@ -494,4 +491,5 @@ $(document).ready(function() {
 
 })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/form/edit.blade.php ENDPATH**/ ?>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('event_id');
             $table->string('form_id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('age');
             $table->string('gender');
             $table->string('village-town-city');

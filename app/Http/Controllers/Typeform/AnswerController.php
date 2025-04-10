@@ -68,15 +68,22 @@ class AnswerController extends Controller
         $questions = $allData['form_response']['definition']['fields'];
         $age=[];
         $gender = [];
-        $ageType = ["18 to 24","25 to 44","45 to 64","65 or over"];
-        $genderType = ["Male","Female","Other"];
+        $ageType = ["18 to 24","25 to 44","45 to 64","65 or over","Prefer not to say"];
+        $genderType = ["Male","Female","Other","Prefer not to say"];
         
-
-        foreach($questions[1]['choices'] as $key=>$ages){
+        if($questions[0]['type'] == 'short_text'){
+            $agesIndex = 1;
+            $gendersIndex = 2;
+        }else{
+            $agesIndex = 0;
+            $gendersIndex = 1;
+        }
+        
+        foreach($questions[$agesIndex]['choices'] as $key=>$ages){
             $age[$ages['id']] = $ageType[$key];
         }
         
-        foreach($questions[2]['choices'] as $key=>$genders){
+        foreach($questions[$gendersIndex]['choices'] as $key=>$genders){
             $gender[$genders['id']] = $genderType[$key];
         }
         
@@ -86,12 +93,15 @@ class AnswerController extends Controller
         $formData = [
             'event_id'=>$eventId,
             'form_id'=>$formId,
-            'age'=>$age[$answers[1]['choice']['id']],
-            'gender'=>$gender[$answers[2]['choice']['id']],
+            'age'=>$age[$answers[$agesIndex]['choice']['id']],
+            'gender'=>$gender[$answers[$gendersIndex]['choice']['id']],
             ];
         
+        $optionalName = [
+              'name'
+              ];
+        
         $labelDBData = [
-            'name',
             'age',
             'gender',
             'village-town-city',
@@ -109,13 +119,15 @@ class AnswerController extends Controller
             'extra_ans2',
             'extra_ans3',
             ];
+            
+        if($questions[0]['type'] == 'short_text'){
+            $labelDBData = array_merge($optionalName,$labelDBData); 
+        }
+  
         $answersDBData = [];
         
-        
-        
         foreach($answers as $key => $answer){
-            
-            if($key == 1 || $key == 2){
+            if($key == $agesIndex || $key == $gendersIndex){
                 continue;
             }
             
@@ -129,7 +141,7 @@ class AnswerController extends Controller
         }
         
         $DBData = array_merge($formData,$answersDBData);
-        
+
         try{
             $answerCreated = Answer::create($DBData);
             $checkWebHooks = Form::where('form_id',$formId)->first();

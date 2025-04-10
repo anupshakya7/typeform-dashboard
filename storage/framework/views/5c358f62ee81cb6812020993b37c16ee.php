@@ -324,7 +324,7 @@
 
                         
                             var branchList = response.branches.filter(function(branch){
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
                                 }

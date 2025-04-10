@@ -18,15 +18,13 @@
 
 <div class="mb-3 pb-1 d-flex align-items-center flex-row">
     <div class="flex-grow-1">
-        <h4 class="fs-16 mb-1">Update User</h4>
-        <p class="text-muted mb-0">Note: Please update User.</p>
+        <h4 class="fs-16 mb-1">Create User</h4>
+        <p class="text-muted mb-0">Note: Please create User.</p>
     </div>
 </div>
 
 
-<form id="mainForm" action="<?php echo e(route('user.update',$user)); ?>" method="POST" enctype="multipart/form-data">
-    <?php echo csrf_field(); ?>
-    <?php echo method_field('PUT'); ?>
+<form id="mainForm" action="<?php echo e(route('user.store')); ?>" method="POST" enctype="multipart/form-data">
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
         <h5 class="card-title mb-0">User</h5>
@@ -37,14 +35,11 @@
     
     <div class="card-body">
         <div class="live-preview">
-
+                <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="d-flex justify-content-center">
-                            <?php
-                                $profile =  $user->avatar ? asset('storage/'.$user->avatar) : asset('build/images/users/user-default.png');
-                            ?>
-                            <img src="<?php echo e($profile); ?>" alt="profile_image" width="150" height="150" id="profile_image" style="border-radius:50%;object-fit:contain;">
+                            <img src="<?php echo e(asset('build/images/users/user-default.png')); ?>" alt="profile_image" width="150" height="150" id="profile_image" style="border-radius:50%;object-fit:contain;">
                         </div>
                         <div class="mb-3">
                             <label for="profile" class="form-label">Profile</label>
@@ -64,7 +59,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" value="<?php echo e(old('name',$user->name)); ?>" placeholder="Name" id="name">
+                            <input type="text" name="name" class="form-control" value="<?php echo e(old('name')); ?>" placeholder="Name" id="name">
                             <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -80,7 +75,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address<span class="text-danger">*</span></label>
-                            <input type="email" name="email" class="form-control" value="<?php echo e(old('email',$user->email)); ?>" placeholder="Email Address" id="email">
+                            <input type="email" name="email" class="form-control" value="<?php echo e(old('email')); ?>" placeholder="Email Address" id="email">
                             <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -95,7 +90,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
                             <input type="password" name="password" class="form-control" placeholder="Password" id="password">
                             <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -111,7 +106,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <label for="password_confirmation" class="form-label">Confirm Password<span class="text-danger">*</span></label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" id="password_confirmation">
                             <?php $__errorArgs = ['c_password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -125,6 +120,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
+                    
+
+                    
+                    <!--end col-->
+                    
 
                     <!--end col-->
                 </div>
@@ -160,10 +160,10 @@ unset($__errorArgs, $__bag); ?>
                             <select id="role" name="role_id" class="form-select select2">
                                 <option selected>Select Role</option>
                                 <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($role->id); ?>" data-rolename="<?php echo e($role->name); ?>" <?php echo e($user->role_id == $role->id ? 'selected':''); ?>><?php echo e(ucfirst($role->name)); ?></option>
+                                <option value="<?php echo e($role->id); ?>" data-rolename="<?php echo e($role->name); ?>"><?php echo e(ucfirst($role->name)); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                            <?php $__errorArgs = ['role'];
+                            <?php $__errorArgs = ['role_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -179,6 +179,8 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </div>
+
+                            
 
 <div class="card" id="formUserOrganizationLevel">
 
@@ -217,6 +219,7 @@ unset($__errorArgs, $__bag); ?>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
+
 function getImagePreview(event,divId){
     var image = URL.createObjectURL(event.target.files[0]);
     var imageTag = document.getElementById(divId);
@@ -225,38 +228,44 @@ function getImagePreview(event,divId){
     imageTag.style.borderRadius = "50%";
     imageDiv.appendChild(imageTag);
 }
+
 $(document).ready(function(){
+    
+    // $('#role').change(function(){
+    //     var roleVal = $('#role option:selected').data('rolename');
+    //     $('#formUserType').show();
+    //     if(roleVal == "organization"){
+    //         $('.title_level').text('Organization'); 
+    //         $.ajax({
+    //             url: "<?php echo e(route('organization.get')); ?>",
+    //             method: 'GET',
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('#field_dropdown').html('');
+    //                 $('#field_dropdown').append('<option selected>Choose Organization</option>');
+    //                 response.organizations.forEach(function(organizationItem) {
+    //                     var option = new Option(organizationItem.name, organizationItem.id);
+    //                     $('#field_dropdown').append(option);
+
+    //                     // if (organization && organization == organizationItem.id) {
+    //                     //     $(option).prop('selected', true);
+    //                     // }
+    //                 })
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 $('#field_dropdown').prop('disabled', true);
+    //                 $('#field_dropdown').html('');
+    //                 $('#field_dropdown').append('<option selected>Choose Organization</option>');
+    //             }
+    //         })
+    //     }
+    // });
+    
     $('#formUserOrganizationLevel').hide();
     $('#formUserBranchLevel').hide();
     $('#formUserSurveyLevel').hide();
 
-    var firstLoad = true;
-    
-    filterLevelBox();
-
     $('#role').change(function(){
-        filterLevelBox();
-    });
-
-    
-
-    $(document).on('change','#organization',function() {
-        var roleVal = $('#role option:selected').data('rolename');
-
-        if(roleVal == 'survey'){
-            filterBranch(function() {
-                filterSurvey();
-            });
-        }else{
-            filterBranch();
-        }
-    });
-
-    $(document).on('change','#branch',function() {
-        filterSurvey();
-    });
-
-    function filterLevelBox(){
         var roleVal = $('#role option:selected').data('rolename');
         
         $('#formUserOrganizationLevel').html('');
@@ -284,7 +293,7 @@ $(document).ready(function(){
                                             data-choices-sorting="true">
                                             <option value="" selected>Select Organization</option>
                                             <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>>
+                                            <option value="<?php echo e($organization->id); ?>">
                                                 <?php echo e($organization->name); ?></option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
@@ -320,7 +329,7 @@ $(document).ready(function(){
                                                 data-choices-sorting="true">
                                                 <option value="" selected>Select Organization</option>
                                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>>
+                                                <option value="<?php echo e($organization->id); ?>">
                                                     <?php echo e($organization->name); ?></option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
@@ -366,7 +375,7 @@ $(document).ready(function(){
                                             data-choices-sorting="true">
                                             <option value="" selected>Select Organization</option>
                                             <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($organization->id); ?>" <?php echo e($user->organization_id == $organization->id ? 'selected':''); ?>>
+                                            <option value="<?php echo e($organization->id); ?>">
                                                 <?php echo e($organization->name); ?></option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
@@ -378,7 +387,7 @@ $(document).ready(function(){
                                         <label for="branch" class="form-label title_level">Division</label>
                                         <select id="branch" name="branch_id" class="form-select" data-choices
                                             data-choices-sorting="true" disabled>
-                                            <option value="" selected>Select Division</option>
+                                            <option value="" selected>Select Branch</option>
                                         </select>
                                     </div>
                                 </div>
@@ -405,10 +414,28 @@ $(document).ready(function(){
         if(roleVal == 'survey'){
             filterSurvey();
         }
-    }
+    });
 
-    function filterBranch(callback) {
+    
+
+    $(document).on('change','#organization',function() {
+        var roleVal = $('#role option:selected').data('rolename');
+
+        filterBranch();
+
+        if(roleVal == 'survey'){
+            filterSurvey();
+        }
+    });
+
+    $(document).on('change','#branch',function() {
+        filterSurvey();
+    });
+
+
+    function filterBranch() {
         var organizationVal = $('#organization').val();
+        console.log(organizationVal);
 
         if (organizationVal !== '') {
             $.ajax({
@@ -421,34 +448,13 @@ $(document).ready(function(){
                     console.log(response);
                     $('#branch').prop('disabled', false);
                     $('#branch').html('');
-                    $('#branch').append('<option value="">Select Division</option>');
-
-                    var userBranchIds = <?php echo json_encode(is_array($user->branch_id)? $user->branch_id : explode(', ', $user->branch_id)) ?>;
-                    
-                    var userBranchIdsInteger = userBranchIds.map(function(item){
-                        return parseInt(item,10);
-                    });
-                    
-
+                    $('#branch').append('<option value="" selected>Select Division</option>');
                     response.branches.forEach(function(branchItem) {
                         // $('#branch').append(new Option(branch.name,
                         // branch.id));
                         var option = new Option(branchItem.name, branchItem.id);
-
-
-                        if(userBranchIdsInteger && userBranchIdsInteger.includes(branchItem.id)){
-                            if(branchItem.id !== ""){
-                                $(option).attr('selected',true);
-                            }
-                        }
-
                         $('#branch').append(option);
                     })
-
-                    firstLoad = false;
-                    if (callback && typeof callback == 'function') {
-                        callback();
-                    }
                 },
                 error: function(xhr, status, error) {
                     $('#branch').prop('disabled', true);
@@ -461,8 +467,7 @@ $(document).ready(function(){
 
     function filterSurvey() {
         var organizationVal = $('#organization').val();
-        var branchLoadId = firstLoad ? <?php echo json_encode($user->branch_id, 15, 512) ?> : null;
-        var branchVal = branchLoadId ? branchLoadId : $('#branch').val();
+        var branchVal = $('#branch').val() ;
 
         if (organizationVal !== '') {
             $.ajax({
@@ -477,18 +482,10 @@ $(document).ready(function(){
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
                     $('#survey').append('<option value="" selected>Select Survey</option>');
-
-                    var surveyId = <?php echo json_encode($user->form_id, 15, 512) ?>;
-
                     response.forms.forEach(function(formItem) {
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
                         var option = new Option(formItem.form_title, formItem.form_id);
-
-                        if(surveyId && surveyId == formItem.form_id){
-                            $(option).attr('selected',true);
-                        }
-
                         $('#survey').append(option);
                     })
                 },
@@ -506,4 +503,4 @@ $(document).ready(function(){
 });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/users/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/users/create.blade.php ENDPATH**/ ?>

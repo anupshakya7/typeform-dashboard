@@ -74,7 +74,7 @@ class UserController extends Controller
         $validatedData['avatar']=$profilePath ?? null;
         
 
-        $role = Role::where('name','branch')->pluck('id')->first();
+        $role = Role::where('name','division')->pluck('id')->first();
 
         if($request->role_id == $role){
             $validatedData['branch_id'] = implode(', ',$validatedData['branch_id']);
@@ -128,7 +128,7 @@ class UserController extends Controller
             $validatedData['avatar'] = $profilePath;
         }
 
-        $role = Role::where('name','branch')->pluck('id')->first();
+        $role = Role::where('name','division')->pluck('id')->first();
 
         if($request->role_id == $role){
             $validatedData['branch_id'] = implode(', ',$validatedData['branch_id']);

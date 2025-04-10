@@ -108,12 +108,14 @@
                                 <th scope="col">
                                     S.No.
                                 </th>
+                                @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
                                 <th>Survey Data ID</th>
                                 <th>Survey ID</th>
+                                @endif
                                 <th>Survey Name</th>
                                 <th>Survey Country</th>
                                 <th>Survey Organization</th>
-                                <th>Survey Branch</th>
+                                <th>Survey Division</th>
                                 <th>Participants Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>
@@ -127,8 +129,10 @@
                                 <th scope="row">
                                     {{$answer->serial_no}}
                                 </th>
+                                 @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
                                 <td>{{$answer->event_id}}</td>
                                 <td>{{$answer->form_id}}</td>
+                                @endif
                                 <td>{{$answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->country : 'No Country'}}</td>
                                 <td>{{$answer->form ? optional($answer->form)->organization->name : 'No Organization'}}</td>
@@ -434,7 +438,7 @@
 
                         
                             var branchList = response.branches.filter(function(branch){
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
                                 }
@@ -497,7 +501,7 @@
                             var userBranchId = @json(auth()->user()->branch_id);
 
                             var formList = response.forms.filter((form)=>{
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
 
                                     if(form.branch_id !== null){

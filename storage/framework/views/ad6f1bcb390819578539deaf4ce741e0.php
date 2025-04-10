@@ -1,9 +1,8 @@
-@extends('typeform.layout.web')
-@section('title')
-    @lang('translation.crm')
-@endsection
-@section('css')
-    <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.crm'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet">
     <!--datatable css-->
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
     <!--datatable responsive css-->
@@ -17,15 +16,11 @@
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <!--greeting section -->
 
-    {{-- <div class="mb-3 pb-1 d-flex align-items-center flex-row">
-        <div class="flex-grow-1">
-            <h4 class="fs-16 mb-1">About</h4>
-        </div>
-    </div> --}}
+    
 
     <!--end greeting section-->
 
@@ -162,22 +157,22 @@
     <!--end row-->
     <!--form section ends here-->
     
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <!-- list.js min js -->
-    <script src="{{ URL::asset('build/libs/list.js/list.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/list.js/list.min.js')); ?>"></script>
 
     <!--list pagination js-->
-    <script src="{{ URL::asset('build/libs/list.pagination.js/list.pagination.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/list.pagination.js/list.pagination.min.js')); ?>"></script>
 
     <!-- ecommerce-order init js -->
-    <script src="{{ URL::asset('build/js/pages/job-application.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/job-application.init.js')); ?>"></script>
 
     <!-- Sweet Alerts js -->
-    <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
     <!-- App js -->
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -189,5 +184,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-    <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
-@endsection
+    <script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/krizmaticcomau/projects.krizmatic.com.au/TypeForm-New/resources/views/typeform/about/index.blade.php ENDPATH**/ ?>

@@ -126,7 +126,7 @@
                             <select id="role" name="role_id" class="form-select select2">
                                 <option selected>Select Role</option>
                                 @foreach($roles as $role)
-                                <option value="{{$role->id}}" data-rolename="{{$role->name}}" {{$user->role_id == $role->id ? 'selected':''}}>{{$role->name}}</option>
+                                <option value="{{$role->id}}" data-rolename="{{$role->name}}" {{$user->role_id == $role->id ? 'selected':''}}>{{ucfirst($role->name)}}</option>
                                 @endforeach
                             </select>
                             @error('role')
@@ -255,7 +255,7 @@ $(document).ready(function(){
             `);
 
             $('#formUserOrganizationLevel').show();
-        }else if(roleVal == "branch"){
+        }else if(roleVal == "division"){
             $('#formUserBranchLevel').html(`
                     <div class="card-header d-flex flex-row justify-content-between align-items-center">
                         <h5 class="card-title mb-0">Select Divisions</h5>

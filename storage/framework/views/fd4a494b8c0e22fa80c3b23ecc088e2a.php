@@ -248,7 +248,7 @@
                             <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Select Organization</option>
                                 <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($organization->id); ?>" <?php echo e(auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':''); ?> ><?php echo e($organization->name); ?></option>
+                                <option value="<?php echo e($organization->id); ?>" <?php echo e(auth()->user()->role->name=='division' &&  $organization->id == auth()->user()->organization_id ? 'selected':''); ?> ><?php echo e($organization->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
@@ -257,13 +257,13 @@
                     <div class="col-md-12" id="setBranchDiv" style="display: none;">
                         <div class="my-3">
                             <label for="setBranch" class="form-label">Would you like to set this form to the division of this organization?</label>
-                            <input type="checkbox" class="ms-2" id="setBranch" <?php if(auth()->user()->role->name=='branch'): ?>checked <?php endif; ?> />
+                            <input type="checkbox" class="ms-2" id="setBranch" <?php if(auth()->user()->role->name=='division'): ?>checked <?php endif; ?> />
                         </div>
                     </div>
                     <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
                             <label for="branch" class="form-label">Division
-                                <?php if(auth()->user()->role->name=='branch'): ?>
+                                <?php if(auth()->user()->role->name=='division'): ?>
                                 <span class="text-danger">*</span>
                                 <?php endif; ?>
                             </label>
@@ -556,7 +556,7 @@ $(document).ready(function() {
 
                    
                     var branchList = response.branches.filter(function(branch){
-                        if(userRole == "branch"){
+                        if(userRole == "division"){
                             let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                             return branchIds.includes(branch.id.toString());
                         }

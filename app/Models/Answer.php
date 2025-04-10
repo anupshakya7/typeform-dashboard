@@ -39,7 +39,7 @@ class Answer extends Model
  
         if($role == "survey"){
              $query->where('form_id',$user->form_id);
-        }elseif($role =="branch"){
+        }elseif($role =="division"){
              $query->whereHas('form',function($q) use($user,$branchIds){
                 $q->whereIn('branch_id',$branchIds);
              });

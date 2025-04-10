@@ -101,12 +101,14 @@
                                 <th scope="col">
                                     S.No.
                                 </th>
+                                <?php if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic"): ?>
                                 <th>Survey Data ID</th>
                                 <th>Survey ID</th>
+                                <?php endif; ?>
                                 <th>Survey Name</th>
                                 <th>Survey Country</th>
                                 <th>Survey Organization</th>
-                                <th>Survey Branch</th>
+                                <th>Survey Division</th>
                                 <th>Participants Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>
@@ -121,8 +123,10 @@
                                     <?php echo e($answer->serial_no); ?>
 
                                 </th>
+                                 <?php if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic"): ?>
                                 <td><?php echo e($answer->event_id); ?></td>
                                 <td><?php echo e($answer->form_id); ?></td>
+                                <?php endif; ?>
                                 <td><?php echo e($answer->form ? optional($answer->form)->form_title : 'Form Not Sync Yet'); ?></td>
                                 <td><?php echo e($answer->form ? optional($answer->form)->country : 'No Country'); ?></td>
                                 <td><?php echo e($answer->form ? optional($answer->form)->organization->name : 'No Organization'); ?></td>
@@ -419,7 +423,7 @@
 
                         
                             var branchList = response.branches.filter(function(branch){
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
                                 }
@@ -482,7 +486,7 @@
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
 
                             var formList = response.forms.filter((form)=>{
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
 
                                     if(form.branch_id !== null){

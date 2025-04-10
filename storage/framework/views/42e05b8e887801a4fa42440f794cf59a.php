@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Community Strength Barometer- CSB" name="description" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicon.ico')); ?>">
+    <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicons/favicon.ico')); ?>">
+    <link rel="icon" href="<?php echo e(URL::asset('build/images/favicons/favicon.ico')); ?>" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(URL::asset('build/images/favicons/favicon-32x32.png')); ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(URL::asset('build/images/favicons/favicon-16x16.png')); ?>">
 
     <?php echo $__env->make('typeform.partials.head-css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css"> -->
@@ -36,11 +39,11 @@
                 <!-- container-fluid -->
             </div>
             <!-- End Page-content -->
-            <?php echo $__env->make('typeform.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         <!-- end main content-->
     </div>
     <!-- END layout-wrapper -->
+            <?php echo $__env->make('typeform.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <?php echo $__env->make('typeform.partials.customizer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 

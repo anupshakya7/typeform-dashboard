@@ -21,7 +21,7 @@ class Role extends Model
             $query->whereNot('name',"survey");
         }
 
-        if($role =="branch"){
+        if($role =="division"){
             $query->whereNot('name',"branch");
         }
         

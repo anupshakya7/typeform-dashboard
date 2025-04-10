@@ -30,7 +30,7 @@ class Form extends Model
  
         if($role == "survey"){
              $query->where('organization_id',$user->organization_id)->where('form_id',$user->form_id);
-        }elseif($role =="branch"){
+        }elseif($role =="division"){
              $query->where('organization_id',$user->organization_id)->whereIn('branch_id',$branchIds);
         }elseif($role == "organization"){
              $query->where('organization_id',$user->organization_id);

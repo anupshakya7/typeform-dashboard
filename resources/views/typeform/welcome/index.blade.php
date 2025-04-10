@@ -27,6 +27,30 @@
     height: 60px;
     background-color: none;
     z-index: -1;}
+	.page-content {
+		    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex
+;
+    align-items: center;
+	align-items:center;
+	}
+	.highlight-area {
+		width: 85%;
+		margin: 0 auto;
+		margin-bottom: 100px;
+ z-index: 99999999; /* Higher than overlay */
+    pointer-events: auto !important; /* Force allow interactions */
+		@media(max-width:767px) {
+			width: 100%;
+					margin-bottom: 0;
+
+		}
+	}
+	
 </style>
 @endsection
 
@@ -358,7 +382,7 @@
                             var userBranchId = @json(auth()->user()->branch_id);
                         
                             var branchList = response.branches.filter(function(branch){
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
                                 }
@@ -424,7 +448,7 @@
                             console.log('before survey filter',response.forms);
 
                             var formList = response.forms.filter(function(form){
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     var branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id => id.trim());
                                     
                                     if(form.branch_id !== null){

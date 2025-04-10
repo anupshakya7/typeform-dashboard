@@ -249,7 +249,7 @@
                             <select id="organization" name="organization" class="form-select select2" >
                                 <option value="" selected>Select Organization</option>
                                 @foreach($organizations as $organization)
-                                <option value="{{$organization->id}}" {{auth()->user()->role->name=='branch' &&  $organization->id == auth()->user()->organization_id ? 'selected':'' }} >{{$organization->name}}</option>
+                                <option value="{{$organization->id}}" {{auth()->user()->role->name=='division' &&  $organization->id == auth()->user()->organization_id ? 'selected':'' }} >{{$organization->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -258,13 +258,13 @@
                     <div class="col-md-12" id="setBranchDiv" style="display: none;">
                         <div class="my-3">
                             <label for="setBranch" class="form-label">Would you like to set this form to the division of this organization?</label>
-                            <input type="checkbox" class="ms-2" id="setBranch" @if(auth()->user()->role->name=='branch')checked @endif />
+                            <input type="checkbox" class="ms-2" id="setBranch" @if(auth()->user()->role->name=='division')checked @endif />
                         </div>
                     </div>
                     <div class="col-md-6" id="branchDiv" style="display: none">
                         <div class="mb-3">
                             <label for="branch" class="form-label">Division
-                                @if(auth()->user()->role->name=='branch')
+                                @if(auth()->user()->role->name=='division')
                                 <span class="text-danger">*</span>
                                 @endif
                             </label>
@@ -561,7 +561,7 @@ $(document).ready(function() {
 
                    
                     var branchList = response.branches.filter(function(branch){
-                        if(userRole == "branch"){
+                        if(userRole == "division"){
                             let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                             return branchIds.includes(branch.id.toString());
                         }

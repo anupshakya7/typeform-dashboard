@@ -20,7 +20,7 @@ class Organization extends Model
 
         if($role == 'survey'){
             $query->where('id',$user->organization_id);
-        }elseif($role == "branch"){
+        }elseif($role == "division"){
             $query->where('id',$user->organization_id);
         }elseif($role == "organization"){
              $query->where('id',$user->organization_id);

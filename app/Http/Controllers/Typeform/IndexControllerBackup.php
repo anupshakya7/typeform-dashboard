@@ -117,17 +117,19 @@ class IndexController extends Controller
         $male = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Male')->count();
         $female = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Female')->count();
         $other = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Other')->count();
+        $preferNot = Answer::where('form_id',$survey_id)->filterSurvey()->where('gender','Prefer not to say')->count();
 
         $genderWise = [
             'male'=>$male,
             'female'=>$female,
-            'other'=>$other
+            'other'=>$other,
+            'preferNot'=>$preferNot,
         ];
         //Gender Wise
 
         //Age Wise
         $participants = Answer::where('form_id',$survey_id)->filterSurvey();
-        $ages = ['18 to 24','25 to 44','45 to 64','65 or over'];
+        $ages = ['18 to 24','25 to 44','45 to 64','65 or over','Prefer not to say'];
 
         foreach($ages as $age){
             $participantsClone = clone $participants;

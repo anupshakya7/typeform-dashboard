@@ -319,7 +319,7 @@ table th, table td {
     background-color: #537cf0 !important;
 }
 .dataTables_scrollBody{
-    min-height: 225px;
+    min-height: 270px;
 }
 .navbar-menu .navbar-nav .nav-link i {
     font-size: 20px;
@@ -866,8 +866,6 @@ table td{
 
    body {
     position: relative; /* Required for absolute positioning of the overlay */
-    margin: 0;
-    height: 100vh; /* Ensure body covers full viewport height */
   }
   
   body.overlay-active::before {
@@ -883,7 +881,7 @@ table td{
 }
 
 /* Elements that SHOULD be interactable despite overlay */
-.overlay-active .filter-section, .highlight-area,.offcanvas,
+.overlay-active .filter-section, .offcanvas,
 .overlay-active .select2-dropdown {
     position: relative; /* or keep absolute if needed */
     z-index: 99999999; /* Higher than overlay */
@@ -894,9 +892,7 @@ table td{
 .overlay-active {
     pointer-events: none;
 }
-.footer {
-    position: static !important;
-}
+
 .people-card {
     height: 89%;
 }
@@ -920,4 +916,11 @@ table td{
 
 .card-header {
     border-radius: 20px 20px 0px 0px !important;
+}
+.logo-sm img {
+	height:65px;
+}
+
+.table-responsive{
+    min-height: 260px;
 }

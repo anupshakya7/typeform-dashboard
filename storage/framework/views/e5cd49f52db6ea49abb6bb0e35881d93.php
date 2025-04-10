@@ -7,7 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Community Strength Barometer- CSB" name="description" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicon.ico')); ?>">
+    <!--<link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicon.ico')); ?>">-->
+    <link rel="shortcut icon" href="<?php echo e(URL::asset('build/images/favicons/favicon.ico')); ?>">
+    <link rel="icon" href="<?php echo e(URL::asset('build/images/favicons/favicon.ico')); ?>" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(URL::asset('build/images/favicons/favicon-32x32.png')); ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(URL::asset('build/images/favicons/favicon-16x16.png')); ?>">
         <?php echo $__env->make('layouts.head-css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
   </head>
 

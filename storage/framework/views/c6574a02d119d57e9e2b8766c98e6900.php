@@ -207,50 +207,10 @@
 
 </div>
 <!--project title --survey-title section -->
-                <!--bar graph section starts here-->
 
-                <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Survey mean score across pillars of Positive Peace</h4>
-                        <div class="flex-shrink-0">
-                            <div class="d-flex flex-row gap-2 align-items-center">
-                                <!--info here-->
-                                <div class="dropdown">
-                            <a class="icon-frame" href="#" id="exportDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="svg-icon" type="image/svg+xml"
-                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="#" data-type="pdf"
-                                        data-chart-id="sales-forecast-chart">Export as PDF</a></li>
-                                <li><a class="dropdown-item" href="#" data-type="png"
-                                        data-chart-id="sales-forecast-chart">Export as PNG</a></li>
-                            </ul>
-                        </div>
-                                <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
-                                    data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
-                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
-                                    <img class="svg-icon" type="image/svg+xml"
-                                        src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
-
-                                </a>
-                            </div>
-                        </div>
-                    </div><!-- end card header -->
-                    <div class="card-body pb-0">
-                        <div id="sales-forecast-chart" data-colors='["--vz-primary", "--vz-success", "--vz-warning"]'
-                            class="apex-charts" dir="ltr"></div>
-                    </div>
-                </div><!-- end card -->
-
-
-                <!--bar graph section ends here-->
-
-
-                <!-- radar and pie section -->
-                <div class="row">
-                    <div class="col-sm-7 pb-4">
+<!-- radar and pie section -->
+                <div>
+                    <div class="col-sm-7 pb-4" style="display:none;">
                         <div class="card h-100 " id="basic_radar_chart">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
                                 <h4 class="card-title mean-result-title">Mean Results</h4>
@@ -287,11 +247,12 @@
                             </div><!-- end card-body -->
                         </div><!-- end card -->
                     </div>
-                    <div class="col-sm-5">
+                    <div class="row">
 
                         <!--gender pie chart here -->
 
-                        <div class="card">
+						<div class="col-12 col-sm-6 col-md-6">
+							                        <div class="card">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
                                 <h4 class="card-title pie-gender-title mb-0">Participants by Gender</h4>
                                 <div class="flex-shrink-0">
@@ -329,11 +290,12 @@
                             </div><!-- end card-body -->
                         </div><!-- end card -->
                         <!--gender pie chart here -->
+						</div>
 
 
                         <!--age pie chart here -->
-
-                        <div class="card">
+						<div class="col-12 col-sm-6">
+                        <div class="card pb-2">
                             <div class="card-header d-flex flex-row align-items-center justify-content-between">
                                 <h4 class="card-title pie-age-title mb-0">Participants by Age</h4>
                                 <div class="flex-shrink-0">
@@ -373,14 +335,54 @@
                         </div><!-- end card -->
 
                         <!--age pie chart here -->
-
+						</div>
 
                     </div>
                 </div>
                 <div>
                     <!-- radar and pie section -->
 
-                    <!--two column bar chart section -->
+                    
+                <!--bar graph section starts here-->
+
+                <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mean-score-bar-title mb-0 flex-grow-1">Survey mean score across pillars of Positive Peace</h4>
+                        <div class="flex-shrink-0">
+                            <div class="d-flex flex-row gap-2 align-items-center">
+                                <!--info here-->
+                                <div class="dropdown">
+                            <a class="icon-frame" href="#" id="exportDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="svg-icon" type="image/svg+xml"
+                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                <li><a class="dropdown-item" href="#" data-type="pdf"
+                                        data-chart-id="sales-forecast-chart">Export as PDF</a></li>
+                                <li><a class="dropdown-item" href="#" data-type="png"
+                                        data-chart-id="sales-forecast-chart">Export as PNG</a></li>
+                            </ul>
+                        </div>
+                                <a class="icon-frame" href="#" data-bs-toggle="offcanvas"
+                                    data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
+                                    class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
+                                    <img class="svg-icon" type="image/svg+xml"
+                                        src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
+
+                                </a>
+                            </div>
+                        </div>
+                    </div><!-- end card header -->
+                    <div class="card-body pb-0">
+                        <div id="sales-forecast-chart" data-colors='["--vz-primary", "--vz-success", "--vz-warning"]'
+                            class="apex-charts" dir="ltr"></div>
+                    </div>
+                </div><!-- end card -->
+
+
+                <!--bar graph section ends here-->
+<!--two column bar chart section -->
 
 
 
@@ -474,11 +476,13 @@
 
                     <!--two column bar chart section -->
 
+                
+
                     <!--area radar chart section starts here -->
 
                     <div class="card">
                         <div class="card-header z-1 d-flex justify-content-between align-items-center">
-                            <h4 class="card-title results-by-pillar-radar mb-0">Results by Pillars</h4>
+                            <h4 class="card-title results-by-pillar-radar mb-0">Results by Pillar</h4>
                             <div class="flex-shrink-0">
                                 <div class="d-flex flex-row gap-2 align-items-center">
                                     <!--info here-->
@@ -511,7 +515,7 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                             <canvas id="multi_mean_radar"  style="max-height:420px;"></canvas>
+                             <canvas id="multi_mean_radar"  style="min-height:350px;max-height:450px;"></canvas>
                             <!--<div id="multi_radar" data-colors='["--vz-danger", "--vz-success", "--vz-primary"]'-->
                             <!--    class="apex-charts" dir="ltr"></div>-->
                         </div><!-- end card-body -->
@@ -621,7 +625,7 @@
                     <div class="col-xl-12">
                         <div class="card mb-0">
                             <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title pillar-table-time-title mb-0 flex-grow-1">Results Over Time</h4>
+                                <h4 class="card-title pillar-table-time-title mb-0 flex-grow-1">Project Impact Analysis</h4>
                                 <div class="flex-shrink-0">
                                     <div class="d-flex flex-row gap-2 align-items-center">
                                         <!--info here-->
@@ -642,8 +646,8 @@
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
                                         aria-controls="theme-settings-offcanvas" 
                                         class="m-0 p-0 d-flex justify-content-center align-items-center"
-                                        data-title="Results Over Time" 
-                                        data-content="<p>This Results over time shows the change in community perceptions of the eight Pillars of Positive Peace over time. The percentage change in pillar scores is calculated based on different survey periods, reflecting improvements or declines in perceptions.</p>"
+                                        data-title="Project Impact Analysis" 
+                                        data-content="<p>The Project Impact Analysis compares survey results from before, during, and after the project implementation. The percentage change is calculated based on different survey periods, reflecting improvements or declines in community perception, and helping assess the project's impact on community dynamics at each stage.</p>"
                                         >
 
                                             <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
@@ -745,8 +749,10 @@
                     <table class="table align-middle table-nowrap mb-0"  id="survey-table" >
                         <thead class="table-head">
                             <tr>
+                                <?php if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic"): ?>
                                 <th scope="col">Survey Data ID</th>
                                 <th scope="col">Survey ID</th>
+                                <?php endif; ?>
                                 <th scope="col">Survey Name</th>
                                 <th scope="col">Survey Country</th>
                                 <th scope="col">Survey Organization</th>
@@ -891,7 +897,7 @@
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
                         
                             var branchList = response.branches.filter(function(branch){
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
                                 }
@@ -959,7 +965,7 @@
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
 
                             var formList = response.forms.filter((form)=>{
-                                if(userRole == "branch"){
+                                if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ').map(id=>id.trim());
 
                                     if(form.branch_id !== null){
@@ -1032,29 +1038,29 @@
             if (areachartSalesColors) {
                 var options = {
                     series: [{
-                            name: 'Well Functioning Government',
+                            name: 'Well-Functioning Government',
                             data: ["<?php echo e($meanScore['well_functioning_government']); ?>"]
                         }, {
-                            name: 'Low Levels of corruption',
+                            name: 'Low Levels of Corruption',
                             data: ["<?php echo e($meanScore['low_level_corruption']); ?>"]
                         },
                         {
-                            name: 'Equitable distribution of resources',
+                            name: 'Equitable Distribution of Resources',
                             data: ["<?php echo e($meanScore['equitable_distribution']); ?>"]
                         }, {
-                            name: 'Good relations with neighbours',
+                            name: 'Good Relations with Neighbours',
                             data: ["<?php echo e($meanScore['good_relations']); ?>"]
                         }, {
-                            name: 'Free Flow Of Information',
+                            name: 'Free Flow of Information',
                             data: ["<?php echo e($meanScore['free_flow']); ?>"]
                         }, {
-                            name: 'High Levels Of Human Capital',
+                            name: 'High Levels of Human Capital',
                             data: ["<?php echo e($meanScore['high_levels']); ?>"]
                         }, {
                             name: 'Sound Business Environment',
                             data: ["<?php echo e($meanScore['sound_business']); ?>"]
                         }, {
-                            name: 'Acceptance Of The Rights Of Others',
+                            name: 'Acceptance of the Rights of Others',
                             data: ["<?php echo e($meanScore['acceptance_rights']); ?>"]
                         }
                     ],
@@ -1069,7 +1075,7 @@
                     plotOptions: {
                         bar: {
                             horizontal: false,
-                            columnWidth: '70%',
+                            columnWidth: '90%'
                         }
                     },
                     stroke: {
@@ -1123,7 +1129,13 @@
                         markers: {
                             width: 10,
                             height: 10,
-                        }
+                        },
+						onItemClick: {
+						toggleDataSeries: false 
+						},
+						onItemHover: {
+							highlightDataSeries: false 
+						}
                     },
                     // colors: areachartSalesColors
                     colors: [
@@ -1224,6 +1236,7 @@
                                 'Sound Business Environment',
                                 'Acceptance Of The Rights Of Others'],
                     datasets: [{
+					
                     label: 'Mean Results',
                     data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
                                 "<?php echo e($meanScore['low_level_corruption']); ?>",
@@ -1235,23 +1248,46 @@
                                 "<?php echo e($meanScore['acceptance_rights']); ?>"],
                     borderWidth: 3,
                     borderColor:'#0564bd',
+                    //backgroundColor: '#0564bd',
                     fill: true,
-                    }
-                    ]
+					pointStyle: 'rect'
+					
+                    }]
                 },
+
                 options: {
                     plugins:{
                         legend:{
                             position:'bottom',
                             align:'center',
                             labels:{
+								usePointStyle: true, 
+								pointStyle: 'rect',
                                 padding:20,
                                 font:{
                                     size:14
+                                },
+                                generateLabels: function(chart) {
+                                    const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                                    labels.forEach(label => {
+                                        label.fillStyle = '#0564bd'; // Solid fill color
+                                        label.strokeStyle = '#0564bd'; // Border color
+                                    });
+                                    return labels;
                                 }
-                            }
-                        }
+                            },
+							onClick: function() {
+							return false; 
+						}
+							
+                        },
+						legendBackground: {
+							backgroundColor: 'rgba(0, 0, 0, 0.05)',
+							borderRadius: 6,
+							padding: 4
+						}
                     },  
+			
                     scales: {
                     r:{
                         min:0,
@@ -1276,7 +1312,9 @@
                         // y: {
                     //     beginAtZero: true
                     // }
-                    }
+                    },
+					
+					
                 }
             });
 
@@ -1288,26 +1326,53 @@
                         $malePieChart = $participantDetails['genderWise']['male'];
                         $femalePieChart = $participantDetails['genderWise']['female'];
                         $otherPieChart = $participantDetails['genderWise']['other'];
+                        $notPreferPieChart = $participantDetails['genderWise']['preferNot'];
                     ?>
-                    series: [<?php echo e($malePieChart); ?>,
-                        <?php echo e($femalePieChart); ?>,
-                        <?php echo e($otherPieChart); ?>
-
-                    ],
+                    series: [<?php echo e($malePieChart); ?>,<?php echo e($femalePieChart); ?>,<?php echo e($otherPieChart); ?>,<?php echo e($notPreferPieChart); ?>],
+					markers: {
+					  size: 6,
+					  shape: "rect", // default
+					  strokeColors: '#fff',
+					  strokeWidth: 2,
+					  fillOpacity: 1,
+					  hover: {
+						size: 8
+					}},
                     chart: {
                         height: 200,
-                        type: 'pie',
+                        type: 'pie'
                     },
-                    labels: ['Male', 'Female','Other'],
+                    labels: ['Male', 'Female','Other','Prefer not to say'],
                     legend: {
-                        position: 'right'
+                        position: 'right',
+						onItemClick: {
+						toggleDataSeries: false 
+						},
+						onItemHover: {
+							highlightDataSeries: false 
+						}
+						
                     },
                     dataLabels: {
+                        enabled:true,
                         dropShadow: {
                             enabled: false,
-                        }
+                        },
+						offset: 15,
+				// 		 formatter: function(val, { seriesIndex, dataPointIndex, w }) {
+    //                         return w.config.series[seriesIndex]
+    //                     }
                     },
-                    colors: ['#004994', '#0c8cdb','#87bce3']
+                     plotOptions: {
+                            pie: {
+                                expandOnClick: false,
+                                dataLabels: {
+                                    offset: -35, // Add this for additional positioning control
+                                    minAngle: 0
+                                }
+                            }
+                        },
+                    colors: ['#004994', '#0c8cdb','#87bce3','#97d0f5']
                 };
 
                 var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
@@ -1326,27 +1391,50 @@
                         $level_two = $participantDetails['ageWise']['25 to 44'];
                         $level_three = $participantDetails['ageWise']['45 to 64'];
                         $level_four = $participantDetails['ageWise']['65 or over'];
-
+                        $level_no = $participantDetails['ageWise']['Prefer not to say'];
                     ?>
-                    series: [<?php echo e($level_one); ?>, <?php echo e($level_two); ?>, <?php echo e($level_three); ?>,
-                        <?php echo e($level_four); ?>
-
-                    ],
-
+                    series: [<?php echo e($level_one); ?>, <?php echo e($level_two); ?>, <?php echo e($level_three); ?>,<?php echo e($level_four); ?>,<?php echo e($level_no); ?>],
+					markers: {
+					  size: 6,
+					  shape: "rect", // default
+					  strokeColors: '#fff',
+					  strokeWidth: 2,
+					  fillOpacity: 1,
+					  hover: {
+						size: 8
+					}},
                     chart: {
                         height: 192,
                         type: 'pie',
                     },
-                    labels: ['18 to 24 years', '25 to 44 years', '45 to 64 years', '65 or over'],
+                    labels: ['18 to 24 years', '25 to 44 years', '45 to 64 years', '65 or over','Prefer not to say'],
                     legend: {
-                        position: 'right'
+                        position: 'right',
+						onItemClick: {
+						toggleDataSeries: false 
+						},
+						onItemHover: {
+							highlightDataSeries: false 
+						}
                     },
                     dataLabels: {
                         dropShadow: {
                             enabled: false,
-                        }
+                        },
+                        //  formatter: function(val, { seriesIndex, dataPointIndex, w }) {
+                        //     return w.config.series[seriesIndex]
+                        // }
                     },
-                    colors: ['#004994', '#0f64bc', '#0c8cdb', '#74ccf8']
+                     plotOptions: {
+                            pie: {
+                                expandOnClick: false,
+                                dataLabels: {
+                                    offset: -20, // Add this for additional positioning control
+                                    minAngle: 0
+                                }
+                            }
+                        },
+                    colors: ['#004994', '#0f64bc', '#0c8cdb', '#74ccf8','#97d0f5']
                 };
 
                 var chart2 = new ApexCharts(document.querySelector("#simple_pie_chart2"), options);
@@ -1434,7 +1522,13 @@
                         markers: {
                             width: 10,
                             height: 10,
-                        }
+                        },
+						onItemClick: {
+						toggleDataSeries: false 
+						},
+						onItemHover: {
+							highlightDataSeries: false 
+						}
                     },
                     colors: ['#0f64bc', '#fb9f68', '#339966']
                 };
@@ -1524,7 +1618,13 @@
                         markers: {
                             width: 10,
                             height: 10,
-                        }
+                        },
+						onItemClick: {
+						toggleDataSeries: false 
+						},
+						onItemHover: {
+							highlightDataSeries: false 
+						}
                     },
                     colors: ['#0f64bc', '#fb9f68', '#339966']
                 };
@@ -1622,9 +1722,9 @@
                     ];
                     
                     $chartColorType = [
-                        'mean'=>'#0f64bd',
+                        'mean'=>'#0f64bc',
                         'countryMean'=>'#fb9f68',
-                        'globalMean'=>'#39b9a0',
+                        'globalMean'=>'#38b8a0',
                     ];
                 ?>
                 datasets: [
@@ -1641,22 +1741,60 @@
                                 "<?php echo e($mean['acceptance_rights']); ?>"],
                     borderWidth: 3,
                     borderColor:'<?php echo e($chartColorType[$key]); ?>',
+					backgroundColor: function(context) {
+                        // Get the dataset type (mean, countryMean, globalMean)
+                        const datasetType = context.dataset.label.toLowerCase();
+                        
+                        // Set alpha transparency based on the dataset type
+                        let alpha;
+                        if (datasetType === 'mean') {
+                            alpha = 0.1; // 20% opacity for 'mean'
+                        } else if (datasetType === 'country mean') {
+                            alpha = 0.2; // 50% opacity for 'countryMean'
+                        } else if (datasetType === 'global mean') {
+                            alpha = 0.4; // 70% opacity for 'globalMean'
+                        }
+
+                        // Return the color with the calculated alpha transparency
+                        return '<?php echo e($chartColorType[$key]); ?>' + Math.floor(alpha * 255).toString(16);
+                    }, 
                     fill: true,
+					pointStyle: 'rect'
+
                     },
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				
             ]
             },
             options: {
+                responsive:true,
+                maintainAspectRatio:false,
                 plugins:{
                     legend:{
                         position:'bottom',
                         align:'center',
                         labels:{
+							usePointStyle: true, 
+								pointStyle: 'rect',
+							position:'bottom',
+                            align:'center',
                             padding:20,
                             font:{
                                 size:14
-                            }
-                        }
+                            },
+                            generateLabels: function(chart) {
+                                    const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                                    labels.forEach(label => {
+                                        const dataset = chart.data.datasets[label.datasetIndex];
+                                        label.fillStyle = dataset.borderColor; // Solid fill color
+                                        label.strokeStyle = dataset.borderColor; // Border color
+                                    });
+                                    return labels;
+                                }
+                        },
+						onClick: function() {
+							return false; 
+						}
                     },
                     beforeDraw: (chart) => {
                     chart.data.datasets.reverse();
@@ -1734,12 +1872,13 @@
                 updateTable(surveyData);
 
                 const charts = [
-                    { id: "sales-forecast-chart", title: "Survey mean score across pillars of Positive Peace" },
-                    { id: "basic_radar", title: "Mean Result" },
-                    { id: "simple_pie_chart", title: "Participants by Gender" },
+					{ id: "simple_pie_chart", title: "Participants by Gender" },
                     { id: "simple_pie_chart2", title: "Participants by Age" },
-                    { id: "sales-forecast-chart-2", title: "Positive Peace" },
+                    { id: "sales-forecast-chart", title: "Survey mean score across pillars of Positive Peace" },
+					{ id: "sales-forecast-chart-2", title: "Positive Peace" },
                     { id: "sales-forecast-chart-3", title: "Negative Peace" },
+					<!--{ id: "basic_radar", title: "Mean Result" },-->
+                    
                     { id: "multi_mean_radar", title: "Results by pillars: Radar" },
                     { id: "pillar-table", title: "Results by pillar: Table" },
                     { id: "pillar-table-time", title: "Results Over Time: Table" },
@@ -1775,18 +1914,30 @@ function updateTable(data) {
     // Populate the table with fetched data
     data.forEach(function (item) {
         const row = tableBody.insertRow();
-
-        // Assuming the response data contains the correct properties
-        row.insertCell(0).textContent = item.survey_data_id || 'N/A';
-        row.insertCell(1).textContent = item.survey_id || 'N/A';
-        row.insertCell(2).textContent = item.survey_name || 'N/A';
-        row.insertCell(3).textContent = item.survey_country || 'N/A';
-        row.insertCell(4).textContent = item.survey_organization || 'N/A';
-        row.insertCell(5).textContent = item.participant_name || 'N/A';
-        row.insertCell(6).textContent = item.age || 'N/A';
-        row.insertCell(7).textContent = item.gender || 'N/A';
-        row.insertCell(8).textContent = item.survey_date || 'N/A';
+        <?php if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic"): ?>
+            // Assuming the response data contains the correct properties
+            row.insertCell(0).textContent = item.survey_data_id || 'N/A';
+            row.insertCell(1).textContent = item.survey_id || 'N/A';
+            row.insertCell(2).textContent = item.survey_name || 'N/A';
+            row.insertCell(3).textContent = item.survey_country || 'N/A';
+            row.insertCell(4).textContent = item.survey_organization || 'N/A';
+            row.insertCell(5).textContent = item.participant_name || 'N/A';
+            row.insertCell(6).textContent = item.age || 'N/A';
+            row.insertCell(7).textContent = item.gender || 'N/A';
+            row.insertCell(8).textContent = item.survey_date || 'N/A';
+        <?php else: ?>
+            // Assuming the response data contains the correct properties
+            row.insertCell(0).textContent = item.survey_name || 'N/A';
+            row.insertCell(1).textContent = item.survey_country || 'N/A';
+            row.insertCell(2).textContent = item.survey_organization || 'N/A';
+            row.insertCell(3).textContent = item.participant_name || 'N/A';
+            row.insertCell(4).textContent = item.age || 'N/A';
+            row.insertCell(5).textContent = item.gender || 'N/A';
+            row.insertCell(6).textContent = item.survey_date || 'N/A';
+        <?php endif; ?>
     });
+    
+    console.log(tableBody);
 }
 
 function exportChartsToPNGAndPDF(charts, callback) {
@@ -1825,9 +1976,12 @@ function exportChartsToPNGAndPDF(charts, callback) {
         // Add main title
         pdf.setFontSize(titleFontSize);
         pdf.setTextColor(30, 30, 30);
-        pdf.text("Community Strength Barometer Report", 
-                margin + contentPadding + logoWidth + 5, 
-                margin + contentPadding + 18);
+        const titleText = "Community Strength Barometer Report";
+		const titleWidth = pdf.getTextWidth(titleText);
+		const titleX = (pageWidth - titleWidth) / 2;
+
+		pdf.text(titleText, titleX, margin + contentPadding + 18);
+
         
         // Add page border (closer to edge now)
         pdf.setDrawColor(30, 30, 30);
@@ -1881,11 +2035,13 @@ function exportChartsToPNGAndPDF(charts, callback) {
         }
 
         html2canvas(chartElement, {
-            scale: 2,
+            scale: 3,
             useCORS: true,
-            backgroundColor: null
+            backgroundColor: null,
+			logging: false,
+			allowTaint: true
         }).then(canvas => {
-            const imgData = canvas.toDataURL("image/png");
+            const imgData = canvas.toDataURL("image/png", 0.9);
             const aspectRatio = canvas.width / canvas.height;
             // Calculate available width considering reduced margins
             const availableWidth = pdf.internal.pageSize.getWidth() - 2 * (margin + contentPadding) - 10;
@@ -1930,8 +2086,8 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100);
-        const orgText = "<?php echo e($formDetails->organization->name); ?>";
-        const emailText = "Source:  <?php echo e($formDetails->form_title); ?>";Source: 
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
+        const emailText = "<?php echo e($formDetails->organization->name); ?>";Source: 
         pdf.text(orgText, margin + contentPadding + 5, footerY);
         pdf.text(emailText, margin + contentPadding + 5, footerY + lineSpacing);
 
@@ -1984,7 +2140,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDFPnBar(chartId,chartTitle);
+                    exportToPDF(chartId,chartTitle);
                 } else if (exportType === "png") {
                     exportToPNGPie(chartId,chartTitle);
                 }  else {
@@ -1996,7 +2152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (exportType === "pdf") {
 
-                    exportToPDFPnBar(chartId,chartTitle);
+                    exportToPDF(chartId,chartTitle);
                 } else if (exportType === "png") {
                     exportToPNGPie(chartId,chartTitle);
                 }  else {
@@ -2079,11 +2235,13 @@ function exportToPDF(chartId, chartTitle) {
 
     // Capture the chart as an image
     html2canvas(document.getElementById(chartId), {
-        scale: 1, // Increase scale for higher resolution
+        scale: 3, // Increase scale for higher resolution
     useCORS: true, // Enable CORS if images are from external sources
-    backgroundColor: null
+    backgroundColor: null,
+	logging: false,
+	allowTaint: true
     }).then(canvas => {
-        const chartImgData = canvas.toDataURL("image/png");
+        const chartImgData = canvas.toDataURL("image/png",0.9);
 
         // Initialize PDF
         const { jsPDF } = window.jspdf;
@@ -2093,8 +2251,8 @@ function exportToPDF(chartId, chartTitle) {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
         const margin = 5; // Margin from the edges
-        const logoWidth = 100; // Width of the logo
-        const logoHeight = 20; // Height of the logo
+         const logoWidth = 65;
+		let logoHeight; 
         const titleFontSize = 24;
         const titleLineHeight = 20; // Line height for the title
 
@@ -2105,8 +2263,14 @@ function exportToPDF(chartId, chartTitle) {
 
         // Add logo to the PDF (if available)
         if (logoData) {
-            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight); // Position logo inside the border
+        // Calculate height maintaining aspect ratio
+        const logoAspectRatio = logo.naturalHeight / logo.naturalWidth;
+        logoHeight = logoWidth * logoAspectRatio;
         }
+		if(logoData) {
+		            pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight); // Position logo inside the border
+
+		}
 
         // Add chart title to the PDF (after the logo, centered a bit higher)
         pdf.setFontSize(titleFontSize);
@@ -2137,12 +2301,12 @@ function exportToPDF(chartId, chartTitle) {
          // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "<?php echo e($formDetails->organization->name); ?>";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -2167,10 +2331,10 @@ function exportToPNG(chartId, chartTitle) {
     
     // Capture chart with higher quality
     html2canvas(document.getElementById(chartId), {
-        scale: 3, // Increased scale for better quality
-        useCORS: true,
-        backgroundColor: null,
-        logging: false
+        scale: 3, // Increase scale for higher resolution
+    useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null,
+	logging: false,
     }).then(chartCanvas => {
         // Create final composition canvas
         const finalCanvas = document.createElement("canvas");
@@ -2200,11 +2364,13 @@ function exportToPNG(chartId, chartTitle) {
             const logoImg = new Image();
             logoImg.src = logoData;
             logoImg.onload = () => {
-                const logoWidth = 100 * pxPerMM; // 100mm
-                const logoHeight = 20 * pxPerMM; // 20mm
+                const logoWidth = 70 * pxPerMM; // 100mm
+                const aspectRatio = logoImg.naturalHeight / logoImg.naturalWidth;
+				const logoHeight = logoWidth * aspectRatio;
                 ctx.drawImage(
                     logoImg, 
                     margin + 10, 
+					
                     margin + 10, 
                     logoWidth, 
                     logoHeight
@@ -2239,10 +2405,10 @@ function exportToPNG(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -2338,10 +2504,13 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
 
     // Capture the chart as an image
     html2canvas(document.getElementById(chartId), {
-        scale: 2, // Increase scale for higher resolution
-        backgroundColor: null // Ensures a transparent background
+        scale: 3, // Increase scale for higher resolution
+    useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null,
+	logging: false,
+	allowTaint: true
     }).then(canvas => {
-        const chartImgData = canvas.toDataURL("image/png");
+        const chartImgData = canvas.toDataURL("image/png",0.9);
 
         // Initialize PDF
         const { jsPDF } = window.jspdf;
@@ -2351,8 +2520,8 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
         const margin = 5; // Margin from the edges
-        const logoWidth = 100; // Width of the logo
-        const logoHeight = 20; // Height of the logo
+        const logoWidth = 60; // Width of the logo
+        let logoHeight; // Height of the logo
         const titleFontSize = 24;
         const titleLineHeight = 20; // Line height for the title
 
@@ -2361,6 +2530,12 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
         pdf.setLineWidth(0.2); // Set border thickness
         pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin); // Draw border
 
+
+		if (logoData) {
+        // Calculate height maintaining aspect ratio
+        const logoAspectRatio = logo.naturalHeight / logo.naturalWidth;
+        logoHeight = logoWidth * logoAspectRatio;
+        }
         // Add logo to the PDF (if available)
         if (logoData) {
             pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight);
@@ -2391,12 +2566,12 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
         // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "<?php echo e($formDetails->organization->name); ?>";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -2415,11 +2590,13 @@ function exportToPDFMultiRadar(chartId, chartTitle) {
 
     // Capture the chart as an image
     html2canvas(document.getElementById(chartId), {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: null
+        scale: 3, // Increase scale for higher resolution
+    useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null,
+	logging: false,
+	allowTaint: true
     }).then(canvas => {
-        const chartImgData = canvas.toDataURL("image/png");
+        const chartImgData = canvas.toDataURL("image/png",0.9);
 
         // Initialize PDF
         const { jsPDF } = window.jspdf;
@@ -2429,8 +2606,8 @@ function exportToPDFMultiRadar(chartId, chartTitle) {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
         const margin = 5;
-        const logoWidth = 100;
-        const logoHeight = 20;
+        const logoWidth = 60;
+        let logoHeight;
         const titleFontSize = 24;
         const titleLineHeight = 20;
 
@@ -2438,7 +2615,11 @@ function exportToPDFMultiRadar(chartId, chartTitle) {
         pdf.setDrawColor(30, 30, 30);
         pdf.setLineWidth(0.2);
         pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
-
+		if (logoData) {
+        // Calculate height maintaining aspect ratio
+        const logoAspectRatio = logo.naturalHeight / logo.naturalWidth;
+        logoHeight = logoWidth * logoAspectRatio;
+        }
         // Add logo
         if (logoData) {
             pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight);
@@ -2471,12 +2652,12 @@ function exportToPDFMultiRadar(chartId, chartTitle) {
         // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "<?php echo e($formDetails->organization->name); ?>";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -2497,11 +2678,13 @@ function exportToPDFPnBar(chartId, chartTitle) {
 
     // Capture the chart as an image
     html2canvas(document.getElementById(chartId), {
-        scale: 2, // High resolution
-        useCORS: true,
-        backgroundColor: null // Ensure transparency
+        scale: 3, // Increase scale for higher resolution
+    useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null,
+	logging: false,
+	allowTaint: true
     }).then(canvas => {
-        const chartImgData = canvas.toDataURL("image/png");
+        const chartImgData = canvas.toDataURL("image/png",0.9);
 
         // Initialize PDF
         const { jsPDF } = window.jspdf;
@@ -2511,8 +2694,8 @@ function exportToPDFPnBar(chartId, chartTitle) {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
         const margin = 5; // Reduced margin for more content space
-        const logoWidth = 100; // Larger logo like other functions
-        const logoHeight = 20;
+        const logoWidth = 60; // Larger logo like other functions
+        let logoHeight;
         const titleFontSize = 24; // Larger title font
         const titleLineHeight = 20;
 
@@ -2520,7 +2703,11 @@ function exportToPDFPnBar(chartId, chartTitle) {
         pdf.setDrawColor(30, 30, 30); // Dark gray border
         pdf.setLineWidth(0.2); // Thinner border
         pdf.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
-
+		if (logoData) {
+        // Calculate height maintaining aspect ratio
+        const logoAspectRatio = logo.naturalHeight / logo.naturalWidth;
+        logoHeight = logoWidth * logoAspectRatio;
+        }
         // Add logo (if available)
         if (logoData) {
             pdf.addImage(logoData, "PNG", margin + 10, margin + 10, logoWidth, logoHeight);
@@ -2554,12 +2741,12 @@ function exportToPDFPnBar(chartId, chartTitle) {
         // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "<?php echo e($formDetails->organization->name); ?>";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -2583,10 +2770,10 @@ function exportToPNGMeanRadar(chartId, chartTitle) {
     
     // Capture chart with higher quality
     html2canvas(document.getElementById(chartId), {
-        scale: 3, // Increased scale for better quality
-        useCORS: true,
-        backgroundColor: null,
-        logging: false
+        scale: 3, // Increase scale for higher resolution
+    useCORS: true, // Enable CORS if images are from external sources
+    backgroundColor: null,
+	logging: false,
     }).then(chartCanvas => {
         // Create final composition canvas
         const finalCanvas = document.createElement("canvas");
@@ -2616,8 +2803,9 @@ function exportToPNGMeanRadar(chartId, chartTitle) {
             const logoImg = new Image();
             logoImg.src = logoData;
             logoImg.onload = () => {
-                const logoWidth = 100 * pxPerMM; // 100mm
-                const logoHeight = 20 * pxPerMM; // 20mm
+                const logoWidth = 70 * pxPerMM; // 100mm
+                const aspectRatio = logoImg.naturalHeight / logoImg.naturalWidth;
+				const logoHeight = logoWidth * aspectRatio;
                 ctx.drawImage(
                     logoImg, 
                     margin + 10, 
@@ -2655,10 +2843,10 @@ function exportToPNGMeanRadar(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -2767,8 +2955,9 @@ function exportToPNGPie(chartId, chartTitle) {
             const logoImg = new Image();
             logoImg.src = logoData;
             logoImg.onload = () => {
-                const logoWidth = 100 * pxPerMM; // 100mm
-                const logoHeight = 20 * pxPerMM; // 20mm
+                const logoWidth = 70 * pxPerMM; // 100mm
+                const aspectRatio = logoImg.naturalHeight / logoImg.naturalWidth;
+				const logoHeight = logoWidth * aspectRatio;
                 ctx.drawImage(
                     logoImg, 
                     margin + 10, 
@@ -2817,10 +3006,10 @@ function exportToPNGPie(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -2943,8 +3132,9 @@ function exportToPNGMultiRadar(chartId, chartTitle) {
             const logoImg = new Image();
             logoImg.src = logoData;
             logoImg.onload = () => {
-                const logoWidth = 100 * pxPerMM; // 100mm
-                const logoHeight = 20 * pxPerMM; // 20mm
+                const logoWidth = 70 * pxPerMM; // 100mm
+                const aspectRatio = logoImg.naturalHeight / logoImg.naturalWidth;
+				const logoHeight = logoWidth * aspectRatio;
                 ctx.drawImage(
                     logoImg, 
                     margin + 10, 
@@ -2982,10 +3172,10 @@ function exportToPNGMultiRadar(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -3098,8 +3288,9 @@ function exportToPNGPP(chartId, chartTitle) {
             const logoImg = new Image();
             logoImg.src = logoData;
             logoImg.onload = () => {
-                const logoWidth = 100 * pxPerMM; // 100mm
-                const logoHeight = 20 * pxPerMM; // 20mm
+                const logoWidth = 70 * pxPerMM; // 100mm
+                const aspectRatio = logoImg.naturalHeight / logoImg.naturalWidth;
+				const logoHeight = logoWidth * aspectRatio;
                 ctx.drawImage(
                     logoImg, 
                     margin + 10, 
@@ -3137,10 +3328,10 @@ function exportToPNGPP(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";

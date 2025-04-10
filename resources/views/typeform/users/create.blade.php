@@ -142,7 +142,7 @@
                             <select id="role" name="role_id" class="form-select select2">
                                 <option selected>Select Role</option>
                                 @foreach($roles as $role)
-                                <option value="{{$role->id}}" data-rolename="{{$role->name}}">{{$role->name}}</option>
+                                <option value="{{$role->id}}" data-rolename="{{$role->name}}">{{ucfirst($role->name)}}</option>
                                 @endforeach
                             </select>
                             @error('role_id')
@@ -170,7 +170,7 @@
                                 data-choices-sorting="true">
                                 {{-- <option selected>Select Role</option>
                                 @foreach($roles as $role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
                                 @endforeach --}}
                             {{-- </select>
                         </div>
@@ -303,7 +303,7 @@ $(document).ready(function(){
             `);
 
             $('#formUserOrganizationLevel').show();
-        }else if(roleVal == "branch"){
+        }else if(roleVal == "division"){
             $('#formUserBranchLevel').html(`
                     <div class="card-header d-flex flex-row justify-content-between align-items-center">
                         <h5 class="card-title mb-0">Select Divisions</h5>
