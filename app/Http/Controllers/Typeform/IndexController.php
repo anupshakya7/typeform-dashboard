@@ -40,14 +40,14 @@ class IndexController extends Controller
             $surveyForms = Form::filterForm()->get();
             
             //Survey id if no then latest form id
-            if(auth()->user()->role->name == "survey"){
-                $country = auth()->user()->survey->country;
-                $survey_id = auth()->user()->survey->form_id;
-            }else{
+            // if(auth()->user()->role->name == "survey"){
+            //     $country = auth()->user()->survey->country;
+            //     $survey_id = auth()->user()->survey->form_id;
+            // }else{
                 $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : session('country');
                 $survey_id = isset($request->survey) && $request->survey ? $request->survey : session('survey_id');
                 session(['country'=>$country,'survey_id'=>$survey_id]);
-            }
+            // }
 
             $formDetails = Form::with('organization')->where('form_id',$survey_id)->first();
     

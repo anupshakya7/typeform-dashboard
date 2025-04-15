@@ -73,9 +73,7 @@
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
                                 <div class="col-auto p-0">
-                                    <?php if(auth()->user()->role->name == 'survey'): ?>
-                                        <input type="text" class="form-control" name="country" id="country" value="<?php echo e(auth()->user()->survey->country); ?>" readonly>
-                                    <?php else: ?>
+                                    
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
 
@@ -86,7 +84,7 @@
                                                 <?php echo e($country->country); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                    <?php endif; ?>
+                                    
                                     
                                 </div>
                                 <div class="col-auto p-0">
@@ -107,21 +105,15 @@
                                 </div>
 
                                 <div class="col-auto p-0">
-                                    <?php if(auth()->user()->role->name == 'survey'): ?>
-                                    <input type="text" class="form-control" value="<?php echo e(auth()->user()->branch_id != null ? auth()->user()->branch->name :''); ?>" readonly>
-                                    <input type="hidden" name="branch" class="form-control" value="<?php echo e(old('branch',auth()->user()->branch_id)); ?>" id="branch" readonly>
-                                    <?php else: ?>
+                                    
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
                                         <option value="" selected>Select Division</option>
                                     </select>
-                                    <?php endif; ?>
+                                    
                                 </div>
                                 <div class="col-auto p-0">
-                                    <?php if(auth()->user()->role->name == 'survey'): ?>
-                                        <input type="text" class="form-control" value="<?php echo e(auth()->user()->survey->form_title); ?>" readonly>
-                                        <input type="hidden" name="survey" class="form-control" value="<?php echo e(old('survey',auth()->user()->form_id)); ?>" id="branch" readonly>
-                                    <?php else: ?>
+                                    
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example">
                                         <option value="" selected>Select Survey</option>
@@ -131,7 +123,7 @@
                                                 <?php echo e($surveyForm->form_title); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                    <?php endif; ?>
+                                    
                                 </div>
                                 <?php if(auth()->user()->role->name !== 'survey'): ?>
                                 <div class="col-auto p-0">
@@ -898,7 +890,7 @@
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
                         
                             var branchList = response.branches.filter(function(branch){
-                                if(userRole == "division"){
+                                if(userRole == "division" || userRole == "survey"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
                                 }
@@ -978,14 +970,30 @@
                                 return true;
                             });
 
+                            console.log('FormList',formList);
+
                             formList.forEach(function(formItem) {
                                 // $('#survey').append(new Option(form.form_title,
                                 // form.id));
-                                var option = new Option(formItem.form_title, formItem.form_id);
-                                $('#survey').append(option);
+                                if(userRole == 'survey'){
+                                    let surveyId = <?php echo json_encode(auth()->user()->form_id, 15, 512) ?>;
+                                    let surveyIds = Array.isArray(surveyId) ? surveyId : surveyId.split(', ');
 
-                                if (survey && survey == formItem.form_id) {
-                                    $(option).prop('selected', true);
+                                    if(surveyIds.includes(formItem.form_id)){
+                                        var option = new Option(formItem.form_title, formItem.form_id);
+                                        $('#survey').append(option);
+
+                                        if (survey && survey == formItem.form_id) {
+                                            $(option).prop('selected', true);
+                                        }
+                                    }
+                                }else{
+                                    var option = new Option(formItem.form_title, formItem.form_id);
+                                    $('#survey').append(option);
+
+                                    if (survey && survey == formItem.form_id) {
+                                        $(option).prop('selected', true);
+                                    }
                                 }
                             });
 
