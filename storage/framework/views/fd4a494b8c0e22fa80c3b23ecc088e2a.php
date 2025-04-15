@@ -276,8 +276,9 @@
                     <div class="card-header align-items-center d-flex mb-3">
                         <h4 class="card-title mb-0 flex-grow-1">Survey Timeline</h4>
                     </div>
-                    <div class="note">
-                        <p>Note: Please enter the survey dates for each phase: before the project starts, during the project, and after completion. If a survey phase hasn’t been conducted yet, you can leave those dates empty.’ after Survey Timeline.</p>
+                    <!--<div class="note">-->
+                    <div>
+                        <p>Note: Please enter the survey dates for each phase: before the project starts, during the project, and after completion. If a survey phase hasn’t been conducted yet, you can leave those dates empty.</p>
                     </div>
                     <div class="col-lg-6">
                         <div class="mt-3">

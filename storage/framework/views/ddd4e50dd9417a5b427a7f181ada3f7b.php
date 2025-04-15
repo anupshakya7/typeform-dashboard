@@ -5,6 +5,8 @@
 <style>
        .container-fluid {
        position: relative;
+display:flex;
+justify-content: center;
        }
        .highlight-area {
         position: absolute;
@@ -29,13 +31,10 @@
 	.page-content {
 		    width: 100%;
     height: 100%;
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
-    display: flex
-;
-    align-items: center;
-	align-items:center;
+    margin: 0 auto;
 	}
 	.highlight-area {
 		width: 85%;

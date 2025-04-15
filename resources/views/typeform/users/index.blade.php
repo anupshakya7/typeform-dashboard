@@ -111,6 +111,7 @@
                                                             View</a>
                                                     </li>
                                                     @if($user->role->name !== 'superadmin')
+                                                    @if((auth()->user()->role->name=="organization" && $user->role->name!=="organization") || auth()->user()->role->name!=="organization" || auth()->user()->id == $user->id)
                                                     <li><a href="{{route('user.edit',$user)}}" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
@@ -125,6 +126,7 @@
                                                             Delete
                                                         </button>
                                                     </li>
+                                                    @endif
                                                     @endif
                                                     @endif
                                                 </ul>

@@ -111,6 +111,7 @@
         </div>
     </div>
 </div>
+@if(auth()->user()->id !== $user->id)
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
         <h5 class="card-title mb-0">Assign Role</h5>
@@ -138,6 +139,10 @@
         </div>
     </div>
 </div>
+@else
+<input type="hidden" name="role_id" value="{{auth()->user()->role_id }}"/>
+<input type="hidden" name="organization_id" value="{{auth()->user()->organization_id }}"/>
+@endif
 
 <div class="card" id="formUserOrganizationLevel">
 

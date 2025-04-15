@@ -94,6 +94,7 @@
                                                             View</a>
                                                     </li>
                                                     <?php if($user->role->name !== 'superadmin'): ?>
+                                                    <?php if((auth()->user()->role->name=="organization" && $user->role->name!=="organization") || auth()->user()->role->name!=="organization" || auth()->user()->id == $user->id): ?>
                                                     <li><a href="<?php echo e(route('user.edit',$user)); ?>" class="dropdown-item edit-item-btn"><i
                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit</a>
@@ -108,6 +109,7 @@
                                                             Delete
                                                         </button>
                                                     </li>
+                                                    <?php endif; ?>
                                                     <?php endif; ?>
                                                     <?php endif; ?>
                                                 </ul>

@@ -145,6 +145,7 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </div>
+<?php if(auth()->user()->id !== $user->id): ?>
 <div class="card" id="formForm">
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
         <h5 class="card-title mb-0">Assign Role</h5>
@@ -179,6 +180,10 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </div>
+<?php else: ?>
+<input type="hidden" name="role_id" value="<?php echo e(auth()->user()->role_id); ?>"/>
+<input type="hidden" name="organization_id" value="<?php echo e(auth()->user()->organization_id); ?>"/>
+<?php endif; ?>
 
 <div class="card" id="formUserOrganizationLevel">
 

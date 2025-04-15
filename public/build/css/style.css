@@ -683,12 +683,13 @@ table td{
 }
 
 .step-number {
-    display: inline-block;
+   display: inline-block;
     width: 20px;
     height: 20px;
-    background-color: #4a6bdf;
-    color: white;
-    border-radius: 50%;
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 5px;
+    border: 1px solid #000;
     text-align: center;
     margin-right: 10px;
     font-weight: bold;
@@ -718,10 +719,9 @@ table td{
     word-break: break-all;
     margin-top: 10px;
     display: block;
-    color: #d63384;
+    color: #136ccb;
     font-weight: 500;
 }
-
 
 .confirm-button {
     
