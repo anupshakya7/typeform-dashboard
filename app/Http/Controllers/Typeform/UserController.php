@@ -74,10 +74,15 @@ class UserController extends Controller
         $validatedData['avatar']=$profilePath ?? null;
         
 
-        $role = Role::where('name','division')->pluck('id')->first();
+        $branchRole = Role::where('name','division')->pluck('id')->first();
+        $surveyRole = Role::where('name','survey')->pluck('id')->first();
 
-        if($request->role_id == $role){
+        if($request->role_id == $branchRole){
             $validatedData['branch_id'] = implode(', ',$validatedData['branch_id']);
+        }   
+
+        if($request->role_id == $surveyRole){
+            $validatedData['form_id'] = implode(', ',$validatedData['form_id']);
         }   
 
         $user = User::create($validatedData);
@@ -128,10 +133,15 @@ class UserController extends Controller
             $validatedData['avatar'] = $profilePath;
         }
 
-        $role = Role::where('name','division')->pluck('id')->first();
+        $branchRole = Role::where('name','division')->pluck('id')->first();
+        $surveyRole = Role::where('name','survey')->pluck('id')->first();
 
-        if($request->role_id == $role){
+        if($request->role_id == $branchRole){
             $validatedData['branch_id'] = implode(', ',$validatedData['branch_id']);
+        }
+
+        if($request->role_id == $surveyRole){
+            $validatedData['form_id'] = implode(', ',$validatedData['form_id']);
         }
 
         if(isset($request->password) && $request->password){
