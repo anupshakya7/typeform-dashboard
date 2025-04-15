@@ -17,7 +17,7 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
+        if($request->all() == [] && !session()->has('survey_id')){
             //Dropdown
             $countries = Form::select('country')->filterForm()->distinct()->get();
 
