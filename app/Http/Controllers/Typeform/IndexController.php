@@ -53,7 +53,7 @@ class IndexController extends Controller
     
             $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
             $selectedOrganizationwithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('organization_id')->first():null;
-    
+            
             $topBox = $this->topBoxData($survey_id);
             $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
             $participantDetails = $this->participantDetails($survey_id);
@@ -159,7 +159,7 @@ class IndexController extends Controller
             }
 
             $formsCountry = $query->get();
-          
+            
             $sum = $formsCountry->flatMap(function($form) use($flag){
                 return $form->answer->pluck($flag);
             })->sum();

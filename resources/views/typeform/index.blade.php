@@ -135,7 +135,7 @@
                                     </select>
                                     {{-- @endif --}}
                                 </div>
-                                @if(auth()->user()->role->name !== 'survey')
+                                {{-- @if(auth()->user()->role->name !== 'survey') --}}
                                 <div class="col-auto p-0">
                                 <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" {{request('survey') ? '' :'disabled'}} >
                                         <span>View Insight</span>
@@ -144,7 +144,7 @@
                                     
                                 </div>
 
-                                @endif
+                                {{-- @endif --}}
                             </div>
                             
                             </div>

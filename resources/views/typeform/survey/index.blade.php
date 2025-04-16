@@ -95,6 +95,21 @@
                                 </div>
                             </div>
                             @endif
+                            @if(auth()->user()->role->name == "survey")
+                            <div class="col-auto">
+                                @php
+                                    $formIds = explode(', ',auth()->user()->form_id);
+                                    $surveys = App\Models\Form::whereIn('form_id',$formIds)->get(['form_id','form_title']);
+                                @endphp
+                                <div class="col-auto"> <select class="form-select select2" name="survey" id="survey" onchange="this.form.submit()" aria-label="Default select example">
+                                        <option value="" selected>Select Survey</option>
+                                        @foreach($surveys as $survey)
+                                        <option value="{{$survey->form_id}}" {{request('survey') ==  $survey->form_id ? 'selected':''}}>{{$survey->form_title}}</option>
+                                        @endforeach
+                                    </select> 
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </form>
                    
