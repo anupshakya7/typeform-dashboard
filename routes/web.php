@@ -82,6 +82,11 @@ Route::middleware('check_auth','check_route')->group(function(){
         Route::get('form/question/{form}',[FormController::class,'formQuestion'])->name('form.question');
         Route::get('form/generate/csv',[FormController::class,'generateCSV'])->name('form.csv');
 
+        //Adding Country and State Fields Form
+        Route::get('form/form-details/{formId}',[FormController::class,'getFormDetails'])->name('form.getForm');
+        Route::get('form/insert/new-field',[FormController::class,'insertingNewField'])->name('form.insert.field');
+        Route::post('form/insert/new-field',[FormController::class,'insertingNewFieldSubmit'])->name('form.insert.field.submit');
+
         //Survey
         Route::resource('survey',AnswerController::class);
         Route::get('/survey/QA/{answer}',[AnswerController::class,'QA'])->name('survey.qa');

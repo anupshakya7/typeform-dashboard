@@ -244,10 +244,12 @@ table th, table td {
     margin-bottom: 5px;
 }
 
-#sidebarUser .nav-item {
+#sidebarUser .nav-item,
+#sidebarSurvey .nav-item {
     margin-bottom: 0px;
 }
-#sidebarUser .nav-item:hover {
+#sidebarUser .nav-item:hover,
+#sidebarSurvey .nav-item:hover {
     background-color: #F1F1F1;
 }
 .simplebar-content .nav-item {
@@ -255,24 +257,29 @@ table th, table td {
     border-radius: 5px !important;
 
 }
-#sidebarUser .nav-item {
+#sidebarUser .nav-item,
+#sidebarSurvey .nav-item{
     padding-left: 1.75rem;
 }
-.vertical #sidebarUser .nav-item {
+.vertical #sidebarUser .nav-item, 
+.vertical #sidebarSurvey .nav-item{
     padding-left: 0rem;
 }
-.vertical #sidebarUser .nav-item:last-child {
+.vertical #sidebarUser .nav-item:last-child,
+.vertical #sidebarSurvey .nav-item:last-child {
     padding-left: 0rem;
 }
-#sidebarUser .nav-item .nav-link {
+#sidebarUser .nav-item .nav-link,
+#sidebarSurvey .nav-item .nav-link {
     background-color: none !important;
 
 }
-#sidebarUser .nav-item .nav-link:hover {
+#sidebarUser .nav-item .nav-link:hover,
+#sidebarSurvey .nav-item .nav-link:hover {
     background-color: none !important;
 
 }
-#sidebarUser .nav-item:last-child {
+#sidebarUser .nav-item:last-child,#sidebarSurvey .nav-item:last-child {
     padding-left: 1.75rem;
     border-radius: 0px 0px 5px 5px !important;
 

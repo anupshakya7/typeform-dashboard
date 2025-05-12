@@ -109,13 +109,40 @@
                 {{-- Branch Management --}}
 
                 {{-- Form Management --}}
-                @if(hasPermissionToRoute('form.index'))
+                @if(hasPermissionToRoute('form.index') || hasPermissionToRoute('form.insert.field'))
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarSurvey" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarSurvey">
+                        <i class="fa-solid fa-user"></i> <span>Survey Management</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarSurvey">
+                        <ul class="nav nav-sm flex-column">
+                            @if(hasPermissionToRoute('form.index'))
+                            <li class="nav-item">
+                                <a href="{{route('form.index')}}" class="nav-link">Survey Management</a>
+                            </li>
+                            @endif
+                             {{-- Country and State Adding Form --}}
+                            @if(hasPermissionToRoute('form.insert.field'))
+                            <li class="nav-item">
+                                <a href="{{route('form.insert.field')}}" class="nav-link">Insert Fields</a>
+                                </a>
+                            </li>
+                            @endif
+                            {{-- Country and State Adding Form --}}
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
+               
+                {{-- @if(hasPermissionToRoute('form.index'))
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('form.index')}}">
                     <i class="fa-solid fa-file"></i> <span>Survey Management</span>
                     </a>
                 </li>
-                @endif
+                @endif --}}
                 {{-- Form Management --}}
 
                  {{-- Survey Management --}}
@@ -137,6 +164,8 @@
                 </li>
                 @endif
                 {{-- About Us --}}
+
+                
 
             </ul>
         </div>

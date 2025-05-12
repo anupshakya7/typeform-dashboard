@@ -16,7 +16,7 @@ class CheckRoute
     public function handle(Request $request, Closure $next): Response
     {   
         $routeName = $request->route()->getName();
-
+        
         if(auth()->user()->hasPermissionToRoute($routeName)){
             return $next($request);
         }

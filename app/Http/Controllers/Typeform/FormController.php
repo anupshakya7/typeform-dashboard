@@ -6,6 +6,7 @@ use App\Helpers\DownloadCSV;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Form;
@@ -455,6 +456,228 @@ class FormController extends Controller
         fclose($fp);
         $headers = array('Content-Type'=>'text/csv');
         return response()->download($filename,'form.csv',$headers);
+    }
+
+    public function getFormDetails($formId){
+        $token = config('services.api.key');
+
+        $response = Http::withToken($token)->get("https://api.typeform.com/forms/{$formId}");
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return response()->json([
+            'error' => 'Unable to Fetch Form',
+            'details' => $response->json()
+        ], $response->status());
+    }
+
+    public function insertingNewField(){
+        return view('typeform.form.insertField');
+    }
+
+    public function insertingNewFieldSubmit(Request $request){
+        $request->merge([
+            'fields'=>$request->input('fields',[])
+        ]);
+        $request->validate([
+            'fields'=>'array',
+            'fields.country'=>'required|in:on',
+            'fields.state'=>'nullable',
+        ]);
+
+        $formData = json_decode($request->typeform_data, true);
+        $countryCheckbox = array_key_exists('country',$request->fields);
+        $stateCheckbox = array_key_exists('state',$request->fields);
+
+        $hasCountryField = collect($formData['fields'])->contains(function ($field) {
+            return isset($field['ref']) && $field['ref'] === 'country_field_ref';
+        });
+
+        if (!$hasCountryField) {
+            try {
+                $formId = $formData['id'];
+
+                if($formData['fields'][0]['type'] == "short_text"){
+                    $gendersIndex = 2;
+                    $afterGenderIndex = 3;
+                }else{
+                    $gendersIndex = 1;
+                    $afterGenderIndex = 2;
+                }
+
+                $formGender = $formData['fields'][$gendersIndex]['ref'];
+                $formAfterGender = $formData['fields'][$afterGenderIndex]['ref'];
+
+                // $selectedCountries = $request->country;
+
+                // $countriesState = json_decode(file_get_contents(public_path('build/assets/countries_state.json')), true);
+                $countriesState = Country::with(['state'=>function($query){
+                    $query->select('geoname','countrycode');
+                }])->select('country','country_code')->where('level',1)->get();
+
+                $accessToken = config('services.api.key');
+
+                $fields = [];
+                $logic = [];
+                $logicCountryState = [];
+
+                // $countryChoices = array_map(fn($country) => ['label' => $country], $selectedCountries);
+                if($countryCheckbox){
+                    $countryChoices = $countriesState->map(fn($country)=>['label'=>$country->country])->toArray();
+                
+                    $fields[] = [
+                        "ref" => "country_field_ref",
+                        "title" => "Which country are your from?",
+                        "type" => "dropdown",
+                        "properties" => [
+                            "choices" => $countryChoices
+                        ],
+                    ];
+                }
+
+                if($countryCheckbox && $stateCheckbox){
+                    foreach ($countriesState as $country) {
+                        $stateFieldRef = preg_replace('/[^a-z0-9_\-]/', '_', strtolower($country->country) . '_state_field_ref');
+                        $stateChoices = $country->state->map(fn($state)=>['label'=>$state->geoname])->toArray();
+    
+                        $stateField = [
+                            "ref" => $stateFieldRef,
+                            "title" => "Which state are your from? ($country->country)",
+                            "type" => "dropdown",
+                            "properties" => [
+                                "choices" => $stateChoices
+                            ],
+                        ];
+    
+                        $fields[] = $stateField;
+    
+                        //Logic for State according to Country
+                        $logicCountryState[] = [
+                            "action" => "jump",
+                            "condition" => [
+                                "op" => "equal",
+                                "vars" => [
+                                    ["type" => "field", "value" => "country_field_ref"],
+                                    ["type" => "constant", "value" => $country->country],
+                                ]
+                            ],
+                            "details" => [
+                                "to" => [
+                                    "type" => "field",
+                                    "value" => $stateFieldRef,
+                                ]
+                            ]
+                        ];
+    
+                        //Logic Redirecting to Field After Select State
+                        $logic[] = [
+                            "type" => "field",
+                            "ref" => $stateFieldRef,
+                            "actions" => [
+                                [
+                                    "action" => "jump",
+                                    "condition" => [
+                                        "op" => "always",
+                                        "vars" => [],
+                                    ],
+                                    "details" => [
+                                        "to" => [
+                                            "type" => "field",
+                                            "value" => "$formAfterGender"
+                                        ]
+                                    ]
+                                ],
+                            ]
+                        ];
+                    }
+                }
+
+                if($countryCheckbox && !$stateCheckbox){
+                    //Logic Redirecting to Field After Select State
+                    $logicCountryState[] = 
+                    [
+                        "action" => "jump",
+                        "condition" => [
+                            "op" => "always",
+                            "vars" => [],
+                        ],
+                        "details" => [
+                            "to" => [
+                                "type" => "field",
+                                "value" => "$formAfterGender"
+                            ]
+                        ]
+                    ];
+                }
+                
+                $logic[] = [
+                    "type" => "field",
+                    "ref" => "country_field_ref",
+                    "actions" => $logicCountryState
+                ];
+         
+                $logic[] = [
+                    "type" => "field",
+                    "ref" => $formGender,
+                    "actions" => [
+                        [
+                            "action" => "jump",
+                            "condition" => [
+                                "op" => "always",
+                                "vars" => [],
+                            ],
+                            "details" => [
+                                "to" => [
+                                    "type" => "field",
+                                    "value" => "country_field_ref",
+                                ]
+                            ]
+                        ],
+                    ]
+                ];
+
+                $formFields = $formData['fields'];
+
+                $formData['fields']=[];
+                
+                foreach($formFields as $key=>$formField){
+                    if($key == 0 || $key ==1){
+                        $formData['fields'][] = $formField;
+                    }
+                }
+                
+                foreach ($fields as $field) {
+                    $formData['fields'][] = $field;
+                }
+
+                foreach($formFields as $key=>$formField){
+                    if($key >= 2){
+                        $formData['fields'][] = $formField;
+                    }
+                }
+
+                foreach ($logic as $condition) {
+                    $formData['logic'][] = $condition;
+                }
+
+                $updateForm = Http::withToken($accessToken)->put("https://api.typeform.com/forms/{$formId}", $formData);
+
+                if($updateForm->successful()){
+                    return "Succesfully Added Country and State Fields";
+                    // return redirect()->back()->with('success','Succesfully Added Country and State Fields');
+                }else{
+                    return "Fail to Add Field";
+                    // return redirect()->back()->with('error','Fail to Add Field');
+                }
+            }catch(\Exception $e){
+                return $e->getMessage();
+            }
+        } else {
+            return "Already Exists";
+            // return redirect()->back()->with('error','Already Exists');
+        }
     }
     
 }

@@ -109,13 +109,34 @@
                 
 
                 
-                <?php if(hasPermissionToRoute('form.index')): ?>
+                <?php if(hasPermissionToRoute('form.index') || hasPermissionToRoute('form.insert.field')): ?>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?php echo e(route('form.index')); ?>">
-                    <i class="fa-solid fa-file"></i> <span>Survey Management</span>
+                    <a class="nav-link menu-link" href="#sidebarSurvey" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarSurvey">
+                        <i class="fa-solid fa-user"></i> <span>Survey Management</span>
                     </a>
+                    <div class="collapse menu-dropdown" id="sidebarSurvey">
+                        <ul class="nav nav-sm flex-column">
+                            <?php if(hasPermissionToRoute('form.index')): ?>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('form.index')); ?>" class="nav-link">Survey Management</a>
+                            </li>
+                            <?php endif; ?>
+                             
+                            <?php if(hasPermissionToRoute('form.insert.field')): ?>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('form.insert.field')); ?>" class="nav-link">Insert Fields</a>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            
+                        </ul>
+                    </div>
                 </li>
                 <?php endif; ?>
+
+               
+                
                 
 
                  
@@ -136,6 +157,8 @@
                     </a>
                 </li>
                 <?php endif; ?>
+                
+
                 
 
             </ul>
