@@ -462,10 +462,17 @@ $(document).ready(function() {
 
                 $('#formId').val(formId);
                 $('#form_name').val(response.data.title);
-
+                
                 const filteredQuestions = response.data.fields.filter(item => item.type !==
                     'statement');
-
+                    
+                if(filteredQuestions[0]['type'] !== "short_text"){
+                     var questionInput = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[]')
+                        .val("");
+                    $('#mainForm').append(questionInput);
+                }
                 filteredQuestions.forEach(function(question) {
                     var questionInput = $('<input>')
                         .attr('type', 'hidden')

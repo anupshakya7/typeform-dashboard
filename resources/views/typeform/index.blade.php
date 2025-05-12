@@ -73,9 +73,9 @@
                         <form action="{{ route('home.index') }}" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
                                 <div class="col-auto p-0">
-                                    @if(auth()->user()->role->name == 'survey')
+                                    {{-- @if(auth()->user()->role->name == 'survey')
                                         <input type="text" class="form-control" name="country" id="country" value="{{auth()->user()->survey->country}}" readonly>
-                                    @else
+                                    @else --}}
                                     <select class="form-select select2" name="country" id="country"
                                         aria-label="Default select example">
 
@@ -86,7 +86,7 @@
                                                 {{ $country->country }}</option>
                                         @endforeach
                                     </select>
-                                    @endif
+                                    {{-- @endif --}}
                                     {{-- <div id="country_hidden">
 
                                     </div> --}}
@@ -109,21 +109,21 @@
                                 </div>
 
                                 <div class="col-auto p-0">
-                                    @if(auth()->user()->role->name == 'survey')
+                                    {{-- @if(auth()->user()->role->name == 'survey')
                                     <input type="text" class="form-control" value="{{auth()->user()->branch_id != null ? auth()->user()->branch->name :''}}" readonly>
                                     <input type="hidden" name="branch" class="form-control" value="{{old('branch',auth()->user()->branch_id)}}" id="branch" readonly>
-                                    @else
+                                    @else --}}
                                     <select class="form-select select2" id="branch" name="branch"
                                         aria-label="Default select example" disabled>
                                         <option value="" selected>Select Division</option>
                                     </select>
-                                    @endif
+                                    {{-- @endif --}}
                                 </div>
                                 <div class="col-auto p-0">
-                                    @if(auth()->user()->role->name == 'survey')
+                                    {{-- @if(auth()->user()->role->name == 'survey')
                                         <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
                                         <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
-                                    @else
+                                    @else --}}
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example">
                                         <option value="" selected>Select Survey</option>
@@ -133,9 +133,9 @@
                                                 {{ $surveyForm->form_title }}</option>
                                         @endforeach
                                     </select>
-                                    @endif
+                                    {{-- @endif --}}
                                 </div>
-                                @if(auth()->user()->role->name !== 'survey')
+                                {{-- @if(auth()->user()->role->name !== 'survey') --}}
                                 <div class="col-auto p-0">
                                 <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" {{request('survey') ? '' :'disabled'}} >
                                         <span>View Insight</span>
@@ -144,7 +144,7 @@
                                     
                                 </div>
 
-                                @endif
+                                {{-- @endif --}}
                             </div>
                             
                             </div>
@@ -906,12 +906,13 @@
                                 if(userRole == "division"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
+                                }else if(userRole == "survey"){
+                                    return userBranchId == branch.id;
                                 }
 
                                 return true;
                             });
 
-                            console.log(branchList);
                             
                             if (isFirstLoad) {
                                 branchList.forEach(function(branchItem) {
@@ -984,13 +985,25 @@
                             });
 
                             formList.forEach(function(formItem) {
-                                // $('#survey').append(new Option(form.form_title,
-                                // form.id));
-                                var option = new Option(formItem.form_title, formItem.form_id);
-                                $('#survey').append(option);
+                                if(userRole == 'survey'){
+                                    let surveyId = @json(auth()->user()->form_id);
+                                    let surveyIds = Array.isArray(surveyId) ? surveyId : surveyId.split(', ');
+                                    
+                                    if(surveyIds.includes(formItem.form_id)){
+                                        var option = new Option(formItem.form_title, formItem.form_id);
+                                        $('#survey').append(option);
 
-                                if (survey && survey == formItem.form_id) {
-                                    $(option).prop('selected', true);
+                                        if (survey && survey == formItem.form_id) {
+                                            $(option).prop('selected', true);
+                                        }
+                                    }
+                                }else{
+                                    var option = new Option(formItem.form_title, formItem.form_id);
+                                    $('#survey').append(option);
+
+                                    if (survey && survey == formItem.form_id) {
+                                        $(option).prop('selected', true);
+                                    }
                                 }
                             });
 

@@ -57,7 +57,7 @@ class User extends Authenticatable
        $role = $user->role->name;
 
        if($role == "survey"){
-            $query->where('organization_id',$user->organization_id)->where('form_id',$user->form_id);
+            $query->where('organization_id',$user->organization_id)->whereIn('form_id',$user->form_id);
        }elseif($role =="division"){
             $query->where('organization_id',$user->organization_id)->whereIn('branch_id',$user->branch_id);
        }elseif($role == "organization"){

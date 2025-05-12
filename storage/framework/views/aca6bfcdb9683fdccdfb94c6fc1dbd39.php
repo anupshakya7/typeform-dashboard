@@ -88,6 +88,21 @@
                                 </div>
                             </div>
                             <?php endif; ?>
+                            <?php if(auth()->user()->role->name == "survey"): ?>
+                            <div class="col-auto">
+                                <?php
+                                    $formIds = explode(', ',auth()->user()->form_id);
+                                    $surveys = App\Models\Form::whereIn('form_id',$formIds)->get(['form_id','form_title']);
+                                ?>
+                                <div class="col-auto"> <select class="form-select select2" name="survey" id="survey" onchange="this.form.submit()" aria-label="Default select example">
+                                        <option value="" selected>Select Survey</option>
+                                        <?php $__currentLoopData = $surveys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $survey): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($survey->form_id); ?>" <?php echo e(request('survey') ==  $survey->form_id ? 'selected':''); ?>><?php echo e($survey->form_title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select> 
+                                </div>
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </form>
                    

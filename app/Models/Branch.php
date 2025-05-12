@@ -21,7 +21,7 @@ class Branch extends Model
         $branchIds = is_array($user->branch_id) ? $user->branch_id : explode(', ',$user->branch_id); 
         
         if($role == "survey"){
-            $query->where('id',$user->branch_id);
+            $query->whereIn('id',$user->branch_id);
         }elseif($role == "division"){
             $query->whereIn('id',$branchIds);
         }elseif($role == "organization"){

@@ -393,8 +393,8 @@ $(document).ready(function(){
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="survey" class="form-label title_level">Survey<span class="text-danger">*</span></label>
-                                        <select id="survey" name="form_id" class="form-select" data-choices
-                                            data-choices-sorting="true" disabled>
+                                        <select id="survey" name="form_id[]" class="form-select" data-choices
+                                            data-choices-sorting="true" multiple disabled>
                                             <option value="" selected>Select Survey</option>
                                         </select>
                                     </div>

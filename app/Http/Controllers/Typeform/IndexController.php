@@ -17,7 +17,7 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->all() == [] && auth()->user()->role->name !== 'survey' && !session()->has('survey_id')){
+        if($request->all() == [] && !session()->has('survey_id')){
             //Dropdown
             $countries = Form::select('country')->filterForm()->distinct()->get();
 
@@ -40,20 +40,20 @@ class IndexController extends Controller
             $surveyForms = Form::filterForm()->get();
             
             //Survey id if no then latest form id
-            if(auth()->user()->role->name == "survey"){
-                $country = auth()->user()->survey->country;
-                $survey_id = auth()->user()->survey->form_id;
-            }else{
+            // if(auth()->user()->role->name == "survey"){
+            //     $country = auth()->user()->survey->country;
+            //     $survey_id = auth()->user()->survey->form_id;
+            // }else{
                 $country = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first() : session('country');
                 $survey_id = isset($request->survey) && $request->survey ? $request->survey : session('survey_id');
                 session(['country'=>$country,'survey_id'=>$survey_id]);
-            }
+            // }
 
             $formDetails = Form::with('organization')->where('form_id',$survey_id)->first();
     
             $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('country')->first():null;
             $selectedOrganizationwithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id',$request->survey)->pluck('organization_id')->first():null;
-    
+            
             $topBox = $this->topBoxData($survey_id);
             $meanScore = $this->meanScoreGraph($request->all(),$survey_id);
             $participantDetails = $this->participantDetails($survey_id);
@@ -150,7 +150,7 @@ class IndexController extends Controller
         $positiveMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer')->filterForm();
+            $query = Form::with('answer');
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);
@@ -159,7 +159,7 @@ class IndexController extends Controller
             }
 
             $formsCountry = $query->get();
-          
+            
             $sum = $formsCountry->flatMap(function($form) use($flag){
                 return $form->answer->pluck($flag);
             })->sum();
@@ -190,7 +190,7 @@ class IndexController extends Controller
         $singlePillarMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer')->filterForm();
+            $query = Form::with('answer');
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);
