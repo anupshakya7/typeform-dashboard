@@ -391,8 +391,8 @@ $(document).ready(function(){
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="survey" class="form-label title_level">Survey<span class="text-danger">*</span></label>
-                                        <select id="survey" name="form_id" class="form-select" data-choices
-                                            data-choices-sorting="true" disabled>
+                                        <select id="survey" name="form_id[]" class="form-select select2" data-choices
+                                            data-choices-sorting="true" multiple disabled>
                                             <option value="" selected>Select Survey</option>
                                         </select>
                                     </div>
@@ -433,7 +433,6 @@ $(document).ready(function(){
                     var userBranchIdsInteger = userBranchIds.map(function(item){
                         return parseInt(item,10);
                     });
-                    
 
                     response.branches.forEach(function(branchItem) {
                         // $('#branch').append(new Option(branch.name,
@@ -481,17 +480,20 @@ $(document).ready(function(){
                     console.log(response);
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
-                    $('#survey').append('<option value="" selected>Select Survey</option>');
+                    $('#survey').append('<option value="">Select Survey</option>');
 
-                    var surveyId = <?php echo json_encode($user->form_id, 15, 512) ?>;
+                    var surveyIds = <?php echo json_encode(is_array($user->form_id) ? $user->form_id : explode(', ', $user->form_id)) ?>;
 
                     response.forms.forEach(function(formItem) {
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
+
                         var option = new Option(formItem.form_title, formItem.form_id);
 
-                        if(surveyId && surveyId == formItem.form_id){
-                            $(option).attr('selected',true);
+                        if(surveyIds && surveyIds.includes(formItem.form_id)){
+                            if(formItem.form_id !== ""){
+                                $(option).attr('selected',true);
+                            }
                         }
 
                         $('#survey').append(option);

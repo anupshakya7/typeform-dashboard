@@ -150,7 +150,7 @@ class IndexController extends Controller
         $positiveMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer')->filterForm();
+            $query = Form::with('answer');
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);
@@ -190,7 +190,7 @@ class IndexController extends Controller
         $singlePillarMeanCal = [];
 
         foreach($types as $type){
-            $query = Form::with('answer')->filterForm();
+            $query = Form::with('answer');
 
             if($type === "mean"){
                 $query->where('form_id',$survey_id);

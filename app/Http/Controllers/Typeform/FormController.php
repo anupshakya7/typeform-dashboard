@@ -164,7 +164,7 @@ class FormController extends Controller
                     'extra_ques3',
                 ];
                 $questionFormattingData = [];
-    
+
                 foreach ($validatedData['questions'] as $key => $question) {
                     $questionFormattingData[$labelDBData[$key]] = $question;
                 }
@@ -174,11 +174,10 @@ class FormController extends Controller
                 ];
     
                 $questionsData = array_merge($formIdData, $questionFormattingData);
-
+                
                 Question::create($questionsData);
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
             } catch (\Exception $e) {
-                dd($e->getMessage());
                 DB::rollBack();
                 return redirect()->back()->with('error', 'Failed to Create Form and its Questions'.$e->getMessage());
             }

@@ -906,12 +906,13 @@
                                 if(userRole == "division" || userRole == "survey"){
                                     let branchIds = Array.isArray(userBranchId) ? userBranchId : userBranchId.split(', ');
                                     return branchIds.includes(branch.id.toString());
+                                }else if(userRole == "survey"){
+                                    return userBranchId == branch.id;
                                 }
 
                                 return true;
                             });
 
-                            console.log(branchList);
                             
                             if (isFirstLoad) {
                                 branchList.forEach(function(branchItem) {
@@ -986,12 +987,10 @@
                             console.log('FormList',formList);
 
                             formList.forEach(function(formItem) {
-                                // $('#survey').append(new Option(form.form_title,
-                                // form.id));
                                 if(userRole == 'survey'){
                                     let surveyId = @json(auth()->user()->form_id);
                                     let surveyIds = Array.isArray(surveyId) ? surveyId : surveyId.split(', ');
-
+                                    
                                     if(surveyIds.includes(formItem.form_id)){
                                         var option = new Option(formItem.form_title, formItem.form_id);
                                         $('#survey').append(option);
