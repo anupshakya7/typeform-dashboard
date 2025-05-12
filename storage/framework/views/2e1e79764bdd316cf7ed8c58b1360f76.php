@@ -210,7 +210,7 @@ unset($__errorArgs, $__bag); ?>
                         </div>      
                         <div class="my-3">
                             <div id="addBtnWrapper" style="position: relative;">
-                                <button type="submit" class="btn btn-primary float-end mx-1" id="addBtn" disabled>Add Fields</button>
+                                <button type="submit" class="btn btn-info float-end mx-1" id="addBtn" disabled>Add Fields</button>
                             </div>
                         </div>
                     </div>

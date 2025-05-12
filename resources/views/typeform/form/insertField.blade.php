@@ -175,7 +175,6 @@
     <div class="card-header d-flex flex-row justify-content-between align-items-center">
         <h5 class="card-title mb-0">Form Sync</h5>
     </div>
-    @if($errors)
     <div class="card-body">
         <div class="live-preview">
             <form action="{{route('form.insert.field.submit')}}" method="POST">
@@ -205,7 +204,7 @@
                         </div>      
                         <div class="my-3">
                             <div id="addBtnWrapper" style="position: relative;">
-                                <button type="submit" class="btn btn-primary float-end mx-1" id="addBtn" disabled>Add Fields</button>
+                                <button type="submit" class="btn btn-info float-end mx-1" id="addBtn" disabled>Add Fields</button>
                             </div>
                         </div>
                     </div>
