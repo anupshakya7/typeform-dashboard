@@ -68,7 +68,7 @@
                             </tr>
                             <tr>
                                 <th>Name</th>
-                                <td>{{$answer->name}}</td>
+                                <td>{{$answer->name ? $answer->name:'Prefer not to say'}}</td>
                             </tr>
                             <tr>
                                 <th>Age</th>
@@ -78,10 +78,18 @@
                                 <th>Gender</th>
                                 <td>{{$answer->gender}}</td>
                             </tr>
+                            @if($answer->country)
                             <tr>
-                                <th>City</th>
-                                <td>{{$answer->{'village-town-city'} }}</td>
+                                <th>Country</th>
+                                <td>{{$answer->country }}</td>
                             </tr>
+                            @endif
+                            @if($answer->state)
+                            <tr>
+                                <th>State</th>
+                                <td>{{$answer->state }}</td>
+                            </tr>
+                            @endif
                             <tr>
                                 <th>{{$answer->form->question->well_functioning_government}}</th>
                                 <td>{{$answer->well_functioning_government}}</td>

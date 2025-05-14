@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('age');
             $table->string('gender');
-            $table->string('village-town-city');
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
             $table->string('well_functioning_government');
             $table->string('low_level_corruption');
             $table->string('equitable_distribution');

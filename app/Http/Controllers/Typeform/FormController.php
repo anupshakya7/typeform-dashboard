@@ -91,7 +91,7 @@ class FormController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {  
         $validatedData = $request->validate([
             'formId' => 'required|unique:forms,form_id',
             'form_name' => 'required|string',
@@ -104,7 +104,10 @@ class FormController extends Controller
             'duringdate' => 'nullable|string',
             'afterdate' => 'nullable|string',
             'questions' => 'required|array',
+            'questions.question' => 'required|array',
+            'questions.ref' => 'required|array',
         ]);
+        
         
         DB::transaction(function() use($validatedData,$request){
             try {
@@ -141,7 +144,7 @@ class FormController extends Controller
                     'during' => $validatedData['duringdate'] !== null ? $duringdate_start.' to '.$duringdate_end : null,
                     'after' => $validatedData['afterdate'] !== null ? $enddate_start.' to '.$enddate_end : null
                 ];
-
+                
                 Form::create($formData);
     
                 //Question Data
@@ -149,7 +152,8 @@ class FormController extends Controller
                     'name',
                     'age',
                     'gender',
-                    'village-town-city',
+                    'country',
+                    'state',
                     'well_functioning_government',
                     'low_level_corruption',
                     'equitable_distribution',
@@ -164,21 +168,60 @@ class FormController extends Controller
                     'extra_ques2',
                     'extra_ques3',
                 ];
+                
+                $matches = array_filter($validatedData['questions']['ref'],function($item){
+                    return is_string($item) && str_ends_with($item,'_state_field_ref');
+                });
+                
+                
+                if(empty($matches)){
+                    $labelDBData = array_filter($labelDBData,function($item){
+                        return $item !== 'state'; 
+                    });
+                    
+                    $labelDBData = array_values($labelDBData);
+                }
+                
+                if(!empty($matches)){
+                     $firstStateIndex = null;
+                
+                    foreach($validatedData['questions']['question'] as $index=>$value){
+                        if(is_string($value) && strpos($value,"Which state are your from?") === 0){
+                            $firstStateIndex = $index;
+                            break;
+                        }
+                    }
+                    
+                    $filteredArray = array_filter($validatedData['questions']['question'],function($item){
+                        return !is_string($item) || strpos($item,'Which state are your from?') !== 0;
+                    });
+                    
+                    $filteredArray = array_values($filteredArray);
+                    
+                    if(!is_null($firstStateIndex)){
+                        array_splice($filteredArray,$firstStateIndex,0,["Which state are you from?"]);
+                    }
+                    
+                    $validatedData['questions']['question'] = $filteredArray;
+                }
+                
                 $questionFormattingData = [];
 
-                foreach ($validatedData['questions'] as $key => $question) {
+                foreach ($validatedData['questions']['question'] as $key => $question) {
                     $questionFormattingData[$labelDBData[$key]] = $question;
                 }
-    
+                
                 $formIdData = [
                     'form_id' => $validatedData['formId']
                 ];
-    
-                $questionsData = array_merge($formIdData, $questionFormattingData);
                 
+                $questionsData = array_merge($formIdData, $questionFormattingData);
+      
                 Question::create($questionsData);
+                Log::info("Form and Question Created Successfully!");
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
             } catch (\Exception $e) {
+                Log::info($e->getMessage());
                 DB::rollBack();
                 return redirect()->back()->with('error', 'Failed to Create Form and its Questions'.$e->getMessage());
             }

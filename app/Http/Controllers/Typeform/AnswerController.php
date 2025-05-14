@@ -62,8 +62,7 @@ class AnswerController extends Controller
 
     public function getAnswer(Request $request){
         $allData = $request->all();
-        return $allData;
-        
+
         $formId = $allData['form_response']['form_id'];
         $eventId = $allData['event_id'];
         $questions = $allData['form_response']['definition']['fields'];
@@ -105,7 +104,8 @@ class AnswerController extends Controller
         $labelDBData = [
             'age',
             'gender',
-            'village-town-city',
+            'country',
+            'state',
             'well_functioning_government',
             'low_level_corruption',
             'equitable_distribution',
@@ -124,7 +124,19 @@ class AnswerController extends Controller
         if($questions[0]['type'] == 'short_text'){
             $labelDBData = array_merge($optionalName,$labelDBData); 
         }
-  
+        
+        $matches = array_filter($questions,function($item){
+            return is_string($item['ref']) && str_ends_with($item['ref'],'_state_field_ref');
+        });
+        
+        if(empty($matches)){
+            $labelDBData = array_filter($labelDBData,function($item){
+                return $item !=='state'; 
+            });
+            
+            $labelDBData = array_values($labelDBData);
+        }
+        
         $answersDBData = [];
         
         foreach($answers as $key => $answer){
@@ -142,7 +154,7 @@ class AnswerController extends Controller
         }
         
         $DBData = array_merge($formData,$answersDBData);
-
+    
         try{
             $answerCreated = Answer::create($DBData);
             $checkWebHooks = Form::where('form_id',$formId)->first();
