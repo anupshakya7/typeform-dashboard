@@ -12,4 +12,8 @@ class CountryState extends Model
     protected $table="new_countries_state";
 
     protected $guarded = [];
+
+    public function state(){
+        return $this->hasMany(CountryState::class,'parent_code','code');
+    }
 }
