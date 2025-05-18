@@ -10,4 +10,8 @@ class NSubCountry extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function country(){
+        return $this->belongsTo(NCountry::class,'countryCode','code');
+    }
 }

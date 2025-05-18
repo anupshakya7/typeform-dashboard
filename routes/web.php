@@ -103,5 +103,7 @@ Route::middleware('check_auth','check_route')->group(function(){
         Route::get('about',[AboutController::class,'index'])->name('about.index');
     });
 });
+
 //Get Answer WebHook
 Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
+
