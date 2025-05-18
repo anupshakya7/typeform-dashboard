@@ -6,7 +6,7 @@ use App\Helpers\DownloadCSV;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
-use App\Models\Country;
+use App\Models\NCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Form;
@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
@@ -169,6 +170,17 @@ class FormController extends Controller
                     'extra_ques3',
                 ];
                 
+                $matchCountry = array_filter($validatedData['questions']['ref'],function($item){
+                    return is_string($item) && Str::contains($item,'country_field_ref');
+                });
+                
+                if(empty($matchCountry)){
+                    $labelDBData = array_filter($labelDBData,function($item){
+                        return $item !== 'country'; 
+                    });
+                }
+                
+                
                 $matches = array_filter($validatedData['questions']['ref'],function($item){
                     return is_string($item) && str_ends_with($item,'_state_field_ref');
                 });
@@ -216,7 +228,7 @@ class FormController extends Controller
                 ];
                 
                 $questionsData = array_merge($formIdData, $questionFormattingData);
-      
+            
                 Question::create($questionsData);
                 Log::info("Form and Question Created Successfully!");
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
@@ -537,7 +549,7 @@ class FormController extends Controller
         $hasCountryField = collect($formData['fields'])->contains(function ($field) {
             return isset($field['ref']) && $field['ref'] === 'country_field_ref';
         });
-
+        
         if (!$hasCountryField) {
             try {
                 $formId = $formData['id'];
@@ -556,20 +568,19 @@ class FormController extends Controller
                 // $selectedCountries = $request->country;
 
                 // $countriesState = json_decode(file_get_contents(public_path('build/assets/countries_state.json')), true);
-                $countriesState = Country::with(['state'=>function($query){
-                    $query->select('geoname','countrycode');
-                }])->select('country','country_code')->where('level',1)->get();
-
+                $countriesState = NCountry::with(['states'=>function($query){
+                    $query->select('name','countryCode');
+                }])->select('name','code')->get();
+    
                 $accessToken = config('services.api.key');
 
                 $fields = [];
                 $logic = [];
                 $logicCountryState = [];
 
-                // $countryChoices = array_map(fn($country) => ['label' => $country], $selectedCountries);
                 if($countryCheckbox){
-                    $countryChoices = $countriesState->map(fn($country)=>['label'=>$country->country])->toArray();
-                
+                    $countryChoices = $countriesState->map(fn($country)=>['label'=>$country->name])->toArray();
+         
                     $fields[] = [
                         "ref" => "country_field_ref",
                         "title" => "Which country are your from?",
@@ -582,12 +593,17 @@ class FormController extends Controller
 
                 if($countryCheckbox && $stateCheckbox){
                     foreach ($countriesState as $country) {
-                        $stateFieldRef = preg_replace('/[^a-z0-9_\-]/', '_', strtolower($country->country) . '_state_field_ref');
-                        $stateChoices = $country->state->map(fn($state)=>['label'=>$state->geoname])->toArray();
-    
+                         $stateChoices = $country->states->map(fn($state)=>['label'=>$state->name])->toArray();
+                         
+                         if(empty($stateChoices)){
+                             continue;
+                         }
+                        
+                        $stateFieldRef = preg_replace('/[^a-z0-9_\-]/', '_', strtolower($country->name) . '_state_field_ref');
+
                         $stateField = [
                             "ref" => $stateFieldRef,
-                            "title" => "Which state are your from? ($country->country)",
+                            "title" => "Which state are your from? ($country->name)",
                             "type" => "dropdown",
                             "properties" => [
                                 "choices" => $stateChoices
@@ -603,7 +619,7 @@ class FormController extends Controller
                                 "op" => "equal",
                                 "vars" => [
                                     ["type" => "field", "value" => "country_field_ref"],
-                                    ["type" => "constant", "value" => $country->country],
+                                    ["type" => "constant", "value" => $country->name],
                                 ]
                             ],
                             "details" => [
@@ -706,7 +722,7 @@ class FormController extends Controller
                 }
 
                 $updateForm = Http::withToken($accessToken)->put("https://api.typeform.com/forms/{$formId}", $formData);
-
+                
                 if($updateForm->successful()){
                     return "Succesfully Added Country and State Fields";
                     // return redirect()->back()->with('success','Succesfully Added Country and State Fields');

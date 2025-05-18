@@ -80,13 +80,13 @@
                             <?php if($answer->country): ?>
                             <tr>
                                 <th>Country</th>
-                                <td><?php echo e($answer->country); ?></td>
+                                <td><?php echo e($answer->rcountry->name); ?></td>
                             </tr>
                             <?php endif; ?>
                             <?php if($answer->state): ?>
                             <tr>
                                 <th>State</th>
-                                <td><?php echo e($answer->state); ?></td>
+                                <td><?php echo e($answer->rstate->name); ?></td>
                             </tr>
                             <?php endif; ?>
                             <tr>

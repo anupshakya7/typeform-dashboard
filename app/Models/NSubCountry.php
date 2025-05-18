@@ -14,4 +14,9 @@ class NSubCountry extends Model
     public function country(){
         return $this->belongsTo(NCountry::class,'countryCode','code');
     }
+    
+    //Get Id By State Name
+    public static function getIdByName($name){
+        return self::where('name',$name)->value('id');
+    }
 }

@@ -81,13 +81,13 @@
                             @if($answer->country)
                             <tr>
                                 <th>Country</th>
-                                <td>{{$answer->country }}</td>
+                                <td>{{$answer->rcountry->name }}</td>
                             </tr>
                             @endif
                             @if($answer->state)
                             <tr>
                                 <th>State</th>
-                                <td>{{$answer->state }}</td>
+                                <td>{{$answer->rstate->name }}</td>
                             </tr>
                             @endif
                             <tr>

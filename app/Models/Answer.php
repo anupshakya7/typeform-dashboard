@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\NCountry;
+use App\Models\NSubCountry;
 
 class Answer extends Model
 {
@@ -31,6 +33,19 @@ class Answer extends Model
         'extra_ans2',
         'extra_ans3',
     ];
+    
+    //Mutator
+    //Country to Country Code
+    public function setCountryAttribute($value){
+        $code = NCountry::getCodeByName($value);
+        $this->attributes['country'] = $code ?: $value;
+    }
+    
+    //State Name to its DB Id
+    public function setStateAttribute($value){
+        $id = NSubCountry::getIdByName($value);
+        $this->attributes['state'] = $id ?: $value;
+    }
 
     public function scopeFilterSurvey($query){
         $user = auth()->user();
@@ -56,5 +71,13 @@ class Answer extends Model
 
     public function form(){
         return $this->belongsTo(Form::class,'form_id','form_id');
+    }
+    
+    public function rcountry(){
+        return $this->belongsTo(NCountry::class,'country','code');
+    }
+    
+    public function rstate(){
+        return $this->belongsTo(NSubCountry::class,'state','id');
     }
 }

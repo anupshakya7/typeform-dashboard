@@ -332,7 +332,7 @@
                                         <span class="step-number">3</span>
                                         <span class="step-title">Add the webhook URL</span>
                                         <p class="step-description">In the webhook settings, add the following URL:</p>
-                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-New/public/answer</span>
+                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-Version-2.0/public/answer</span>
                                     </div>
                                     
                                     <div class="instruction-step border-0">

@@ -14,4 +14,9 @@ class NCountry extends Model
     public function states(){
         return $this->hasMany(NSubCountry::class,'countryCode','code');
     }
+    
+    //Get Code By Country Name
+    public static function getCodeByName($name){
+        return self::where('name',$name)->value('code');
+    }
 }

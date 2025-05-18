@@ -184,8 +184,8 @@ class AnswerController extends Controller
     }
 
     public function QA(String $id){
-        $answer = Answer::with('form','form.question')->filterSurvey()->find($id);
-        
+        $answer = Answer::with('form','form.question','rcountry','rstate')->filterSurvey()->find($id);
+
         if($answer){
             return view('typeform.survey.QA',compact('answer'));
         }else{

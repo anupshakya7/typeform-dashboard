@@ -17,4 +17,9 @@ class Country extends Model
     public function state(){
         return $this->hasMany(SubCountry::class,'countrycode','country_code');
     }
+    
+    //Get Code By Country Name
+    public static function getCodeByName($name){
+        return self::where('country',$name)->value('country_code');
+    }
 }
