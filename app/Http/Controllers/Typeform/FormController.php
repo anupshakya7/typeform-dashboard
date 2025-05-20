@@ -551,7 +551,37 @@ class FormController extends Controller
         });
         
         if (!$hasCountryField) {
-            try {
+           return $this->insertCountriesAndStateField($formData,$countryCheckbox,$stateCheckbox);
+        } else {
+            $formData = $this->removeCountryAndStateFields($formData);
+            return $this->insertCountriesAndStateField($formData,$countryCheckbox,$stateCheckbox);
+        }
+    }
+
+    private function removeCountryAndStateFields($formData){
+        $fields = $formData['fields'] ?? [];
+
+        $fieldIdsRemove = collect($fields)
+            ->filter(function($field){
+                $title = strtolower($field['title'] ?? '');
+                return str_contains($title,'country') || str_contains($title,'state');
+            })
+            ->pluck('ref')
+            ->toArray();
+
+        //Remove Fields
+        $formData['fields'] = array_values(array_filter($fields,function($field) use($fieldIdsRemove){
+            return !in_array($field['ref'],$fieldIdsRemove);
+        }));
+        
+        //Remove Logic
+        unset($formData['logic']);
+
+        return $formData;
+    }
+
+    public function insertCountriesAndStateField($formData,$countryCheckbox,$stateCheckbox){
+         try {
                 $formId = $formData['id'];
 
                 if($formData['fields'][0]['type'] == "short_text"){
@@ -583,7 +613,7 @@ class FormController extends Controller
          
                     $fields[] = [
                         "ref" => "country_field_ref",
-                        "title" => "Which country are your from?",
+                        "title" => "Which country do you live in?*",
                         "type" => "dropdown",
                         "properties" => [
                             "choices" => $countryChoices
@@ -603,7 +633,7 @@ class FormController extends Controller
 
                         $stateField = [
                             "ref" => $stateFieldRef,
-                            "title" => "Which state are your from? ($country->name)",
+                            "title" => "Please enter your state/province/county. ($country->name)",
                             "type" => "dropdown",
                             "properties" => [
                                 "choices" => $stateChoices
@@ -733,10 +763,6 @@ class FormController extends Controller
             }catch(\Exception $e){
                 return $e->getMessage();
             }
-        } else {
-            return "Already Exists";
-            // return redirect()->back()->with('error','Already Exists');
-        }
     }
     
 }
