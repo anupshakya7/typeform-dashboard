@@ -154,7 +154,7 @@ class AnswerController extends Controller
         }
         
         $DBData = array_merge($formData,$answersDBData);
-    
+     
         try{
             $answerCreated = Answer::create($DBData);
             $checkWebHooks = Form::where('form_id',$formId)->first();
