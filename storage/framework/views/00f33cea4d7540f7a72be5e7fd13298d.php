@@ -332,7 +332,7 @@
                                         <span class="step-number">3</span>
                                         <span class="step-title">Add the webhook URL</span>
                                         <p class="step-description">In the webhook settings, add the following URL:</p>
-                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-New/public/answer</span>
+                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-Version-2.0/public/answer</span>
                                     </div>
                                     
                                     <div class="instruction-step border-0">
@@ -457,24 +457,31 @@ $(document).ready(function() {
 
                 $('#formId').val(formId);
                 $('#form_name').val(response.data.title);
-                
+                console.log(response);
                 const filteredQuestions = response.data.fields.filter(item => item.type !==
                     'statement');
                     
                 if(filteredQuestions[0]['type'] !== "short_text"){
                      var questionInput = $('<input>')
                         .attr('type', 'hidden')
-                        .attr('name', 'questions[]')
+                        .attr('name', 'questions[question][]')
                         .val("");
-                    $('#mainForm').append(questionInput);
+                     var questionRef = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[ref][]')
+                        .val("");
+                    $('#mainForm').append([questionInput,questionRef]);
                 }
                 filteredQuestions.forEach(function(question) {
                     var questionInput = $('<input>')
                         .attr('type', 'hidden')
-                        .attr('name', 'questions[]')
+                        .attr('name', 'questions[question][]')
                         .val(question.title)
-
-                    $('#mainForm').append(questionInput);
+                    var questionRef = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[ref][]')
+                        .val(question.ref);
+                    $('#mainForm').append([questionInput,questionRef]);
                 });
                 SyncIcon.removeClass("rotate");
             },

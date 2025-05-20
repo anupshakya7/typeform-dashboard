@@ -169,7 +169,7 @@ class FormController extends Controller
                     'extra_ques2',
                     'extra_ques3',
                 ];
-                
+
                 $matchCountry = array_filter($validatedData['questions']['ref'],function($item){
                     return is_string($item) && Str::contains($item,'country_field_ref');
                 });
@@ -179,7 +179,6 @@ class FormController extends Controller
                         return $item !== 'country'; 
                     });
                 }
-                
                 
                 $matches = array_filter($validatedData['questions']['ref'],function($item){
                     return is_string($item) && str_ends_with($item,'_state_field_ref');
@@ -198,37 +197,37 @@ class FormController extends Controller
                      $firstStateIndex = null;
                 
                     foreach($validatedData['questions']['question'] as $index=>$value){
-                        if(is_string($value) && strpos($value,"Which state are your from?") === 0){
+                        if(is_string($value) && strpos($value,"Please enter your state/province/county.") === 0){
                             $firstStateIndex = $index;
                             break;
                         }
                     }
                     
                     $filteredArray = array_filter($validatedData['questions']['question'],function($item){
-                        return !is_string($item) || strpos($item,'Which state are your from?') !== 0;
+                        return !is_string($item) || strpos($item,'Please enter your state/province/county.') !== 0;
                     });
                     
                     $filteredArray = array_values($filteredArray);
                     
                     if(!is_null($firstStateIndex)){
-                        array_splice($filteredArray,$firstStateIndex,0,["Which state are you from?"]);
+                        array_splice($filteredArray,$firstStateIndex,0,["Please enter your state/province/county."]);
                     }
                     
                     $validatedData['questions']['question'] = $filteredArray;
                 }
-                
+
                 $questionFormattingData = [];
 
                 foreach ($validatedData['questions']['question'] as $key => $question) {
                     $questionFormattingData[$labelDBData[$key]] = $question;
                 }
-                
+
                 $formIdData = [
                     'form_id' => $validatedData['formId']
                 ];
-                
+ 
                 $questionsData = array_merge($formIdData, $questionFormattingData);
-            
+
                 Question::create($questionsData);
                 Log::info("Form and Question Created Successfully!");
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
