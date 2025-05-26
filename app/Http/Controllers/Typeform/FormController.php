@@ -623,8 +623,24 @@ class FormController extends Controller
                 if($countryCheckbox && $stateCheckbox){
                     foreach ($countriesState as $country) {
                          $stateChoices = $country->states->map(fn($state)=>['label'=>$state->name])->toArray();
-                         
+                       
                          if(empty($stateChoices)){
+                            $logicCountryState[] = [
+                                "action" => "jump",
+                                "condition" => [
+                                    "op" => "equal",
+                                    "vars" => [
+                                        ["type"=>"field","value"=>"country_field_ref"],
+                                        ["type"=>"constant","value"=>$country->name],
+                                    ]
+                                ],
+                                "details" => [
+                                    "to" => [
+                                        "type" => "field",
+                                        "value" => $formAfterGender,
+                                    ]
+                                ]
+                            ];
                              continue;
                          }
                         
