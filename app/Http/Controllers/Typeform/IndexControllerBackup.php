@@ -32,6 +32,7 @@ class IndexController extends Controller
             //Dropdown
             $countriesPath = public_path('build/js/countries/countries.json');
             $countries = json_decode(File::get($countriesPath),true);
+            
             $organizations = Organization::filterOrganization()->get();
             $surveyForms = Form::filterForm()->get();
             

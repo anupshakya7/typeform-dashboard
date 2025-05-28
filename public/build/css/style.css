@@ -931,3 +931,13 @@ table td{
 .table-responsive{
     min-height: 260px;
 }
+
+.survey-type{
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    background-color: #6b0f0f;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 8px;
+}

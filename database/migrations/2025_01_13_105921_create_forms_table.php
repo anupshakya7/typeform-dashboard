@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('form_id');
             $table->string('form_title');
-            $table->string('country');
+            $table->string('country')->nullable();
             $table->string('webhook')->default(0);
             $table->unsignedBigInteger('organization_id');
             $table->unsignedBigInteger('branch_id')->nullable();
