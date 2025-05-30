@@ -3,7 +3,7 @@
     <div class="col-12 col-sm-10 col-md-9">
         <div class="filter-section show-filter d-flex flex-column align-content-stretch justify-content-start h-100">
             <div class="mb-2">
-                @php
+                <?php
                     $user = auth()->user()->role->name;
                     if ($user == 'superadmin') {
                         $lastText = ' or Organisation';
@@ -12,71 +12,65 @@
                     } else {
                         $lastText = '';
                     }
-                @endphp
+                ?>
                 <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for
-                    <b>{{ $formDetails->form_title }}</b>. <span class="survey-type">Country Survey</span>
-                        @if ($user !== 'survey')
+                    <b><?php echo e($formDetails->form_title); ?></b>. <span class="survey-type">Country Survey</span>
+                        <?php if($user !== 'survey'): ?>
                             <br><span>Use the filters below to switch between different surveys or refine your results
-                                by Country{{ $lastText }}.</span></h5>
-                @endif
+                                by Country<?php echo e($lastText); ?>.</span></h5>
+                <?php endif; ?>
             </div>
 
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
-                <form action="{{ route('home.index') }}" method="GET">
+                <form action="<?php echo e(route('home.index')); ?>" method="GET">
                     <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
                         
                         <div class="col-auto p-0">
-                            @if (auth()->user()->role->name == 'superadmin')
+                            <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                 <select class="form-select select2" id="organization" name="organization"
                                     aria-label="Default select example">
                                     <option value="" selected>Select Organization</option>
-                                    @foreach ($organizations as $organization)
-                                        <option value="{{ $organization->id }}"
-                                            {{ ($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id || $selectedOrganizationwithSurvey == $organization->id ? 'selected' : '' }}>
-                                            {{ $organization->name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $organizations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $organization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($organization->id); ?>"
+                                            <?php echo e(($filterData && $filterData->organization_id == $organization->id) || request('organization') == $organization->id || $selectedOrganizationwithSurvey == $organization->id ? 'selected' : ''); ?>>
+                                            <?php echo e($organization->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                            @else
+                            <?php else: ?>
                                 <input type="text" class="form-control organization-name"
-                                    value="{{ auth()->user()->organization->name }}" readonly>
+                                    value="<?php echo e(auth()->user()->organization->name); ?>" readonly>
                                 <input type="hidden" name="organization" class="form-control"
-                                    value="{{ old('organization', auth()->user()->organization_id) }}" id="organization"
+                                    value="<?php echo e(old('organization', auth()->user()->organization_id)); ?>" id="organization"
                                     readonly>
-                            @endif
+                            <?php endif; ?>
                         </div>
 
                         <div class="col-auto p-0">
-                            {{-- @if (auth()->user()->role->name == 'survey')
-                         <input type="text" class="form-control" value="{{auth()->user()->branch_id != null ? auth()->user()->branch->name :''}}" readonly>
-                         <input type="hidden" name="branch" class="form-control" value="{{old('branch',auth()->user()->branch_id)}}" id="branch" readonly>
-                         @else --}}
+                            
                             <select class="form-select select2" id="branch" name="branch"
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select Division</option>
                             </select>
-                            {{-- @endif --}}
+                            
                         </div>
                         <div class="col-auto p-0">
-                            {{-- @if (auth()->user()->role->name == 'survey')
-                             <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
-                             <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
-                         @else --}}
+                            
                             <select class="form-select select2" name="survey" id="survey"
                                 aria-label="Default select example">
                                 <option value="" selected>Select Survey</option>
-                                @foreach ($surveyForms as $surveyForm)
-                                    <option value="{{ $surveyForm->form_title }}"
-                                        {{ ($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }} 
-                                        @if($surveyForm->form_type == 0)
-                                            data-country="{{$surveyForm->country}}"
-                                        @elseif ($surveyForm->form_type ==1)
-                                            data-country-url="{{ route('countrystate.get', ['surveyId' => $surveyForm->form_id]) }}"
-                                        @endif    
+                                <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($surveyForm->form_title); ?>"
+                                        <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?> 
+                                        <?php if($surveyForm->form_type == 0): ?>
+                                            data-country="<?php echo e($surveyForm->country); ?>"
+                                        <?php elseif($surveyForm->form_type ==1): ?>
+                                            data-country-url="<?php echo e(route('countrystate.get', ['surveyId' => $surveyForm->form_id])); ?>"
+                                        <?php endif; ?>    
                                     >
-                                        {{ $surveyForm->form_title }} ({{$surveyForm->form_type == 1 ? 'Global':'Single'}})</option>
-                                @endforeach
+                                        <?php echo e($surveyForm->form_title); ?> (<?php echo e($surveyForm->form_type == 1 ? 'Global':'Single'); ?>)</option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                            {{-- @endif --}}
+                            
                         </div>
 
                         <div class="col-auto p-0" id="countryField">
@@ -86,36 +80,30 @@
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select Country</option>
                             </select>
-                            {{-- @endif --}}
-                            {{-- <div id="country_hidden">
-
-                            </div> --}}
+                            
+                            
                         </div>
                         <div class="col-auto p-0">
-                            {{-- @if(auth()->user()->role->name == 'survey')
-                                <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
-                            @else --}}
+                            
                             <select class="form-select select2" name="state" id="state_select"
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select State</option>
                             </select>
-                            {{-- @endif --}}
-                            {{-- <div id="country_hidden">
-
-                            </div> --}}
+                            
+                            
                         </div>
 
-                        {{-- @if (auth()->user()->role->name !== 'survey') --}}
+                        
                         <div class="col-auto p-0">
                             <button href="#" class="view-insight-btn" id="filter_btn"
-                                onclick="this.form.submit();" {{ request('survey') ? '' : 'disabled' }}>
+                                onclick="this.form.submit();" <?php echo e(request('survey') ? '' : 'disabled'); ?>>
                                 <span>View Insight</span>
                                 <i class='bx bx-arrow-back bx-rotate-180'></i>
                             </button>
 
                         </div>
 
-                        {{-- @endif --}}
+                        
                     </div>
 
             </div>
@@ -144,7 +132,7 @@
                 </div>
                 <div class="gap-2 mt-4">
                     <h4 class="fs-22 fw-semibold ff-secondary"><span class="counter-value"
-                            data-target="{{ $topBox['people'] }}">{{ $topBox['people'] }}</span>
+                            data-target="<?php echo e($topBox['people']); ?>"><?php echo e($topBox['people']); ?></span>
                     </h4>
 
 
@@ -156,3 +144,4 @@
 </div>
 
 <!--initial filter section-->
+<?php /**PATH E:\New Advance Project\typeform-dashboard\resources\views/typeform/partials/dashboard-filter.blade.php ENDPATH**/ ?>

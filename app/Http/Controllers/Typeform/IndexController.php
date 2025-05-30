@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Typeform;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Form;
+use App\Models\NCountry;
+use App\Models\NSubCountry;
 use App\Models\Organization;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,18 +41,35 @@ class IndexController extends Controller
     public function globalSurveyData($request)
     {
         $filterData = $request->all() == [] ? Form::filterForm()->where('form_id', session('survey_id'))->first() : null;
-    
+
         //Dropdown
         $countries = Form::select('country')->filterForm()->whereNotNull('country',)->distinct()->get();
 
         $organizations = Organization::filterOrganization()->get();
         $surveyForms = Form::filterForm()->get();
-
+        
         //Survey id if no then latest form id
         $country = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : session('country');
+        
+        if((isset($request->formType) && $request->formType == 1) || session('form_type') == 1){
+            $country = isset($request->country) && $request->country ? $request->country : null;
+            $selectedCountry = isset($request->country) && $request->country ? $request->country : null;
+            session(['country'=>$country]);       
+        }else{
+            $selectedCountry = null;
+            session(['country'=>null]); 
+        } 
+
+        if((isset($request->formType) && $request->formType == 1) || session('form_type') == 1){
+            $state = isset($request->state) && $request->state ?  $request->state :null; 
+            session(['state'=>$state]);
+        }else{
+            $state =null;
+        }
+
         $survey_id = isset($request->survey) && $request->survey ? $request->survey : session('survey_id');
         $form_type = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('form_type')->first() : session('form_type');
-        session(['country' => $country, 'survey_id' => $survey_id,'form_type'=>$form_type]);
+        session(['survey_id' => $survey_id,'form_type'=>$form_type]);
 
         $formDetails = Form::with('organization')->where('form_id', $survey_id)->first();
 
@@ -67,7 +86,7 @@ class IndexController extends Controller
 
         $resultByPillar = [];
 
-        return view('typeform.index', compact('formDetails', 'countries', 'organizations', 'surveyForms', 'topBox', 'meanScore', 'participantDetails', 'positivePeace', 'negativePeace', 'pillarMeanScore', 'overTimeScores', 'filterData', 'selectedCountrywithSurvey', 'selectedOrganizationwithSurvey'));
+        return view('typeform.index', compact('formDetails','countries', 'organizations', 'surveyForms', 'topBox', 'meanScore', 'participantDetails', 'positivePeace', 'negativePeace', 'pillarMeanScore', 'overTimeScores', 'filterData', 'selectedCountrywithSurvey', 'selectedOrganizationwithSurvey','selectedCountry','state' ));
     }
 
     // public function singleSurveyData($request)
@@ -104,7 +123,7 @@ class IndexController extends Controller
     //     return view('typeform.index', compact('formDetails', 'countries', 'organizations', 'surveyForms', 'topBox', 'meanScore', 'participantDetails', 'positivePeace', 'negativePeace', 'pillarMeanScore', 'overTimeScores', 'filterData', 'selectedCountrywithSurvey', 'selectedOrganizationwithSurvey'));
     // }
 
-    public function topBoxData($surveyValue = null,$form_type)
+    public function topBoxData($surveyValue = null,$form_type=null)
     {
         $surveys = Form::filterForm()->count();
         $countries = Form::select('country')->distinct()->filterForm()->get()->count();
@@ -119,7 +138,7 @@ class IndexController extends Controller
         ];
     }
 
-    public function meanScoreGraph($request, $survey_id,$form_type)
+    public function meanScoreGraph($request, $survey_id,$form_type=null)
     {
         $meanPillarScore = [];
 
@@ -147,7 +166,7 @@ class IndexController extends Controller
         return $meanPillarScore;
     }
 
-    public function participantDetails($survey_id,$form_type)
+    public function participantDetails($survey_id,$form_type=null)
     {
         $genderWise = [];
         $ageWise = [];
@@ -183,7 +202,7 @@ class IndexController extends Controller
         ];
     }
 
-    public function positiveNegative($country, $survey_id, $flag,$form_type)
+    public function positiveNegative($country, $survey_id, $flag,$form_type=null)
     {
         $types = ['mean', 'countryMean', 'globalMean'];
         $positiveMeanCal = [];
@@ -213,7 +232,7 @@ class IndexController extends Controller
         return $positiveMeanCal;
     }
 
-    public function pillarsMeanScore($country, $survey_id,$form_type)
+    public function pillarsMeanScore($country, $survey_id,$form_type=null)
     {
         $types = ['mean', 'countryMean', 'globalMean'];
         $pillars = [
@@ -257,7 +276,7 @@ class IndexController extends Controller
         return $pillarMeanCal;
     }
 
-    public function overTimeScore($survey_id,$form_type)
+    public function overTimeScore($survey_id,$form_type=null)
     {
         $survey = Form::with('answer')->filterForm()->where('form_id', $survey_id)->first();
         $overTimeMeanTime = [];

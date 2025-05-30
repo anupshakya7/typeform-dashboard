@@ -668,6 +668,14 @@
             var branch = branch_id ? branch_id : getQueryParams('branch');
             var survey = survey_id ? survey_id : getQueryParams('survey');
 
+            //Country Session
+            let countrySelected = @json($selectedCountry ?? session('country') ?? '');
+
+            if(countrySelected !== ''){
+                filterState();
+            }
+            
+
             var isFirstLoad = true;
 
             //filterOrganization();
@@ -695,7 +703,6 @@
             // $('#branch').change(function() {
             //     filterSurvey();
             // });
-
 
             $(document).on('change', '#country', function() {
                 // $('#survey').html('');
@@ -756,7 +763,7 @@
             
             function filterBtn(){
                 let surveyValue = $('#survey').val();
-                
+
                 filterCountry();
 
                 if(surveyValue!==""){
@@ -793,26 +800,33 @@
             }
 
             function filterCountry(){
-                console.log('testing 1');
                 let surveyType = $('#survey option:selected').data('formtype');
                 let surveyCountry = $('#survey option:selected').data('country');
-                console.log('testing 2',surveyType);
+                let selectedValue = '';
 
+                if(@json($selectedCountry)!==null){
+                    selectedValue = @json($selectedCountry);
+                }else if(@json(session('country')) !== null){
+                    selectedValue = @json(session('country'));
+                }else{
+                    selectedValue = '';
+                }
+                
+                console.log(selectedValue);
+                // let selectedValue =  @json($selectedCountry ?? session('country') ?? '');
+                
                 if (surveyType == 0) {
-                    $('#country_select').parent().find('.select2-container').hide();
-                    $('#country_select').prop('disabled', true);
-
                     $('#country_input').show().val(surveyCountry);
-
-                    disableStateField();
-                    
-                } else if (surveyType == 1) {
-                    $('#country_input').hide();
-                    $('#country_select').parent().find('.select2-container').show();
-                    $('#country_select').prop('disabled', false);
-
-                    //Clear existing options
+                    $('#country_select').val('').prop('disabled', true).trigger('change.select2');
                     $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+                    $('#country_select').parent().find('.select2-container').hide();
+
+                    disableStateField();                    
+                } else if (surveyType == 1) {
+                    $('#country_input').val('').hide();
+                    $('#country_select').prop('disabled', false);
+                    $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+                    $('#country_select').parent().find('.select2-container').show();
 
                     let countryUrl = $('#survey option:selected').data('country-url');
                     
@@ -824,8 +838,13 @@
                                         `<option value="${country.code}">${country.country}</option>`
                                     );
                                 });
+                                console.log('selectValueFinal',selectedValue);
+                                if(selectedValue !== ''){
+                                    $('#country_select').val(selectedValue).trigger('change.select2');
 
-                                $('#country_select').trigger('change.select2');
+                                    filterState();
+                                }
+                               
                             }
                         });
                     }
@@ -833,35 +852,42 @@
             }
 
             $('#country_select').change(function(){
-               let surveyId = $('#survey').val();
-               let countryCode = $(this).val();
-
-               let surveyType = $('#survey option:selected').data('formtype');
-
-               if(surveyType == 1){
-                    filterState(surveyId,countryCode);
-                    $('#state_select').prop('disabled',false);
-               }
+                let surveyType = $('#survey option:selected').data('formtype');
+                if (surveyType == 1) {
+                    filterState();
+                }
             });
 
-            function filterState(surveyId,countryCode){
-                $('#state_select').empty().append('<option value="" selected>Select State</option>');
+            function filterState(){
+                let surveyId = $('#survey').val();
+                let countryCode = $('#country_select').val();
+                let selectedState = @json($state ?? request()->query('state') ?? session('state') ?? '');
+
+                let surveyType = $('#survey option:selected').data('formtype');
+
+                if(surveyType == 1 && countryCode !== ''){
+                    $('#state_select').empty().append('<option value="" selected>Select State</option>');
                 
-                if (surveyId && countryCode) {
                     let stateUrl = `{{url('/')}}/typeform/getCountryState/${surveyId}/${countryCode}`;
                     
                     $.get(stateUrl,function(response){
                         if(response && response.data){
                             response.data.forEach(function(state){
                                 $('#state_select').append(
-                                     `<option value="${state.code}">${state.state}</option>`
+                                    `<option value="${state.code}">${state.state}</option>`
                                 );
                             });
 
-                            $('#state_select').trigger('change.select2');
+                            if(selectedState !== ''){
+                                $('#state_select').val(selectedState).trigger('change.select2');
+                            }
+                            
+                            $('#state_select').prop('disabled',false);
                         }
                     });
-                }
+                }else{
+                    disableStateField();
+                } 
             }
             
 

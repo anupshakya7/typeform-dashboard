@@ -6,18 +6,12 @@
 <style>
        .container-fluid {
        position: relative;
-display:flex;
+       /**
+display:inline-flex;
 justify-content: center;
+**/
        }
-       .highlight-area {
-        position: absolute;
-    z-index: 999999;
-    background-color: none;
-    border-radius: 10px;
-    padding: 20px 7px;
-    width: 100%;
-    background-color: white;
-       }
+       
        .footer {
         position: absolute !important;
        margin-left: var(--vz-vertical-menu-width);
@@ -32,16 +26,23 @@ justify-content: center;
 	.page-content {
 		    width: 100%;
     height: 100%;
-    position: absolute;
+   /**  position: absolute;**/
     top: 0;
     left: 0;
     margin: 0 auto;
 	}
 	.highlight-area {
-		width: 85%;
-		margin: 0 auto;
+        position: absolute;
+    background-color: none;
+    border-radius: 10px;
+    padding: 20px 7px;
+    width: 100%;
+    background-color: white;
+       
+		/** width: 85%; **/
+		/** margin: 0 auto; **/
 		margin-bottom: 100px;
- z-index: 99999999; /* Higher than overlay */
+ /** z-index: 99999999; /* Higher than overlay */ 
     pointer-events: auto !important; /* Force allow interactions */
 		@media(max-width:767px) {
 			width: 100%;
@@ -202,20 +203,8 @@ justify-content: center;
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
-
-                                <div class="col-auto p-0">
-                                    
-                                    <select class="form-select select2" name="country" id="country"
-                                        aria-label="Default select example">
-                                        <option value="" selected>Select Country</option>
-                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country->country); ?>">
-                                                <?php echo e($country->country); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    
-                                    
-                                </div>
+                            <input type="hidden" name="formType" id="formtype"/>
+                                
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                     <select class="form-select select2" id="organization" name="organization"
@@ -246,16 +235,51 @@ justify-content: center;
                                         aria-label="Default select example">
                                         <option value="" selected>Select Survey</option>
                                         <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $surveyForm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($surveyForm->form_title); ?>">
-                                                <?php echo e($surveyForm->form_title); ?></option>
+                                            <option value="<?php echo e($surveyForm->form_title); ?>" data-formtype="<?php echo e($surveyForm->form_type); ?>"
+                                                 <?php if($surveyForm->form_type == 0): ?>
+                                                    data-country="<?php echo e($surveyForm->country); ?>"
+                                                <?php elseif($surveyForm->form_type ==1): ?>
+                                                    data-country-url="<?php echo e(route('countrystate.get', ['surveyId' => $surveyForm->form_id])); ?>"
+                                                <?php endif; ?>
+                                                 >
+                                                
+                                                <?php echo e($surveyForm->form_title); ?> (<?php echo e($surveyForm->form_type == 1 ? 'Global':'Single'); ?>)</option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     
                                 </div>
+                                <div class="col-auto p-0" id="countryField">
+                                    <input type="text" class="form-control" name="country" id="country_input" readonly style="display:none;">
+
+                                    <select class="form-select select2" name="country" id="country_select"
+                                        aria-label="Default select example" disabled>
+                                        <option value="" selected>Select Country</option>
+
+                                        <?php
+                                            $countries = App\Models\NCountry::all();
+                                        ?>
+                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($country->code); ?>">
+                                                <?php echo e($country->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    
+                                    
+                                </div>
+                                <div class="col-auto p-0">
+                                    
+                                    <select class="form-select select2" name="state" id="state_select"
+                                        aria-label="Default select example" disabled>
+                                        <option value="" selected>Select State</option>
+                                    </select>
+                                    
+                                    
+                                </div>
+                                
                                 
                                 <div class="col-auto p-0">
                                     
-                                <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" <?php echo e(request('survey') ? '' :'disabled'); ?> >
+                                <button href="#" class="view-insight-btn" id="filter_btn"  <?php echo e(request('survey') ? '' :'disabled'); ?> >
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
@@ -323,21 +347,30 @@ justify-content: center;
 
                 filterBranch();
                 filterSurvey();
+                disableCountryField();
+                disableStateField();
             });
             $(document).on('change', '#branch', function() {
                 filterSurvey();
+                disableCountryField();
+                disableStateField();
             });
 
-            $(document).on('change', '#survey', function() {
+            $(document).on('change input', '#survey', function() {
                 filterBtn();
             });
 
             function filterBtn(){
                 let surveyValue = $('#survey').val();
+                let surveyType = $('#survey option:selected').data('formtype');
+                let surveyCountry = $('#survey option:selected').data('country');
+
+                filterCountry(surveyType,surveyCountry);
 
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
                     $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
+
                 }else{
                     $('#filter_btn').prop('disabled', true);
                     $('#filter_btn').attr({
@@ -348,6 +381,90 @@ justify-content: center;
                         'data-bs-placement' : 'top'
                     }).popover();
 
+                   
+                    disableCountryField();
+                    disableStateField();
+                   
+                }
+            }
+
+            function disableCountryField(){
+                $('#country_input').val('').hide();
+                $('#country_select').val('').prop('disabled', true).trigger('change.select2');
+                $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+                $('#country_select').parent().find('.select2-container').show();
+            }
+
+            function disableStateField(){
+                $('#state_select').val('').prop('disabled', true).trigger('change.select2');
+                $('#state_select').empty().append('<option value="" selected>Select State</option>');
+            }
+
+            function filterCountry(surveyType,surveyCountry){
+
+                if (surveyType == 0) {
+                    $('#country_select').parent().find('.select2-container').hide();
+                    $('#country_select').prop('disabled', true);
+
+                    $('#country_input').show().val(surveyCountry);
+
+                    disableStateField();
+                    
+                } else if (surveyType == 1) {
+                    $('#country_input').hide();
+                    $('#country_select').parent().find('.select2-container').show();
+                    $('#country_select').prop('disabled', false);
+
+                    //Clear existing options
+                    $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+
+                    let countryUrl = $('#survey option:selected').data('country-url');
+                    
+                    if(countryUrl){
+                        $.get(countryUrl,function(data){
+                            if(data && data.data){
+                                data.data.forEach(function(country){
+                                    $('#country_select').append(
+                                        `<option value="${country.code}">${country.country}</option>`
+                                    );
+                                });
+
+                                $('#country_select').trigger('change.select2');
+                            }
+                        });
+                    }
+                }
+            }
+
+            $('#country_select').change(function(){
+               let surveyId = $('#survey').val();
+               let countryCode = $(this).val();
+
+               let surveyType = $('#survey option:selected').data('formtype');
+
+               if(surveyType == 1){
+                    filterState(surveyId,countryCode);
+                    $('#state_select').prop('disabled',false);
+               }
+            });
+
+            function filterState(surveyId,countryCode){
+                $('#state_select').empty().append('<option value="" selected>Select State</option>');
+                
+                if (surveyId && countryCode) {
+                    let stateUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${surveyId}/${countryCode}`;
+                    
+                    $.get(stateUrl,function(response){
+                        if(response && response.data){
+                            response.data.forEach(function(state){
+                                $('#state_select').append(
+                                     `<option value="${state.code}">${state.state}</option>`
+                                );
+                            });
+
+                            $('#state_select').trigger('change.select2');
+                        }
+                    });
                 }
             }
 
@@ -413,6 +530,7 @@ justify-content: center;
             }
 
             function filterSurvey(){ 
+                filterBtn();
                 var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
@@ -435,7 +553,6 @@ justify-content: center;
                             var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
 
                             console.log('userRole',userRole);
-                            
 
                             console.log('before survey filter',response.forms);
 
@@ -453,19 +570,25 @@ justify-content: center;
                                 return true;
                             });
 
-                            console.log("after survey filter",formList);
-
                           
-
+                            
                             formList.forEach(function(formItem) {
-                                // $('#survey').append(new Option(form.form_title,
-                                // form.id));
+                                let formType = formItem.form_type == 1 ? 'Global':'Single'; 
+                                let formTypeValue = formItem.form_type;
+
                                 if(userRole == 'survey'){
                                     let surveyId = <?php echo json_encode(auth()->user()->form_id, 15, 512) ?>;
                                     let surveyIds = Array.isArray(surveyId) ? surveyId : surveyId.split(', ');
 
                                     if(surveyIds.includes(formItem.form_id)){
-                                        var option = new Option(formItem.form_title, formItem.form_id);
+                                        var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
+                                        option.setAttribute('data-formtype',formTypeValue);
+                                        if(formTypeValue == 0){
+                                            option.setAttribute('data-country',formItem.country);
+                                        }else if(formTypeValue == 1){
+                                            let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
+                                            option.setAttribute('data-country-url',countryUrl);
+                                        }
                                         $('#survey').append(option);
 
                                         if (survey && survey == formItem.form_id) {
@@ -473,7 +596,15 @@ justify-content: center;
                                         }
                                     }
                                 }else{
-                                    var option = new Option(formItem.form_title, formItem.form_id);
+                                    var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
+                                    option.setAttribute('data-formtype',formTypeValue);
+                                    if(formTypeValue == 0){
+                                        option.setAttribute('data-country',formItem.country);
+                                    }else if(formTypeValue == 1){
+                                        let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
+                                        option.setAttribute('data-country-url',countryUrl);
+                                    }
+
                                     $('#survey').append(option);
 
                                     if (survey && survey == formItem.form_id) {
@@ -518,7 +649,17 @@ justify-content: center;
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        $('#filter_btn').on('click', function(e) {
+            e.preventDefault();
+
+            let formType = $('#survey option:selected').data('formtype');
+            $('#formtype').val(formType);
+
+            $(this).closest('form').submit();
+        });
+
+    
+       // document.addEventListener('DOMContentLoaded', function() {
             // Check if current page is homepage (root '/' or '')
 
             // if (window.location.pathname === '/' || window.location.pathname === '') {
@@ -526,8 +667,8 @@ justify-content: center;
             // } else {
             //   document.body.classList.remove('overlay-active');
             // }
-            document.body.classList.add('overlay-active');
-        });
+         //   document.body.classList.add('overlay-active');
+       // });
 
     </script>
 
