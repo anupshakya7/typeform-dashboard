@@ -929,7 +929,7 @@
                 }
             }
 
-            function filterSurvey(){ 
+            function filterSurvey(callback){ 
                 var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
@@ -1024,6 +1024,10 @@
                                 }
                             }else{
                                 $('#filter_btn').prop('disabled',true);
+                            }
+
+                            if(typeof callback === 'function'){
+                                callback();
                             }
 
                         },
