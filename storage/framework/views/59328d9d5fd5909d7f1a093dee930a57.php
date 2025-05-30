@@ -5,18 +5,12 @@
 <style>
        .container-fluid {
        position: relative;
-display:flex;
+       /**
+display:inline-flex;
 justify-content: center;
+**/
        }
-       .highlight-area {
-        position: absolute;
-    z-index: 999999;
-    background-color: none;
-    border-radius: 10px;
-    padding: 20px 7px;
-    width: 100%;
-    background-color: white;
-       }
+       
        .footer {
         position: absolute !important;
        margin-left: var(--vz-vertical-menu-width);
@@ -31,16 +25,23 @@ justify-content: center;
 	.page-content {
 		    width: 100%;
     height: 100%;
-    position: absolute;
+   /**  position: absolute;**/
     top: 0;
     left: 0;
     margin: 0 auto;
 	}
 	.highlight-area {
-		width: 85%;
-		margin: 0 auto;
+        position: absolute;
+    background-color: none;
+    border-radius: 10px;
+    padding: 20px 7px;
+    width: 100%;
+    background-color: white;
+       
+		/** width: 85%; **/
+		/** margin: 0 auto; **/
 		margin-bottom: 100px;
- z-index: 99999999; /* Higher than overlay */
+ /** z-index: 99999999; /* Higher than overlay */ 
     pointer-events: auto !important; /* Force allow interactions */
 		@media(max-width:767px) {
 			width: 100%;
@@ -202,19 +203,7 @@ justify-content: center;
                         <form action="<?php echo e(route('home.index')); ?>" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
 
-                                <div class="col-auto p-0">
-                                    
-                                    <select class="form-select select2" name="country" id="country"
-                                        aria-label="Default select example">
-                                        <option value="" selected>Select Country</option>
-                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($country->country); ?>">
-                                                <?php echo e($country->country); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    
-                                    
-                                </div>
+                                
                                 <div class="col-auto p-0">
                                     <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                     <select class="form-select select2" id="organization" name="organization"
@@ -241,6 +230,19 @@ justify-content: center;
                                 </div>
                                 <div class="col-auto p-0">
                                     
+                                    <select class="form-select select2" name="country" id="country"
+                                        aria-label="Default select example">
+                                        <option value="" selected>Select Country</option>
+                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($country->country); ?>">
+                                                <?php echo e($country->country); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    
+                                    
+                                </div>
+                                <div class="col-auto p-0">
+                                    
                                     <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example">
                                         <option value="" selected>Select Survey</option>
@@ -251,6 +253,7 @@ justify-content: center;
                                     </select>
                                     
                                 </div>
+                                
                                 
                                 <div class="col-auto p-0">
                                     
@@ -517,7 +520,8 @@ justify-content: center;
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
+    
+       // document.addEventListener('DOMContentLoaded', function() {
             // Check if current page is homepage (root '/' or '')
 
             // if (window.location.pathname === '/' || window.location.pathname === '') {
@@ -525,8 +529,8 @@ justify-content: center;
             // } else {
             //   document.body.classList.remove('overlay-active');
             // }
-            document.body.classList.add('overlay-active');
-        });
+         //   document.body.classList.add('overlay-active');
+       // });
 
     </script>
 

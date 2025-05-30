@@ -25,17 +25,7 @@
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
                 <form action="<?php echo e(route('home.index')); ?>" method="GET">
                     <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
-                        <div class="col-auto p-0">
-                            <select class="form-select select2" name="country" id="country"
-                                aria-label="Default select example">
-                                <option value="">Select Country</option>
-                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($country->country); ?>"
-                                        <?php echo e(($filterData && $filterData->country == $country->country) || request('country') == $country->country || $selectedCountrywithSurvey == $country->country ? 'selected' : ''); ?>>
-                                        <?php echo e($country->country); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
-                        </div>
+                        
                         <div class="col-auto p-0">
                             <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                 <select class="form-select select2" id="organization" name="organization"
@@ -65,6 +55,17 @@
                             
                         </div>
                         <div class="col-auto p-0">
+                            <select class="form-select select2" name="country" id="country"
+                                aria-label="Default select example">
+                                <option value="">Select Country</option>
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($country->country); ?>"
+                                        <?php echo e(($filterData && $filterData->country == $country->country) || request('country') == $country->country || $selectedCountrywithSurvey == $country->country ? 'selected' : ''); ?>>
+                                        <?php echo e($country->country); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                        <div class="col-auto p-0">
                             
                             <select class="form-select select2" name="survey" id="survey"
                                 aria-label="Default select example">
@@ -77,6 +78,7 @@
                             </select>
                             
                         </div>
+                        
                         
                         <div class="col-auto p-0">
                             <button href="#" class="view-insight-btn" id="filter_btn"
