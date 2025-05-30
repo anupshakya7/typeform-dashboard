@@ -28,14 +28,18 @@ class IndexController extends Controller
 
             return view('typeform.welcome.index', compact('countries', 'organizations', 'surveyForms', 'topBox'));
         } else {
-            return $this->singleSurveyData($request);
+            // if((isset($request->formType) && $request->formType == 0) || (session('form_type') == 0 && session('form_type') !== null)){
+            //     return $this->singleSurveyData($request);
+            // }elseif((isset($request->formType) && $request->formType == 1) || (session('form_type') == 1 && session('form_type') !== null)){
+                return $this->globalSurveyData($request);
+            // }
         }
     }
 
-    public function singleSurveyData($request)
+    public function globalSurveyData($request)
     {
         $filterData = $request->all() == [] ? Form::filterForm()->where('form_id', session('survey_id'))->first() : null;
-
+    
         //Dropdown
         $countries = Form::select('country')->filterForm()->whereNotNull('country',)->distinct()->get();
 
@@ -45,27 +49,62 @@ class IndexController extends Controller
         //Survey id if no then latest form id
         $country = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : session('country');
         $survey_id = isset($request->survey) && $request->survey ? $request->survey : session('survey_id');
-        session(['country' => $country, 'survey_id' => $survey_id]);
+        $form_type = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('form_type')->first() : session('form_type');
+        session(['country' => $country, 'survey_id' => $survey_id,'form_type'=>$form_type]);
 
         $formDetails = Form::with('organization')->where('form_id', $survey_id)->first();
 
         $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : null;
         $selectedOrganizationwithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('organization_id')->first() : null;
 
-        $topBox = $this->topBoxData($survey_id);
-        $meanScore = $this->meanScoreGraph($request->all(), $survey_id);
-        $participantDetails = $this->participantDetails($survey_id);
-        $positivePeace = $this->positiveNegative($country, $survey_id, 'positive_peace');
-        $negativePeace = $this->positiveNegative($country, $survey_id, 'negative_peace');
-        $pillarMeanScore = $this->pillarsMeanScore($country, $survey_id);
-        $overTimeScores = $this->overTimeScore($survey_id);
+        $topBox = $this->topBoxData($survey_id,$form_type);
+        $meanScore = $this->meanScoreGraph($request->all(), $survey_id,$form_type);
+        $participantDetails = $this->participantDetails($survey_id,$form_type);
+        $positivePeace = $this->positiveNegative($country, $survey_id, 'positive_peace',$form_type);
+        $negativePeace = $this->positiveNegative($country, $survey_id, 'negative_peace',$form_type);
+        $pillarMeanScore = $this->pillarsMeanScore($country, $survey_id,$form_type);
+        $overTimeScores = $this->overTimeScore($survey_id,$form_type);
 
         $resultByPillar = [];
 
         return view('typeform.index', compact('formDetails', 'countries', 'organizations', 'surveyForms', 'topBox', 'meanScore', 'participantDetails', 'positivePeace', 'negativePeace', 'pillarMeanScore', 'overTimeScores', 'filterData', 'selectedCountrywithSurvey', 'selectedOrganizationwithSurvey'));
     }
 
-    public function topBoxData($surveyValue = null)
+    // public function singleSurveyData($request)
+    // {
+    //     $filterData = $request->all() == [] ? Form::filterForm()->where('form_id', session('survey_id'))->first() : null;
+
+    //     //Dropdown
+    //     $countries = Form::select('country')->filterForm()->whereNotNull('country',)->distinct()->get();
+
+    //     $organizations = Organization::filterOrganization()->get();
+    //     $surveyForms = Form::filterForm()->get();
+
+    //     //Survey id if no then latest form id
+    //     $country = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : session('country');
+    //     $survey_id = isset($request->survey) && $request->survey ? $request->survey : session('survey_id');
+    //     $form_type = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('form_type')->first() : session('form_type');
+    //     session(['country' => $country, 'survey_id' => $survey_id,'form_type'=>$form_type]);
+
+    //     $formDetails = Form::with('organization')->where('form_id', $survey_id)->first();
+
+    //     $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : null;
+    //     $selectedOrganizationwithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('organization_id')->first() : null;
+
+    //     $topBox = $this->topBoxData($survey_id);
+    //     $meanScore = $this->meanScoreGraph($request->all(), $survey_id);
+    //     $participantDetails = $this->participantDetails($survey_id);
+    //     $positivePeace = $this->positiveNegative($country, $survey_id, 'positive_peace');
+    //     $negativePeace = $this->positiveNegative($country, $survey_id, 'negative_peace');
+    //     $pillarMeanScore = $this->pillarsMeanScore($country, $survey_id);
+    //     $overTimeScores = $this->overTimeScore($survey_id);
+
+    //     $resultByPillar = [];
+
+    //     return view('typeform.index', compact('formDetails', 'countries', 'organizations', 'surveyForms', 'topBox', 'meanScore', 'participantDetails', 'positivePeace', 'negativePeace', 'pillarMeanScore', 'overTimeScores', 'filterData', 'selectedCountrywithSurvey', 'selectedOrganizationwithSurvey'));
+    // }
+
+    public function topBoxData($surveyValue = null,$form_type)
     {
         $surveys = Form::filterForm()->count();
         $countries = Form::select('country')->distinct()->filterForm()->get()->count();
@@ -80,7 +119,7 @@ class IndexController extends Controller
         ];
     }
 
-    public function meanScoreGraph($request, $survey_id)
+    public function meanScoreGraph($request, $survey_id,$form_type)
     {
         $meanPillarScore = [];
 
@@ -108,7 +147,7 @@ class IndexController extends Controller
         return $meanPillarScore;
     }
 
-    public function participantDetails($survey_id)
+    public function participantDetails($survey_id,$form_type)
     {
         $genderWise = [];
         $ageWise = [];
@@ -144,7 +183,7 @@ class IndexController extends Controller
         ];
     }
 
-    public function positiveNegative($country, $survey_id, $flag)
+    public function positiveNegative($country, $survey_id, $flag,$form_type)
     {
         $types = ['mean', 'countryMean', 'globalMean'];
         $positiveMeanCal = [];
@@ -174,7 +213,7 @@ class IndexController extends Controller
         return $positiveMeanCal;
     }
 
-    public function pillarsMeanScore($country, $survey_id)
+    public function pillarsMeanScore($country, $survey_id,$form_type)
     {
         $types = ['mean', 'countryMean', 'globalMean'];
         $pillars = [
@@ -218,7 +257,7 @@ class IndexController extends Controller
         return $pillarMeanCal;
     }
 
-    public function overTimeScore($survey_id)
+    public function overTimeScore($survey_id,$form_type)
     {
         $survey = Form::with('answer')->filterForm()->where('form_id', $survey_id)->first();
         $overTimeMeanTime = [];

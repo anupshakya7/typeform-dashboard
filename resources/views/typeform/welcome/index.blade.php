@@ -203,7 +203,7 @@ justify-content: center;
                     <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3" >
                         <form action="{{ route('home.index') }}" method="GET">
                         <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
-
+                            <input type="hidden" name="formType" id="formtype"/>
                                 
                                 <div class="col-auto p-0">
                                     @if(auth()->user()->role->name == 'superadmin')
@@ -234,14 +234,39 @@ justify-content: center;
                                 </div>
                                 <div class="col-auto p-0">
                                     {{-- @if(auth()->user()->role->name == 'survey')
-                                        <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
+                                        <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
+                                        <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
                                     @else --}}
-                                    <select class="form-select select2" name="country" id="country"
+                                    <select class="form-select select2" name="survey" id="survey"
                                         aria-label="Default select example">
+                                        <option value="" selected>Select Survey</option>
+                                        @foreach ($surveyForms as $surveyForm)
+                                            <option value="{{ $surveyForm->form_title }}" data-formtype="{{ $surveyForm->form_type }}"
+                                                 @if($surveyForm->form_type == 0)
+                                                    data-country="{{$surveyForm->country}}"
+                                                @elseif ($surveyForm->form_type ==1)
+                                                    data-country-url="{{ route('countrystate.get', ['surveyId' => $surveyForm->form_id]) }}"
+                                                @endif
+                                                 >
+                                                
+                                                {{ $surveyForm->form_title }} ({{$surveyForm->form_type == 1 ? 'Global':'Single'}})</option>
+                                        @endforeach
+                                    </select>
+                                    {{-- @endif --}}
+                                </div>
+                                <div class="col-auto p-0" id="countryField">
+                                    <input type="text" class="form-control" name="country" id="country_input" readonly style="display:none;">
+
+                                    <select class="form-select select2" name="country" id="country_select"
+                                        aria-label="Default select example" disabled>
                                         <option value="" selected>Select Country</option>
+
+                                        @php
+                                            $countries = App\Models\NCountry::all();
+                                        @endphp
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->country }}">
-                                                {{ $country->country }}</option>
+                                            <option value="{{ $country->code }}">
+                                                {{ $country->name }}</option>
                                         @endforeach
                                     </select>
                                     {{-- @endif --}}
@@ -251,24 +276,22 @@ justify-content: center;
                                 </div>
                                 <div class="col-auto p-0">
                                     {{-- @if(auth()->user()->role->name == 'survey')
-                                        <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
-                                        <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
+                                        <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
                                     @else --}}
-                                    <select class="form-select select2" name="survey" id="survey"
-                                        aria-label="Default select example">
-                                        <option value="" selected>Select Survey</option>
-                                        @foreach ($surveyForms as $surveyForm)
-                                            <option value="{{ $surveyForm->form_title }}">
-                                                {{ $surveyForm->form_title }}</option>
-                                        @endforeach
+                                    <select class="form-select select2" name="state" id="state_select"
+                                        aria-label="Default select example" disabled>
+                                        <option value="" selected>Select State</option>
                                     </select>
                                     {{-- @endif --}}
+                                    {{-- <div id="country_hidden">
+
+                                    </div> --}}
                                 </div>
                                 
                                 {{-- @if(auth()->user()->role->name !== 'survey') --}}
                                 <div class="col-auto p-0">
                                     
-                                <button href="#" class="view-insight-btn" id="filter_btn" onclick="this.form.submit();" {{request('survey') ? '' :'disabled'}} >
+                                <button href="#" class="view-insight-btn" id="filter_btn"  {{request('survey') ? '' :'disabled'}} >
                                         <span>View Insight</span>
                                         <i class='bx bx-arrow-back bx-rotate-180' ></i>
                                     </button>
@@ -336,21 +359,30 @@ justify-content: center;
 
                 filterBranch();
                 filterSurvey();
+                disableCountryField();
+                disableStateField();
             });
             $(document).on('change', '#branch', function() {
                 filterSurvey();
+                disableCountryField();
+                disableStateField();
             });
 
-            $(document).on('change', '#survey', function() {
+            $(document).on('change input', '#survey', function() {
                 filterBtn();
             });
 
             function filterBtn(){
                 let surveyValue = $('#survey').val();
+                let surveyType = $('#survey option:selected').data('formtype');
+                let surveyCountry = $('#survey option:selected').data('country');
+
+                filterCountry(surveyType,surveyCountry);
 
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
                     $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
+
                 }else{
                     $('#filter_btn').prop('disabled', true);
                     $('#filter_btn').attr({
@@ -361,6 +393,90 @@ justify-content: center;
                         'data-bs-placement' : 'top'
                     }).popover();
 
+                   
+                    disableCountryField();
+                    disableStateField();
+                   
+                }
+            }
+
+            function disableCountryField(){
+                $('#country_input').val('').hide();
+                $('#country_select').val('').prop('disabled', true).trigger('change.select2');
+                $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+                $('#country_select').parent().find('.select2-container').show();
+            }
+
+            function disableStateField(){
+                $('#state_select').val('').prop('disabled', true).trigger('change.select2');
+                $('#state_select').empty().append('<option value="" selected>Select State</option>');
+            }
+
+            function filterCountry(surveyType,surveyCountry){
+
+                if (surveyType == 0) {
+                    $('#country_select').parent().find('.select2-container').hide();
+                    $('#country_select').prop('disabled', true);
+
+                    $('#country_input').show().val(surveyCountry);
+
+                    disableStateField();
+                    
+                } else if (surveyType == 1) {
+                    $('#country_input').hide();
+                    $('#country_select').parent().find('.select2-container').show();
+                    $('#country_select').prop('disabled', false);
+
+                    //Clear existing options
+                    $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+
+                    let countryUrl = $('#survey option:selected').data('country-url');
+                    
+                    if(countryUrl){
+                        $.get(countryUrl,function(data){
+                            if(data && data.data){
+                                data.data.forEach(function(country){
+                                    $('#country_select').append(
+                                        `<option value="${country.code}">${country.country}</option>`
+                                    );
+                                });
+
+                                $('#country_select').trigger('change.select2');
+                            }
+                        });
+                    }
+                }
+            }
+
+            $('#country_select').change(function(){
+               let surveyId = $('#survey').val();
+               let countryCode = $(this).val();
+
+               let surveyType = $('#survey option:selected').data('formtype');
+
+               if(surveyType == 1){
+                    filterState(surveyId,countryCode);
+                    $('#state_select').prop('disabled',false);
+               }
+            });
+
+            function filterState(surveyId,countryCode){
+                $('#state_select').empty().append('<option value="" selected>Select State</option>');
+                
+                if (surveyId && countryCode) {
+                    let stateUrl = `{{url('/')}}/typeform/getCountryState/${surveyId}/${countryCode}`;
+                    
+                    $.get(stateUrl,function(response){
+                        if(response && response.data){
+                            response.data.forEach(function(state){
+                                $('#state_select').append(
+                                     `<option value="${state.code}">${state.state}</option>`
+                                );
+                            });
+
+                            $('#state_select').trigger('change.select2');
+                        }
+                    });
                 }
             }
 
@@ -426,6 +542,7 @@ justify-content: center;
             }
 
             function filterSurvey(){ 
+                filterBtn();
                 var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
@@ -448,7 +565,6 @@ justify-content: center;
                             var userBranchId = @json(auth()->user()->branch_id);
 
                             console.log('userRole',userRole);
-                            
 
                             console.log('before survey filter',response.forms);
 
@@ -466,19 +582,25 @@ justify-content: center;
                                 return true;
                             });
 
-                            console.log("after survey filter",formList);
-
                           
-
+                            
                             formList.forEach(function(formItem) {
-                                // $('#survey').append(new Option(form.form_title,
-                                // form.id));
+                                let formType = formItem.form_type == 1 ? 'Global':'Single'; 
+                                let formTypeValue = formItem.form_type;
+
                                 if(userRole == 'survey'){
                                     let surveyId = @json(auth()->user()->form_id);
                                     let surveyIds = Array.isArray(surveyId) ? surveyId : surveyId.split(', ');
 
                                     if(surveyIds.includes(formItem.form_id)){
-                                        var option = new Option(formItem.form_title, formItem.form_id);
+                                        var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
+                                        option.setAttribute('data-formtype',formTypeValue);
+                                        if(formTypeValue == 0){
+                                            option.setAttribute('data-country',formItem.country);
+                                        }else if(formTypeValue == 1){
+                                            let countryUrl = `{{url('/')}}/typeform/getCountryState/${formItem.form_id}`;
+                                            option.setAttribute('data-country-url',countryUrl);
+                                        }
                                         $('#survey').append(option);
 
                                         if (survey && survey == formItem.form_id) {
@@ -486,7 +608,15 @@ justify-content: center;
                                         }
                                     }
                                 }else{
-                                    var option = new Option(formItem.form_title, formItem.form_id);
+                                    var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
+                                    option.setAttribute('data-formtype',formTypeValue);
+                                    if(formTypeValue == 0){
+                                        option.setAttribute('data-country',formItem.country);
+                                    }else if(formTypeValue == 1){
+                                        let countryUrl = `{{url('/')}}/typeform/getCountryState/${formItem.form_id}`;
+                                        option.setAttribute('data-country-url',countryUrl);
+                                    }
+
                                     $('#survey').append(option);
 
                                     if (survey && survey == formItem.form_id) {
@@ -529,6 +659,15 @@ justify-content: center;
                 var urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
             }
+        });
+
+        $('#filter_btn').on('click', function(e) {
+            e.preventDefault();
+
+            let formType = $('#survey option:selected').data('formtype');
+            $('#formtype').val(formType);
+
+            $(this).closest('form').submit();
         });
 
     

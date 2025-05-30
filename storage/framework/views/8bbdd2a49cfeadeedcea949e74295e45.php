@@ -653,7 +653,7 @@
 
     <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
-    <script>
+    <script defer>
         $(document).ready(function() {
             var branch_id = <?php echo json_encode($filterData->branch_id ?? null); ?>;
             var survey_id = <?php echo json_encode($filterData->form_id ?? null); ?>;
@@ -668,7 +668,11 @@
 
             //filterOrganization();
             filterBranch();
-            filterSurvey();
+            filterSurvey(()=>{
+                filterBtn();
+            });
+            
+            
 
             //Filter Organizations
             // $('#country').change(function() {
@@ -710,6 +714,8 @@
                 filterBranch();
 
                 filterSurvey();
+                disableCountryField();
+                disableStateField();
                 // filterBtn();
 
             });
@@ -718,13 +724,41 @@
                 // $('#survey').append('<option value="" selected>Select Survey</option>');
                 filterSurvey();
                 // filterBtn();
+                disableCountryField();
+                disableStateField();
             });
 
             $(document).on('change', '#survey', function() {
+                // let surveyValue = $('#survey').val();
+
+                // if(surveyValue!==""){
+                //     $('#filter_btn').prop('disabled',false);
+                //     $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
+                // }else{
+                //     $('#filter_btn').prop('disabled', true);
+                //     $('#filter_btn').attr({
+                //         'tabindex': '0',
+                //         'data-bs-toggle': 'popover',
+                //         'data-bs-trigger': 'hover focus',
+                //         'data-bs-content': 'Select survey to view insights!',
+                //         'data-bs-placement': 'top'
+
+                //     }).popover();
+
+                // }
+                filterBtn();
+            });
+
+            
+            function filterBtn(){
                 let surveyValue = $('#survey').val();
+                
+                filterCountry();
+
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
                     $('#filter_btn').popover('dispose').removeAttr('tabindex data-bs-toggle data-bs-trigger data-bs-content');
+
                 }else{
                     $('#filter_btn').prop('disabled', true);
                     $('#filter_btn').attr({
@@ -732,14 +766,99 @@
                         'data-bs-toggle': 'popover',
                         'data-bs-trigger': 'hover focus',
                         'data-bs-content': 'Select survey to view insights!',
-                        'data-bs-placement': 'top'
-
+                        'data-bs-placement' : 'top'
                     }).popover();
 
+                   
+                    disableCountryField();
+                    disableStateField();
+                   
                 }
+            }
+
+            function disableCountryField(){
+                $('#country_input').val('').hide();
+                $('#country_select').val('').prop('disabled', true).trigger('change.select2');
+                $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+                $('#country_select').parent().find('.select2-container').show();
+            }
+
+            function disableStateField(){
+                $('#state_select').val('').prop('disabled', true).trigger('change.select2');
+                $('#state_select').empty().append('<option value="" selected>Select State</option>');
+            }
+
+            function filterCountry(){
+                console.log('testing 1');
+                let surveyType = $('#survey option:selected').data('formtype');
+                let surveyCountry = $('#survey option:selected').data('country');
+                console.log('testing 2',surveyType);
+
+                if (surveyType == 0) {
+                    $('#country_select').parent().find('.select2-container').hide();
+                    $('#country_select').prop('disabled', true);
+
+                    $('#country_input').show().val(surveyCountry);
+
+                    disableStateField();
+                    
+                } else if (surveyType == 1) {
+                    $('#country_input').hide();
+                    $('#country_select').parent().find('.select2-container').show();
+                    $('#country_select').prop('disabled', false);
+
+                    //Clear existing options
+                    $('#country_select').empty().append('<option value="" selected>Select Country</option>');
+
+                    let countryUrl = $('#survey option:selected').data('country-url');
+                    
+                    if(countryUrl){
+                        $.get(countryUrl,function(data){
+                            if(data && data.data){
+                                data.data.forEach(function(country){
+                                    $('#country_select').append(
+                                        `<option value="${country.code}">${country.country}</option>`
+                                    );
+                                });
+
+                                $('#country_select').trigger('change.select2');
+                            }
+                        });
+                    }
+                }
+            }
+
+            $('#country_select').change(function(){
+               let surveyId = $('#survey').val();
+               let countryCode = $(this).val();
+
+               let surveyType = $('#survey option:selected').data('formtype');
+
+               if(surveyType == 1){
+                    filterState(surveyId,countryCode);
+                    $('#state_select').prop('disabled',false);
+               }
             });
 
-            
+            function filterState(surveyId,countryCode){
+                $('#state_select').empty().append('<option value="" selected>Select State</option>');
+                
+                if (surveyId && countryCode) {
+                    let stateUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${surveyId}/${countryCode}`;
+                    
+                    $.get(stateUrl,function(response){
+                        if(response && response.data){
+                            response.data.forEach(function(state){
+                                $('#state_select').append(
+                                     `<option value="${state.code}">${state.state}</option>`
+                                );
+                            });
+
+                            $('#state_select').trigger('change.select2');
+                        }
+                    });
+                }
+            }
             
 
             function filterBranch(callback) {
@@ -810,7 +929,6 @@
                 var countryVal = $('#country').val();
                 var organizationVal = $('#organization').val();
                 var branchVal = isFirstLoad ? branch : $('#branch').val();
-                console.log(countryVal,organizationVal);
 
                 // if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
@@ -843,23 +961,39 @@
                                 return true;
                             });
 
-                            console.log('FormList',formList);
-
                             formList.forEach(function(formItem) {
+                                let formType = formItem.form_type == 1 ? 'Global' : 'Single';
+                                let formTypeValue = formItem.form_type;
+                                
                                 if(userRole == 'survey'){
                                     let surveyId = <?php echo json_encode(auth()->user()->form_id, 15, 512) ?>;
                                     let surveyIds = Array.isArray(surveyId) ? surveyId : surveyId.split(', ');
                                     
                                     if(surveyIds.includes(formItem.form_id)){
-                                        var option = new Option(formItem.form_title, formItem.form_id);
+                                        var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
+                                        option.setAttribute('data-formtype',formTypeValue);
+                                        if(formTypeValue == 0){
+                                            option.setAttribute('data-country',formItem.country);
+                                        }else if(formTypeValue == 1){
+                                            let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
+                                            option.setAttribute('data-country-url',countryUrl);
+                                        }
                                         $('#survey').append(option);
 
                                         if (survey && survey == formItem.form_id) {
                                             $(option).prop('selected', true);
+                                            $('#survey').val(survey).trigger('change');
                                         }
                                     }
                                 }else{
-                                    var option = new Option(formItem.form_title, formItem.form_id);
+                                    var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
+                                    option.setAttribute('data-formtype',formTypeValue);
+                                    if(formTypeValue == 0){
+                                        option.setAttribute('data-country',formItem.country);
+                                    }else if(formTypeValue == 1){
+                                        let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
+                                        option.setAttribute('data-country-url',countryUrl);
+                                    }
                                     $('#survey').append(option);
 
                                     if (survey && survey == formItem.form_id) {

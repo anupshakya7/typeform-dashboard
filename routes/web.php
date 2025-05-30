@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Typeform\AboutController;
 use App\Http\Controllers\Typeform\AnswerController;
+use App\Http\Controllers\Typeform\ApiController;
 use App\Http\Controllers\Typeform\Auth\LoginController;
 use App\Http\Controllers\Typeform\BranchController;
 use App\Http\Controllers\Typeform\FormController;
@@ -106,4 +107,7 @@ Route::middleware('check_auth','check_route')->group(function(){
 
 //Get Answer WebHook
 Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
+
+//Get Filter Country State according to Survey for Global
+Route::get('typeform/getCountryState/{surveyId}/{countryCode?}',[ApiController::class,'countryStateFilter'])->name('countrystate.get');
 

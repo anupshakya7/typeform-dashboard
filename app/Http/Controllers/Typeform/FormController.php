@@ -228,7 +228,7 @@ class FormController extends Controller
                 ];
  
                 $questionsData = array_merge($formIdData, $questionFormattingData);
-
+                
                 Question::create($questionsData);
                 Log::info("Form and Question Created Successfully!");
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
