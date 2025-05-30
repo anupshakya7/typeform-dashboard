@@ -954,3 +954,6 @@ table td{
     transform: translateY(-50%);
     color: #fff;
 }
+.input-label {
+    margin: 0;
+}

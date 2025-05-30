@@ -25,10 +25,11 @@
 
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
                 <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                    <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                    <div class="row column-gap-3 row-gap-2 m-0 p-0 dashboard flex-nowra align-items-end">
                         
                         <div class="col-auto p-0">
                             <?php if(auth()->user()->role->name == 'superadmin'): ?>
+                                <p class="input-label">Organization</p>
                                 <select class="form-select select2" id="organization" name="organization"
                                     aria-label="Default select example">
                                     <option value="" selected>Select Organization</option>
@@ -49,6 +50,8 @@
 
                         <div class="col-auto p-0">
                             
+                                                         <p class="input-label">Division</p>
+
                             <select class="form-select select2" id="branch" name="branch"
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select Division</option>
@@ -57,6 +60,8 @@
                         </div>
                         <div class="col-auto p-0">
                             
+                                                                                         <p class="input-label">Survey</p>
+
                             <select class="form-select select2" name="survey" id="survey"
                                 aria-label="Default select example">
                                 <option value="" selected>Select Survey</option>
@@ -69,6 +74,8 @@
                             
                         </div>
                         <div class="col-auto p-0">
+                                                            <p class="input-label">Country</p>
+
                             <select class="form-select select2" name="country" id="country"
                                 aria-label="Default select example">
                                 <option value="">Select Country</option>
@@ -80,6 +87,8 @@
                             </select>
                         </div>
                         <div class="col-auto p-0">
+                                                            <p class="input-label">State</p>
+
                             <select class="form-select select2" name="state" id="state" aria-label="Default select example">
                                         <option value="" selected>Select State</option>
                                         <option value="Bagmati">Bagmati</option>
@@ -138,9 +147,11 @@
 
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
                 <form action="<?php echo e(route('home.index')); ?>" method="GET">
-                    <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                    <div class="row gap-3 m-0 p-0 dashboard flex-nowra">
                         <div class="col-auto p-0">
                             <?php if(auth()->user()->role->name == 'superadmin'): ?>
+                                                            <p class="input-label">Organization</p>
+
                                 <select class="form-select select2" id="organization" name="organization"
                                     aria-label="Default select example">
                                     <option value="" selected>Select Organization</option>
@@ -180,15 +191,10 @@
                             </select>
                             
                         </div>
+                        
                         <div class="col-auto p-0">
-                            <button href="#" class="view-insight-btn" id="filter_btn"
-                                onclick="this.form.submit();" <?php echo e(request('survey') ? '' : 'disabled'); ?>>
-                                <span>View Insight</span>
-                                <i class='bx bx-arrow-back bx-rotate-180'></i>
-                            </button>
+                                                            <p class="input-label">Country</p>
 
-                        </div>
-                        <div class="col-auto p-0">
                             <select class="form-select select2" name="country" id="country"
                                 aria-label="Default select example">
                                 <option value="">Select Country</option>
@@ -200,6 +206,8 @@
                             </select>
                         </div>
                         <div class="col-auto p-0">
+                                                            <p class="input-label">State</p>
+
                             <select class="form-select select2" name="state" id="state" aria-label="Default select example">
                                         <option value="" selected>Select State</option>
                                         <option value="Bagmati">Bagmati</option>
@@ -223,7 +231,14 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-   
+   <div class="col-auto p-0 ">
+                            <button href="#" class="view-insight-btn" id="filter_btn"
+                                onclick="this.form.submit();" <?php echo e(request('survey') ? '' : 'disabled'); ?>>
+                                <span>View Insight</span>
+                                <i class='bx bx-arrow-back bx-rotate-180'></i>
+                            </button>
+
+                        </div>
                         
 
                         

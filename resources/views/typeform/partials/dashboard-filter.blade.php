@@ -25,10 +25,11 @@
 
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
                 <form action="{{ route('home.index') }}" method="GET">
-                    <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                    <div class="row column-gap-3 row-gap-2 m-0 p-0 dashboard flex-nowra align-items-end">
                         
                         <div class="col-auto p-0">
                             @if (auth()->user()->role->name == 'superadmin')
+                                <p class="input-label">Organization</p>
                                 <select class="form-select select2" id="organization" name="organization"
                                     aria-label="Default select example">
                                     <option value="" selected>Select Organization</option>
@@ -52,6 +53,8 @@
                          <input type="text" class="form-control" value="{{auth()->user()->branch_id != null ? auth()->user()->branch->name :''}}" readonly>
                          <input type="hidden" name="branch" class="form-control" value="{{old('branch',auth()->user()->branch_id)}}" id="branch" readonly>
                          @else --}}
+                                                         <p class="input-label">Division</p>
+
                             <select class="form-select select2" id="branch" name="branch"
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select Division</option>
@@ -60,9 +63,12 @@
                         </div>
                         <div class="col-auto p-0">
                             {{-- @if (auth()->user()->role->name == 'survey')
+
                              <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
                              <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
                          @else --}}
+                                                                                         <p class="input-label">Survey</p>
+
                             <select class="form-select select2" name="survey" id="survey"
                                 aria-label="Default select example">
                                 <option value="" selected>Select Survey</option>
@@ -75,6 +81,8 @@
                             {{-- @endif --}}
                         </div>
                         <div class="col-auto p-0">
+                                                            <p class="input-label">Country</p>
+
                             <select class="form-select select2" name="country" id="country"
                                 aria-label="Default select example">
                                 <option value="">Select Country</option>
@@ -86,6 +94,8 @@
                             </select>
                         </div>
                         <div class="col-auto p-0">
+                                                            <p class="input-label">State</p>
+
                             <select class="form-select select2" name="state" id="state" aria-label="Default select example">
                                         <option value="" selected>Select State</option>
                                         <option value="Bagmati">Bagmati</option>
@@ -144,9 +154,11 @@
 
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
                 <form action="{{ route('home.index') }}" method="GET">
-                    <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
+                    <div class="row gap-3 m-0 p-0 dashboard flex-nowra">
                         <div class="col-auto p-0">
                             @if (auth()->user()->role->name == 'superadmin')
+                                                            <p class="input-label">Organization</p>
+
                                 <select class="form-select select2" id="organization" name="organization"
                                     aria-label="Default select example">
                                     <option value="" selected>Select Organization</option>
@@ -167,6 +179,8 @@
 
                         <div class="col-auto p-0">
                             {{-- @if (auth()->user()->role->name == 'survey')
+                                                                <p class="input-label">Branch</p>
+
                             <input type="text" class="form-control" value="{{auth()->user()->branch_id != null ? auth()->user()->branch->name :''}}" readonly>
                             <input type="hidden" name="branch" class="form-control" value="{{old('branch',auth()->user()->branch_id)}}" id="branch" readonly>
                             @else --}}
@@ -178,6 +192,8 @@
                         </div>
                         <div class="col-auto p-0">
                             {{-- @if (auth()->user()->role->name == 'survey')
+                                                                <p class="input-label">Survey</p>
+
                                 <input type="text" class="form-control" value="{{auth()->user()->survey->form_title}}" readonly>
                                 <input type="hidden" name="survey" class="form-control" value="{{old('survey',auth()->user()->form_id)}}" id="branch" readonly>
                             @else --}}
@@ -192,15 +208,10 @@
                             </select>
                             {{-- @endif --}}
                         </div>
+                        
                         <div class="col-auto p-0">
-                            <button href="#" class="view-insight-btn" id="filter_btn"
-                                onclick="this.form.submit();" {{ request('survey') ? '' : 'disabled' }}>
-                                <span>View Insight</span>
-                                <i class='bx bx-arrow-back bx-rotate-180'></i>
-                            </button>
+                                                            <p class="input-label">Country</p>
 
-                        </div>
-                        <div class="col-auto p-0">
                             <select class="form-select select2" name="country" id="country"
                                 aria-label="Default select example">
                                 <option value="">Select Country</option>
@@ -212,6 +223,8 @@
                             </select>
                         </div>
                         <div class="col-auto p-0">
+                                                            <p class="input-label">State</p>
+
                             <select class="form-select select2" name="state" id="state" aria-label="Default select example">
                                         <option value="" selected>Select State</option>
                                         <option value="Bagmati">Bagmati</option>
@@ -235,7 +248,14 @@
                                 @endforeach
                             </select>
                         </div>
-   
+   <div class="col-auto p-0 ">
+                            <button href="#" class="view-insight-btn" id="filter_btn"
+                                onclick="this.form.submit();" {{ request('survey') ? '' : 'disabled' }}>
+                                <span>View Insight</span>
+                                <i class='bx bx-arrow-back bx-rotate-180'></i>
+                            </button>
+
+                        </div>
                         
 
                         {{-- @endif --}}
