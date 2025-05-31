@@ -48,14 +48,14 @@ class IndexController extends Controller
         $organizations = Organization::filterOrganization()->get();
         $surveyForms = Form::filterForm()->get();
         
+        // dd(session('survey_id'));
         //Survey id if no then latest form id
-        $country = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : session('country');
-        
         if((isset($request->formType) && $request->formType == 1) || session('form_type') == 1){
-            $country = isset($request->country) && $request->country ? $request->country : null;
-            $selectedCountry = isset($request->country) && $request->country ? $request->country : null;
+            $country = isset($request->country) || $request->country == null ? $request->country : session('country');
+            $selectedCountry = isset($request->country) || $request->country == null ? $request->country : session('country');
             session(['country'=>$country]);       
         }else{
+            $country = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : Form::where('form_id', session('survey_id'))->pluck('country')->first();
             $selectedCountry = null;
             session(['country'=>null]); 
         } 
@@ -76,13 +76,13 @@ class IndexController extends Controller
         $selectedCountrywithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('country')->first() : null;
         $selectedOrganizationwithSurvey = isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('organization_id')->first() : null;
 
-        $topBox = $this->topBoxData($survey_id,$form_type);
-        $meanScore = $this->meanScoreGraph($request->all(), $survey_id,$form_type);
-        $participantDetails = $this->participantDetails($survey_id,$form_type);
-        $positivePeace = $this->positiveNegative($country, $survey_id, 'positive_peace',$form_type);
-        $negativePeace = $this->positiveNegative($country, $survey_id, 'negative_peace',$form_type);
-        $pillarMeanScore = $this->pillarsMeanScore($country, $survey_id,$form_type);
-        $overTimeScores = $this->overTimeScore($survey_id,$form_type);
+        $topBox = $this->topBoxData($survey_id,$form_type,$country,$state);
+        $meanScore = $this->meanScoreGraph($request->all(), $survey_id,$form_type,$country,$state);
+        $participantDetails = $this->participantDetails($survey_id,$form_type,$country,$state);
+        $positivePeace = $this->positiveNegative($country, $survey_id, 'positive_peace',$form_type,$state);
+        $negativePeace = $this->positiveNegative($country, $survey_id, 'negative_peace',$form_type,$state);
+        $pillarMeanScore = $this->pillarsMeanScore($country, $survey_id,$form_type,$state);
+        $overTimeScores = $this->overTimeScore($survey_id,$form_type,$state);
 
         $resultByPillar = [];
 
@@ -123,12 +123,19 @@ class IndexController extends Controller
     //     return view('typeform.index', compact('formDetails', 'countries', 'organizations', 'surveyForms', 'topBox', 'meanScore', 'participantDetails', 'positivePeace', 'negativePeace', 'pillarMeanScore', 'overTimeScores', 'filterData', 'selectedCountrywithSurvey', 'selectedOrganizationwithSurvey'));
     // }
 
-    public function topBoxData($surveyValue = null,$form_type=null)
+    public function topBoxData($surveyValue = null,$form_type=null,$country=null,$state=null)
     {
         $surveys = Form::filterForm()->count();
         $countries = Form::select('country')->distinct()->filterForm()->get()->count();
         $organizations = Organization::filterOrganization()->count();
-        $people = $surveyValue !== null ? Answer::filterSurvey()->where('form_id', $surveyValue)->count() : Answer::filterSurvey()->count();
+        
+        //Global Survey Condition
+        // if($form_type !== 0){
+        //     $people = $surveyValue !== null ? Answer::filterSurvey()->filterGlobalSurvey($form_type,$surveyValue,$country,$state)->count() : Answer::filterSurvey()->count();
+        // }else{
+        //     $people = $surveyValue !== null ? Answer::filterSurvey()->where('form_id', $surveyValue)->count() : Answer::filterSurvey()->count();
+        // }
+        $people = $surveyValue !== null ? Answer::filterSurvey()->filterGlobalSurvey($form_type,$surveyValue,$country,$state)->count() : Answer::filterSurvey()->count();
 
         return [
             'survey' => $surveys,
@@ -138,7 +145,7 @@ class IndexController extends Controller
         ];
     }
 
-    public function meanScoreGraph($request, $survey_id,$form_type=null)
+    public function meanScoreGraph($request, $survey_id,$form_type=null,$country=null,$state=null)
     {
         $meanPillarScore = [];
 
@@ -154,8 +161,9 @@ class IndexController extends Controller
         ];
 
         foreach ($pillars as $pillar) {
-            $sum = Answer::where('form_id', $survey_id)->filterSurvey()->sum($pillar);
-            $count = Answer::where('form_id', $survey_id)->filterSurvey()->whereNotNull($pillar)->count();
+            $sum = Answer::filterSurvey()->filterGlobalSurvey($form_type,$survey_id,$country,$state)->sum($pillar);
+            $count = Answer::filterSurvey()->filterGlobalSurvey($form_type,$survey_id,$country,$state)->whereNotNull($pillar)->count();
+
             $count = $count == 0 ? 1 : $count;
 
             $mean = $sum / $count;
@@ -166,16 +174,16 @@ class IndexController extends Controller
         return $meanPillarScore;
     }
 
-    public function participantDetails($survey_id,$form_type=null)
+    public function participantDetails($survey_id,$form_type=null,$country=null,$state=null)
     {
         $genderWise = [];
         $ageWise = [];
 
         //Gender Wise
-        $male = Answer::where('form_id', $survey_id)->filterSurvey()->where('gender', 'Male')->count();
-        $female = Answer::where('form_id', $survey_id)->filterSurvey()->where('gender', 'Female')->count();
-        $other = Answer::where('form_id', $survey_id)->filterSurvey()->where('gender', 'Other')->count();
-        $preferNot = Answer::where('form_id', $survey_id)->filterSurvey()->where('gender', 'Prefer not to say')->count();
+        $male = Answer::filterSurvey()->filterGlobalSurvey($form_type,$survey_id,$country,$state)->where('gender', 'Male')->count();
+        $female = Answer::filterSurvey()->filterGlobalSurvey($form_type,$survey_id,$country,$state)->where('gender', 'Female')->count();
+        $other = Answer::filterSurvey()->filterGlobalSurvey($form_type,$survey_id,$country,$state)->where('gender', 'Other')->count();
+        $preferNot = Answer::filterSurvey()->filterGlobalSurvey($form_type,$survey_id,$country,$state)->where('gender', 'Prefer not to say')->count();
 
         $genderWise = [
             'male' => $male,
@@ -186,7 +194,7 @@ class IndexController extends Controller
         //Gender Wise
 
         //Age Wise
-        $participants = Answer::where('form_id', $survey_id)->filterSurvey();
+        $participants = Answer::filterSurvey()->filterGlobalSurvey($form_type,$survey_id,$country,$state);
         $ages = ['18 to 24', '25 to 44', '45 to 64', '65 or over', 'Prefer not to say'];
 
         foreach ($ages as $age) {
@@ -202,31 +210,83 @@ class IndexController extends Controller
         ];
     }
 
-    public function positiveNegative($country, $survey_id, $flag,$form_type=null)
+    public function positiveNegative($country, $survey_id, $flag,$form_type=null,$state)
     {
-        $types = ['mean', 'countryMean', 'globalMean'];
+        if($form_type ==1 ){
+            $types = ['mean', 'globalMean'];
+
+            if(!empty($country)){
+                array_splice($types,1,0,'countryMean');
+            }
+        }else{
+            $types = ['mean', 'countryMean', 'globalMean'];
+        }
+        
         $positiveMeanCal = [];
 
-        foreach ($types as $type) {
-            $query = Form::with('answer');
+        if($form_type == 1){
+             foreach ($types as $type) {
+                $query = Form::with('answer');
 
-            if ($type === "mean") {
-                $query->where('form_id', $survey_id);
-            } elseif ($type === "countryMean") {
-                $query->where('country', $country);
+                if ($type === "mean") {
+                    $forms = Form::with('answer')->where('form_id',$survey_id)->get();
+                    
+                    $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+                    $count = $forms->sum(fn($form) => $form->answer->count());
+                } elseif ($type === "countryMean") {
+                    if($form_type == 0){
+                        $forms = Form::with('answer')->where('country',$country)->get();
+
+                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+                        $count = $forms->sum(fn($form) => $form->answer->count());
+                    }else{
+                        $countryFull = NCountry::where('code',$country)->pluck('name')->first();
+
+                        $formTypeSingleAnswers = Form::with('answer')
+                            ->where('form_type',0)
+                            ->where('country',$countryFull)
+                            ->get()
+                            ->flatMap(fn($form)=>$form->answer->pluck($flag));
+
+                        $formTypeGlobalIds = Form::where('form_type',1)->pluck('form_id');
+                        $formTypeGlobalAnswers = Answer::whereIn('form_id',$formTypeGlobalIds)->where('country',$country)->pluck($flag);
+
+                        $allAnswers = $formTypeSingleAnswers->merge($formTypeGlobalAnswers);
+                        
+                        $sum = $allAnswers->sum();
+                        $count = $allAnswers->count();
+                    }
+                }elseif($type === "globalMean"){
+                    $forms = Form::with('answer')->get();
+                    
+                    $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+                    $count = $forms->sum(fn($form) => $form->answer->count());
+                }
+
+                $positiveMeanCal[$type] = $count > 0 ? round($sum / $count, 1) : 0;
             }
+        }else{
+            foreach ($types as $type) {
+                $query = Form::with('answer');
 
-            $formsCountry = $query->get();
+                if ($type === "mean") {
+                    $query->where('form_id', $survey_id);
+                } elseif ($type === "countryMean") {
+                    $query->where('country', $country);
+                }
 
-            $sum = $formsCountry->flatMap(function ($form) use ($flag) {
-                return $form->answer->pluck($flag);
-            })->sum();
+                $formsCountry = $query->get();
 
-            $count = $formsCountry->sum(function ($form) {
-                return $form->answer->count();
-            });
+                $sum = $formsCountry->flatMap(function ($form) use ($flag) {
+                    return $form->answer->pluck($flag);
+                })->sum();
+    
+                $count = $formsCountry->sum(function ($form) {
+                    return $form->answer->count();
+                });
 
-            $positiveMeanCal[$type] = $count > 0 ? round($sum / $count, 1) : 0;
+                $positiveMeanCal[$type] = $count > 0 ? round($sum / $count, 1) : 0;
+            }
         }
 
         return $positiveMeanCal;

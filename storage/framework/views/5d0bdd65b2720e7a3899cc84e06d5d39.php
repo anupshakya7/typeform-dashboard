@@ -1499,10 +1499,13 @@
                     series: [{
                         name: 'Mean',
                         data: [<?php echo e($positivePeace['mean']); ?>]
-                    }, {
+                    }, 
+                    <?php if(isset($positivePeace['countryMean'])): ?>{
                         name: 'Country Mean',
                         data: [<?php echo e($positivePeace['countryMean']); ?>]
-                    }, {
+                    },
+                    <?php endif; ?>
+                    {
                         name: 'Global Mean',
                         data: [<?php echo e($positivePeace['globalMean']); ?>]
                     }],
@@ -1595,10 +1598,14 @@
                     series: [{
                         name: 'Mean',
                         data: ["<?php echo e($negativePeace['mean']); ?>"]
-                    }, {
+                    }, 
+                    <?php if(isset( $negativePeace['countryMean'])): ?>
+                    {
                         name: 'Country Mean',
                         data: ["<?php echo e($negativePeace['countryMean']); ?>"]
-                    }, {
+                    }, 
+                    <?php endif; ?>
+                    {
                         name: 'Global Mean',
                         data: ["<?php echo e($negativePeace['globalMean']); ?>"]
                     }],

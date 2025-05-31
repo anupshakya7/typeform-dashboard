@@ -1502,10 +1502,13 @@
                     series: [{
                         name: 'Mean',
                         data: [{{ $positivePeace['mean'] }}]
-                    }, {
+                    }, 
+                    @if(isset($positivePeace['countryMean'])){
                         name: 'Country Mean',
                         data: [{{ $positivePeace['countryMean'] }}]
-                    }, {
+                    },
+                    @endif
+                    {
                         name: 'Global Mean',
                         data: [{{ $positivePeace['globalMean'] }}]
                     }],
@@ -1598,10 +1601,14 @@
                     series: [{
                         name: 'Mean',
                         data: ["{{ $negativePeace['mean'] }}"]
-                    }, {
+                    }, 
+                    @if(isset( $negativePeace['countryMean']))
+                    {
                         name: 'Country Mean',
                         data: ["{{ $negativePeace['countryMean'] }}"]
-                    }, {
+                    }, 
+                    @endif
+                    {
                         name: 'Global Mean',
                         data: ["{{ $negativePeace['globalMean'] }}"]
                     }],

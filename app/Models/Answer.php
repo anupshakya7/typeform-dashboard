@@ -69,6 +69,21 @@ class Answer extends Model
         return $query;
     }
 
+    public function scopeFilterGlobalSurvey($query,$formType,$surveyId,$country=null,$state=null){
+        $query->where('form_id',$surveyId);
+        if($formType == 1){
+            if(!empty($country)){
+                $query->where('country',$country);
+            }
+        
+            if(!empty($state)){
+                $query->where('state',$state);
+            }
+        }
+
+        return $query;
+    }
+
     public function form(){
         return $this->belongsTo(Form::class,'form_id','form_id');
     }
