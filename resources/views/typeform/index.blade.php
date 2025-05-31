@@ -802,18 +802,6 @@
             function filterCountry(){
                 let surveyType = $('#survey option:selected').data('formtype');
                 let surveyCountry = $('#survey option:selected').data('country');
-                let selectedValue = '';
-
-                if(@json($selectedCountry)!==null){
-                    selectedValue = @json($selectedCountry);
-                }else if(@json(session('country')) !== null){
-                    selectedValue = @json(session('country'));
-                }else{
-                    selectedValue = '';
-                }
-                
-                console.log(selectedValue);
-                // let selectedValue =  @json($selectedCountry ?? session('country') ?? '');
                 
                 if (surveyType == 0) {
                     $('#country_input').show().val(surveyCountry);
@@ -823,6 +811,12 @@
 
                     disableStateField();                    
                 } else if (surveyType == 1) {
+                    let selectedCountry = $('#selected_country').val();
+                    console.log('input country VALUE:',selectedCountry);
+                    // let selectedValue = '';
+                    // selectedValue =  @json($selectedCountry ?? session('country') ?? '');
+                    // console.log('selected Value',selectedValue);
+
                     $('#country_input').val('').hide();
                     $('#country_select').prop('disabled', false);
                     $('#country_select').empty().append('<option value="" selected>Select Country</option>');
@@ -838,9 +832,9 @@
                                         `<option value="${country.code}">${country.country}</option>`
                                     );
                                 });
-                                console.log('selectValueFinal',selectedValue);
-                                if(selectedValue !== ''){
-                                    $('#country_select').val(selectedValue).trigger('change.select2');
+                                console.log('selectValueFinal',selectedCountry);
+                                if(selectedCountry !== ''){
+                                    $('#country_select').val(selectedCountry).trigger('change.select2');
 
                                     filterState();
                                 }
@@ -1074,6 +1068,15 @@
                 var urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
             }
+
+            $('#filter_btn').on('click', function(e) {
+                e.preventDefault();
+
+                let formType = $('#survey option:selected').data('formtype');
+                $('#formtype').val(formType);
+
+                $(this).closest('form').submit();
+            });
 
             
 

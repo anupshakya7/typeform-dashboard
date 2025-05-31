@@ -24,7 +24,7 @@
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
                 <form action="{{ route('home.index') }}" method="GET">
                     <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
-                        
+                        <input type="hidden" name="formType" id="formtype"/>
                         <div class="col-auto p-0">
                             @if (auth()->user()->role->name == 'superadmin')
                                 <select class="form-select select2" id="organization" name="organization"
@@ -80,6 +80,7 @@
                         </div>
 
                         <div class="col-auto p-0" id="countryField">
+                            <input type="hidden" id="selected_country" value="{{(request('formType') == 1 || session('form_type') ==1) ? $selectedCountry ?? session('country') ?? '': '' }}">
                             <input type="text" class="form-control" name="country" id="country_input" readonly style="display:none;">
 
                             <select class="form-select select2" name="country" id="country_select"
@@ -108,7 +109,7 @@
                         {{-- @if (auth()->user()->role->name !== 'survey') --}}
                         <div class="col-auto p-0">
                             <button href="#" class="view-insight-btn" id="filter_btn"
-                                onclick="this.form.submit();" {{ request('survey') ? '' : 'disabled' }}>
+                                {{ request('survey') ? '' : 'disabled' }}>
                                 <span>View Insight</span>
                                 <i class='bx bx-arrow-back bx-rotate-180'></i>
                             </button>
