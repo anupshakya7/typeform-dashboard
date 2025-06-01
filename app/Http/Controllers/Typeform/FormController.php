@@ -415,12 +415,18 @@ class FormController extends Controller
                     $branchLevel = 0;
                 }
 
+                $formtype = isset($validatedData['setFormType']) ? 1 :0;
+
+                if($form->form_type !== $formtype){
+                    session(['form_type'=>$formtype]);
+                }
+
                 //Form Data
                 $formData = [
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
-                    'form_type' => isset($validatedData['setFormType']) ? 1 :0,
+                    'form_type' => $formtype,
                     'organization_id' => $validatedData['organization'],
                     'branch_id' => $branch_id,
                     'branch_level'=>$branchLevel,
