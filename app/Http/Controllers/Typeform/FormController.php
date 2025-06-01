@@ -382,7 +382,8 @@ class FormController extends Controller
         $validatedData = $request->validate([
             'formId' => 'required|exists:forms,form_id',
             'form_name' => 'required|string',
-            'country' => 'required|string',
+            'setFormType' => 'nullable',
+            'country' => 'required_without:setFormType',
             'organization' => 'required|integer',
             'branch'=>['nullable','integer',Rule::requiredIf(function() use($request){
                 return auth()->user()->role->name == 'branch';
@@ -419,6 +420,7 @@ class FormController extends Controller
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
+                    'form_type' => isset($validatedData['setFormType']) ? 1 :0,
                     'organization_id' => $validatedData['organization'],
                     'branch_id' => $branch_id,
                     'branch_level'=>$branchLevel,

@@ -436,10 +436,11 @@
                                             <table class="table align-middle table-nowrap mb-0" id="pillar-table">
                                                 <thead class="table-head">
                                                     <tr>
-
                                                         <th scope="col" class="text-center"></th>
                                                         <th scope="col" class="text-center">Mean</th>
+                                                        <?php if(isset($pillarMeanScore['countryMean'])): ?>
                                                         <th scope="col" class="text-center">Country Mean</th>
+                                                        <?php endif; ?>
                                                         <th scope="col" class="text-center">Global Mean</th>
 
                                                     </tr>
@@ -465,8 +466,10 @@
                                                                     class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                             </td>
                                                             <td class="text-center"><?php echo e($pillar); ?></td>
+                                                            <?php if(isset($pillarMeanScore['countryMean'][$key])): ?>
                                                             <td class="text-center">
                                                                 <?php echo e($pillarMeanScore['countryMean'][$key]); ?></td>
+                                                            <?php endif; ?>
                                                             <td class="text-center">
                                                                 <?php echo e($pillarMeanScore['globalMean'][$key]); ?></td>
                                                         </tr>
@@ -680,6 +683,7 @@
             filterSurvey(()=>{
                 filterBtn();
             });
+            filterCountry();
             
             
 
@@ -1703,6 +1707,7 @@
             //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             //                 ],
             //             },
+            //              <?php if(isset($pillarMeanScore['countryMean'])): ?>
             //             {
             //                 name: 'Country Mean',
             //                 data: [
@@ -1711,6 +1716,7 @@
             //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             //                 ],
             //             },
+            //              <?php endif; ?>
             //             {
             //                 name: 'Global Mean',
             //                 data: [

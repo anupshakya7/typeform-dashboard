@@ -14,7 +14,7 @@
                     }
                 ?>
                 <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for
-                    <b><?php echo e($formDetails->form_title); ?></b>. <span class="survey-type">Country Survey</span>
+                    <b><?php echo e($formDetails->form_title); ?></b>. <span class="survey-type"><?php echo e(request('formType')==1 || session('form_type') ==1 ? 'Global':'Single'); ?></span>
                         <?php if($user !== 'survey'): ?>
                             <br><span>Use the filters below to switch between different surveys or refine your results
                                 by Country<?php echo e($lastText); ?>.</span></h5>

@@ -46,12 +46,20 @@
                         </div>
                     </div>
                     <!--end col-->
-                    <div class="col-md-6">
+
+                    <div class="col-md-12" id="selectFormType">
+                        <div class="my-3">
+                            <label for="setFromType" class="form-label">If you would like this form to be used for a global survey, please check the box below.</label>
+                            <input type="checkbox" {{$form->form_type == 1 ? 'checked':''}} name="setFormType" class="ms-2" id="setFromType"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" id="countryField">
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" >
-                                <option selected>Select Country</option>
+                                <option value="" selected>Select Country</option>
                                 @foreach ($countries as $country)
                                 <option value="{{$country['name']}}" {{$form->country == $country['name'] ? 'selected':''}}>{{$country['name']}}</option>
                                 @endforeach
@@ -59,7 +67,7 @@
                         </div>
                     </div>
                     <!--end col-->
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="organizationField">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
@@ -289,9 +297,34 @@ $(document).ready(function() {
     //     }
     // });
 
+    checkGlobalBox();
+
     $('#organization,#setBranch').change(function() {
        handleBranch();
     });
+
+    //Check If Global Country Select or Not
+    $('#setFromType').change(function(){
+        checkGlobalBox();
+    });
+
+    function checkGlobalBox(){
+        let isGlobalChecked = $('#setFromType').prop("checked");
+        let countryField = $('#countryField');
+        let countrySelect = $('#country');
+        
+        if(isGlobalChecked){
+            countryField.hide();
+            countrySelect.val('');
+            $('#organizationField').removeClass('col-md-6');
+            $('#organizationField').addClass('col-md-12');
+            countrySelect.trigger('change');
+        }else{
+            countryField.show();
+            $('#organizationField').removeClass('col-md-12');
+            $('#organizationField').addClass('col-md-6');
+        }
+    }
 
     function handleBranch(){
         var organizationVal = $('#organization').val();
