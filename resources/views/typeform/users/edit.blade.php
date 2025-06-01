@@ -444,10 +444,11 @@ $(document).ready(function(){
                     var surveyIds = @json(is_array($user->form_id) ? $user->form_id : explode(', ',$user->form_id));
 
                     response.forms.forEach(function(formItem) {
+                        let formType = formItem.form_type == 1 ? 'Global' : 'Single';
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
 
-                        var option = new Option(formItem.form_title, formItem.form_id);
+                        var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
 
                         if(surveyIds && surveyIds.includes(formItem.form_id)){
                             if(formItem.form_id !== ""){

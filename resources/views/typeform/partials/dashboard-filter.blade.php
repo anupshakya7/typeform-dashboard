@@ -14,7 +14,7 @@
                     }
                 @endphp
                 <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for
-                    <b>{{ $formDetails->form_title }}</b>. <span class="survey-type">Country Survey</span>
+                    <b>{{ $formDetails->form_title }}</b>. <span class="survey-type">{{request('formType')==1 || session('form_type') ==1 ? 'Global':'Single'}}</span>
                         @if ($user !== 'survey')
                             <br><span>Use the filters below to switch between different surveys or refine your results
                                 by Country{{ $lastText }}.</span></h5>

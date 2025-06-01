@@ -438,10 +438,11 @@
                                             <table class="table align-middle table-nowrap mb-0" id="pillar-table">
                                                 <thead class="table-head">
                                                     <tr>
-
                                                         <th scope="col" class="text-center"></th>
                                                         <th scope="col" class="text-center">Mean</th>
+                                                        @if(isset($pillarMeanScore['countryMean']))
                                                         <th scope="col" class="text-center">Country Mean</th>
+                                                        @endif
                                                         <th scope="col" class="text-center">Global Mean</th>
 
                                                     </tr>
@@ -467,8 +468,10 @@
                                                                     class="fw-medium pillar-text">{{ $pillars[$key] }}</span>
                                                             </td>
                                                             <td class="text-center">{{ $pillar }}</td>
+                                                            @if(isset($pillarMeanScore['countryMean'][$key]))
                                                             <td class="text-center">
                                                                 {{ $pillarMeanScore['countryMean'][$key] }}</td>
+                                                            @endif
                                                             <td class="text-center">
                                                                 {{ $pillarMeanScore['globalMean'][$key] }}</td>
                                                         </tr>
@@ -683,6 +686,7 @@
             filterSurvey(()=>{
                 filterBtn();
             });
+            filterCountry();
             
             
 
@@ -1706,6 +1710,7 @@
             //                     @endforeach
             //                 ],
             //             },
+            //              @if(isset($pillarMeanScore['countryMean']))
             //             {
             //                 name: 'Country Mean',
             //                 data: [
@@ -1714,6 +1719,7 @@
             //                     @endforeach
             //                 ],
             //             },
+            //              @endif
             //             {
             //                 name: 'Global Mean',
             //                 data: [

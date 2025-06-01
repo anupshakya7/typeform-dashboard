@@ -476,14 +476,16 @@ $(document).ready(function(){
                     branch_id: branchVal
                 },
                 success: function(response) {
-                    console.log(response);
                     $('#survey').prop('disabled', false);
                     $('#survey').html('');
                     $('#survey').append('<option value="" selected>Select Survey</option>');
+
+                    
                     response.forms.forEach(function(formItem) {
+                        let formType = formItem.form_type == 1 ? 'Global' : 'Single';
                         // $('#survey').append(new Option(form.form_title,
                         // form.id));
-                        var option = new Option(formItem.form_title, formItem.form_id);
+                        var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
                         $('#survey').append(option);
                     })
                 },

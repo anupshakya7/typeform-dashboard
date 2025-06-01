@@ -82,7 +82,7 @@ class IndexController extends Controller
         $positivePeace = $this->positiveNegative($country, $survey_id, 'positive_peace',$form_type,$state);
         $negativePeace = $this->positiveNegative($country, $survey_id, 'negative_peace',$form_type,$state);
         $pillarMeanScore = $this->pillarsMeanScore($country, $survey_id,$form_type,$state);
-        $overTimeScores = $this->overTimeScore($survey_id,$form_type,$state);
+        $overTimeScores = $this->overTimeScore($survey_id,$form_type,$country,$state);
 
         $resultByPillar = [];
 
@@ -210,7 +210,7 @@ class IndexController extends Controller
         ];
     }
 
-    public function positiveNegative($country, $survey_id, $flag,$form_type=null,$state)
+    public function positiveNegative($country, $survey_id, $flag,$form_type=null,$state=null)
     {
         if($form_type ==1 ){
             $types = ['mean', 'globalMean'];
@@ -224,77 +224,135 @@ class IndexController extends Controller
         
         $positiveMeanCal = [];
 
-        if($form_type == 1){
-             foreach ($types as $type) {
-                $query = Form::with('answer');
+        foreach ($types as $type) {
+        // $query = Form::with('answer');
 
-                if ($type === "mean") {
-                    $forms = Form::with('answer')->where('form_id',$survey_id)->get();
-                    
-                    $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
-                    $count = $forms->sum(fn($form) => $form->answer->count());
-                } elseif ($type === "countryMean") {
-                    if($form_type == 0){
-                        $forms = Form::with('answer')->where('country',$country)->get();
+        if ($type === "mean") {
+            $forms = Form::with('answer')->where('form_id',$survey_id)->get();
 
-                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
-                        $count = $forms->sum(fn($form) => $form->answer->count());
-                    }else{
-                        $countryFull = NCountry::where('code',$country)->pluck('name')->first();
+            // $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+            $sum = $forms->flatMap(function($form) use($flag,$form_type,$country,$state){
+                if($form_type == 1 && !empty($country)){
+                    return $form->answer->filter(function($answer) use($country,$state){
+                        if(!empty($state)){
+                            return $answer->country == $country && $answer->state == $state;
+                        }
+                        return $answer->country == $country;
+                    })->pluck($flag);
 
-                        $formTypeSingleAnswers = Form::with('answer')
-                            ->where('form_type',0)
-                            ->where('country',$countryFull)
-                            ->get()
-                            ->flatMap(fn($form)=>$form->answer->pluck($flag));
-
-                        $formTypeGlobalIds = Form::where('form_type',1)->pluck('form_id');
-                        $formTypeGlobalAnswers = Answer::whereIn('form_id',$formTypeGlobalIds)->where('country',$country)->pluck($flag);
-
-                        $allAnswers = $formTypeSingleAnswers->merge($formTypeGlobalAnswers);
-                        
-                        $sum = $allAnswers->sum();
-                        $count = $allAnswers->count();
-                    }
-                }elseif($type === "globalMean"){
-                    $forms = Form::with('answer')->get();
-                    
-                    $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
-                    $count = $forms->sum(fn($form) => $form->answer->count());
                 }
 
-                $positiveMeanCal[$type] = $count > 0 ? round($sum / $count, 1) : 0;
-            }
-        }else{
-            foreach ($types as $type) {
-                $query = Form::with('answer');
+                return $form->answer->pluck($flag);
+            })->sum();
 
-                if ($type === "mean") {
-                    $query->where('form_id', $survey_id);
-                } elseif ($type === "countryMean") {
-                    $query->where('country', $country);
+            $count = $forms->flatMap(function($form) use($flag,$form_type,$country,$state){
+                if($form_type == 1 && !empty($country)){
+                    return $form->answer->filter(function($answer) use($country,$state){
+                        if(!empty($state)){
+                            return $answer->country == $country && $answer->state == $state;
+                        }
+                        return $answer->country == $country;
+                    })->pluck($flag);
+
                 }
 
-                $formsCountry = $query->get();
+                return $form->answer->pluck($flag);
+            })->count();
+            // $count = $forms->sum(fn($form) => $form->answer->count());
+        } elseif ($type === "countryMean") {
+            if($form_type == 0){
+                $forms = Form::with('answer')->where('country',$country)->get();
 
-                $sum = $formsCountry->flatMap(function ($form) use ($flag) {
-                    return $form->answer->pluck($flag);
-                })->sum();
-    
-                $count = $formsCountry->sum(function ($form) {
-                    return $form->answer->count();
-                });
+                $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+                $count = $forms->sum(fn($form) => $form->answer->count());
+            }else{
+                $countryFull = NCountry::where('code',$country)->pluck('name')->first();
 
-                $positiveMeanCal[$type] = $count > 0 ? round($sum / $count, 1) : 0;
+                $formTypeSingleAnswers = Form::with('answer')
+                    ->where('form_type',0)
+                    ->where('country',$countryFull)
+                    ->get()
+                    ->flatMap(fn($form)=>$form->answer->pluck($flag));
+
+                $formTypeGlobalIds = Form::where('form_type',1)->pluck('form_id');
+                $formTypeGlobalAnswers = Answer::whereIn('form_id',$formTypeGlobalIds)->where('country',$country)->pluck($flag);
+
+                $allAnswers = $formTypeSingleAnswers->merge($formTypeGlobalAnswers);
+                
+                $sum = $allAnswers->sum();
+                $count = $allAnswers->count();
             }
+        }elseif($type === "globalMean"){
+            $forms = Form::with('answer')->get();
+            
+            $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+            $count = $forms->sum(fn($form) => $form->answer->count());
         }
 
+        $positiveMeanCal[$type] = $count > 0 ? round($sum / $count, 1) : 0;
+    }
+        
         return $positiveMeanCal;
     }
 
-    public function pillarsMeanScore($country, $survey_id,$form_type=null)
+    // public function pillarsMeanScore($country, $survey_id,$form_type=null,$state=null)
+    // {
+    //     $types = ['mean', 'countryMean', 'globalMean'];
+
+    //     $pillars = [
+    //         'well_functioning_government',
+    //         'low_level_corruption',
+    //         'equitable_distribution',
+    //         'good_relations',
+    //         'free_flow',
+    //         'high_levels',
+    //         'sound_business',
+    //         'acceptance_rights'
+    //     ];
+    //     $pillarMeanCal = [];
+    //     $singlePillarMeanCal = [];
+
+    //     foreach ($types as $type) {
+    //         $query = Form::with('answer');
+
+    //         if ($type === "mean") {
+    //             $query->where('form_id', $survey_id);
+    //         } elseif ($type === "countryMean") {
+    //             $query->where('country', $country);
+    //         }
+
+    //         $formsCountry = $query->get();
+
+    //         foreach ($pillars as $pillar) {
+    //             $sum = $formsCountry->flatMap(function ($form) use ($pillar) {
+    //                 return $form->answer->pluck($pillar);
+    //             })->sum();
+
+    //             $count = $formsCountry->sum(function ($form) {
+    //                 return $form->answer->count();
+    //             });
+    //             $singlePillarMeanCal[$pillar] = $count > 0 ? round($sum / $count, 1) : 0;
+    //         }
+
+    //         $pillarMeanCal[$type] = $singlePillarMeanCal;
+    //     }
+
+    //     return $pillarMeanCal;
+    // }
+
+    //Update for Global Survey
+    public function pillarsMeanScore($country, $survey_id,$form_type=null,$state=null)
     {
-        $types = ['mean', 'countryMean', 'globalMean'];
+        if($form_type == 1){
+            $types = ['mean', 'globalMean'];
+
+            if(!empty($country)){
+                array_splice($types,1,0,'countryMean');
+            }
+        }else{
+            $types = ['mean', 'countryMean', 'globalMean'];
+        }
+
         $pillars = [
             'well_functioning_government',
             'low_level_corruption',
@@ -306,39 +364,140 @@ class IndexController extends Controller
             'acceptance_rights'
         ];
         $pillarMeanCal = [];
-        $singlePillarMeanCal = [];
 
         foreach ($types as $type) {
-            $query = Form::with('answer');
+            $pillarScores = [];
 
-            if ($type === "mean") {
-                $query->where('form_id', $survey_id);
-            } elseif ($type === "countryMean") {
-                $query->where('country', $country);
+            foreach($pillars as $pillar){
+                if($type === "mean"){
+                    $forms = Form::with('answer')->where('form_id',$survey_id)->get();
+
+                    // $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->sum();
+                    // $count = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->count();
+                    $sum = $forms->flatMap(function($form) use($pillar,$form_type,$country,$state){
+                        if($form_type == 1 && !empty($country)){
+                            return $form->answer->filter(function($answer) use($country,$state){
+                                if(!empty($state)){
+                                    return $answer->country == $country && $answer->state == $state;
+                                }
+                                return $answer->country == $country;
+                            })->pluck($pillar);
+
+                        }
+        
+                        return $form->answer->pluck($pillar);
+                    })->sum();
+        
+                    $count = $forms->flatMap(function($form) use($pillar,$form_type,$country,$state){
+                        if($form_type == 1 && !empty($country)){
+                            return $form->answer->filter(function($answer) use($country,$state){
+                                if(!empty($state)){
+                                    return $answer->country == $country && $answer->state == $state;
+                                }
+                                return $answer->country == $country;
+                            })->pluck($pillar);
+
+                        }
+        
+                        return $form->answer->pluck($pillar);
+                    })->count();
+                }elseif($type === "countryMean"){
+                    if($form_type == 0){
+                        $forms = Form::with('answer')->where('country',$country)->get();
+
+                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->sum();
+                        $count = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->count();
+                    }else{
+                        $countryFull = NCountry::where('code',$country)->pluck('name')->first();
+
+                        $formTypeSingleAnswers = Form::with('answer')
+                        ->where('form_type', 0)
+                        ->where('country', $countryFull)
+                        ->get()
+                        ->flatMap(fn($form) => $form->answer->pluck($pillar));
+
+                        $formTypeGlobalIds = Form::where('form_type', 1)->pluck('form_id');
+
+                        $formTypeGlobalAnswers = Answer::whereIn('form_id', $formTypeGlobalIds)
+                            ->where('country', $country)
+                            ->pluck($pillar);
+
+                        $allAnswers = $formTypeSingleAnswers->merge($formTypeGlobalAnswers);
+
+                        $sum = $allAnswers->sum();
+                        $count = $allAnswers->count(); 
+                    }
+                }elseif($type === "globalMean"){
+                    $forms = Form::with('answer')->get();
+
+                    $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->sum();
+                    $count = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->count();
+                }
+
+                $pillarScores[$pillar] = $count > 0 ? round($sum / $count, 1) : 0;
+                
             }
 
-            $formsCountry = $query->get();
-
-            foreach ($pillars as $pillar) {
-                $sum = $formsCountry->flatMap(function ($form) use ($pillar) {
-                    return $form->answer->pluck($pillar);
-                })->sum();
-
-                $count = $formsCountry->sum(function ($form) {
-                    return $form->answer->count();
-                });
-                $singlePillarMeanCal[$pillar] = $count > 0 ? round($sum / $count, 1) : 0;
-            }
-
-            $pillarMeanCal[$type] = $singlePillarMeanCal;
+            $pillarMeanCal[$type] = $pillarScores;
         }
 
         return $pillarMeanCal;
     }
 
-    public function overTimeScore($survey_id,$form_type=null)
+    // public function overTimeScore($survey_id,$form_type=null,$country=null,$state=null)
+    // {
+    //     $survey = Form::with('answer')->filterForm()->where('form_id', $survey_id)->first();
+
+    //     $overTimeMeanTime = [];
+
+    //     $pillars = [
+    //         'well_functioning_government',
+    //         'low_level_corruption',
+    //         'equitable_distribution',
+    //         'good_relations',
+    //         'free_flow',
+    //         'high_levels',
+    //         'sound_business',
+    //         'acceptance_rights'
+    //     ];
+
+    //     $timeTypes = ['before', 'during', 'after'];
+
+    //     foreach ($timeTypes as $timeType) {
+    //         if ($survey->$timeType != null) {
+    //             $date = explode(' to ', $survey->$timeType);
+    //             $startdate = Carbon::createFromFormat('d-m-Y', $date[0])->startOfDay();
+    //             $enddate = Carbon::createFromFormat('d-m-Y', $date[1])->endOfDay();
+
+    //             $answersInTimeRange = $survey->answer()->filterSurvey()->whereBetween('created_at', [$startdate, $enddate])->get();
+    //             if($timeType == 'after'){
+    //                 $answersInTimeRanges = $survey->answer()->filterSurvey()->whereBetween('created_at', [$startdate, $enddate])->first();
+    //                 dd($answersInTimeRanges);
+    //             }
+
+    //             $overTimeMean = [];
+    //             foreach ($pillars as $pillar) {
+    //                 $answerSum = $answersInTimeRange->sum($pillar);
+    //                 $answerCount = $answersInTimeRange->count();
+
+    //                 $answerCount = max($answerCount, 1);
+
+    //                 $overTimeMean[$pillar] = round($answerSum / $answerCount, 1);
+    //             }
+
+    //             $overTimeMeanTime[$timeType] = $overTimeMean;
+    //         } else {
+    //             $overTimeMeanTime[$timeType] = 0;
+    //         }
+    //     }
+
+    //     return $overTimeMeanTime;
+    // }
+
+    public function overTimeScore($survey_id,$form_type=null,$country=null,$state=null)
     {
         $survey = Form::with('answer')->filterForm()->where('form_id', $survey_id)->first();
+
         $overTimeMeanTime = [];
 
         $pillars = [
@@ -360,7 +519,15 @@ class IndexController extends Controller
                 $startdate = Carbon::createFromFormat('d-m-Y', $date[0])->startOfDay();
                 $enddate = Carbon::createFromFormat('d-m-Y', $date[1])->endOfDay();
 
-                $answersInTimeRange = $survey->answer()->filterSurvey()->whereBetween('created_at', [$startdate, $enddate])->get();
+                $answersInTimeRange = $survey->answer()->filterSurvey();
+                if($form_type == 1 && !empty($country)){
+                    $answersInTimeRange->where('country',$country);
+
+                    if(!empty($state)){
+                        $answersInTimeRange->where('state',$state);
+                    }
+                }
+                $answersInTimeRange = $answersInTimeRange->whereBetween('created_at', [$startdate, $enddate])->get();
 
                 $overTimeMean = [];
                 foreach ($pillars as $pillar) {

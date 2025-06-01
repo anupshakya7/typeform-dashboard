@@ -14,7 +14,7 @@
                     }
                 ?>
                 <h5 class="my-1" style="font-size:16px;color: #333;">Showing insights for
-                    <b><?php echo e($formDetails->form_title); ?></b>. <span class="survey-type">Country Survey</span>
+                    <b><?php echo e($formDetails->form_title); ?></b>. <span class="survey-type"><?php echo e(request('formType')==1 || session('form_type') ==1 ? 'Global':'Single'); ?></span>
                         <?php if($user !== 'survey'): ?>
                             <br><span>Use the filters below to switch between different surveys or refine your results
                                 by Country<?php echo e($lastText); ?>.</span></h5>
@@ -24,7 +24,7 @@
             <div class="mt-3 mt-lg-0 d-flex justify-content-between flex-wrap gap-3">
                 <form action="<?php echo e(route('home.index')); ?>" method="GET">
                     <div class="row gap-3 m-0 p-0 dashboard flex-nowra align-items-center">
-                        
+                        <input type="hidden" name="formType" id="formtype"/>
                         <div class="col-auto p-0">
                             <?php if(auth()->user()->role->name == 'superadmin'): ?>
                                 <select class="form-select select2" id="organization" name="organization"
@@ -74,19 +74,12 @@
                         </div>
 
                         <div class="col-auto p-0" id="countryField">
+                            <input type="hidden" id="selected_country" value="<?php echo e((request('formType') == 1 || session('form_type') ==1) ? $selectedCountry ?? session('country') ?? '': ''); ?>">
                             <input type="text" class="form-control" name="country" id="country_input" readonly style="display:none;">
 
                             <select class="form-select select2" name="country" id="country_select"
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select Country</option>
-
-                                <?php
-                                    $countries = App\Models\NCountry::all();
-                                ?>
-                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($country->code); ?>">
-                                        <?php echo e($country->name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                             
                             
@@ -104,7 +97,7 @@
                         
                         <div class="col-auto p-0">
                             <button href="#" class="view-insight-btn" id="filter_btn"
-                                onclick="this.form.submit();" <?php echo e(request('survey') ? '' : 'disabled'); ?>>
+                                <?php echo e(request('survey') ? '' : 'disabled'); ?>>
                                 <span>View Insight</span>
                                 <i class='bx bx-arrow-back bx-rotate-180'></i>
                             </button>
