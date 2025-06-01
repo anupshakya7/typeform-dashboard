@@ -175,6 +175,7 @@ class FormController extends Controller
                     return is_string($item) && Str::contains($item,'country_field_ref');
                 });
                 
+                
                 if(empty($matchCountry)){
                     $labelDBData = array_filter($labelDBData,function($item){
                         return $item !== 'country'; 
@@ -228,7 +229,7 @@ class FormController extends Controller
                 ];
  
                 $questionsData = array_merge($formIdData, $questionFormattingData);
-
+                
                 Question::create($questionsData);
                 Log::info("Form and Question Created Successfully!");
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
