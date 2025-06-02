@@ -551,7 +551,7 @@ $(document).ready(function() {
 
     function filterState(countryCode){
         $.ajax({
-                url: `/typeform/getState/${countryCode}`,
+                url: `{{url('/')}}/typeform/getState/${countryCode}`,
                 method: 'GET',
                 success: function(response) {
                     console.log(response);

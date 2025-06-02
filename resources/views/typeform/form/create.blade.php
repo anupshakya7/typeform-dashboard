@@ -352,7 +352,7 @@
                                         <span class="step-number">3</span>
                                         <span class="step-title">Add the webhook URL</span>
                                         <p class="step-description">In the webhook settings, add the following URL:</p>
-                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-Version-2.0/public/answer</span>
+                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-Version-3.0/public/answer</span>
                                     </div>
                                     
                                     <div class="instruction-step border-0">
@@ -650,7 +650,7 @@ $(document).ready(function() {
 
     function filterState(countryCode){
         $.ajax({
-                url: `/typeform/getState/${countryCode}`,
+                url: `{{url('/')}}/typeform/getState/${countryCode}`,
                 method: 'GET',
                 success: function(response) {
                     console.log(response);
