@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Typeform;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Form;
+use App\Models\NSubCountry;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -41,5 +42,23 @@ class ApiController extends Controller
             'data'=>$countryState
         ]);
         
+    }
+
+    public function findStateCountry($countryCode=null){
+
+        if($countryCode){
+            $states = NSubCountry::select('name','id')->where('countryCode',$countryCode)->get();
+
+            return response()->json([
+                'status'=>true,
+                'data'=> $states
+            ]);
+        }else{
+            return response()->json([
+                'status'=>false,
+                'message'=>'Please select Country'
+            ]);
+        }
+       
     }
 }

@@ -45,20 +45,38 @@
                         </div>
                     </div>
                     <!--end col-->
-                    <div class="col-md-6">
+
+                    <div class="col-md-12" id="selectFormType">
+                        <div class="my-3">
+                            <label for="setFromType" class="form-label">If you would like this form to be used for a global survey, please check the box below.</label>
+                            <input type="checkbox" <?php echo e($form->form_type == 1 ? 'checked':''); ?> name="setFormType" class="ms-2" id="setFromType"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" id="countryField">
                         <div class="mb-3">
                             <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
 
                             <select id="country" name="country" class="form-select select2" >
-                                <option selected>Select Country</option>
+                                <option value="" selected>Select Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($country['name']); ?>" <?php echo e($form->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
+                                <option value="<?php echo e($country['name']); ?>" data-countryCode="<?php echo e($country['code']); ?>" <?php echo e($form->country == $country['name'] ? 'selected':''); ?>><?php echo e($country['name']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
+
+                    <div class="col-md-6" id="stateField">
+                        <div class="mb-3">
+                            <label for="state" class="form-label">State</label>
+
+                            <select id="state" name="state" class="form-select select2" disabled>
+                                <option value="" selected>Select State</option>
+                            </select>
+                        </div>
+                    </div>
                     <!--end col-->
-                    <div class="col-md-6">
+                    <div class="col-md-12" id="organizationField">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
@@ -286,9 +304,48 @@ $(document).ready(function() {
     //     }
     // });
 
+    checkGlobalBox();
+    let countryCode = $(this).find(':selected').data('countrycode');
+        if(countryCode){
+            filterState(countryCode);
+        }
+
     $('#organization,#setBranch').change(function() {
        handleBranch();
     });
+
+    //Check If Global Country Select or Not
+    $('#setFromType').change(function(){
+        checkGlobalBox();
+    });
+
+    //When Country changes filter State
+    $('#country').change(function(){
+        let countryCode = $(this).find(':selected').data('countrycode');
+        if(countryCode){
+            filterState(countryCode);
+        }
+    });
+
+    function checkGlobalBox(){
+        let isGlobalChecked = $('#setFromType').prop("checked");
+        let countryField = $('#countryField');
+        let countrySelect = $('#country');
+        let stateField = $('#stateField');
+        let stateSelect = $('#state');
+        
+        if(isGlobalChecked){
+            countryField.hide();
+            countrySelect.val('');
+            stateField.hide();
+            stateSelect.val('');
+            countrySelect.trigger('change');
+        }else{
+            countryField.show();
+            stateField.show();
+            stateSelect.prop('disabled',true);
+        }
+    }
 
     function handleBranch(){
         var organizationVal = $('#organization').val();
@@ -489,6 +546,35 @@ $(document).ready(function() {
     //         .html('<option value="">Choose Branch</option>');
     // }
 
+    function filterState(countryCode){
+        $.ajax({
+                url: `/typeform/getState/${countryCode}`,
+                method: 'GET',
+                success: function(response) {
+                    console.log(response);
+                    if(response.status == true){
+                        $('#state').prop('disabled', false);
+                        $('#state').html('');
+                        $('#state').append('<option value="" selected>Select State</option>');
+                        
+                        
+                        let selectedStateId = "<?php echo e($form->state ?? ''); ?>";
+                        console.log(selectedStateId);
+                        
+                        response.data.forEach(function(state) {
+                            let isSelected = state.id == selectedStateId ? 'selected' : '';
+                            $('#state').append(`<option value="${state.id}" ${isSelected}>${state.name}</option>`);
+                            // $('#state').append(new Option(state.name, state.id));
+                        })
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#state').prop('disabled', true);
+                    $('#state').html('');
+                    $('#state').append('<option value="" selected>Select State</option>');
+                }
+            })
+    }
 })
 </script>
 <?php $__env->stopSection(); ?>

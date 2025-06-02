@@ -244,13 +244,22 @@
                             <select id="country" name="country" class="form-select select2" >
                                 <option value="" selected>Select Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
+                                <option value="<?php echo e($country['name']); ?>" data-countryCode="<?php echo e($country['code']); ?>"><?php echo e($country['name']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-6" id="stateField">
+                        <div class="mb-3">
+                            <label for="state" class="form-label">State</label>
+
+                            <select id="state" name="state" class="form-select select2" disabled>
+                                <option value="" selected>Select State</option>
+                            </select>
+                        </div>
+                    </div>
                     <!--end col-->
-                    <div class="col-md-6" id="organizationField">
+                    <div class="col-md-12" id="organizationField">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
@@ -548,23 +557,35 @@ $(document).ready(function() {
         checkGlobalBox();
     });
 
+    //When Country changes filter State
+    $('#country').change(function(){
+        let countryCode = $(this).find(':selected').data('countrycode');
+        if(filterState){
+            filterState(countryCode);
+        }
+    });
+
     function checkGlobalBox(){
         let isGlobalChecked = $('#setFromType').prop("checked");
         let countryField = $('#countryField');
         let countrySelect = $('#country');
+        let stateField = $('#stateField');
+        let stateSelect = $('#state');
+
         
         if(isGlobalChecked){
             countryField.hide();
             countrySelect.val('');
-            $('#organizationField').removeClass('col-md-6');
-            $('#organizationField').addClass('col-md-12');
+            stateField.hide();
+            stateSelect.val('');
             countrySelect.trigger('change');
         }else{
             countryField.show();
-            $('#organizationField').removeClass('col-md-12');
-            $('#organizationField').addClass('col-md-6');
+            stateField.show();
+            stateSelect.prop('disabled',true);
         }
     }
+
 
     function checkBoxBranch(){
         var organizationVal = $('#organization').val();
@@ -618,6 +639,30 @@ $(document).ready(function() {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
                     $('#branch').append('<option value="" selected>Select Division</option>');
+                }
+            })
+    }
+
+    function filterState(countryCode){
+        $.ajax({
+                url: `/typeform/getState/${countryCode}`,
+                method: 'GET',
+                success: function(response) {
+                    console.log(response);
+                    if(response.status == true){
+                        $('#state').prop('disabled', false);
+                        $('#state').html('');
+                        $('#state').append('<option value="" selected>Select State</option>');
+
+                        response.data.forEach(function(state) {
+                            $('#state').append(new Option(state.name, state.id));
+                        })
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#state').prop('disabled', true);
+                    $('#state').html('');
+                    $('#state').append('<option value="" selected>Select State</option>');
                 }
             })
     }

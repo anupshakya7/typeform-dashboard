@@ -237,6 +237,8 @@ justify-content: center;
                                             <option value="<?php echo e($surveyForm->form_title); ?>" data-formtype="<?php echo e($surveyForm->form_type); ?>"
                                                  <?php if($surveyForm->form_type == 0): ?>
                                                     data-country="<?php echo e($surveyForm->country); ?>"
+                                                    data-state="<?php echo e(!empty($surveyForm->states) ? $surveyForm->states->name : ''); ?>"
+                                                    data-state-id="<?php echo e(!empty($surveyForm->states) ? $surveyForm->states->id : ''); ?>"
                                                 <?php elseif($surveyForm->form_type ==1): ?>
                                                     data-country-url="<?php echo e(route('countrystate.get', ['surveyId' => $surveyForm->form_id])); ?>"
                                                 <?php endif; ?>
@@ -267,6 +269,10 @@ justify-content: center;
                                 </div>
                                 <div class="col-auto p-0">
                                     
+                                    <input type="text" class="form-control" id="state_input" readonly style="display:none;">
+                                    <input type="hidden" class="form-control" name="state" id="state_id_input" readonly>
+                                    
+
                                     <select class="form-select select2" name="state" id="state_select"
                                         aria-label="Default select example" disabled>
                                         <option value="" selected>Select State</option>
@@ -363,8 +369,10 @@ justify-content: center;
                 let surveyValue = $('#survey').val();
                 let surveyType = $('#survey option:selected').data('formtype');
                 let surveyCountry = $('#survey option:selected').data('country');
-
-                filterCountry(surveyType,surveyCountry);
+                let surveyState = $('#survey option:selected').data('state');
+                let surveyStateId = $('#survey option:selected').data('state-id');
+              
+                filterCountry(surveyType,surveyCountry,surveyState,surveyStateId);
 
                 if(surveyValue!==""){
                     $('#filter_btn').prop('disabled',false);
@@ -399,20 +407,37 @@ justify-content: center;
                 $('#state_select').empty().append('<option value="" selected>Select State</option>');
             }
 
-            function filterCountry(surveyType,surveyCountry){
+            function filterCountry(surveyType,surveyCountry,surveyState,surveyStateId){
 
                 if (surveyType == 0) {
                     $('#country_select').parent().find('.select2-container').hide();
                     $('#country_select').prop('disabled', true);
-
                     $('#country_input').show().val(surveyCountry);
-
-                    disableStateField();
+                
+                    $('#state_select').parent().find('.select2-container').hide();
+                    $('#state_select').prop('disabled', true);
+                    if(surveyState !== ""){
+                        $('#state_input').show().val(surveyState);
+                        $('#state_id_input').show().val(surveyStateId);
+                    }else{
+                        $('#state_input').show().val("No State");
+                        $('#state_id_input').show().val("");
+                    }
+                    
                     
                 } else if (surveyType == 1) {
                     $('#country_input').hide();
+                    $('#country_input').val('');
+
                     $('#country_select').parent().find('.select2-container').show();
                     $('#country_select').prop('disabled', false);
+
+                    $('#state_input').hide();
+                    $('#state_input').val('');
+                    $('#state_id_input').val('');
+
+                    $('#state_select').parent().find('.select2-container').show();
+                    $('#state_select').prop('disabled', true);
 
                     //Clear existing options
                     $('#country_select').empty().append('<option value="" selected>Select Country</option>');
@@ -574,6 +599,8 @@ justify-content: center;
                             formList.forEach(function(formItem) {
                                 let formType = formItem.form_type == 1 ? 'Global':'Single'; 
                                 let formTypeValue = formItem.form_type;
+                                var data_state = formItem.states !== null ? formItem.states.name :'';
+                                var data_state_id = formItem.states !== null ? formItem.states.id :'';
 
                                 if(userRole == 'survey'){
                                     let surveyId = <?php echo json_encode(auth()->user()->form_id, 15, 512) ?>;
@@ -582,8 +609,12 @@ justify-content: center;
                                     if(surveyIds.includes(formItem.form_id)){
                                         var option = new Option(formItem.form_title+' ('+formType+')', formItem.form_id);
                                         option.setAttribute('data-formtype',formTypeValue);
+                                        
+                                       
                                         if(formTypeValue == 0){
                                             option.setAttribute('data-country',formItem.country);
+                                            option.setAttribute('data-state',data_state);
+                                            option.setAttribute('data-state-id',data_state_id);
                                         }else if(formTypeValue == 1){
                                             let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
                                             option.setAttribute('data-country-url',countryUrl);
@@ -599,6 +630,8 @@ justify-content: center;
                                     option.setAttribute('data-formtype',formTypeValue);
                                     if(formTypeValue == 0){
                                         option.setAttribute('data-country',formItem.country);
+                                        option.setAttribute('data-state',data_state);
+                                        option.setAttribute('data-state-id',data_state_id);
                                     }else if(formTypeValue == 1){
                                         let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
                                         option.setAttribute('data-country-url',countryUrl);

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();;
             $table->string('age');
             $table->string('gender');
+            $table->string('village-town-city')->nullable();
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('well_functioning_government');

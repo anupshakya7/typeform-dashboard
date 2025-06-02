@@ -10,6 +10,7 @@ use App\Models\NCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Form;
+use App\Models\NSubCountry;
 use App\Models\Organization;
 use App\Models\Question;
 use Carbon\Carbon;
@@ -72,8 +73,9 @@ class FormController extends Controller
 
     public function create()
     {
-        $countriesPath = public_path('build/js/countries/countries.json');
-        $countries = json_decode(File::get($countriesPath),true);
+        // $countriesPath = public_path('build/js/countries/countries.json');
+        // $countries = json_decode(File::get($countriesPath),true);
+        $countries = NCountry::select('name','code')->get()->toArray();
 
         $organizations = Organization::filterOrganization()->get();
 
@@ -98,6 +100,7 @@ class FormController extends Controller
             'form_name' => 'required|string',
             'setFormType' => 'nullable',
             'country' => 'required_without:setFormType',
+            'state' => 'nullable',
             'organization' => 'required|integer',
             'branch'=>['nullable','integer',Rule::requiredIf(function() use($request){
                 return auth()->user()->role->name == 'branch';
@@ -109,7 +112,7 @@ class FormController extends Controller
             'questions.question' => 'required|array',
             'questions.ref' => 'required|array',
         ]);
-        
+
         DB::transaction(function() use($validatedData,$request){
             try {
                 //Formatting Date
@@ -131,13 +134,16 @@ class FormController extends Controller
                     $branch_id=null;
                     $branchLevel = 0;
                 }
+
+                $formtype = isset($validatedData['setFormType']) ? 1 :0;
                 
                 //Form Data
                 $formData = [
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
-                    'form_type' => isset($validatedData['setFormType']) ? 1 :0,
+                    'state' => $validatedData['state'],
+                    'form_type' => $formtype,
                     'webhook' => $request->webhook ? 1:0,
                     'organization_id' => $validatedData['organization'],
                     'branch_id' => $branch_id,
@@ -146,14 +152,15 @@ class FormController extends Controller
                     'during' => $validatedData['duringdate'] !== null ? $duringdate_start.' to '.$duringdate_end : null,
                     'after' => $validatedData['afterdate'] !== null ? $enddate_start.' to '.$enddate_end : null
                 ];
-                
+
                 Form::create($formData);
-    
+                
                 //Question Data
                 $labelDBData = [
                     'name',
                     'age',
                     'gender',
+                    'village-town-city',
                     'country',
                     'state',
                     'well_functioning_government',
@@ -171,10 +178,15 @@ class FormController extends Controller
                     'extra_ques3',
                 ];
 
+                if($formtype == 1){
+                    $labelDBData = array_filter($labelDBData,function($item){
+                        return $item !== 'village-town-city';
+                    });
+                }
+
                 $matchCountry = array_filter($validatedData['questions']['ref'],function($item){
                     return is_string($item) && Str::contains($item,'country_field_ref');
                 });
-                
                 
                 if(empty($matchCountry)){
                     $labelDBData = array_filter($labelDBData,function($item){
@@ -194,7 +206,7 @@ class FormController extends Controller
                     
                     $labelDBData = array_values($labelDBData);
                 }
-                
+
                 if(!empty($matches)){
                      $firstStateIndex = null;
                 
@@ -229,7 +241,7 @@ class FormController extends Controller
                 ];
  
                 $questionsData = array_merge($formIdData, $questionFormattingData);
-                
+
                 Question::create($questionsData);
                 Log::info("Form and Question Created Successfully!");
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
@@ -332,6 +344,7 @@ class FormController extends Controller
         ]);
 
         $formQuery = Form::query();
+        $formQuery->with('countries','states');
         
         if($request->filled('country')){
             $formQuery->where('country',$validatedData['country']);
@@ -363,8 +376,9 @@ class FormController extends Controller
     public function edit(String $id)
     {
         $form = Form::with('branches','branches.organization')->filterForm()->find($id);
-        $countriesPath = public_path('build/js/countries/countries.json');
-        $countries = json_decode(File::get($countriesPath),true);
+        // $countriesPath = public_path('build/js/countries/countries.json');
+        // $countries = json_decode(File::get($countriesPath),true);
+        $countries = NCountry::select('name','code')->get()->toArray();
 
         $organizations = Organization::filterOrganization()->get();
 
@@ -384,6 +398,7 @@ class FormController extends Controller
             'form_name' => 'required|string',
             'setFormType' => 'nullable',
             'country' => 'required_without:setFormType',
+            'state' => 'nullable',
             'organization' => 'required|integer',
             'branch'=>['nullable','integer',Rule::requiredIf(function() use($request){
                 return auth()->user()->role->name == 'branch';
@@ -426,6 +441,7 @@ class FormController extends Controller
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
+                    'state' => $validatedData['state'],
                     'form_type' => $formtype,
                     'organization_id' => $validatedData['organization'],
                     'branch_id' => $branch_id,

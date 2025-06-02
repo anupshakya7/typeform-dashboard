@@ -63,6 +63,8 @@
                                         <?php echo e(($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : ''); ?> 
                                         <?php if($surveyForm->form_type == 0): ?>
                                             data-country="<?php echo e($surveyForm->country); ?>"
+                                            data-state="<?php echo e(!empty($surveyForm->states) ? $surveyForm->states->name : ''); ?>"
+                                            data-state-id="<?php echo e(!empty($surveyForm->states) ? $surveyForm->states->id : ''); ?>"
                                         <?php elseif($surveyForm->form_type ==1): ?>
                                             data-country-url="<?php echo e(route('countrystate.get', ['surveyId' => $surveyForm->form_id])); ?>"
                                         <?php endif; ?>    
@@ -86,6 +88,10 @@
                         </div>
                         <div class="col-auto p-0">
                             
+
+                            <input type="text" class="form-control" id="state_input" readonly style="display:none;">
+                            <input type="hidden" class="form-control" name="state" id="state_id_input" readonly>
+
                             <select class="form-select select2" name="state" id="state_select"
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select State</option>

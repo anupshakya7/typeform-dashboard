@@ -69,6 +69,8 @@
                                         {{ ($filterData && $filterData->form_id == $surveyForm->form_id) || request('survey') == $surveyForm->form_id ? 'selected' : '' }} 
                                         @if($surveyForm->form_type == 0)
                                             data-country="{{$surveyForm->country}}"
+                                            data-state="{{!empty($surveyForm->states) ? $surveyForm->states->name : ''}}"
+                                            data-state-id="{{!empty($surveyForm->states) ? $surveyForm->states->id : ''}}"
                                         @elseif ($surveyForm->form_type ==1)
                                             data-country-url="{{ route('countrystate.get', ['surveyId' => $surveyForm->form_id]) }}"
                                         @endif    
@@ -96,6 +98,10 @@
                             {{-- @if(auth()->user()->role->name == 'survey')
                                 <input type="text" class="form-control" name="country" id="country" value="{{$filterData->country}}" readonly>
                             @else --}}
+
+                            <input type="text" class="form-control" id="state_input" readonly style="display:none;">
+                            <input type="hidden" class="form-control" name="state" id="state_id_input" readonly>
+
                             <select class="form-select select2" name="state" id="state_select"
                                 aria-label="Default select example" disabled>
                                 <option value="" selected>Select State</option>

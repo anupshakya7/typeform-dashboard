@@ -24,7 +24,7 @@ class IndexController extends Controller
             $countries = Form::select('country')->filterForm()->distinct()->get();
 
             $organizations = Organization::filterOrganization()->get();
-            $surveyForms = Form::filterForm()->get();
+            $surveyForms = Form::with('countries','states')->filterForm()->get();
 
             $topBox = $this->topBoxData();
 
@@ -46,7 +46,7 @@ class IndexController extends Controller
         $countries = Form::select('country')->filterForm()->whereNotNull('country',)->distinct()->get();
 
         $organizations = Organization::filterOrganization()->get();
-        $surveyForms = Form::filterForm()->get();
+        $surveyForms = Form::with('countries','states')->filterForm()->get();
         
         // dd(session('survey_id'));
         //Survey id if no then latest form id
@@ -61,10 +61,11 @@ class IndexController extends Controller
         } 
 
         if((isset($request->formType) && $request->formType == 1) || session('form_type') == 1){
-            $state = isset($request->state) && $request->state ?  $request->state :null; 
+            $state = isset($request->state) || $request->state == null ?  $request->state :session('state'); 
             session(['state'=>$state]);
         }else{
-            $state =null;
+            $state =isset($request->survey) && $request->survey ? Form::where('form_id', $request->survey)->pluck('state')->first() : Form::where('form_id', session('survey_id'))->pluck('state')->first();
+            session(['state'=>null]);
         }
 
         $survey_id = isset($request->survey) && $request->survey ? $request->survey : session('survey_id');
@@ -214,12 +215,20 @@ class IndexController extends Controller
     {
         if($form_type ==1 ){
             $types = ['mean', 'globalMean'];
+            
+            if(!empty($state)){
+                array_splice($types,1,0,'stateMean');
+            }
 
             if(!empty($country)){
-                array_splice($types,1,0,'countryMean');
+                array_splice($types,2,0,'countryMean');
             }
         }else{
             $types = ['mean', 'countryMean', 'globalMean'];
+
+            if(!empty($state)){
+                array_splice($types,1,0,'stateMean');
+            }
         }
         
         $positiveMeanCal = [];
@@ -259,6 +268,27 @@ class IndexController extends Controller
                 return $form->answer->pluck($flag);
             })->count();
             // $count = $forms->sum(fn($form) => $form->answer->count());
+        }elseif ($type === "stateMean") {
+            if($form_type == 0){
+                $forms = Form::with('answer')->where('state',$state)->get();
+                
+                $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+                $count = $forms->sum(fn($form) => $form->answer->count());
+            }else{
+                $formTypeSingleAnswers = Form::with('answer')
+                    ->where('form_type',0)
+                    ->where('state',$state)
+                    ->get()
+                    ->flatMap(fn($form)=>$form->answer->pluck($flag));
+
+                $formTypeGlobalIds = Form::where('form_type',1)->pluck('form_id');
+                $formTypeGlobalAnswers = Answer::whereIn('form_id',$formTypeGlobalIds)->where('state',$state)->pluck($flag);
+
+                $allAnswers = $formTypeSingleAnswers->merge($formTypeGlobalAnswers);
+                
+                $sum = $allAnswers->sum();
+                $count = $allAnswers->count();
+            }
         } elseif ($type === "countryMean") {
             if($form_type == 0){
                 $forms = Form::with('answer')->where('country',$country)->get();
@@ -292,7 +322,7 @@ class IndexController extends Controller
         $positiveMeanCal[$type] = $count > 0 ? round($sum / $count, 1) : 0;
     }
         
-        return $positiveMeanCal;
+    return $positiveMeanCal;
     }
 
     // public function pillarsMeanScore($country, $survey_id,$form_type=null,$state=null)
@@ -346,11 +376,19 @@ class IndexController extends Controller
         if($form_type == 1){
             $types = ['mean', 'globalMean'];
 
+            if(!empty($state)){
+                array_splice($types,1,0,'stateMean');
+            }
+
             if(!empty($country)){
-                array_splice($types,1,0,'countryMean');
+                array_splice($types,2,0,'countryMean');
             }
         }else{
             $types = ['mean', 'countryMean', 'globalMean'];
+
+            if(!empty($state)){
+                array_splice($types,1,0,'stateMean');
+            }
         }
 
         $pillars = [
@@ -401,6 +439,30 @@ class IndexController extends Controller
         
                         return $form->answer->pluck($pillar);
                     })->count();
+                }elseif($type === "stateMean"){
+                    if($form_type == 0){
+                        $forms = Form::with('answer')->where('state',$state)->get();
+
+                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->sum();
+                        $count = $forms->sum(fn($form) => $form->answer->count());
+
+                    }else{
+                        $formTypeSingleAnswers = Form::with('answer')
+                        ->where('form_type', 0)
+                        ->where('state', $state)
+                        ->get()
+                        ->flatMap(fn($form) => $form->answer->pluck($pillar));
+
+                        $formTypeGlobalIds = Form::where('form_type', 1)->pluck('form_id');
+                        $formTypeGlobalAnswers = Answer::whereIn('form_id', $formTypeGlobalIds)
+                            ->where('state', $state)
+                            ->pluck($pillar);
+
+                        $allAnswers = $formTypeSingleAnswers->merge($formTypeGlobalAnswers);
+
+                        $sum = $allAnswers->sum();
+                        $count = $allAnswers->count(); 
+                    }
                 }elseif($type === "countryMean"){
                     if($form_type == 0){
                         $forms = Form::with('answer')->where('country',$country)->get();

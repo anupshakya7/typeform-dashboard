@@ -932,12 +932,28 @@ table td{
     min-height: 260px;
 }
 
-.survey-type{
+.survey-type {
     position: absolute;
-    right: 20px;
+    right: 25px;
     top: 10px;
-    background-color: #6b0f0f;
+    /* background-color: #1f86c6;*/
+    background-color: #002347;
     color: #fff;
-    padding: 5px 10px;
+    padding: 3px 7px 3px 22px; 
+    font-size: 13px;
+    font-weight: 600;
     border-radius: 8px;
+}
+
+.survey-type::before {
+    content: "\f46d"; 
+    font-family: 'Font Awesome 6 Free';
+    position: absolute;
+    left: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+.input-label {
+    margin: 0;
 }

@@ -111,3 +111,6 @@ Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store
 //Get Filter Country State according to Survey for Global
 Route::get('typeform/getCountryState/{surveyId}/{countryCode?}',[ApiController::class,'countryStateFilter'])->name('countrystate.get');
 
+//Get Filter State according to Country
+Route::get('typeform/getState/{countryCode?}',[ApiController::class,'findStateCountry'])->name('state.get');
+

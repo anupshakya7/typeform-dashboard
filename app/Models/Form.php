@@ -14,6 +14,7 @@ class Form extends Model
         'form_id',
         'form_title',
         'country',
+        'state',
         'form_type',
         'webhook',
         'organization_id',
@@ -55,5 +56,13 @@ class Form extends Model
 
     public function answer(){
         return $this->hasMany(Answer::class,'form_id','form_id');
+    }
+
+    public function countries(){
+        return $this->hasOne(NCountry::class,'name','country');
+    }
+
+    public function states(){
+        return $this->hasOne(NSubCountry::class,'id','state');
     }
 }
