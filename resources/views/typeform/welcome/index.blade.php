@@ -374,7 +374,7 @@ justify-content: center;
                 disableStateField();
             });
 
-            $(document).on('change input', '#survey', function() {
+            $(document).on('change', '#survey', function() {
                 filterBtn();
             });
 
@@ -456,7 +456,7 @@ justify-content: center;
                     $('#country_select').empty().append('<option value="" selected>Select Country</option>');
 
                     let countryUrl = $('#survey option:selected').data('country-url');
-                    
+                   
                     if(countryUrl){
                         $.get(countryUrl,function(data){
                             if(data && data.data){
@@ -490,7 +490,7 @@ justify-content: center;
                 
                 if (surveyId && countryCode) {
                     let stateUrl = `{{url('/')}}/typeform/getCountryState/${surveyId}/${countryCode}`;
-                    
+
                     $.get(stateUrl,function(response){
                         if(response && response.data){
                             response.data.forEach(function(state){
