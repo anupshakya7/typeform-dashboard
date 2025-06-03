@@ -152,7 +152,7 @@ class FormController extends Controller
                     'during' => $validatedData['duringdate'] !== null ? $duringdate_start.' to '.$duringdate_end : null,
                     'after' => $validatedData['afterdate'] !== null ? $enddate_start.' to '.$enddate_end : null
                 ];
-
+                
                 Form::create($formData);
                 
                 //Question Data
@@ -182,6 +182,8 @@ class FormController extends Controller
                     $labelDBData = array_filter($labelDBData,function($item){
                         return $item !== 'village-town-city';
                     });
+                    
+                    $labelDBData = array_values($labelDBData);
                 }
 
                 $matchCountry = array_filter($validatedData['questions']['ref'],function($item){
@@ -229,9 +231,9 @@ class FormController extends Controller
                     
                     $validatedData['questions']['question'] = $filteredArray;
                 }
-
+                
                 $questionFormattingData = [];
-
+                
                 foreach ($validatedData['questions']['question'] as $key => $question) {
                     $questionFormattingData[$labelDBData[$key]] = $question;
                 }
@@ -239,7 +241,7 @@ class FormController extends Controller
                 $formIdData = [
                     'form_id' => $validatedData['formId']
                 ];
- 
+                
                 $questionsData = array_merge($formIdData, $questionFormattingData);
 
                 Question::create($questionsData);
@@ -408,6 +410,7 @@ class FormController extends Controller
             'afterdate' => 'nullable|string',
         ]);
         
+        
         DB::transaction(function() use($validatedData,$form){
             try {
                 //Formatting Date
@@ -441,7 +444,7 @@ class FormController extends Controller
                     'form_id' => $validatedData['formId'],
                     'form_title' => $validatedData['form_name'],
                     'country' => $validatedData['country'],
-                    'state' => $validatedData['state'],
+                    'state' => isset($validatedData['state']) ? $validatedData['state']:null,
                     'form_type' => $formtype,
                     'organization_id' => $validatedData['organization'],
                     'branch_id' => $branch_id,
@@ -791,7 +794,7 @@ class FormController extends Controller
                 foreach ($logic as $condition) {
                     $formData['logic'][] = $condition;
                 }
-
+                
                 $updateForm = Http::withToken($accessToken)->put("https://api.typeform.com/forms/{$formId}", $formData);
                 
                 if($updateForm->successful()){
