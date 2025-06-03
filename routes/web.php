@@ -108,9 +108,13 @@ Route::middleware('check_auth','check_route')->group(function(){
 //Get Answer WebHook
 Route::post('/answer',[AnswerController::class,'getAnswer'])->name('answer.store');
 
+//Import Answer into DB according to Survey Id
+Route::post('/import/answer/{surveyId}',[AnswerController::class,'importAnswerSurvey'])->name('answer.import.surveyId');
+
 //Get Filter Country State according to Survey for Global
 Route::get('typeform/getCountryState/{surveyId}/{countryCode?}',[ApiController::class,'countryStateFilter'])->name('countrystate.get');
 
 //Get Filter State according to Country
 Route::get('typeform/getState/{countryCode?}',[ApiController::class,'findStateCountry'])->name('state.get');
+
 

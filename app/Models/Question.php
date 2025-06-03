@@ -14,6 +14,7 @@ class Question extends Model
         'name',
         'age',
         'gender',
+        'village-town-city',
         'country',
         'state',
         'well_functioning_government',

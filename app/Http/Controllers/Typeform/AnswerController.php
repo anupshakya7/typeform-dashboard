@@ -7,10 +7,14 @@ use App\Models\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Helpers\PaginationHelper;
+use App\Models\AnswerTesting;
 use App\Models\Form;
 use App\Models\Organization;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class AnswerController extends Controller
 {
@@ -391,4 +395,137 @@ class AnswerController extends Controller
             'surveys' => $formattedAnswers,
         ]);
     }
+
+    public function importAnswerSurvey($surveyId){
+        try{
+            $token = config('services.api.key');
+        
+            $response = Http::withToken($token)->get("https://api.typeform.com/forms/$surveyId/responses",[
+                'page_size' => 1000
+            ]);
+    
+            if($response->successful()){
+                $result = $response->json();
+                $eachResponse = [];
+                foreach($result['items'] as $item){
+                    
+                    $surveyLabel = [
+                        'name',
+                        'age',
+                        'gender',
+                        'country',
+                        'state',
+                        'well_functioning_government',
+                        'low_level_corruption',
+                        'equitable_distribution',
+                        'good_relations',
+                        'free_flow',
+                        'high_levels',
+                        'sound_business',
+                        'acceptance_rights',
+                        'positive_peace',
+                        'negative_peace',
+                    ];
+
+                    $firstItemType = $item['answers'][0]['field']['type'];
+                    
+                    if($firstItemType == 'multiple_choice'){
+                        $surveyLabel = array_filter($surveyLabel,function($item){
+                            return $item !== 'name';
+                        });
+
+                        $surveyLabel = array_values($surveyLabel);
+                    }
+                        $matchCountry = array_filter($item['answers'],function($item){
+                            return is_string($item['field']['ref']) && Str::contains($item['field']['ref'],'country_field_ref');
+                        });
+                        
+                        if(empty($matchCountry)){
+                            $surveyLabel = array_filter($surveyLabel,function($item){
+                                return $item !== 'country'; 
+                            });
+                        }
+                        
+                        $matches = array_filter($item['answers'],function($item){
+                            return is_string($item['field']['ref']) && str_ends_with($item['field']['ref'],'_state_field_ref');
+                        });
+                        
+                        if(empty($matches)){
+                            $surveyLabel = array_filter($surveyLabel,function($item){
+                                return $item !== 'state'; 
+                            });
+                            
+                            $surveyLabel = array_values($surveyLabel);
+                        }
+
+                        $eachLabel = [];
+                        foreach($item['answers'] as $key => $answer){
+                            if($answer['type'] == "choice"){
+                                $value = $answer['choice']['label'];
+                            }
+
+                            if($answer['type'] == "text"){
+                                $value = $answer['text'];
+                            }
+
+                            if($answer['type'] == "number"){
+                                $value = $answer['number'];
+                            }
+
+                            $eachLabel[$surveyLabel[$key]] = $value;
+                        }
+
+                        $surveyLabelId = [
+                            'event_id'=>$item['token'],
+                            'form_id'=>$surveyId,
+                        ];
+                        // $surveyLabelCreateUpdate =[
+                        //     'created_at'=>now(),
+                        //     'updated_at'=>now()
+                        // ];
+                        
+                        $finalEachResponse = array_merge($surveyLabelId,$eachLabel);
+                        
+                        $eachResponse[] = $finalEachResponse;
+                    
+                }
+                // dd($eachResponse);
+
+                foreach(array_chunk($eachResponse,50) as $chunk){
+                    foreach($chunk as $data){
+                        if(isset($data['event_id'])){
+                         $answer =   AnswerTesting::create($data);
+                        }
+                    }
+                    
+                }
+
+                Log::info("Inserted Succesfully");
+
+               return true;
+                
+            }else{
+                Log::error('API Response Fail');
+                return false;
+            }
+        }catch(Exception $e){
+            
+            Log::error($e->getMessage());
+            return false;
+        }
+        
+    }
+    // public function importAnswerSurvey($surveyId){
+    //     $allResponses = [];
+    //     $page =1;
+    //     $pageSize = 100;
+    //     $hasMore = true;
+
+    //     $token = config('services.api.key');
+        
+    //     $response = Http::withToken($token)->get("https://api.typeform.com/forms/wLqSVeHU/responses",[
+    //         'page_size' => $pageSize,
+    //         'page' => $page
+    //     ]);
+    // }
 }

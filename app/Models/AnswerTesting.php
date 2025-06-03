@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\NCountry;
-use App\Models\NSubCountry;
 
-class Answer extends Model
+class AnswerTesting extends Model
 {
     use HasFactory;
+    protected $table = 'answers_testing';
 
     protected $fillable =[
         'event_id',
