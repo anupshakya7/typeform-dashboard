@@ -64,7 +64,8 @@ class AnswerController extends Controller
         $allData = $request->all();
 
         $formId = $allData['form_response']['form_id'];
-        $eventId = $allData['event_id'];
+        // $eventId = $allData['event_id'];
+        $eventId = $allData['form_response']['token'];
         $questions = $allData['form_response']['definition']['fields'];
         $age=[];
         $gender = [];
@@ -154,7 +155,7 @@ class AnswerController extends Controller
         }
         
         $DBData = array_merge($formData,$answersDBData);
-     
+
         try{
             $answerCreated = Answer::create($DBData);
             $checkWebHooks = Form::where('form_id',$formId)->first();
