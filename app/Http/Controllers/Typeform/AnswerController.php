@@ -494,7 +494,7 @@ class AnswerController extends Controller
                 foreach(array_chunk($eachResponse,50) as $chunk){
                     foreach($chunk as $data){
                         if(isset($data['event_id'])){
-                         $answer =   AnswerTesting::create($data);
+                         $answer =   Answer::create($data);
                         }
                     }
                     
