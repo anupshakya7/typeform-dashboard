@@ -376,12 +376,19 @@ class IndexController extends Controller
         if($form_type == 1){
             $types = ['mean', 'globalMean'];
 
+            if(!empty($state) && !empty($country)){
+                $indexState = 1;
+                $indexCountry = 2;
+            }elseif(!empty($country)){
+                $indexCountry =1;
+            }
+
             if(!empty($state)){
-                array_splice($types,1,0,'stateMean');
+                array_splice($types,$indexState,0,'stateMean');
             }
 
             if(!empty($country)){
-                array_splice($types,2,0,'countryMean');
+                array_splice($types,$indexCountry,0,'countryMean');
             }
         }else{
             $types = ['mean', 'countryMean', 'globalMean'];

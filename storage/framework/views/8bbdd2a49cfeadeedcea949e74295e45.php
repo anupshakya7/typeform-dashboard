@@ -436,7 +436,7 @@
                                                 <thead class="table-head">
                                                     <tr>
                                                         <th scope="col" class="text-center"></th>
-                                                        <th scope="col" class="text-center">Mean</th>
+                                                        <th scope="col" class="text-center">Survey Mean</th>
                                                         <?php if(isset($pillarMeanScore['stateMean'])): ?>
                                                         <th scope="col" class="text-center">State Mean</th>
                                                         <?php endif; ?>
@@ -1535,7 +1535,7 @@
             if (areachartSalesColorst) {
                 var options = {
                     series: [{
-                        name: 'Mean',
+                        name: 'Survey Mean',
                         data: [<?php echo e($positivePeace['mean']); ?>]
                     }, 
                     <?php if(isset($positivePeace['stateMean'])): ?>{
@@ -1646,7 +1646,7 @@
             if (areachartSalesColorsth) {
                 var options = {
                     series: [{
-                        name: 'Mean',
+                        name: 'Survey Mean',
                         data: ["<?php echo e($negativePeace['mean']); ?>"]
                     }, 
                     <?php if(isset($positivePeace['stateMean'])): ?>{
@@ -1835,7 +1835,7 @@
                             'Acceptance Of The Rights Of Others'],
                 <?php
                     $labelType = [
-                        'mean'=>'Mean',
+                        'mean'=>'Survey Mean',
                         'stateMean'=>'State Mean',
                         'countryMean'=>'Country Mean',
                         'globalMean'=>'Global Mean',
