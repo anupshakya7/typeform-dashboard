@@ -479,11 +479,19 @@ $(document).ready(function() {
 
                 $('#formId').val(formId);
                 $('#form_name').val(response.data.title);
-                console.log(response);
+
                 const filteredQuestions = response.data.fields.filter(item => item.type !==
                     'statement');
                     
                 if(filteredQuestions[0]['type'] !== "short_text"){
+                    var questionId = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_id][]')
+                        .val("");
+                    var questionType = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_type][]')
+                        .val("");
                      var questionInput = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'questions[question][]')
@@ -492,18 +500,26 @@ $(document).ready(function() {
                         .attr('type', 'hidden')
                         .attr('name', 'questions[ref][]')
                         .val("");
-                    $('#mainForm').append([questionInput,questionRef]);
+                    $('#mainForm').append([questionId,questionType,questionInput,questionRef]);
                 }
                 filteredQuestions.forEach(function(question) {
+                    var questionId = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_id][]')
+                        .val(question.id);
+                    var questionType = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_type][]')
+                        .val(question.type);
                     var questionInput = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'questions[question][]')
-                        .val(question.title)
+                        .val(question.title);
                     var questionRef = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'questions[ref][]')
                         .val(question.ref);
-                    $('#mainForm').append([questionInput,questionRef]);
+                    $('#mainForm').append([questionId,questionType,questionInput,questionRef]);
                 });
                 SyncIcon.removeClass("rotate");
             },

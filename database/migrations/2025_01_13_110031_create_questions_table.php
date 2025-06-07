@@ -32,9 +32,6 @@ return new class extends Migration
             $table->string('acceptance_rights');
             $table->string('positive_peace');
             $table->string('negative_peace');
-            $table->string('extra_ques1')->nullable();
-            $table->string('extra_ques2')->nullable();
-            $table->string('extra_ques3')->nullable();
             $table->timestamps();
 
             $table->foreign('form_id')->references('form_id')->on('forms')->onDelete('cascade');

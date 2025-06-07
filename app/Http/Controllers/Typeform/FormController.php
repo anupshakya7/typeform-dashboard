@@ -6,6 +6,7 @@ use App\Helpers\DownloadCSV;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\ExtraQuestion;
 use App\Models\NCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -109,6 +110,8 @@ class FormController extends Controller
             'duringdate' => 'nullable|string',
             'afterdate' => 'nullable|string',
             'questions' => 'required|array',
+            'questions.question_id' => 'nullable|array',
+            'questions.question_type' => 'nullable|array',
             'questions.question' => 'required|array',
             'questions.ref' => 'required|array',
         ]);
@@ -172,10 +175,7 @@ class FormController extends Controller
                     'sound_business',
                     'acceptance_rights',
                     'positive_peace',
-                    'negative_peace',
-                    'extra_ques1',
-                    'extra_ques2',
-                    'extra_ques3',
+                    'negative_peace'
                 ];
 
                 if($formtype == 1){
@@ -232,12 +232,28 @@ class FormController extends Controller
                     $validatedData['questions']['question'] = $filteredArray;
                 }
                 
-                $questionFormattingData = [];
+                $questions = $validatedData['questions']['question'];
+
+                if($formtype == 1){
+                    $mainQuestions = array_slice($questions,0,15);
+                    $extraQuestions = array_slice($questions,15);
+
+                    $extraQuestionId = array_slice($validatedData['questions']['question_id'],15);
+                    $extraQuestionType = array_slice($validatedData['questions']['question_type'],15);
+                }else{
+                    $mainQuestions = array_slice($questions,0,14);
+                    $extraQuestions = array_slice($questions,14);
+
+                    $extraQuestionId = array_slice($validatedData['questions']['question_id'],14);
+                    $extraQuestionType = array_slice($validatedData['questions']['question_type'],14);
+                }
                 
-                foreach ($validatedData['questions']['question'] as $key => $question) {
+                $questionFormattingData = [];
+
+                foreach ($mainQuestions as $key => $question) {
                     $questionFormattingData[$labelDBData[$key]] = $question;
                 }
-
+    
                 $formIdData = [
                     'form_id' => $validatedData['formId']
                 ];
@@ -245,6 +261,23 @@ class FormController extends Controller
                 $questionsData = array_merge($formIdData, $questionFormattingData);
 
                 Question::create($questionsData);
+
+                //Extra Questions
+                $extraQuestionFormat = [];
+
+                foreach($extraQuestions as $key=>$extraQuestion){
+                    $extraQuestionFormat[] =[
+                        'form_id'=> $validatedData['formId'],
+                        'question_id'=> $extraQuestionId[$key],
+                        'type'=> $extraQuestionType[$key],
+                        'title'=> $extraQuestion,
+                        'created_at'=> now(),
+                        'updated_at'=> now(),
+                    ];
+                }
+                
+                ExtraQuestion::insert($extraQuestionFormat);
+
                 Log::info("Form and Question Created Successfully!");
                 // return redirect()->route('form.index')->with('success', 'Successfully Created Form and its Questions!!!');
             } catch (\Exception $e) {

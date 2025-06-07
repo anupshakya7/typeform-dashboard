@@ -437,7 +437,10 @@
                                                 <thead class="table-head">
                                                     <tr>
                                                         <th scope="col" class="text-center"></th>
-                                                        <th scope="col" class="text-center">Mean</th>
+                                                        <th scope="col" class="text-center">Survey Mean</th>
+                                                        <?php if(isset($pillarMeanScore['stateMean'])): ?>
+                                                        <th scope="col" class="text-center">State Mean</th>
+                                                        <?php endif; ?>
                                                         <?php if(isset($pillarMeanScore['countryMean'])): ?>
                                                         <th scope="col" class="text-center">Country Mean</th>
                                                         <?php endif; ?>
@@ -466,6 +469,10 @@
                                                                     class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                             </td>
                                                             <td class="text-center"><?php echo e($pillar); ?></td>
+                                                            <?php if(isset($pillarMeanScore['stateMean'][$key])): ?>
+                                                            <td class="text-center">
+                                                                <?php echo e($pillarMeanScore['stateMean'][$key]); ?></td>
+                                                            <?php endif; ?>
                                                             <?php if(isset($pillarMeanScore['countryMean'][$key])): ?>
                                                             <td class="text-center">
                                                                 <?php echo e($pillarMeanScore['countryMean'][$key]); ?></td>
@@ -670,10 +677,10 @@
 
             //Country Session
             let countrySelected = <?php echo json_encode($selectedCountry ?? session('country') ?? '', 15, 512) ?>;
-
-            if(countrySelected !== ''){
-                filterState();
-            }
+            
+            // if(countrySelected !== ''){
+            //     filterState();
+            // }
             
 
             var isFirstLoad = true;
@@ -803,6 +810,8 @@
             function filterCountry(){
                 let surveyType = $('#survey option:selected').data('formtype');
                 let surveyCountry = $('#survey option:selected').data('country');
+                let surveyState = $('#survey option:selected').data('state');
+                let surveyStateId = $('#survey option:selected').data('state-id');
                 
                 if (surveyType == 0) {
                     $('#country_input').show().val(surveyCountry);
@@ -810,7 +819,17 @@
                     $('#country_select').empty().append('<option value="" selected>Select Country</option>');
                     $('#country_select').parent().find('.select2-container').hide();
 
-                    disableStateField();                    
+                    $('#state_select').parent().find('.select2-container').hide();
+                    $('#state_select').prop('disabled', true);   
+                    
+                    if(surveyState !== ""){
+                        $('#state_input').show().val(surveyState);
+                        $('#state_id_input').show().val(surveyStateId);
+                    }else{
+                        $('#state_input').show().val("No State");
+                        $('#state_id_input').show().val("");
+                    }
+
                 } else if (surveyType == 1) {
                     let selectedCountry = $('#selected_country').val();
                     console.log('input country VALUE:',selectedCountry);
@@ -819,9 +838,16 @@
                     // console.log('selected Value',selectedValue);
 
                     $('#country_input').val('').hide();
+                    
                     $('#country_select').prop('disabled', false);
                     $('#country_select').empty().append('<option value="" selected>Select Country</option>');
                     $('#country_select').parent().find('.select2-container').show();
+
+                    $('#state_input').val('').hide();
+                    $('#state_id_input').val('');
+
+                    $('#state_select').parent().find('.select2-container').show();
+                    $('#state_select').prop('disabled', true);
 
                     let countryUrl = $('#survey option:selected').data('country-url');
                     
@@ -836,8 +862,8 @@
                                 console.log('selectValueFinal',selectedCountry);
                                 if(selectedCountry !== ''){
                                     $('#country_select').val(selectedCountry).trigger('change.select2');
-
-                                    filterState();
+                                    let selectedState = <?php echo json_encode($state ?? request()->query('state') ?? session('state') ?? '', 15, 512) ?>;
+                                    filterState(selectedState);
                                 }
                                
                             }
@@ -848,15 +874,16 @@
 
             $('#country_select').change(function(){
                 let surveyType = $('#survey option:selected').data('formtype');
+               
                 if (surveyType == 1) {
                     filterState();
                 }
             });
 
-            function filterState(){
+            function filterState(selectedState){
+                console.log('upper function',selectedState);
                 let surveyId = $('#survey').val();
                 let countryCode = $('#country_select').val();
-                let selectedState = <?php echo json_encode($state ?? request()->query('state') ?? session('state') ?? '', 15, 512) ?>;
 
                 let surveyType = $('#survey option:selected').data('formtype');
 
@@ -874,7 +901,9 @@
                             });
 
                             if(selectedState !== ''){
-                                $('#state_select').val(selectedState).trigger('change.select2');
+                                console.log('selecting Value',selectedState);
+                                $('#state_select').val(selectedState).trigger('change');
+                                $('#state_select')
                             }
                             
                             $('#state_select').prop('disabled',false);
@@ -989,6 +1018,8 @@
                             formList.forEach(function(formItem) {
                                 let formType = formItem.form_type == 1 ? 'Global' : 'Single';
                                 let formTypeValue = formItem.form_type;
+                                var data_state = formItem.states !== null ? formItem.states.name :'';
+                                var data_state_id = formItem.states !== null ? formItem.states.id :'';
                                 
                                 if(userRole == 'survey'){
                                     let surveyId = <?php echo json_encode(auth()->user()->form_id, 15, 512) ?>;
@@ -999,6 +1030,8 @@
                                         option.setAttribute('data-formtype',formTypeValue);
                                         if(formTypeValue == 0){
                                             option.setAttribute('data-country',formItem.country);
+                                            option.setAttribute('data-state',data_state);
+                                            option.setAttribute('data-state-id',data_state_id);
                                         }else if(formTypeValue == 1){
                                             let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
                                             option.setAttribute('data-country-url',countryUrl);
@@ -1015,6 +1048,8 @@
                                     option.setAttribute('data-formtype',formTypeValue);
                                     if(formTypeValue == 0){
                                         option.setAttribute('data-country',formItem.country);
+                                        option.setAttribute('data-state',data_state);
+                                        option.setAttribute('data-state-id',data_state_id);
                                     }else if(formTypeValue == 1){
                                         let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
                                         option.setAttribute('data-country-url',countryUrl);
@@ -1501,9 +1536,14 @@
             if (areachartSalesColorst) {
                 var options = {
                     series: [{
-                        name: 'Mean',
+                        name: 'Survey Mean',
                         data: [<?php echo e($positivePeace['mean']); ?>]
                     }, 
+                    <?php if(isset($positivePeace['stateMean'])): ?>{
+                        name: 'State Mean',
+                        data: [<?php echo e($positivePeace['stateMean']); ?>]
+                    },
+                    <?php endif; ?>
                     <?php if(isset($positivePeace['countryMean'])): ?>{
                         name: 'Country Mean',
                         data: [<?php echo e($positivePeace['countryMean']); ?>]
@@ -1585,7 +1625,14 @@
 							highlightDataSeries: false 
 						}
                     },
-                    colors: ['#0f64bc', '#fb9f68', '#339966']
+                    colors: ['#0f64bc', 
+                    <?php if(isset($positivePeace['stateMean'])): ?>
+                    '#fb4f30',
+                    <?php endif; ?>
+                    <?php if(isset($positivePeace['countryMean'])): ?>
+                    '#fb9f68',
+                    <?php endif; ?>
+                    '#339966']
                 };
                 if (salesForecastChart2 != "")
                     salesForecastChart2.destroy();
@@ -1600,9 +1647,14 @@
             if (areachartSalesColorsth) {
                 var options = {
                     series: [{
-                        name: 'Mean',
+                        name: 'Survey Mean',
                         data: ["<?php echo e($negativePeace['mean']); ?>"]
                     }, 
+                    <?php if(isset($positivePeace['stateMean'])): ?>{
+                        name: 'State Mean',
+                        data: [<?php echo e($positivePeace['stateMean']); ?>]
+                    },
+                    <?php endif; ?>
                     <?php if(isset( $negativePeace['countryMean'])): ?>
                     {
                         name: 'Country Mean',
@@ -1685,7 +1737,14 @@
 							highlightDataSeries: false 
 						}
                     },
-                    colors: ['#0f64bc', '#fb9f68', '#339966']
+                    colors: ['#0f64bc',
+                    <?php if(isset($positivePeace['stateMean'])): ?>
+                    '#fb4f30',
+                    <?php endif; ?>
+                    <?php if(isset($positivePeace['countryMean'])): ?>
+                    '#fb9f68',
+                    <?php endif; ?>
+                    '#339966']
                 };
                 if (salesForecastChart3 != "")
                     salesForecastChart3.destroy();
@@ -1777,13 +1836,15 @@
                             'Acceptance Of The Rights Of Others'],
                 <?php
                     $labelType = [
-                        'mean'=>'Mean',
+                        'mean'=>'Survey Mean',
+                        'stateMean'=>'State Mean',
                         'countryMean'=>'Country Mean',
                         'globalMean'=>'Global Mean',
                     ];
                     
                     $chartColorType = [
                         'mean'=>'#0f64bc',
+                        'stateMean'=>'#fb4f30',
                         'countryMean'=>'#fb9f68',
                         'globalMean'=>'#38b8a0',
                     ];

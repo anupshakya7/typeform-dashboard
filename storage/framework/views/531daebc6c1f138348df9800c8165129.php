@@ -245,13 +245,22 @@
                             <select id="country" name="country" class="form-select select2" >
                                 <option value="" selected>Select Country</option>
                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($country['name']); ?>"><?php echo e($country['name']); ?></option>
+                                <option value="<?php echo e($country['name']); ?>" data-countryCode="<?php echo e($country['code']); ?>"><?php echo e($country['name']); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-6" id="stateField">
+                        <div class="mb-3">
+                            <label for="state" class="form-label">State</label>
+
+                            <select id="state" name="state" class="form-select select2" disabled>
+                                <option value="" selected>Select State</option>
+                            </select>
+                        </div>
+                    </div>
                     <!--end col-->
-                    <div class="col-md-6" id="organizationField">
+                    <div class="col-md-12" id="organizationField">
                         <div class="mb-3">
                             <label for="organization" class="form-label">Organization<span class="text-danger">*</span></label>
                             <select id="organization" name="organization" class="form-select select2" >
@@ -341,7 +350,7 @@
                                         <span class="step-number">3</span>
                                         <span class="step-title">Add the webhook URL</span>
                                         <p class="step-description">In the webhook settings, add the following URL:</p>
-                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-Version-2.0/public/answer</span>
+                                        <span class="webhook-url">https://projects.krizmatic.com.au/TypeForm-Version-3.0/public/answer</span>
                                     </div>
                                     
                                     <div class="instruction-step border-0">
@@ -466,11 +475,19 @@ $(document).ready(function() {
 
                 $('#formId').val(formId);
                 $('#form_name').val(response.data.title);
-                console.log(response);
+
                 const filteredQuestions = response.data.fields.filter(item => item.type !==
                     'statement');
                     
                 if(filteredQuestions[0]['type'] !== "short_text"){
+                    var questionId = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_id][]')
+                        .val("");
+                    var questionType = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_type][]')
+                        .val("");
                      var questionInput = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'questions[question][]')
@@ -479,18 +496,26 @@ $(document).ready(function() {
                         .attr('type', 'hidden')
                         .attr('name', 'questions[ref][]')
                         .val("");
-                    $('#mainForm').append([questionInput,questionRef]);
+                    $('#mainForm').append([questionId,questionType,questionInput,questionRef]);
                 }
                 filteredQuestions.forEach(function(question) {
+                    var questionId = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_id][]')
+                        .val(question.id);
+                    var questionType = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'questions[question_type][]')
+                        .val(question.type);
                     var questionInput = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'questions[question][]')
-                        .val(question.title)
+                        .val(question.title);
                     var questionRef = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'questions[ref][]')
                         .val(question.ref);
-                    $('#mainForm').append([questionInput,questionRef]);
+                    $('#mainForm').append([questionId,questionType,questionInput,questionRef]);
                 });
                 SyncIcon.removeClass("rotate");
             },
@@ -549,23 +574,35 @@ $(document).ready(function() {
         checkGlobalBox();
     });
 
+    //When Country changes filter State
+    $('#country').change(function(){
+        let countryCode = $(this).find(':selected').data('countrycode');
+        if(filterState){
+            filterState(countryCode);
+        }
+    });
+
     function checkGlobalBox(){
         let isGlobalChecked = $('#setFromType').prop("checked");
         let countryField = $('#countryField');
         let countrySelect = $('#country');
+        let stateField = $('#stateField');
+        let stateSelect = $('#state');
+
         
         if(isGlobalChecked){
             countryField.hide();
             countrySelect.val('');
-            $('#organizationField').removeClass('col-md-6');
-            $('#organizationField').addClass('col-md-12');
+            stateField.hide();
+            stateSelect.val('');
             countrySelect.trigger('change');
         }else{
             countryField.show();
-            $('#organizationField').removeClass('col-md-12');
-            $('#organizationField').addClass('col-md-6');
+            stateField.show();
+            stateSelect.prop('disabled',true);
         }
     }
+
 
     function checkBoxBranch(){
         var organizationVal = $('#organization').val();
@@ -619,6 +656,30 @@ $(document).ready(function() {
                     $('#branch').prop('disabled', true);
                     $('#branch').html('');
                     $('#branch').append('<option value="" selected>Select Division</option>');
+                }
+            })
+    }
+
+    function filterState(countryCode){
+        $.ajax({
+                url: `<?php echo e(url('/')); ?>/typeform/getState/${countryCode}`,
+                method: 'GET',
+                success: function(response) {
+                    console.log(response);
+                    if(response.status == true){
+                        $('#state').prop('disabled', false);
+                        $('#state').html('');
+                        $('#state').append('<option value="" selected>Select State</option>');
+
+                        response.data.forEach(function(state) {
+                            $('#state').append(new Option(state.name, state.id));
+                        })
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#state').prop('disabled', true);
+                    $('#state').html('');
+                    $('#state').append('<option value="" selected>Select State</option>');
                 }
             })
     }
