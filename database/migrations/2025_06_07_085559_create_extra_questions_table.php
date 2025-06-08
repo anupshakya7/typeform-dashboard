@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('type');
             $table->string('title');
             $table->timestamps();
+
+            $table->foreign('form_id')->references('form_id')->on('forms')->onDelete('cascade');
         });
     }
 
