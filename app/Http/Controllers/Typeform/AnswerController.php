@@ -228,8 +228,10 @@ class AnswerController extends Controller
         }
 
         $survey = $surveyQuery->latest()->get();
-
-        $filename = 'survey.csv';
+        
+        $formName = Str::slug(Form::where('form_id',$request->survey)->pluck('form_title')->first()).'-survey-data.csv';
+        
+        $filename = $formName;
         $fp = fopen($filename,'w+');
         fputcsv($fp,array(
             'ID',
@@ -286,7 +288,7 @@ class AnswerController extends Controller
         fclose($fp);
         $headers = array('Content-Type'=>'text/csv');
 
-        return response()->download($filename,'survey.csv',$headers);
+        return response()->download($filename,$formName,$headers);
     }
 
     public function generateIndividualCSV($id){
