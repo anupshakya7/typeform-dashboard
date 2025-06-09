@@ -104,25 +104,13 @@
                             <h5 class="ms-1">Extra Questions</h5>
                             <table class="table table-bordered table-striped">
                                 <tbody>
-                                    @if($form->question->extra_ques1 || $form->question->extra_ques2 || $form->question->extra_ques3)
-                                    @if($form->question->extra_ques1)
+                                    @if(count($form->extraQuestions))
+                                    @foreach($form->extraQuestions as $key => $extraQuestion)
                                     <tr>
-                                        <th>Extra Question 1</th>
-                                        <td>{{ $form->question->extra_ques1 }}</td>
+                                        <th>Extra Question {{$key+1}}</th>
+                                        <td>{{ $extraQuestion->title }}</td>
                                     </tr>
-                                    @endif
-                                    @if($form->question->extra_ques2)
-                                    <tr>
-                                        <th>Extra Question 2</th>
-                                        <td>{{ $form->question->extra_ques2 }}</td>
-                                    </tr>
-                                    @endif
-                                    @if($form->question->extra_ques3)
-                                    <tr>
-                                        <th>Extra Question 3</th>
-                                        <td>{{ $form->question->extra_ques3 }}</td>
-                                    </tr>
-                                    @endif
+                                    @endforeach
                                     @else
                                     <tr>
                                         <td>No Extra Questions</td>

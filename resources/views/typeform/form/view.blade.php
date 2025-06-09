@@ -53,7 +53,7 @@
                             </tr>
                             <tr>
                                 <th>Country</th>
-                                <td>{{$form->country}}</td>
+                                <td>{{$form->form_type == 1 ? 'Global' : $form->country}}</td>
                             </tr>
                             <tr>
                                 <th>Organization</th>

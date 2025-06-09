@@ -517,7 +517,7 @@ class FormController extends Controller
     }
 
     public function formQuestion(String $id){
-        $form = Form::with('question')->filterForm()->find($id);
+        $form = Form::with('question','extraQuestions')->filterForm()->find($id);
         
         if($form){
             return view('typeform.form.questions',compact('form'));

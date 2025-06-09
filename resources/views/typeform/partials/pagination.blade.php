@@ -10,10 +10,37 @@
         @else
             <li class="page-item"> <a href="{{$paginator->previousPageUrl()}}" class="page-link">Previous</a> </li>
         @endif
-       
-        @foreach($paginator->getUrlRange(1,$paginator->lastPage()) as $page=>$url)
-        <li class="page-item {{$page ==$paginator->currentPage() ? 'active' :'' }}"> <a href="{{$url}}" class="page-link">{{$page}}</a> </li>
-        @endforeach
+        
+        @php
+            $currentPage = $paginator->currentPage();
+            $lastPage = $paginator->lastPage();
+            $start = max(1, $currentPage - 1);
+            $end = min($lastPage,$currentPage+1);
+        @endphp
+        
+        @if($start > 1)
+            <li class="page-item"><a class="page-link" href="{{ $paginator->url(1) }}">1</a></li>
+            @if ($start > 2)
+                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+            @endif
+        @endif
+        
+        {{-- Pages in range --}}
+        @for ($i = $start; $i <= $end; $i++)
+            <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                <a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a>
+            </li>
+        @endfor
+        
+        {{-- Always show last page --}}
+        @if ($end < $lastPage)
+            @if ($end < $lastPage - 1)
+                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+            @endif
+            <li class="page-item"><a class="page-link" href="{{ $paginator->url($lastPage) }}">{{ $lastPage }}</a></li>
+        @endif
+        
+        
         {{-- <li class="page-item active"> <a href="#" class="page-link">2</a> </li>
         <li class="page-item"> <a href="#" class="page-link">3</a> </li> --}}
 

@@ -130,7 +130,7 @@
                                 </th>
                                 <td><?php echo e($form->form_id); ?></td>
                                 <td><?php echo e($form->form_title); ?></td>
-                                <td><?php echo e($form->country); ?></td>
+                                <td><?php echo e($form->form_type == 1 ? 'Global' : $form->country); ?></td>
                                 <!-- <td>
                                     <?php echo e($form->webhook == 1 ? 'Active':'Inactive'); ?></td> -->
                                     <td>

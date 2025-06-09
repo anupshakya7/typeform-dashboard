@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Organization;
+use App\Models\ExtraQuestion;
 
 class Form extends Model
 {
@@ -64,5 +65,9 @@ class Form extends Model
 
     public function states(){
         return $this->hasOne(NSubCountry::class,'id','state');
+    }
+    
+    public function extraQuestions(){
+        return $this->hasMany(ExtraQuestion::class,'form_id','form_id');
     }
 }

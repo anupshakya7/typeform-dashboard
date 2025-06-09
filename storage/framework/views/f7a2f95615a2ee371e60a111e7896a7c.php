@@ -52,7 +52,7 @@
                             </tr>
                             <tr>
                                 <th>Country</th>
-                                <td><?php echo e($form->country); ?></td>
+                                <td><?php echo e($form->form_type == 1 ? 'Global' : $form->country); ?></td>
                             </tr>
                             <tr>
                                 <th>Organization</th>

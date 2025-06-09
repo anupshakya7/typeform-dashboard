@@ -147,7 +147,7 @@
                                 </th>
                                 <td>{{$form->form_id}}</td>
                                 <td>{{$form->form_title}}</td>
-                                <td>{{$form->country}}</td>
+                                <td>{{$form->form_type == 1 ? 'Global' : $form->country}}</td>
                                 <!-- <td>
                                     {{$form->webhook == 1 ? 'Active':'Inactive'}}</td> -->
                                     <td>

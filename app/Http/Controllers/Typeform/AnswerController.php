@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Typeform;
 
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
+use App\Models\ExtraAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Helpers\PaginationHelper;
@@ -15,6 +16,7 @@ use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class AnswerController extends Controller
 {
@@ -106,28 +108,80 @@ class AnswerController extends Controller
               'name'
               ];
         
+        // $labelDBData = [
+        //     'age',
+        //     'gender',
+        //     'country',
+        //     'state',
+        //     'well_functioning_government',
+        //     'low_level_corruption',
+        //     'equitable_distribution',
+        //     'good_relations',
+        //     'free_flow',
+        //     'high_levels',
+        //     'sound_business',
+        //     'acceptance_rights',
+        //     'positive_peace',
+        //     'negative_peace'
+        //     ];
+            
         $labelDBData = [
-            'age',
-            'gender',
-            'country',
-            'state',
-            'well_functioning_government',
-            'low_level_corruption',
-            'equitable_distribution',
-            'good_relations',
-            'free_flow',
-            'high_levels',
-            'sound_business',
-            'acceptance_rights',
-            'positive_peace',
-            'negative_peace',
-            'extra_ans1',
-            'extra_ans2',
-            'extra_ans3',
+                'age',
+                'gender',
+                'village-town-city',
+                'country',
+                'state',
+                'well_functioning_government',
+                'low_level_corruption',
+                'equitable_distribution',
+                'good_relations',
+                'free_flow',
+                'high_levels',
+                'sound_business',
+                'acceptance_rights',
+                'positive_peace',
+                'negative_peace'
             ];
             
         if($questions[0]['type'] == 'short_text'){
             $labelDBData = array_merge($optionalName,$labelDBData); 
+        }
+        
+        $matchesCountry = array_filter($questions,function($item){
+            return isset($item['ref']) && $item['ref'] === 'country_field_ref'; 
+        });
+        
+        //Separate Array for Main Answers and Extra Answers
+        if(empty($matchesCountry)){
+            if($questions[0]['type'] == 'short_text'){
+                $mainAnswers = array_slice($answers,0,14);
+                $extraAnswers = array_slice($answers,14);
+            }else{
+                $mainAnswers = array_slice($answers,0,13);
+                $extraAnswers = array_slice($answers,13);
+            }
+        }else{
+            if($questions[0]['type'] == 'short_text'){
+                $mainAnswers = array_slice($answers,0,15);
+                $extraAnswers = array_slice($answers,15);
+            }else{
+                $mainAnswers = array_slice($answers,0,14);
+                $extraAnswers = array_slice($answers,14); 
+            }
+        }
+        
+        if(!empty($matchesCountry)){
+            $labelDBData = array_filter($labelDBData,function($item){
+                return $item !== 'village-town-city';
+            });
+            
+            $labelDBData = array_values($labelDBData);
+        }
+        
+        if(empty($matchesCountry)){
+            $labelDBData = array_filter($labelDBData,function($item){
+                return $item !== 'country'; 
+            });
         }
         
         $matches = array_filter($questions,function($item){
@@ -143,8 +197,8 @@ class AnswerController extends Controller
         }
         
         $answersDBData = [];
-        
-        foreach($answers as $key => $answer){
+
+        foreach($mainAnswers as $key => $answer){
             if($key == $agesIndex || $key == $gendersIndex){
                 continue;
             }
@@ -160,8 +214,38 @@ class AnswerController extends Controller
         
         $DBData = array_merge($formData,$answersDBData);
 
+        $extraAnswersFormat = [];
+        foreach($extraAnswers as $extraAnswer){
+            $value ='';
+            if($extraAnswer['type'] ==  "text"){
+                $value = $extraAnswer['text'];
+            }elseif($extraAnswer['type'] == "choice"){
+                $value = $extraAnswer['choice']['label'];
+            }elseif($extraAnswer['type'] == "number"){
+                $value = $extraAnswer['number'];
+            }elseif($extraAnswer['type'] == "choices"){
+                $labels = $extraAnswer['choices']['labels'] ?? [];
+                $value = is_array($labels) ? implode(', ', $labels) : (string) $labels;
+            }
+    
+            $extraAnswersFormat[] = [
+                'event_id'=>$eventId,
+                'form_id'=>$formId,
+                'question_id'=>$extraAnswer['field']['id'],
+                'type'=>$extraAnswer['type'],
+                'value'=>$value,
+                'created_at'=>now(),
+                'updated_at'=>now(),
+            ];
+        }
+        
+
         try{
+            DB::beginTransaction();
+            
             $answerCreated = Answer::create($DBData);
+            $extraAnswerCreated = ExtraAnswer::insert($extraAnswersFormat);
+            
             $checkWebHooks = Form::where('form_id',$formId)->first();
 
             if($checkWebHooks->webhook == 0){
@@ -169,7 +253,10 @@ class AnswerController extends Controller
                     'webhook'=>1
                 ]);
             }
+            
+            DB::commit();
         }catch(\Exception $e){
+            DB::rollBack();
             Log::error('Error creating answer: '.$e->getMessage());
             return $e->getMessage();
         }
