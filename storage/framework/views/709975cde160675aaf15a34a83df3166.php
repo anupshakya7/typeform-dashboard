@@ -103,25 +103,13 @@
                             <h5 class="ms-1">Extra Questions</h5>
                             <table class="table table-bordered table-striped">
                                 <tbody>
-                                    <?php if($form->question->extra_ques1 || $form->question->extra_ques2 || $form->question->extra_ques3): ?>
-                                    <?php if($form->question->extra_ques1): ?>
+                                    <?php if(count($form->extraQuestions)): ?>
+                                    <?php $__currentLoopData = $form->extraQuestions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $extraQuestion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <th>Extra Question 1</th>
-                                        <td><?php echo e($form->question->extra_ques1); ?></td>
+                                        <th>Extra Question <?php echo e($key+1); ?></th>
+                                        <td><?php echo e($extraQuestion->title); ?></td>
                                     </tr>
-                                    <?php endif; ?>
-                                    <?php if($form->question->extra_ques2): ?>
-                                    <tr>
-                                        <th>Extra Question 2</th>
-                                        <td><?php echo e($form->question->extra_ques2); ?></td>
-                                    </tr>
-                                    <?php endif; ?>
-                                    <?php if($form->question->extra_ques3): ?>
-                                    <tr>
-                                        <th>Extra Question 3</th>
-                                        <td><?php echo e($form->question->extra_ques3); ?></td>
-                                    </tr>
-                                    <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php else: ?>
                                     <tr>
                                         <td>No Extra Questions</td>

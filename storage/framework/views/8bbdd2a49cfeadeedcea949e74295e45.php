@@ -1975,8 +1975,11 @@
                 
         mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
         if (surveydata) surveydata.style.display = "block";
-
-        const selectedCountry = document.getElementById('country').value;
+        <?php if(session('form_type') == 1): ?>
+            const selectedCountry = document.getElementById('selected_country').value;
+        <?php else: ?>
+            const selectedCountry = document.getElementById('country_select').value;
+        <?php endif; ?>
         const selectedOrganization = document.getElementById('organization').value;
         
         $.ajax({
@@ -2141,7 +2144,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
     const processCharts = (index) => {
         if (index >= charts.length) {
             addFooter(pdf);
-            pdf.save("CSB_Report.pdf");
+            pdf.save(<?php echo json_encode(Str::slug(App\Models\Form::where('form_id', session('survey_id'))->pluck('form_title')->first()), 512) ?>+'-report');
             if (callback) callback();
             return;
         }
@@ -2156,49 +2159,101 @@ function exportChartsToPNGAndPDF(charts, callback) {
         }
 
         html2canvas(chartElement, {
-            scale: 3,
+            scale: 0.7,
             useCORS: true,
             backgroundColor: null,
 			logging: false,
 			allowTaint: true
         }).then(canvas => {
-            const imgData = canvas.toDataURL("image/png", 0.9);
-            const aspectRatio = canvas.width / canvas.height;
-            // Calculate available width considering reduced margins
-            const availableWidth = pdf.internal.pageSize.getWidth() - 2 * (margin + contentPadding) - 10;
+            // console.log(canvas.toDataURL());
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+
+            const availableWidth = pageWidth - 2 * (margin + contentPadding) - 10;
             const imgWidth = availableWidth;
-            const imgHeight = imgWidth / aspectRatio;
-            
-            // Check if we need a new page (using reduced margin in calculation)
-            if (yOffset + imgHeight + 40 > pdf.internal.pageSize.getHeight() - (margin + contentPadding)) {
+            const aspectRatio = canvas.width / canvas.height;
+            const fullImgHeight = imgWidth / aspectRatio;
+
+            const footerSafeBottom = pageHeight - (margin + contentPadding + 20);
+            const spaceNeeded = fullImgHeight + 40;
+
+            if (yOffset + spaceNeeded <= footerSafeBottom) {
+                pdf.setFontSize(chartTitleFontSize);
+                pdf.setTextColor(30, 30, 30);
+                const titleX = pageWidth / 2;
+                pdf.text(title, titleX, yOffset, { align: 'center' });
+                yOffset += lineSpacing * 2;
+
+                pdf.setDrawColor(211, 211, 211);
+                pdf.setLineWidth(0.5);
+                pdf.rect(margin + contentPadding + 5, yOffset, imgWidth, fullImgHeight);
+                pdf.addImage(canvas.toDataURL("image/png", 1), "PNG", margin + contentPadding + 5, yOffset, imgWidth, fullImgHeight);
+
+                yOffset += fullImgHeight + 15;
+                processCharts(index + 1);
+            } else {
+                const context = canvas.getContext("2d");
+                let renderedHeight = 0;
+                let firstSlice = true;
+
+                while (renderedHeight < canvas.height) {
+                    const maxAvailableHeight = footerSafeBottom - yOffset;
+                    const sliceCanvasHeight = Math.min(
+                        (maxAvailableHeight * canvas.width) / imgWidth,
+                        canvas.height - renderedHeight
+                    );
+
+                    // Force page break if space is insufficient
+                    if (maxAvailableHeight < 60 || sliceCanvasHeight < 60) {
+                        addFooter(pdf);
+                        pdf.addPage();
+                        currentPage++;
+                        yOffset = margin + contentPadding + 15;
+                        addSubsequentPageHeader(pdf, currentPage);
+                        continue;
+                    }
+
+                    const sliceCanvas = document.createElement("canvas");
+                    sliceCanvas.width = canvas.width;
+                    sliceCanvas.height = sliceCanvasHeight;
+
+                    const sliceCtx = sliceCanvas.getContext("2d");
+                    sliceCtx.putImageData(
+                        context.getImageData(0, renderedHeight, canvas.width, sliceCanvasHeight),
+                        0,
+                        0
+                    );
+
+                    const sliceImgData = sliceCanvas.toDataURL("image/png", 1);
+                    const sliceImgHeight = (sliceCanvasHeight / canvas.width) * imgWidth;
+
+                    if (firstSlice) {
+                        pdf.setFontSize(chartTitleFontSize);
+                        pdf.setTextColor(30, 30, 30);
+                        const titleX = pageWidth / 2;
+                        pdf.text(title, titleX, yOffset, { align: 'center' });
+                        yOffset += lineSpacing * 1;
+                    }
+
+                    pdf.setDrawColor(211, 211, 211);
+                    pdf.setLineWidth(0.5);
+                    pdf.rect(margin + contentPadding + 5, yOffset, imgWidth, sliceImgHeight);
+                    pdf.addImage(sliceImgData, "PNG", margin + contentPadding + 5, yOffset, imgWidth, sliceImgHeight);
+
+                    yOffset += sliceImgHeight + 15;
+                    renderedHeight += sliceCanvasHeight;
+                    firstSlice = false;
+                }
+
                 addFooter(pdf);
-                pdf.addPage();
-                currentPage++;
-                yOffset = margin + contentPadding + 15; // Adjusted for reduced margin
-                addSubsequentPageHeader(pdf, currentPage);
+                processCharts(index + 1);
             }
-            
-            // Add chart title
-            pdf.setFontSize(chartTitleFontSize);
-            pdf.setTextColor(30, 30, 30);
-            const titleX = pdf.internal.pageSize.getWidth() / 2;
-            pdf.text(title, titleX, yOffset, { align: 'center' });
-            yOffset += lineSpacing * 2;
-            
-            // Add chart with border (using contentPadding)
-            pdf.setDrawColor(211, 211, 211);
-            pdf.setLineWidth(0.5);
-            pdf.rect(margin + contentPadding + 5, yOffset, imgWidth, imgHeight);
-            pdf.addImage(imgData, "PNG", margin + contentPadding + 5, yOffset, imgWidth, imgHeight);
-            
-            yOffset += imgHeight + 15; // Reduced spacing after chart
-            
-            processCharts(index + 1);
         }).catch(error => {
-            console.error(`Error rendering chart "${title}":`, error);
-            processCharts(index + 1);
-        });
-    };
+                    console.error(`Error rendering chart "${title}":`, error);
+                    processCharts(index + 1);
+                });
+            };
+    
     
     // Add footer function (adjusted for reduced margin)
     const addFooter = (pdf) => {
@@ -2208,7 +2263,8 @@ function exportChartsToPNGAndPDF(charts, callback) {
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100);
         const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
-        const emailText = "<?php echo e($formDetails->organization->name); ?>";Source: 
+        let organizationName = <?php echo json_encode($formDetails->organization->name, 15, 512) ?>;
+        const emailText = organizationName.trim(); 
         pdf.text(orgText, margin + contentPadding + 5, footerY);
         pdf.text(emailText, margin + contentPadding + 5, footerY + lineSpacing);
 

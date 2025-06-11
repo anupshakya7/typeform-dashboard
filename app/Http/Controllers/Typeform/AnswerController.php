@@ -276,8 +276,8 @@ class AnswerController extends Controller
     }
 
     public function QA(String $id){
-        $answer = Answer::with('form','form.question','rcountry','rstate')->filterSurvey()->find($id);
-
+        $answer = Answer::with('form','form.question','form.extraQuestions','rcountry','rstate','extraAnswer')->filterSurvey()->find($id);
+        
         if($answer){
             return view('typeform.survey.QA',compact('answer'));
         }else{
@@ -379,11 +379,12 @@ class AnswerController extends Controller
     }
 
     public function generateIndividualCSV($id){
-        $surveySingle = Answer::with('form','form.organization')->filterSurvey()->where('id',$id)->first();
+        $surveySingle = Answer::with('form','form.extraQuestions','form.organization','extraAnswer')->filterSurvey()->where('id',$id)->first();
 
         $filename = 'survey.csv';
         $fp = fopen($filename,'w+');
-        fputcsv($fp,array(
+
+        $headers = [
             'ID',
             'Survey Data ID',
             'Survey ID',
@@ -401,14 +402,18 @@ class AnswerController extends Controller
             'Sound Business Environment',
             'Acceptance of the Rights of Others',
             'Positive Peace',
-            'Negative Peace',
-            'Extra Question 1',
-            'Extra Question 2',
-            'Extra Question 3',
-            'Survey Date'
-        ));
+            'Negative Peace'
+        ];
 
-            fputcsv($fp,array(
+        if($surveySingle->form->extraQuestions !== null){
+            $extraQuestions = $surveySingle->form->extraQuestions->pluck('title');
+            $headers = array_merge($headers,$extraQuestions->toArray());
+        }
+
+        $headers = array_merge($headers,['Survey Date']);
+
+        fputcsv($fp,$headers);
+            $values = [
                 $surveySingle->id,
                 $surveySingle->event_id,
                 $surveySingle->form_id,
@@ -426,12 +431,19 @@ class AnswerController extends Controller
                 $surveySingle->sound_business,
                 $surveySingle->acceptance_rights,
                 $surveySingle->positive_peace,
-                $surveySingle->negative_peace,
-                $surveySingle->extra_ans1,
-                $surveySingle->extra_ans2,
-                $surveySingle->extra_ans3,
-                Carbon::parse($surveySingle->created_at)->format('d M, Y'),
-            ));
+                $surveySingle->negative_peace
+            ];
+
+            if($surveySingle->form->extraQuestions !== null){
+                $extraAnswers = $surveySingle->extraAnswer->pluck('value')->toArray();
+                $values = array_merge($values,$extraAnswers);
+            }
+
+            $values = array_merge($values,[
+                Carbon::parse($surveySingle->created_at)->format('d M, Y')
+            ]);
+
+            fputcsv($fp,$values);
 
         fclose($fp);
         $headers = array('Content-Type'=>'text/csv');

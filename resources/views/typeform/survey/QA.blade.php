@@ -130,23 +130,13 @@
                                 <th>{{$answer->form->question->negative_peace}}</th>
                                 <td>{{$answer->negative_peace}}</td>
                             </tr>
-                            @if($answer->extra_ans1)
+                            @if(optional($answer->form)->extraQuestions && count($answer->form->extraQuestions) > 0)
+                            @foreach($answer->form->extraQuestions as $key=>$extraQuestion)
                             <tr>
-                                <th>{{$answer->form->question->extra_ques1}}</th>
-                                <td>{{$answer->extra_ans1}}</td>
+                                <th>{{$extraQuestion->title}}</th>
+                                <td>{{$answer->extraAnswer[$key]->value}}</td>
                             </tr>
-                            @endif
-                            @if($answer->extra_ans2)
-                            <tr>
-                                <th>{{$answer->form->question->extra_ques2}}</th>
-                                <td>{{$answer->extra_ans2}}</td>
-                            </tr>
-                            @endif
-                            @if($answer->extra_ans3)
-                            <tr>
-                                <th>{{$answer->form->question->extra_ques3}}</th>
-                                <td>{{$answer->extra_ans3}}</td>
-                            </tr>
+                            @endforeach
                             @endif
                             <tr>
                                 <th>Created At</th>

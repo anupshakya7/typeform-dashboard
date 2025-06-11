@@ -96,4 +96,8 @@ class Answer extends Model
     public function rstate(){
         return $this->belongsTo(NSubCountry::class,'state','id');
     }
+
+    public function extraAnswer(){
+        return $this->hasMany(ExtraAnswer::class,'event_id','event_id');
+    }
 }

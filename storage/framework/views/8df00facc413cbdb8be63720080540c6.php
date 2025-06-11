@@ -129,23 +129,13 @@
                                 <th><?php echo e($answer->form->question->negative_peace); ?></th>
                                 <td><?php echo e($answer->negative_peace); ?></td>
                             </tr>
-                            <?php if($answer->extra_ans1): ?>
+                            <?php if(optional($answer->form)->extraQuestions && count($answer->form->extraQuestions) > 0): ?>
+                            <?php $__currentLoopData = $answer->form->extraQuestions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$extraQuestion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th><?php echo e($answer->form->question->extra_ques1); ?></th>
-                                <td><?php echo e($answer->extra_ans1); ?></td>
+                                <th><?php echo e($extraQuestion->title); ?></th>
+                                <td><?php echo e($answer->extraAnswer[$key]->value); ?></td>
                             </tr>
-                            <?php endif; ?>
-                            <?php if($answer->extra_ans2): ?>
-                            <tr>
-                                <th><?php echo e($answer->form->question->extra_ques2); ?></th>
-                                <td><?php echo e($answer->extra_ans2); ?></td>
-                            </tr>
-                            <?php endif; ?>
-                            <?php if($answer->extra_ans3): ?>
-                            <tr>
-                                <th><?php echo e($answer->form->question->extra_ques3); ?></th>
-                                <td><?php echo e($answer->extra_ans3); ?></td>
-                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
                             <tr>
                                 <th>Created At</th>
