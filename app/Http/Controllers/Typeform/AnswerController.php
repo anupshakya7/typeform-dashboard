@@ -286,7 +286,7 @@ class AnswerController extends Controller
     }
 
     public function generateCSV(Request $request){
-        $surveyQuery = Answer::with('form','form.organization')->filterSurvey();
+        $surveyQuery = Answer::with('form','form.extraQuestions','form.organization','extraAnswer')->filterSurvey();
 
         if($request->filled('search_participant')){
             $surveyQuery->where('name','like','%'.$request->search_participant.'%');
@@ -320,11 +320,12 @@ class AnswerController extends Controller
         
         $filename = $formName;
         $fp = fopen($filename,'w+');
-        fputcsv($fp,array(
+
+        $headers = [
             'ID',
-            'Form',
-            'Country (Form)',
-            'Organization (Form)',
+            'Survey Data ID',
+            'Survey ID',
+            'Survey',
             'Participant',
             'Age',
             'Gender',
@@ -338,19 +339,24 @@ class AnswerController extends Controller
             'Sound Business Environment',
             'Acceptance of the Rights of Others',
             'Positive Peace',
-            'Negative Peace',
-            'Extra Question 1',
-            'Extra Question 2',
-            'Extra Question 3',
-            'Survey Date'
-        ));
+            'Negative Peace'
+        ];
 
+        if(count($survey[0]->form->extraQuestions) > 0){
+            $extraQuestions = $survey[0]->form->extraQuestions->pluck('title');
+            $headers = array_merge($headers,$extraQuestions->toArray());
+        }
+
+        $headers = array_merge($headers,['Survey Date']);
+
+        fputcsv($fp,$headers);
+        
         foreach($survey as $row){
-            fputcsv($fp,array(
+            $values = [
                 $row->id,
+                $row->event_id,
+                $row->form_id,
                 $row->form ? optional($row->form)->form_title:null,
-                $row->form ? optional($row->form)->country:null,
-                $row->form ? optional($row->form)->organization->name :null,
                 $row->name,
                 $row->age,
                 $row->gender,
@@ -364,12 +370,20 @@ class AnswerController extends Controller
                 $row->sound_business,
                 $row->acceptance_rights,
                 $row->positive_peace,
-                $row->negative_peace,
-                $row->extra_ans1,
-                $row->extra_ans2,
-                $row->extra_ans3,
-                Carbon::parse($row->created_at)->format('d M, Y'),
-            ));
+                $row->negative_peace
+            ];
+
+            if($row->form->extraQuestions !== null){
+                $extraAnswers = $row->extraAnswer->pluck('value')->toArray();
+                $values = array_merge($values,$extraAnswers);
+            }
+
+            $values = array_merge($values,[
+                Carbon::parse($row->created_at)->format('d M, Y')
+            ]);
+
+
+            fputcsv($fp,$values);
         }
 
         fclose($fp);

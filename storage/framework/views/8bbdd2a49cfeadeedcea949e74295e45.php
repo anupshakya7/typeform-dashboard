@@ -49,26 +49,28 @@
         <?php echo $__env->make('typeform.partials.dashboard-filter', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Top Filter -->
 
-<!--project title --survey-title section -->
-
-<div class="title-container mb-3 d-flex flex-row justify-content-between">
-<h4><span class="project-title"><?php echo e($formDetails->form_title); ?></span></h4>
-<!-- Dropdown for exporting as PDF, PNG, or Excel -->
-<div class="dropdown">
-                                            <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
-                                                id="exportDropdown" role="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <img class="svg-icon" type="image/svg+xml"
-                                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                                <li><a class="dropdown-item" href="#" id="export-all">Download
-                                                        Report</a></li>
-                                                <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>session('country'),'survey'=>session('survey_id')])); ?>" >
-                                                        Export Survey Data</a></li>
-    
-                                            </ul>
-                                        </div>
+        <!--project title --survey-title section -->
+        <div class="title-container mb-3 d-flex flex-row justify-content-between">
+        <h4><span class="project-title"><?php echo e($formDetails->form_title); ?></span></h4>
+        <!-- Dropdown for exporting as PDF, PNG, or Excel -->
+        <div class="dropdown">
+                    <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
+                        id="exportDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img class="svg-icon" type="image/svg+xml"
+                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li><a class="dropdown-item" href="#" id="export-all">Download
+                                Report</a></li>
+                        <?php
+                            $countryValue = request('country') ? request('country') : session('country');
+                            $stateValue = request('state') ? request('state') : session('state');
+                        ?>
+                        <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>$countryValue,'survey'=>session('survey_id'),'state'=>$stateValue])); ?>" >
+                                Export Survey Data</a></li>
+                    </ul>
+                </div>
 
 </div>
 <!--project title --survey-title section -->
