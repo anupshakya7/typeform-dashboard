@@ -619,7 +619,6 @@
             </div> <!-- end .h-100-->
 
         </div> <!-- end col -->
-
         <div class="card-body" id="survey-data" style="display:none;">
             <div class="live-preview">
                 <div class="table-responsive" >
@@ -630,12 +629,10 @@
                                 <th scope="col">Survey Data ID</th>
                                 <th scope="col">Survey ID</th>
                                 <?php endif; ?>
-                                <th scope="col">Survey Name</th>
+                                
                                 <th scope="col">Survey Country</th>
-                                <th scope="col">Survey Organization</th>
-                                <th scope="col">Participants Name</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Gender</th>
+                                <th scope="col">Survey State</th>
+                                
                                 <th scope="col">Survey Date</th>
                             </tr>
                         </thead>
@@ -683,7 +680,6 @@
             //     filterState();
             // }
             
-
             var isFirstLoad = true;
 
             //filterOrganization();
@@ -692,8 +688,6 @@
                 filterBtn();
             });
             filterCountry();
-            
-            
 
             //Filter Organizations
             // $('#country').change(function() {
@@ -1956,17 +1950,16 @@
             //Chart Js Code End
 
         });
-
-        //Export All
-        document.addEventListener("DOMContentLoaded", function () {
+    
+    //Export All
+    document.addEventListener("DOMContentLoaded", function () {
     const exportButton = document.getElementById('export-all');
     const surveyTable = document.getElementById("survey-table");
     const surveydata = document.getElementById("survey-data");
     const loader = document.querySelector('.download-spinner-container');
     const mainpage = document.querySelector('body'); // Added dot for class selector
 
-    mainpage.style.display = 'block'; // Directly use loader, not loader.element
-
+    mainpage.style.display = 'block'; //Directly use loader, not loader.element
 
     exportButton.addEventListener("click", function () {
         exportButton.disabled = true;
@@ -1977,25 +1970,34 @@
                 
         mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
         if (surveydata) surveydata.style.display = "block";
-        <?php if(session('form_type') == 1): ?>
-            const selectedCountry = document.getElementById('selected_country').value;
-        <?php else: ?>
-            const selectedCountry = document.getElementById('country_select').value;
-        <?php endif; ?>
+       
+        // <?php if(session('form_type') == 1): ?>
+        //     let selectedCountry = document.getElementById('selected_country').value;
+        // <?php else: ?>
+        //     let selectedCountry = document.getElementById('country_select').value;
+        // <?php endif; ?>
+
+
+        const selectedCountry =  <?php echo json_encode(request('country') ? request('country') : session('country'), 15, 512) ?>;
+        const selectedState =  <?php echo json_encode(request('state') ? request('state') : session('state'), 15, 512) ?>;
         const selectedOrganization = document.getElementById('organization').value;
-        
+        const selectedBranch = document.getElementById('branch').value;
+        const selectedSurvey = document.getElementById('survey').value;
+    
         $.ajax({
             // url: '/typeform/fecthallsurvey',
             url:'<?php echo e(route('survey.fecthallsurvey')); ?>',
             type: 'GET',
             data: {
+                survey: selectedSurvey,
                 country: selectedCountry,
-                organization_id: selectedOrganization
+                state: selectedState,
+                organization_id: selectedOrganization,
+                branch_id: selectedBranch
             },
             dataType: 'json',
             success: function (response) {
                 const surveyData = response.surveys;
-                updateTable(surveyData);
 
                 const charts = [
 					{ id: "simple_pie_chart", title: "Participants by Gender" },
@@ -2003,16 +2005,15 @@
                     { id: "sales-forecast-chart", title: "Survey mean score across pillars of Positive Peace" },
 					{ id: "sales-forecast-chart-2", title: "Positive Peace" },
                     { id: "sales-forecast-chart-3", title: "Negative Peace" },
-					<!--{ id: "basic_radar", title: "Mean Result" },-->
-                    
                     { id: "multi_mean_radar", title: "Results by pillars: Radar" },
                     { id: "pillar-table", title: "Results by pillar: Table" },
                     { id: "pillar-table-time", title: "Results Over Time: Table" },
-                    { id: "survey-table", title: "Survey Report: Table" }
                 ];
-
-            
                 
+                <?php if(count($formDetails->extraQuestions) > 0): ?>
+                    updateTable(surveyData);
+                    charts.push({ id: "survey-table", title: "Survey Report: Table" });
+                <?php endif; ?>
 
                 // Export charts and tables to PNG and PDF
                 exportChartsToPNGAndPDF(charts, function () {
@@ -2044,22 +2045,24 @@ function updateTable(data) {
             // Assuming the response data contains the correct properties
             row.insertCell(0).textContent = item.survey_data_id || 'N/A';
             row.insertCell(1).textContent = item.survey_id || 'N/A';
-            row.insertCell(2).textContent = item.survey_name || 'N/A';
-            row.insertCell(3).textContent = item.survey_country || 'N/A';
-            row.insertCell(4).textContent = item.survey_organization || 'N/A';
-            row.insertCell(5).textContent = item.participant_name || 'N/A';
-            row.insertCell(6).textContent = item.age || 'N/A';
-            row.insertCell(7).textContent = item.gender || 'N/A';
-            row.insertCell(8).textContent = item.survey_date || 'N/A';
+            // row.insertCell(2).textContent = item.survey_name || 'N/A';
+            row.insertCell(2).textContent = item.survey_country || 'N/A';
+            row.insertCell(3).textContent = item.survey_state || 'N/A';
+            // row.insertCell(4).textContent = item.survey_organization || 'N/A';
+            // row.insertCell(5).textContent = item.participant_name || 'N/A';
+            // row.insertCell(6).textContent = item.age || 'N/A';
+            // row.insertCell(7).textContent = item.gender || 'N/A';
+            row.insertCell(4).textContent = item.survey_date || 'N/A';
         <?php else: ?>
             // Assuming the response data contains the correct properties
-            row.insertCell(0).textContent = item.survey_name || 'N/A';
-            row.insertCell(1).textContent = item.survey_country || 'N/A';
-            row.insertCell(2).textContent = item.survey_organization || 'N/A';
-            row.insertCell(3).textContent = item.participant_name || 'N/A';
-            row.insertCell(4).textContent = item.age || 'N/A';
-            row.insertCell(5).textContent = item.gender || 'N/A';
-            row.insertCell(6).textContent = item.survey_date || 'N/A';
+            // row.insertCell(0).textContent = item.survey_name || 'N/A';
+            row.insertCell(0).textContent = item.survey_country || 'N/A';
+            row.insertCell(1).textContent = item.survey_state || 'N/A';
+            // row.insertCell(2).textContent = item.survey_organization || 'N/A';
+            // row.insertCell(3).textContent = item.participant_name || 'N/A';
+            // row.insertCell(4).textContent = item.age || 'N/A';
+            // row.insertCell(5).textContent = item.gender || 'N/A';
+            row.insertCell(3).textContent = item.survey_date || 'N/A';
         <?php endif; ?>
     });
     

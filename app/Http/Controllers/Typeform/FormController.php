@@ -551,14 +551,16 @@ class FormController extends Controller
         
         $filename = "form.csv";
         $fp = fopen($filename,'w+');
-        fputcsv($fp,array('ID','Form Id','Form Title','Country','Organization','Branch','Branch Level','Before','During','After','Created At'));
+        fputcsv($fp,array('ID','Form Id','Form Title','Form Type','Country','State','Organization','Branch','Branch Level','Before','During','After','Created At'));
 
         foreach($forms as $row){
             fputcsv($fp,array(
                 $row->id,
                 $row->form_id,
                 $row->form_title,
+                $row->form_type == 1 ? 'Global':'Single',
                 $row->country,
+                $row->state,
                 $row->organization->name,
                 $row->branches ? $row->branches->name : 'Main Branch',
                 $row->branches ? 'Branch':'Main Branch',

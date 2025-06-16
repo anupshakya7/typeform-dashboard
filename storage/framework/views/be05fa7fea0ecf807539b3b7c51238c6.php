@@ -548,7 +548,7 @@ $(document).ready(function() {
 
     function filterState(countryCode){
         $.ajax({
-                url: `/typeform/getState/${countryCode}`,
+                url: `<?php echo e(url('/')); ?>/typeform/getState/${countryCode}`,
                 method: 'GET',
                 success: function(response) {
                     console.log(response);

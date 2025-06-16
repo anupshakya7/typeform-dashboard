@@ -14,6 +14,14 @@
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+<style>
+    .disabled-link{
+        pointer-events:none;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+</style>
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <!--greeting section -->
@@ -39,11 +47,18 @@
                 <div class="flex-shrink-0">
                     <div class="d-flex flex-row gap-2 align-items-center">
                         <!--info here-->
-                        <a href="<?php echo e(route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey')])); ?>" type="button" class="btn btn-success">
-                            <i
-                                class="ri-file-download-line align-bottom me-1"></i>
 
-                            Export</a>
+                        
+                        
+                        
+
+                        
+                        <a id="export-all-btn" class="btn btn-success disabled-link" data-href-template="<?php echo e(route('survey.csv',['search_participant'=>request('search_participant'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey')])); ?>" aria-disabled="true">
+                            <i class="ri-file-download-line align-bottom me-1"></i>
+                            Export
+                        </a>
+                        
+
                         
                     </div>
                 </div>
@@ -59,15 +74,8 @@
                                 <div class="search-box"> <input type="text" class="form-control" id="searchProductList" name="search_participant" value="<?php echo e(request('search_participant')); ?>" onkeyup="debounceSeach()"
                                         placeholder="Search Participants"> <i class="ri-search-line search-icon"></i> </div>
                             </div>
+
                             <?php if(auth()->user()->role->name !== "survey"): ?>
-                            <div class="col-auto"> 
-                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Select Country</option>
-                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($country->country); ?>" <?php echo e(request('country') == $country->country ? 'selected':''); ?>><?php echo e($country->country); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
                             <div class="col-auto"> 
                                 <select class="form-select select2" name="organization" id="organization" aria-label="Default select example" onchange="this.form.submit()">
                                     <option value="" selected>Select Organization</option>
@@ -82,11 +90,16 @@
                                 </select> 
                             </div>
                             <div class="col-auto">
-                                <div class="col-auto"> <select class="form-select select2" name="survey" id="survey" onchange="this.form.submit()" aria-label="Default select example" disabled>
+                                <div class="col-auto"> <select class="form-select select2" name="survey" id="survey" onchange="this.form.submit()" aria-label="Default select example">
                                         <option value="" selected>Select Survey</option>
+                                        <?php $__currentLoopData = $surveyForms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $survey): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($survey->form_id); ?>"><?php echo e($survey->form_title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select> 
                                 </div>
                             </div>
+                            
+                                
                             <?php endif; ?>
                             <?php if(auth()->user()->role->name == "survey"): ?>
                             <div class="col-auto">
@@ -416,6 +429,9 @@
                 filterSurvey();
             });
 
+            //Export Btn Condition
+            checkSurveyExport();
+
 
             function filterBranch(callback) {
                 var organizationVal = organization_id;
@@ -531,6 +547,21 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
                         }
                     })
+                }
+            }
+
+
+            function checkSurveyExport(){
+                let surveyValue = <?php echo json_encode(request('survey'), 15, 512) ?>;
+                let exportBtn = $('#export-all-btn');
+                let baseUrl = exportBtn.data('href-template');
+
+                if(surveyValue !== null){
+                    var newUrl = baseUrl.replace('__SURVEY__',encodeURIComponent(surveyValue));
+
+                    exportBtn.removeClass('disabled-link').removeAttr('aria-disabled').attr('href',newUrl);
+                }else{
+                    exportBtn.addClass('disabled-link').attr('aria-disabled','true').removeAttr('href');
                 }
             }
     }); 

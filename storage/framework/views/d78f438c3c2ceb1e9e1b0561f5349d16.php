@@ -39,7 +39,7 @@
         <div class="flex-shrink-0">
             <div class="d-flex flex-row gap-2 align-items-center">
                 <!--info here-->
-                <a href="<?php echo e(route('form.csv',['search_title'=> request('search_title'),'country'=>request('country'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
+                <a href="<?php echo e(route('form.csv',['search_title'=> request('search_title'),'country'=>request('country'),'state'=>request('state'),'organization'=>request('organization'),'branch'=>request('branch'),'survey'=>request('survey') ])); ?>" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
                     Export</a>
                 
             </div>
@@ -66,13 +66,6 @@
                                 <div class="search-box"> <input type="text" class="form-control" value="<?php echo e(request('search_title')); ?>" name="search_title" onkeyup="debounceSearch()" id="searchProductList"
                                         placeholder="Search"> <i class="ri-search-line search-icon"></i> </div>
                             </div>
-                            <div class="col-auto"> 
-                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
-                                    <option value="" selected>Select Country </option>
-                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($country->country); ?>" <?php echo e(request('country') == $country->country ? 'selected':''); ?>><?php echo e($country->country); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select> </div>
                             <div class="col-auto">
                                 <div class="col-auto"> 
                                     <select class="form-select select2" name="organization" aria-label="Default select example" onchange="this.form.submit()">
@@ -97,6 +90,13 @@
                                         
                                     </select> </div>
                             </div>
+                            <div class="col-auto"> 
+                                <select class="form-select select2" name="country" aria-label="Default select example" onchange="this.form.submit()">
+                                    <option value="" selected>Select Country </option>
+                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($country->country); ?>" <?php echo e(request('country') == $country->country ? 'selected':''); ?>><?php echo e($country->country); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select> </div>
                     </div>
                 </form>
                 </div>
