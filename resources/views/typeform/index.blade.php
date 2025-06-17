@@ -2031,7 +2031,7 @@
                 });
             },
             error: function (error) {
-                // console.log('Error fetching data:', error);
+                console.log('Error fetching data:', error);
                 exportButton.disabled = false;
                 surveyTable.style.display = "none";
                 loader.style.display = 'none';
@@ -2165,7 +2165,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
         const chartElement = document.getElementById(id);
 
         if (!chartElement) {
-            console.error(`Element with ID ${id} not found.`);
+            // console.error(`Element with ID ${id} not found.`);
             processCharts(index + 1);
             return;
         }

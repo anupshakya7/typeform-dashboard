@@ -2025,7 +2025,7 @@
                 });
             },
             error: function (error) {
-                console.log('Error fetching data:', error);
+                // console.log('Error fetching data:', error);
                 exportButton.disabled = false;
                 surveyTable.style.display = "none";
                 loader.style.display = 'none';
