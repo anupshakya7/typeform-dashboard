@@ -11,6 +11,7 @@ use App\Helpers\PaginationHelper;
 use App\Models\AnswerTesting;
 use App\Models\Form;
 use App\Models\NCountry;
+use App\Models\NSubCountry;
 use App\Models\Organization;
 use Carbon\Carbon;
 use Exception;
@@ -420,7 +421,7 @@ class AnswerController extends Controller
     }
 
     public function generateIndividualCSV($id)
-    {
+    { 
         $surveySingle = Answer::with('form', 'form.extraQuestions', 'form.organization', 'extraAnswer')->filterSurvey()->where('id', $id)->first();
 
         $filename = 'survey.csv';
@@ -499,8 +500,8 @@ class AnswerController extends Controller
 
         if (count($form->extraQuestions) > 0) {
             // Start building the query
-            $answersQuery = Answer::with('form', 'form.organization')  // Load the related form and organization
-                ->select('id', 'event_id', 'form_id', 'name', 'age', 'gender', 'created_at');
+            $answersQuery = Answer::with('form','rcountry','rstate','form.organization','form.extraQuestions','extraAnswer')  // Load the related form and organization
+                ->select('id', 'event_id', 'form_id', 'name', 'age', 'gender','country','state', 'created_at');
 
             if ($request->filled('survey')) {
                 $answersQuery->where('form_id', $request->survey);
@@ -508,16 +509,25 @@ class AnswerController extends Controller
 
             // Filter by country if provided
             if ($request->filled('country')) {
-                $answersQuery->whereHas('form', function ($query) use ($request) {
-                    $query->where('country', $request->country);
-                });
+                if($form->form_type == 1){
+                    $answersQuery->where('country',$request->country);
+                }else{
+                    $answersQuery->whereHas('form', function ($query) use ($request) {
+                        $query->where('country', $request->country);
+                    });
+                }
+               
             }
 
             //Filter by state if provided
             if ($request->filled('state')) {
-                $answersQuery->whereHas('form', function ($query) use ($request) {
-                    $query->where('state', $request->state);
-                });
+                if($form->form_type == 1){
+                    $answersQuery->where('state',$request->state);
+                }else{
+                    $answersQuery->whereHas('form', function ($query) use ($request) {
+                        $query->where('state', $request->state);
+                    });
+                }
             }
 
             if ($request->filled('organization_id')) {
@@ -532,17 +542,40 @@ class AnswerController extends Controller
                 });
             }
 
-
             // Get all answers (no pagination)
             $answers = $answersQuery->filterSurvey()->latest()->get();  // Use get() to fetch all data
-
+          
             // Prepare data for frontend
-            $formattedAnswers = $answers->map(function ($answer) {
+            $formattedAnswers = $answers->map(function ($answer) use($form){  
+                $extraQuestionsLists = $answer->form ? $answer->form->extraQuestions : collect();
+                $extraAnswersLists = $answer->extraAnswer ?: collect();
+
+                // $extraQuestionsKey = $extraQuestionsLists->map(function($list){
+                //     return Str::slug($list->title);
+                // });
+
+                $extraQnA = $extraQuestionsLists->mapWithKeys(function($question) use($extraAnswersLists){
+                    $answer = $extraAnswersLists->firstWhere('question_id',$question->question_id);
+
+                    return [
+                        Str::slug($question->title) => $answer ? $answer->value : null,
+                    ];
+                });
+
+                if($form->form_type == 1){
+                    $countryValue = $answer->rcountry ? $answer->rcountry->name : 'No Country';
+                    $stateValue = $answer->rstate ? $answer->rstate->name : 'No State';
+                }else{
+                    $countryValue = $answer->form ? optional($answer->form)->country : 'No Country';
+                    $stateValue = $answer->form ? optional($answer->form)->states->name : 'No State';
+                }
+
                 return [
                     'survey_data_id' => $answer->event_id,
                     'survey_id' => $answer->form_id,
-                    'survey_country' => $answer->form ? optional($answer->form)->country : 'No Country',
-                    'survey_state' => $answer->form ? optional($answer->form)->state : 'No State',
+                    'survey_country' => $countryValue,
+                    'survey_state' => $stateValue,
+                    ...$extraQnA->toArray(),
                     'survey_date' => Carbon::parse($answer->created_at)->format('d M, Y'),
                 ];
             });

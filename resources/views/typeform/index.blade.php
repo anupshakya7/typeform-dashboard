@@ -623,6 +623,7 @@
             </div> <!-- end .h-100-->
 
         </div> <!-- end col -->
+        @if(count($formDetails->extraQuestions) > 0)
         <div class="card-body" id="survey-data" style="display:none;">
             <div class="live-preview">
                 <div class="table-responsive" >
@@ -633,13 +634,11 @@
                                 <th scope="col">Survey Data ID</th>
                                 <th scope="col">Survey ID</th>
                                 @endif
-                                {{-- <th scope="col">Survey Name</th> --}}
                                 <th scope="col">Survey Country</th>
                                 <th scope="col">Survey State</th>
-                                {{-- <th scope="col">Survey Organization</th>
-                                <th scope="col">Participants Name</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Gender</th> --}}
+                                @foreach($formDetails->extraQuestions as $extraQuestion)
+                                <th scope="col">{{$extraQuestion->title}}</th>
+                                @endforeach
                                 <th scope="col">Survey Date</th>
                             </tr>
                         </thead>
@@ -656,6 +655,7 @@
             </div>
 
         </div>
+        @endif
     </div>
 @endsection
 
@@ -2019,7 +2019,7 @@
                 
                 @if(count($formDetails->extraQuestions) > 0)
                     updateTable(surveyData);
-                    charts.push({ id: "survey-table", title: "Survey Report: Table" });
+                    charts.push({ id: "survey-table", title: "Additional Question Responses" });
                 @endif
 
                 // Export charts and tables to PNG and PDF
@@ -2045,34 +2045,59 @@ function updateTable(data) {
     const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
     tableBody.innerHTML = ""; // Clear existing table rows
 
+    const hiddenColumns = @json((auth()->user()->role->name === "superadmin" || auth()->user()->role->name === "krizmatic") ? [] : ['survey_data_id','survey_id']);
+
     // Populate the table with fetched data
-    data.forEach(function (item) {
-        const row = tableBody.insertRow();
-        @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
-            // Assuming the response data contains the correct properties
-            row.insertCell(0).textContent = item.survey_data_id || 'N/A';
-            row.insertCell(1).textContent = item.survey_id || 'N/A';
-            // row.insertCell(2).textContent = item.survey_name || 'N/A';
-            row.insertCell(2).textContent = item.survey_country || 'N/A';
-            row.insertCell(3).textContent = item.survey_state || 'N/A';
-            // row.insertCell(4).textContent = item.survey_organization || 'N/A';
-            // row.insertCell(5).textContent = item.participant_name || 'N/A';
-            // row.insertCell(6).textContent = item.age || 'N/A';
-            // row.insertCell(7).textContent = item.gender || 'N/A';
-            row.insertCell(4).textContent = item.survey_date || 'N/A';
-        @else
-            // Assuming the response data contains the correct properties
-            // row.insertCell(0).textContent = item.survey_name || 'N/A';
-            row.insertCell(0).textContent = item.survey_country || 'N/A';
-            row.insertCell(1).textContent = item.survey_state || 'N/A';
-            // row.insertCell(2).textContent = item.survey_organization || 'N/A';
-            // row.insertCell(3).textContent = item.participant_name || 'N/A';
-            // row.insertCell(4).textContent = item.age || 'N/A';
-            // row.insertCell(5).textContent = item.gender || 'N/A';
-            row.insertCell(3).textContent = item.survey_date || 'N/A';
-        @endif
-    });
+    // data.forEach(function (item) {
+    //     const row = tableBody.insertRow();
+    //     console.log(Object.entries(item));
+    //     Object.entries(item).forEach(([key, value]) => {
+    //         @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
+    //             const cell = row.insertCell();
+    //             cell.textContent = value || 'N/A';
+    //         @else
+    //             if(key !== 'survey_data_id' || key !== 'survey_id'){
+    //                 const cell = row.insertCell();
+    //                 cell.textContent = value || 'N/A';
+    //             }
+    //         @endif
+    //     });
+
+    //     // @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
+    //     //     // Assuming the response data contains the correct properties
+    //     //     row.insertCell(0).textContent = item.survey_data_id || 'N/A';
+    //     //     row.insertCell(1).textContent = item.survey_id || 'N/A';
+    //     //     // row.insertCell(2).textContent = item.survey_name || 'N/A';
+    //     //     row.insertCell(2).textContent = item.survey_country || 'N/A';
+    //     //     row.insertCell(3).textContent = item.survey_state || 'N/A';
+    //     //     // row.insertCell(4).textContent = item.survey_organization || 'N/A';
+    //     //     // row.insertCell(5).textContent = item.participant_name || 'N/A';
+    //     //     // row.insertCell(6).textContent = item.age || 'N/A';
+    //     //     // row.insertCell(7).textContent = item.gender || 'N/A';
+    //     //     row.insertCell(4).textContent = item.survey_date || 'N/A';
+    //     // @else
+    //     //     // Assuming the response data contains the correct properties
+    //     //     // row.insertCell(0).textContent = item.survey_name || 'N/A';
+    //     //     row.insertCell(0).textContent = item.survey_country || 'N/A';
+    //     //     row.insertCell(1).textContent = item.survey_state || 'N/A';
+    //     //     // row.insertCell(2).textContent = item.survey_organization || 'N/A';
+    //     //     // row.insertCell(3).textContent = item.participant_name || 'N/A';
+    //     //     // row.insertCell(4).textContent = item.age || 'N/A';
+    //     //     // row.insertCell(5).textContent = item.gender || 'N/A';
+    //     //     row.insertCell(3).textContent = item.survey_date || 'N/A';
+    //     // @endif
+    // });
     
+    data.forEach(item => {
+        const row = tableBody.insertRow();
+        Object.entries(item)
+            .filter(([key]) => !hiddenColumns.includes(key))
+            .forEach(([_,value])=>{
+                const cell = row.insertCell();
+                cell.textContent = value || 'N/A';
+            });
+    });
+
     console.log(tableBody);
 }
 
@@ -2165,7 +2190,6 @@ function exportChartsToPNGAndPDF(charts, callback) {
         const chartElement = document.getElementById(id);
 
         if (!chartElement) {
-            console.error(`Element with ID ${id} not found.`);
             processCharts(index + 1);
             return;
         }

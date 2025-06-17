@@ -238,8 +238,8 @@ class FormController extends Controller
                     $mainQuestions = array_slice($questions,0,15);
                     $extraQuestions = array_slice($questions,15);
 
-                    $extraQuestionId = array_slice($validatedData['questions']['question_id'],15);
-                    $extraQuestionType = array_slice($validatedData['questions']['question_type'],15);
+                    $extraQuestionId = array_slice($validatedData['questions']['question_id'],211);
+                    $extraQuestionType = array_slice($validatedData['questions']['question_type'],211);
                 }else{
                     $mainQuestions = array_slice($questions,0,14);
                     $extraQuestions = array_slice($questions,14);
@@ -275,7 +275,7 @@ class FormController extends Controller
                         'updated_at'=> now(),
                     ];
                 }
-                
+
                 ExtraQuestion::insert($extraQuestionFormat);
 
                 Log::info("Form and Question Created Successfully!");
