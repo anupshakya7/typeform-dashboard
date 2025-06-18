@@ -1,11 +1,11 @@
-@extends('typeform.layout.web')
-@section('title')
-    @lang('translation.crm')
-@endsection
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.crm'); ?>
+<?php $__env->stopSection(); ?>
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
     <div class="row">
@@ -16,13 +16,13 @@
 
                 <div>
                     <div>
-                        <h4>Welcome back, {{ auth()->user()->name }}</h4>
+                        <h4>Welcome back, <?php echo e(auth()->user()->name); ?></h4>
                     </div>
                 </div>
                 <!--end greeting section-->
 
   <!-- about csb section--------========================================= -->
-  <!-- <div class="about-csb" style="background-image: url({{ asset('build/images/csb-banner.jpg') }})">
+  <!-- <div class="about-csb" style="background-image: url(<?php echo e(asset('build/images/csb-banner.jpg')); ?>)">
   <h5>Community Strength Barometer (CSB)</h5>
    <p>
     The Community Strength Barometer (CSB) measures social cohesion, resilience, and well-being within communities, assessing engagement, support networks, and collective problem-solving.
@@ -34,41 +34,41 @@
                
                 <!--card row section ==========================================================-->
 
-                @php
+                <?php
                     if(auth()->user()->role->name == 'superadmin' || auth()->user()->role->name == 'krizmatic'){
                         $columns = 3;
                     }else{
                         $columns = 4;
                     }
-                @endphp
+                ?>
 
                
 
                 <!--greeting section ends here -->
 
         <!-- Top Filter -->
-        @include('typeform.partials.dashboard-filter')
+        <?php echo $__env->make('typeform.partials.dashboard-filter', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Top Filter -->
 
         <!--project title --survey-title section -->
         <div class="title-container mb-3 d-flex flex-row justify-content-between">
-        <h4><span class="project-title">{{$formDetails->form_title}}</span></h4>
+        <h4><span class="project-title"><?php echo e($formDetails->form_title); ?></span></h4>
         <!-- Dropdown for exporting as PDF, PNG, or Excel -->
         <div class="dropdown">
                     <a class="icon-frame bg-white" style="border: 1px solid #BABABA;" href="#"
                         id="exportDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <img class="svg-icon" type="image/svg+xml"
-                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                         <li><a class="dropdown-item" href="#" id="export-all">Download
                                 Report</a></li>
-                        @php
+                        <?php
                             $countryValue = request('country') ? request('country') : session('country');
                             $stateValue = request('state') ? request('state') : session('state');
-                        @endphp
-                        <li><a class="dropdown-item" href="{{route('survey.csv',['country'=>$countryValue,'survey'=>session('survey_id'),'state'=>$stateValue])}}" >
+                        ?>
+                        <li><a class="dropdown-item" href="<?php echo e(route('survey.csv',['country'=>$countryValue,'survey'=>session('survey_id'),'state'=>$stateValue])); ?>" >
                                 Export Survey Data</a></li>
                     </ul>
                 </div>
@@ -89,7 +89,7 @@
                                         <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                             <li><a class="dropdown-item" href="#" data-type="pdf"
@@ -102,7 +102,7 @@
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Community Resilience Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul><li>Well-functioning Government</li><li>Sound Business Environment</li><li>Equitable Distribution of Resources</li><li>Acceptance of the Rights of Others</li><li>Good Relations with Neighbours</li><li>Free Flow of Information</li><li>High Levels of Human Capital</li><li>Low Levels of Corruption</li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                        src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                 </a>
                                     </div>
@@ -130,7 +130,7 @@
                                     <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                         <li><a class="dropdown-item" href="#" data-type="pdf"
@@ -145,7 +145,7 @@
                                             class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Participation by Gender " data-content="<p>Distribution of survey participants by gender</p>">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -173,7 +173,7 @@
                                     <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                         <li><a class="dropdown-item" href="#" data-type="pdf"
@@ -188,7 +188,7 @@
                                             class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Participation by Age" data-content="<p>Distribution of survey participants by age</p>">
 
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                         </a>
                                     </div>
@@ -223,7 +223,7 @@
                             <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="svg-icon" type="image/svg+xml"
-                                    src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                    src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="#" data-type="pdf"
@@ -236,7 +236,7 @@
                                     data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas"
                                     class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Mean Scores Across the Pillars of Positive Peace" data-content="<p>The average scores for the eight Pillars of Positive Peace each represent a key area of societal resilience. The eight pillars that comprise Positive Peace are:</p><ul class='pillar-list'><li><strong>Well-functioning Government</strong></li><li><strong>Sound Business Environment</strong></li><li><strong>Equitable Distribution of Resources</strong></li><li><strong>Acceptance of the Rights of Others</strong></li><li><strong>Good Relations with Neighbours</strong></li><li><strong>Free Flow of Information</strong></li><li><strong>High Levels of Human Capital</strong></li><li><strong>Low Levels of Corruption</strong></li></ul><p>These pillars encompass governance, social cohesion, economic opportunities, and other factors that contribute to the overall stability and well-being of a community.</p><p>Higher scores in any pillar indicate stronger perceptions of resilience, while lower scores highlight areas that may need further development or attention. By examining the mean scores across these pillars, we gain valuable insights into the strengths and challenges within the community's societal framework.</p>">
                                     <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                        src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                 </a>
                             </div>
@@ -267,7 +267,7 @@
                                         <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                             <li><a class="dropdown-item" href="#" data-type="pdf"
@@ -281,7 +281,7 @@
                                                 aria-controls="theme-settings-offcanvas"
                                                 class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Positive Peace" data-content="<p>Positive Peace refers to the attitudes, institutions, and structures that foster and sustain peaceful societies. Higher scores in Positive Peace signify greater resilience, enabling societies to better protect their citizens from adverse shocks—whether political, environmental, or economic.</p>">
                                                 <img class="svg-icon" type="image/svg+xml"
-                                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                             </a>
                                         </div>
@@ -310,7 +310,7 @@
                                         <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                             <li><a class="dropdown-item" href="#" data-type="pdf"
@@ -325,7 +325,7 @@
                                                 class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Negative Peace" data-content="<p>Negative Peace refers to the absence of direct violence or fear of violence.</p><p>Higher scores in Negative Peace indicate a greater absence of conflict and violence, suggesting a stable environment with low levels of direct harm or societal unrest. </p>">
 
                                                 <img class="svg-icon" type="image/svg+xml"
-                                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                             </a>
                                         </div>
@@ -358,7 +358,7 @@
                                 <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img class="svg-icon" type="image/svg+xml"
-                                        src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                        src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                     <li><a class="dropdown-item" href="#" data-type="pdf"
@@ -374,7 +374,7 @@
                                         class="m-0 p-0 d-flex justify-content-center align-items-center" data-title="Results by Pillars" data-content="<p>The radar plot visualises the eight Pillars of Positive Peace, comparing community response mean scores against country and global averages. It provides insights into community perceptions of these pillars in relation to broader trends.</p>">
 
                                         <img class="svg-icon" type="image/svg+xml"
-                                            src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                     </a>
                                     
@@ -398,22 +398,20 @@
                                     <h4 class="card-title results-by-pillar-table mb-0 flex-grow-1">Results By Pillar</h4>
                                     <div class="flex-shrink-0">
                                         <div class="d-flex flex-row gap-2 align-items-center">
-                                            {{-- <a href="{{route('home.csv',['survey'=> request('survey') ])}}" type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i>
-                                                Export</a> --}}
+                                            
                                             <!--info here-->
                                             <div class="dropdown">
                                         <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                             <li><a class="dropdown-item" href="#" data-type="pdf"
                                                     data-chart-id="pillar-table">Export as PDF</a></li>
                                             <li><a class="dropdown-item" href="#" data-type="png"
                                                     data-chart-id="pillar-table">Export as PNG</a></li>
-                                            {{-- <li><a class="dropdown-item" href="#" data-type="excel"
-                                                    data-chart-id="pillar-table">Export as Excel</a></li> --}}
+                                            
                                         </ul>
                                     </div>
                                 
@@ -425,7 +423,7 @@
                                                 data-content="<p>This table compares community response mean scores across the eight Pillars of Positive Peace, alongside country and global averages. It provides insights into community perceptions of these pillars in relation to broader trends.</p>">
 
                                                 <img class="svg-icon" type="image/svg+xml"
-                                                    src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                                    src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
 
                                             </a>
                                             
@@ -442,18 +440,18 @@
                                                     <tr>
                                                         <th scope="col" class="text-center"></th>
                                                         <th scope="col" class="text-center">Survey Mean</th>
-                                                        @if(isset($pillarMeanScore['stateMean']))
+                                                        <?php if(isset($pillarMeanScore['stateMean'])): ?>
                                                         <th scope="col" class="text-center">State Mean</th>
-                                                        @endif
-                                                        @if(isset($pillarMeanScore['countryMean']))
+                                                        <?php endif; ?>
+                                                        <?php if(isset($pillarMeanScore['countryMean'])): ?>
                                                         <th scope="col" class="text-center">Country Mean</th>
-                                                        @endif
+                                                        <?php endif; ?>
                                                         <th scope="col" class="text-center">Global Mean</th>
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php
+                                                    <?php
                                                         $pillars = [
                                                             'well_functioning_government' =>
                                                                 'Well-Functioning Government',
@@ -466,25 +464,25 @@
                                                             'sound_business' => 'Sound Business Environment',
                                                             'acceptance_rights' => 'Acceptance of the Rights of Others',
                                                         ];
-                                                    @endphp
-                                                    @foreach ($pillarMeanScore['mean'] as $key => $pillar)
+                                                    ?>
+                                                    <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $pillar): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <tr>
                                                             <td><span
-                                                                    class="fw-medium pillar-text">{{ $pillars[$key] }}</span>
+                                                                    class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                             </td>
-                                                            <td class="text-center">{{ $pillar }}</td>
-                                                            @if(isset($pillarMeanScore['stateMean'][$key]))
+                                                            <td class="text-center"><?php echo e($pillar); ?></td>
+                                                            <?php if(isset($pillarMeanScore['stateMean'][$key])): ?>
                                                             <td class="text-center">
-                                                                {{ $pillarMeanScore['stateMean'][$key] }}</td>
-                                                            @endif
-                                                            @if(isset($pillarMeanScore['countryMean'][$key]))
+                                                                <?php echo e($pillarMeanScore['stateMean'][$key]); ?></td>
+                                                            <?php endif; ?>
+                                                            <?php if(isset($pillarMeanScore['countryMean'][$key])): ?>
                                                             <td class="text-center">
-                                                                {{ $pillarMeanScore['countryMean'][$key] }}</td>
-                                                            @endif
+                                                                <?php echo e($pillarMeanScore['countryMean'][$key]); ?></td>
+                                                            <?php endif; ?>
                                                             <td class="text-center">
-                                                                {{ $pillarMeanScore['globalMean'][$key] }}</td>
+                                                                <?php echo e($pillarMeanScore['globalMean'][$key]); ?></td>
                                                         </tr>
-                                                    @endforeach
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                                 </tbody>
 
@@ -500,7 +498,7 @@
                     </div><!-- end col -->
 
                     <!--table section starts here -->
-                    @if($formDetails->during || $formDetails->after)
+                    <?php if($formDetails->during || $formDetails->after): ?>
                     <div class="row">
                     <div class="col-xl-12">
                         <div class="card mb-0">
@@ -513,15 +511,14 @@
                                         <a class="icon-frame" href="#" id="exportDropdown" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <img class="svg-icon" type="image/svg+xml"
-                                                src="{{ URL::asset('build/icons/download.svg') }}"></img>
+                                                src="<?php echo e(URL::asset('build/icons/download.svg')); ?>"></img>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                             <li><a class="dropdown-item" href="#" data-type="pdf"
                                                     data-chart-id="pillar-table-time">Export as PDF</a></li>
                                             <li><a class="dropdown-item" href="#" data-type="png"
                                                     data-chart-id="pillar-table-time">Export as PNG</a></li>
-                                            {{-- <li><a class="dropdown-item" href="#" data-type="excel"
-                                                    data-chart-id="pillar-table-time">Export as Excel</a></li> --}}
+                                            
                                         </ul>
                                     </div>
                                         <a class="icon-frame" href="#"  data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas"
@@ -531,15 +528,15 @@
                                         data-content="<p>The Project Impact Analysis compares survey results from before, during, and after the project implementation. The percentage change is calculated based on different survey periods, reflecting improvements or declines in community perception, and helping assess the project's impact on community dynamics at each stage.</p>"
                                         >
 
-                                            <img class="svg-icon" type="image/svg+xml" src="{{ URL::asset('build/icons/info.svg') }}"></img>
+                                            <img class="svg-icon" type="image/svg+xml" src="<?php echo e(URL::asset('build/icons/info.svg')); ?>"></img>
                                         </a> 
                                         
                                     </div>
                                 </div>
                             </div><!-- end card header -->
-                            @php
+                            <?php
                                 
-                            @endphp
+                            ?>
                             <div class="card-body">
                                 <div class="live-preview">
                                     <div class="table-responsive">
@@ -550,15 +547,15 @@
                                                     <th scope="col"></th>
                                                     <th scope="col">Before</th>
                                                     <th scope="col">During</th>
-                                                    @if($formDetails->after)
+                                                    <?php if($formDetails->after): ?>
                                                     <th scope="col">After</th>
-                                                    @endif
+                                                    <?php endif; ?>
                                                     <th scope="col">% Change</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php
+                                                <?php
                                                     $pillars = [
                                                         'well_functioning_government' =>
                                                             'Well-Functioning Government',
@@ -571,35 +568,35 @@
                                                         'sound_business' => 'Sound Business Environment',
                                                         'acceptance_rights' => 'Acceptance of the Rights of Others',
                                                     ];
-                                                @endphp
-                                                @foreach($overTimeScores['before'] as $key=> $overTimeScore)
+                                                ?>
+                                                <?php $__currentLoopData = $overTimeScores['before']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $overTimeScore): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
 
-                                                    <td><span class="fw-medium pillar-text">{{$pillars[$key]}}</span>
+                                                    <td><span class="fw-medium pillar-text"><?php echo e($pillars[$key]); ?></span>
                                                     </td>
-                                                    <td class="text-center">{{$overTimeScore}}</td>
-                                                    <td class="text-center">{{$overTimeScores['during'][$key]}}</td>
-                                                    @if($formDetails->after)
-                                                    <td class="text-center">{{$overTimeScores['after'][$key]}}</td>
-                                                    @endif
+                                                    <td class="text-center"><?php echo e($overTimeScore); ?></td>
+                                                    <td class="text-center"><?php echo e($overTimeScores['during'][$key]); ?></td>
+                                                    <?php if($formDetails->after): ?>
+                                                    <td class="text-center"><?php echo e($overTimeScores['after'][$key]); ?></td>
+                                                    <?php endif; ?>
                                                     <td class="trend-blue text-center">
-                                                        @php
+                                                        <?php
                                                             $choosenDate = $formDetails->after ? $overTimeScores['after'][$key] : $overTimeScores['during'][$key];
                                                             $overTimeScoreDivide = $overTimeScore > 0 ? $overTimeScore:1;
                                                             $percentChange = round((($choosenDate-$overTimeScore)/$overTimeScoreDivide)*100,1);
-                                                        @endphp 
-                                                        <span >{{$percentChange}}%
-                                                            @if($percentChange > 0)
+                                                        ?> 
+                                                        <span ><?php echo e($percentChange); ?>%
+                                                            <?php if($percentChange > 0): ?>
                                                             <img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-blue.svg') }}" alt="ArrowExternalRight">
-                                                            @else
+                                                                src="<?php echo e(URL::asset('build/icons/trend-blue.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php else: ?>
                                                             <img class="trend-icon"
-                                                                src="{{ URL::asset('build/icons/trend-red.svg') }}" alt="ArrowExternalRight">
-                                                            @endif
+                                                                src="<?php echo e(URL::asset('build/icons/trend-red.svg')); ?>" alt="ArrowExternalRight">
+                                                            <?php endif; ?>
                                                     </td>
 
                                                 </tr>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>
 
                                         </table>
@@ -614,7 +611,7 @@
                         
                         </div>
                     <!-- end col -->
-                    @endif
+                    <?php endif; ?>
                 </div>
                 <!--end row-->
 
@@ -623,22 +620,22 @@
             </div> <!-- end .h-100-->
 
         </div> <!-- end col -->
-        @if(count($formDetails->extraQuestions) > 0)
+        <?php if(count($formDetails->extraQuestions) > 0): ?>
         <div class="card-body" id="survey-data" style="display:none;">
             <div class="live-preview">
                 <div class="table-responsive" >
                     <table class="table align-middle table-nowrap mb-0"  id="survey-table" >
                         <thead class="table-head">
                             <tr>
-                                @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
+                                <?php if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic"): ?>
                                 <th scope="col">Survey Data ID</th>
                                 <th scope="col">Survey ID</th>
-                                @endif
+                                <?php endif; ?>
                                 <th scope="col">Survey Country</th>
                                 <th scope="col">Survey State</th>
-                                @foreach($formDetails->extraQuestions as $extraQuestion)
-                                <th scope="col">{{$extraQuestion->title}}</th>
-                                @endforeach
+                                <?php $__currentLoopData = $formDetails->extraQuestions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $extraQuestion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <th scope="col"><?php echo e($extraQuestion->title); ?></th>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <th scope="col">Survey Date</th>
                             </tr>
                         </thead>
@@ -655,24 +652,24 @@
             </div>
 
         </div>
-        @endif
+        <?php endif; ?>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
     <!-- apexcharts -->
-    <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/apexcharts-pie.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/dashboard-crm.init.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/apexcharts-radar.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/apexcharts-pie.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/dashboard-crm.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/apexcharts-radar.init.js')); ?>"></script>
 
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
 
     <script defer>
         $(document).ready(function() {
-            var branch_id = {!! json_encode($filterData->branch_id ?? null) !!};
-            var survey_id = {!! json_encode($filterData->form_id ?? null) !!};
+            var branch_id = <?php echo json_encode($filterData->branch_id ?? null); ?>;
+            var survey_id = <?php echo json_encode($filterData->form_id ?? null); ?>;
 
             //Parameters
             var country = getQueryParams('country');
@@ -681,7 +678,7 @@
             var survey = survey_id ? survey_id : getQueryParams('survey');
 
             //Country Session
-            let countrySelected = @json($selectedCountry ?? session('country') ?? '');
+            let countrySelected = <?php echo json_encode($selectedCountry ?? session('country') ?? '', 15, 512) ?>;
             
             // if(countrySelected !== ''){
             //     filterState();
@@ -836,7 +833,7 @@
                     let selectedCountry = $('#selected_country').val();
                     console.log('input country VALUE:',selectedCountry);
                     // let selectedValue = '';
-                    // selectedValue =  @json($selectedCountry ?? session('country') ?? '');
+                    // selectedValue =  <?php echo json_encode($selectedCountry ?? session('country') ?? '', 15, 512) ?>;
                     // console.log('selected Value',selectedValue);
 
                     $('#country_input').val('').hide();
@@ -864,7 +861,7 @@
                                 console.log('selectValueFinal',selectedCountry);
                                 if(selectedCountry !== ''){
                                     $('#country_select').val(selectedCountry).trigger('change.select2');
-                                    let selectedState = @json($state ?? request()->query('state') ?? session('state') ?? '');
+                                    let selectedState = <?php echo json_encode($state ?? request()->query('state') ?? session('state') ?? '', 15, 512) ?>;
                                     filterState(selectedState);
                                 }
                                
@@ -892,7 +889,7 @@
                 if(surveyType == 1 && countryCode !== ''){
                     $('#state_select').empty().append('<option value="" selected>Select State</option>');
                 
-                    let stateUrl = `{{url('/')}}/typeform/getCountryState/${surveyId}/${countryCode}`;
+                    let stateUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${surveyId}/${countryCode}`;
                     
                     $.get(stateUrl,function(response){
                         if(response && response.data){
@@ -922,7 +919,7 @@
 
                 if (organizationVal !== '') {
                     $.ajax({
-                        url: "{{ route('branch.get') }}",
+                        url: "<?php echo e(route('branch.get')); ?>",
                         method: 'GET',
                         data: {
                             organization_id: organizationVal
@@ -933,8 +930,8 @@
                             $('#branch').html('');
                             $('#branch').append('<option value="" selected>Select Division</option>');
 
-                            var userRole = @json(auth()->user()->role->name);
-                            var userBranchId = @json(auth()->user()->branch_id);
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
                         
                             var branchList = response.branches.filter(function(branch){
                                 if(userRole == "division" || userRole == "survey"){
@@ -988,7 +985,7 @@
 
                 // if (organizationVal !== '' || countryVal !='') {
                     $.ajax({
-                        url: "{{ route('survey.get') }}",
+                        url: "<?php echo e(route('survey.get')); ?>",
                         method: 'GET',
                         data: {
                             country: countryVal,
@@ -1001,8 +998,8 @@
                             $('#survey').append('<option value="" selected>Select Survey</option>');
 
 
-                            var userRole = @json(auth()->user()->role->name);
-                            var userBranchId = @json(auth()->user()->branch_id);
+                            var userRole = <?php echo json_encode(auth()->user()->role->name, 15, 512) ?>;
+                            var userBranchId = <?php echo json_encode(auth()->user()->branch_id, 15, 512) ?>;
 
                             var formList = response.forms.filter((form)=>{
                                 if(userRole == "division"){
@@ -1024,7 +1021,7 @@
                                 var data_state_id = formItem.states !== null ? formItem.states.id :'';
                                 
                                 if(userRole == 'survey'){
-                                    let surveyId = @json(auth()->user()->form_id);
+                                    let surveyId = <?php echo json_encode(auth()->user()->form_id, 15, 512) ?>;
                                     let surveyIds = Array.isArray(surveyId) ? surveyId : surveyId.split(', ');
                                     
                                     if(surveyIds.includes(formItem.form_id)){
@@ -1035,7 +1032,7 @@
                                             option.setAttribute('data-state',data_state);
                                             option.setAttribute('data-state-id',data_state_id);
                                         }else if(formTypeValue == 1){
-                                            let countryUrl = `{{url('/')}}/typeform/getCountryState/${formItem.form_id}`;
+                                            let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
                                             option.setAttribute('data-country-url',countryUrl);
                                         }
                                         $('#survey').append(option);
@@ -1053,7 +1050,7 @@
                                         option.setAttribute('data-state',data_state);
                                         option.setAttribute('data-state-id',data_state_id);
                                     }else if(formTypeValue == 1){
-                                        let countryUrl = `{{url('/')}}/typeform/getCountryState/${formItem.form_id}`;
+                                        let countryUrl = `<?php echo e(url('/')); ?>/typeform/getCountryState/${formItem.form_id}`;
                                         option.setAttribute('data-country-url',countryUrl);
                                     }
                                     $('#survey').append(option);
@@ -1128,29 +1125,29 @@
                 var options = {
                     series: [{
                             name: 'Well-Functioning Government',
-                            data: ["{{ $meanScore['well_functioning_government'] }}"]
+                            data: ["<?php echo e($meanScore['well_functioning_government']); ?>"]
                         }, {
                             name: 'Low Levels of Corruption',
-                            data: ["{{ $meanScore['low_level_corruption'] }}"]
+                            data: ["<?php echo e($meanScore['low_level_corruption']); ?>"]
                         },
                         {
                             name: 'Equitable Distribution of Resources',
-                            data: ["{{ $meanScore['equitable_distribution'] }}"]
+                            data: ["<?php echo e($meanScore['equitable_distribution']); ?>"]
                         }, {
                             name: 'Good Relations with Neighbours',
-                            data: ["{{ $meanScore['good_relations'] }}"]
+                            data: ["<?php echo e($meanScore['good_relations']); ?>"]
                         }, {
                             name: 'Free Flow of Information',
-                            data: ["{{ $meanScore['free_flow'] }}"]
+                            data: ["<?php echo e($meanScore['free_flow']); ?>"]
                         }, {
                             name: 'High Levels of Human Capital',
-                            data: ["{{ $meanScore['high_levels'] }}"]
+                            data: ["<?php echo e($meanScore['high_levels']); ?>"]
                         }, {
                             name: 'Sound Business Environment',
-                            data: ["{{ $meanScore['sound_business'] }}"]
+                            data: ["<?php echo e($meanScore['sound_business']); ?>"]
                         }, {
                             name: 'Acceptance of the Rights of Others',
-                            data: ["{{ $meanScore['acceptance_rights'] }}"]
+                            data: ["<?php echo e($meanScore['acceptance_rights']); ?>"]
                         }
                     ],
 
@@ -1244,14 +1241,14 @@
             //     var options = {
             //         series: [{
             //             name: 'Mean',
-            //             data: ["{{ $meanScore['well_functioning_government'] }}",
-            //                 "{{ $meanScore['low_level_corruption'] }}",
-            //                 " {{ $meanScore['equitable_distribution'] }}",
-            //                 "{{ $meanScore['good_relations'] }}",
-            //                 "{{ $meanScore['free_flow'] }}",
-            //                 "{{ $meanScore['high_levels'] }}",
-            //                 "{{ $meanScore['sound_business'] }}",
-            //                 "{{ $meanScore['acceptance_rights'] }}"
+            //             data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
+            //                 "<?php echo e($meanScore['low_level_corruption']); ?>",
+            //                 " <?php echo e($meanScore['equitable_distribution']); ?>",
+            //                 "<?php echo e($meanScore['good_relations']); ?>",
+            //                 "<?php echo e($meanScore['free_flow']); ?>",
+            //                 "<?php echo e($meanScore['high_levels']); ?>",
+            //                 "<?php echo e($meanScore['sound_business']); ?>",
+            //                 "<?php echo e($meanScore['acceptance_rights']); ?>"
             //             ],
             //         }],
             //         chart: {
@@ -1327,14 +1324,14 @@
                     datasets: [{
 					
                     label: 'Mean Results',
-                    data: ["{{ $meanScore['well_functioning_government'] }}",
-                                "{{ $meanScore['low_level_corruption'] }}",
-                                " {{ $meanScore['equitable_distribution'] }}",
-                                "{{ $meanScore['good_relations'] }}",
-                                "{{ $meanScore['free_flow'] }}",
-                                "{{ $meanScore['high_levels'] }}",
-                                "{{ $meanScore['sound_business'] }}",
-                                "{{ $meanScore['acceptance_rights'] }}"],
+                    data: ["<?php echo e($meanScore['well_functioning_government']); ?>",
+                                "<?php echo e($meanScore['low_level_corruption']); ?>",
+                                " <?php echo e($meanScore['equitable_distribution']); ?>",
+                                "<?php echo e($meanScore['good_relations']); ?>",
+                                "<?php echo e($meanScore['free_flow']); ?>",
+                                "<?php echo e($meanScore['high_levels']); ?>",
+                                "<?php echo e($meanScore['sound_business']); ?>",
+                                "<?php echo e($meanScore['acceptance_rights']); ?>"],
                     borderWidth: 3,
                     borderColor:'#0564bd',
                     //backgroundColor: '#0564bd',
@@ -1411,13 +1408,13 @@
             var chartPieBasicColors = getChartColorsArray("simple_pie_chart");
             if (chartPieBasicColors) {
                 var options = {
-                    @php
+                    <?php
                         $malePieChart = $participantDetails['genderWise']['male'];
                         $femalePieChart = $participantDetails['genderWise']['female'];
                         $otherPieChart = $participantDetails['genderWise']['other'];
                         $notPreferPieChart = $participantDetails['genderWise']['preferNot'];
-                    @endphp
-                    series: [{{ $malePieChart }},{{ $femalePieChart }},{{ $otherPieChart }},{{$notPreferPieChart}}],
+                    ?>
+                    series: [<?php echo e($malePieChart); ?>,<?php echo e($femalePieChart); ?>,<?php echo e($otherPieChart); ?>,<?php echo e($notPreferPieChart); ?>],
 					markers: {
 					  size: 6,
 					  shape: "rect", // default
@@ -1475,14 +1472,14 @@
             var chartPieBasicColors2 = getChartColorsArray("simple_pie_chart2");
             if (chartPieBasicColors2) {
                 var options = {
-                    @php
+                    <?php
                         $level_one = $participantDetails['ageWise']['18 to 24'];
                         $level_two = $participantDetails['ageWise']['25 to 44'];
                         $level_three = $participantDetails['ageWise']['45 to 64'];
                         $level_four = $participantDetails['ageWise']['65 or over'];
                         $level_no = $participantDetails['ageWise']['Prefer not to say'];
-                    @endphp
-                    series: [{{ $level_one }}, {{ $level_two }}, {{ $level_three }},{{ $level_four }},{{$level_no}}],
+                    ?>
+                    series: [<?php echo e($level_one); ?>, <?php echo e($level_two); ?>, <?php echo e($level_three); ?>,<?php echo e($level_four); ?>,<?php echo e($level_no); ?>],
 					markers: {
 					  size: 6,
 					  shape: "rect", // default
@@ -1539,21 +1536,21 @@
                 var options = {
                     series: [{
                         name: 'Survey Mean',
-                        data: [{{ $positivePeace['mean'] }}]
+                        data: [<?php echo e($positivePeace['mean']); ?>]
                     }, 
-                    @if(isset($positivePeace['stateMean'])){
+                    <?php if(isset($positivePeace['stateMean'])): ?>{
                         name: 'State Mean',
-                        data: [{{ $positivePeace['stateMean'] }}]
+                        data: [<?php echo e($positivePeace['stateMean']); ?>]
                     },
-                    @endif
-                    @if(isset($positivePeace['countryMean'])){
+                    <?php endif; ?>
+                    <?php if(isset($positivePeace['countryMean'])): ?>{
                         name: 'Country Mean',
-                        data: [{{ $positivePeace['countryMean'] }}]
+                        data: [<?php echo e($positivePeace['countryMean']); ?>]
                     },
-                    @endif
+                    <?php endif; ?>
                     {
                         name: 'Global Mean',
-                        data: [{{ $positivePeace['globalMean'] }}]
+                        data: [<?php echo e($positivePeace['globalMean']); ?>]
                     }],
                     chart: {
                         type: 'bar',
@@ -1628,12 +1625,12 @@
 						}
                     },
                     colors: ['#0f64bc', 
-                    @if(isset($positivePeace['stateMean']))
+                    <?php if(isset($positivePeace['stateMean'])): ?>
                     '#fb4f30',
-                    @endif
-                    @if(isset($positivePeace['countryMean']))
+                    <?php endif; ?>
+                    <?php if(isset($positivePeace['countryMean'])): ?>
                     '#fb9f68',
-                    @endif
+                    <?php endif; ?>
                     '#339966']
                 };
                 if (salesForecastChart2 != "")
@@ -1650,22 +1647,22 @@
                 var options = {
                     series: [{
                         name: 'Survey Mean',
-                        data: ["{{ $negativePeace['mean'] }}"]
+                        data: ["<?php echo e($negativePeace['mean']); ?>"]
                     }, 
-                    @if(isset($positivePeace['stateMean'])){
+                    <?php if(isset($positivePeace['stateMean'])): ?>{
                         name: 'State Mean',
-                        data: [{{ $positivePeace['stateMean'] }}]
+                        data: [<?php echo e($positivePeace['stateMean']); ?>]
                     },
-                    @endif
-                    @if(isset( $negativePeace['countryMean']))
+                    <?php endif; ?>
+                    <?php if(isset( $negativePeace['countryMean'])): ?>
                     {
                         name: 'Country Mean',
-                        data: ["{{ $negativePeace['countryMean'] }}"]
+                        data: ["<?php echo e($negativePeace['countryMean']); ?>"]
                     }, 
-                    @endif
+                    <?php endif; ?>
                     {
                         name: 'Global Mean',
-                        data: ["{{ $negativePeace['globalMean'] }}"]
+                        data: ["<?php echo e($negativePeace['globalMean']); ?>"]
                     }],
                     chart: {
                         type: 'bar',
@@ -1740,12 +1737,12 @@
 						}
                     },
                     colors: ['#0f64bc',
-                    @if(isset($positivePeace['stateMean']))
+                    <?php if(isset($positivePeace['stateMean'])): ?>
                     '#fb4f30',
-                    @endif
-                    @if(isset($positivePeace['countryMean']))
+                    <?php endif; ?>
+                    <?php if(isset($positivePeace['countryMean'])): ?>
                     '#fb9f68',
-                    @endif
+                    <?php endif; ?>
                     '#339966']
                 };
                 if (salesForecastChart3 != "")
@@ -1763,27 +1760,27 @@
             //         series: [{
             //                 name: 'Mean',
             //                 data: [
-            //                     @foreach ($pillarMeanScore['mean'] as $key => $means)
-            //                         "{{ $means }}",
-            //                     @endforeach
+            //                     <?php $__currentLoopData = $pillarMeanScore['mean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            //                         "<?php echo e($means); ?>",
+            //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             //                 ],
             //             },
-            //              @if(isset($pillarMeanScore['countryMean']))
+            //              <?php if(isset($pillarMeanScore['countryMean'])): ?>
             //             {
             //                 name: 'Country Mean',
             //                 data: [
-            //                     @foreach ($pillarMeanScore['countryMean'] as $key => $means)
-            //                         "{{ $means }}",
-            //                     @endforeach
+            //                     <?php $__currentLoopData = $pillarMeanScore['countryMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            //                         "<?php echo e($means); ?>",
+            //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             //                 ],
             //             },
-            //              @endif
+            //              <?php endif; ?>
             //             {
             //                 name: 'Global Mean',
             //                 data: [
-            //                     @foreach ($pillarMeanScore['globalMean'] as $key => $means)
-            //                         "{{ $means }}",
-            //                     @endforeach
+            //                     <?php $__currentLoopData = $pillarMeanScore['globalMean']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $means): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            //                         "<?php echo e($means); ?>",
+            //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             //                 ],
             //             }
             //         ],
@@ -1836,7 +1833,7 @@
                             'High Levels Of Human Capital',
                             'Sound Business Environment',
                             'Acceptance Of The Rights Of Others'],
-                @php
+                <?php
                     $labelType = [
                         'mean'=>'Survey Mean',
                         'stateMean'=>'State Mean',
@@ -1850,21 +1847,21 @@
                         'countryMean'=>'#fb9f68',
                         'globalMean'=>'#38b8a0',
                     ];
-                @endphp
+                ?>
                 datasets: [
-                @foreach($pillarMeanScore as $key=>$mean)
+                <?php $__currentLoopData = $pillarMeanScore; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$mean): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     {
-                    label: '{{$labelType[$key]}}',
-                    data: ["{{ $mean['well_functioning_government'] }}",
-                                "{{ $mean['low_level_corruption'] }}",
-                                " {{ $mean['equitable_distribution'] }}",
-                                "{{ $mean['good_relations'] }}",
-                                "{{ $mean['free_flow'] }}",
-                                "{{ $mean['high_levels'] }}",
-                                "{{ $mean['sound_business'] }}",
-                                "{{ $mean['acceptance_rights'] }}"],
+                    label: '<?php echo e($labelType[$key]); ?>',
+                    data: ["<?php echo e($mean['well_functioning_government']); ?>",
+                                "<?php echo e($mean['low_level_corruption']); ?>",
+                                " <?php echo e($mean['equitable_distribution']); ?>",
+                                "<?php echo e($mean['good_relations']); ?>",
+                                "<?php echo e($mean['free_flow']); ?>",
+                                "<?php echo e($mean['high_levels']); ?>",
+                                "<?php echo e($mean['sound_business']); ?>",
+                                "<?php echo e($mean['acceptance_rights']); ?>"],
                     borderWidth: 3,
-                    borderColor:'{{$chartColorType[$key]}}',
+                    borderColor:'<?php echo e($chartColorType[$key]); ?>',
 					backgroundColor: function(context) {
                         // Get the dataset type (mean, countryMean, globalMean)
                         const datasetType = context.dataset.label.toLowerCase();
@@ -1880,13 +1877,13 @@
                         }
 
                         // Return the color with the calculated alpha transparency
-                        return '{{$chartColorType[$key]}}' + Math.floor(alpha * 255).toString(16);
+                        return '<?php echo e($chartColorType[$key]); ?>' + Math.floor(alpha * 255).toString(16);
                     }, 
                     fill: true,
 					pointStyle: 'rect'
 
                     },
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				
             ]
             },
@@ -1978,22 +1975,22 @@
         mainpage.style.overflow = 'hidden'; // Directly use mainpage, not mainpage.element
         if (surveydata) surveydata.style.display = "block";
        
-        // @if(session('form_type') == 1)
+        // <?php if(session('form_type') == 1): ?>
         //     let selectedCountry = document.getElementById('selected_country').value;
-        // @else
+        // <?php else: ?>
         //     let selectedCountry = document.getElementById('country_select').value;
-        // @endif
+        // <?php endif; ?>
 
 
-        const selectedCountry =  @json(request('country') ? request('country') : session('country'));
-        const selectedState =  @json(request('state') ? request('state') : session('state'));
+        const selectedCountry =  <?php echo json_encode(request('country') ? request('country') : session('country'), 15, 512) ?>;
+        const selectedState =  <?php echo json_encode(request('state') ? request('state') : session('state'), 15, 512) ?>;
         const selectedOrganization = document.getElementById('organization').value;
         const selectedBranch = document.getElementById('branch').value;
         const selectedSurvey = document.getElementById('survey').value;
     
         $.ajax({
             // url: '/typeform/fecthallsurvey',
-            url:'{{route('survey.fecthallsurvey')}}',
+            url:'<?php echo e(route('survey.fecthallsurvey')); ?>',
             type: 'GET',
             data: {
                 survey: selectedSurvey,
@@ -2017,17 +2014,17 @@
                     { id: "pillar-table-time", title: "Results Over Time: Table" },
                 ];
                 
-                @if(count($formDetails->extraQuestions) > 0)
+                <?php if(count($formDetails->extraQuestions) > 0): ?>
                     updateTable(surveyData);
                     charts.push({ id: "survey-table", title: "Additional Question Responses" });
-                @endif
+                <?php endif; ?>
 
                 // Export charts and tables to PNG and PDF
                 exportChartsToPNGAndPDF(charts, function () {
-                                    @if(count($formDetails->extraQuestions) > 0)
+                                    <?php if(count($formDetails->extraQuestions) > 0): ?>
 
                     surveydata.style.display = "none";
-                    @endif
+                    <?php endif; ?>
                     loader.style.display = 'none';
                     mainpage.style.overflow = 'visible';
                     exportButton.disabled = false;
@@ -2049,25 +2046,25 @@ function updateTable(data) {
     const tableBody = document.getElementById("survey-table").getElementsByTagName("tbody")[0];
     tableBody.innerHTML = ""; // Clear existing table rows
 
-    const hiddenColumns = @json((auth()->user()->role->name === "superadmin" || auth()->user()->role->name === "krizmatic") ? [] : ['survey_data_id','survey_id']);
+    const hiddenColumns = <?php echo json_encode((auth()->user()->role->name === "superadmin" || auth()->user()->role->name === "krizmatic") ? [] : ['survey_data_id', 'survey_id'], 512) ?>;
 
     // Populate the table with fetched data
     // data.forEach(function (item) {
     //     const row = tableBody.insertRow();
     //     console.log(Object.entries(item));
     //     Object.entries(item).forEach(([key, value]) => {
-    //         @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
+    //         <?php if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic"): ?>
     //             const cell = row.insertCell();
     //             cell.textContent = value || 'N/A';
-    //         @else
+    //         <?php else: ?>
     //             if(key !== 'survey_data_id' || key !== 'survey_id'){
     //                 const cell = row.insertCell();
     //                 cell.textContent = value || 'N/A';
     //             }
-    //         @endif
+    //         <?php endif; ?>
     //     });
 
-    //     // @if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic")
+    //     // <?php if(auth()->user()->role->name == "superadmin" || auth()->user()->role->name == "krizmatic"): ?>
     //     //     // Assuming the response data contains the correct properties
     //     //     row.insertCell(0).textContent = item.survey_data_id || 'N/A';
     //     //     row.insertCell(1).textContent = item.survey_id || 'N/A';
@@ -2079,7 +2076,7 @@ function updateTable(data) {
     //     //     // row.insertCell(6).textContent = item.age || 'N/A';
     //     //     // row.insertCell(7).textContent = item.gender || 'N/A';
     //     //     row.insertCell(4).textContent = item.survey_date || 'N/A';
-    //     // @else
+    //     // <?php else: ?>
     //     //     // Assuming the response data contains the correct properties
     //     //     // row.insertCell(0).textContent = item.survey_name || 'N/A';
     //     //     row.insertCell(0).textContent = item.survey_country || 'N/A';
@@ -2089,7 +2086,7 @@ function updateTable(data) {
     //     //     // row.insertCell(4).textContent = item.age || 'N/A';
     //     //     // row.insertCell(5).textContent = item.gender || 'N/A';
     //     //     row.insertCell(3).textContent = item.survey_date || 'N/A';
-    //     // @endif
+    //     // <?php endif; ?>
     // });
     
     data.forEach(item => {
@@ -2185,7 +2182,7 @@ function exportChartsToPNGAndPDF(charts, callback) {
     const processCharts = (index) => {
         if (index >= charts.length) {
             addFooter(pdf);
-            pdf.save(@json(Str::slug(App\Models\Form::where('form_id',session('survey_id'))->pluck('form_title')->first()))+'-report');
+            pdf.save(<?php echo json_encode(Str::slug(App\Models\Form::where('form_id', session('survey_id'))->pluck('form_title')->first()), 512) ?>+'-report');
             if (callback) callback();
             return;
         }
@@ -2302,8 +2299,8 @@ function exportChartsToPNGAndPDF(charts, callback) {
         
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100);
-        const orgText = "Source:  {{ $formDetails->form_title }}";
-        let organizationName = @json($formDetails->organization->name);
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
+        let organizationName = <?php echo json_encode($formDetails->organization->name, 15, 512) ?>;
         const emailText = organizationName.trim(); 
         pdf.text(orgText, margin + contentPadding + 5, footerY);
         pdf.text(emailText, margin + contentPadding + 5, footerY + lineSpacing);
@@ -2518,12 +2515,12 @@ function exportToPDF(chartId, chartTitle) {
          // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "Source:  {{ $formDetails->form_title }}";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("{{ $formDetails->organization->name }}", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -2622,10 +2619,10 @@ function exportToPNG(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("Source:  {{ $formDetails->form_title }}", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("{{ $formDetails->organization->name }}", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -2668,7 +2665,7 @@ function exportToPNG(chartId, chartTitle) {
             ctx.fillStyle = "#646464";
             ctx.textAlign = "right";
             ctx.fillText(
-                "{{ $formDetails->organization->name }}",
+                "<?php echo e($formDetails->organization->name); ?>",
                 canvasWidth - margin - 10,
                 footerY
             );
@@ -2783,12 +2780,12 @@ function exportToPDFMeanRadar(chartId, chartTitle) {
         // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "Source:  {{ $formDetails->form_title }}";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("{{ $formDetails->organization->name }}", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -2869,12 +2866,12 @@ function exportToPDFMultiRadar(chartId, chartTitle) {
         // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "Source:  {{ $formDetails->form_title }}";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("{{ $formDetails->organization->name }}", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -2958,12 +2955,12 @@ function exportToPDFPnBar(chartId, chartTitle) {
         // Left-aligned organization (line 1)
         pdf.setFontSize(footerFontSize);
         pdf.setTextColor(100, 100, 100); // Black
-        const orgText = "Source:  {{ $formDetails->form_title }}";
+        const orgText = "Source:  <?php echo e($formDetails->form_title); ?>";
         pdf.text(orgText, margin + 10, footerY, { align: 'left' });
 
         // Left-aligned source (line 2, grey text)
         pdf.setTextColor(100, 100, 100); // Grey
-        pdf.text("{{ $formDetails->organization->name }}", margin + 10, footerY + lineHeight, { align: 'left' });
+        pdf.text("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + lineHeight, { align: 'left' });
 
         // Right-aligned email (line 2)
         const emailText = "csb.economicsandpeace.org";
@@ -3060,10 +3057,10 @@ function exportToPNGMeanRadar(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("Source:  {{ $formDetails->form_title }}", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("{{ $formDetails->organization->name }}", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -3106,7 +3103,7 @@ function exportToPNGMeanRadar(chartId, chartTitle) {
             ctx.fillStyle = "#646464";
             ctx.textAlign = "right";
             ctx.fillText(
-                "{{ $formDetails->organization->name }}",
+                "<?php echo e($formDetails->organization->name); ?>",
                 canvasWidth - margin - 10,
                 footerY
             );
@@ -3223,10 +3220,10 @@ function exportToPNGPie(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("Source:  {{ $formDetails->form_title }}", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("{{ $formDetails->organization->name }}", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -3279,7 +3276,7 @@ function exportToPNGPie(chartId, chartTitle) {
             ctx.fillStyle = "#646464";
             ctx.textAlign = "right";
             ctx.fillText(
-                "{{ $formDetails->organization->name }}",
+                "<?php echo e($formDetails->organization->name); ?>",
                 canvasWidth - margin - 10,
                 footerY
             );
@@ -3389,10 +3386,10 @@ function exportToPNGMultiRadar(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("Source:  {{ $formDetails->form_title }}", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("{{ $formDetails->organization->name }}", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -3435,7 +3432,7 @@ function exportToPNGMultiRadar(chartId, chartTitle) {
             ctx.fillStyle = "#646464";
             ctx.textAlign = "right";
             ctx.fillText(
-                "{{ $formDetails->organization->name }}",
+                "<?php echo e($formDetails->organization->name); ?>",
                 canvasWidth - margin - 10,
                 footerY
             );
@@ -3545,10 +3542,10 @@ function exportToPNGPP(chartId, chartTitle) {
                 ctx.font = `${footerFontSize}px 'Arial'`;
                 ctx.fillStyle = "#646464"; // Gray
                 ctx.textAlign = "left";
-                ctx.fillText("Source:  {{ $formDetails->form_title }}", margin + 10, footerY);
+                ctx.fillText("Source:  <?php echo e($formDetails->form_title); ?>", margin + 10, footerY);
 
                 // Source text (left, second line)
-                ctx.fillText("{{ $formDetails->organization->name }}", margin + 10, footerY + 5 * pxPerMM);
+                ctx.fillText("<?php echo e($formDetails->organization->name); ?>", margin + 10, footerY + 5 * pxPerMM);
 
                 // Email (right)
                 ctx.textAlign = "right";
@@ -3591,7 +3588,7 @@ function exportToPNGPP(chartId, chartTitle) {
             ctx.fillStyle = "#646464";
             ctx.textAlign = "right";
             ctx.fillText(
-                "{{ $formDetails->organization->name }}",
+                "<?php echo e($formDetails->organization->name); ?>",
                 canvasWidth - margin - 10,
                 footerY
             );
@@ -3621,4 +3618,6 @@ function exportToPNGPP(chartId, chartTitle) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('typeform.layout.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\KDS- ARPIN\CSB-New\typeform-dashboard\resources\views/typeform/index.blade.php ENDPATH**/ ?>
