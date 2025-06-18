@@ -2020,10 +2020,14 @@
 
                 // Export charts and tables to PNG and PDF
                 exportChartsToPNGAndPDF(charts, function () {
+                                    <?php if(count($formDetails->extraQuestions) > 0): ?>
+
                     surveydata.style.display = "none";
+                    <?php endif; ?>
                     loader.style.display = 'none';
                     mainpage.style.overflow = 'visible';
                     exportButton.disabled = false;
+
                 });
             },
             error: function (error) {
