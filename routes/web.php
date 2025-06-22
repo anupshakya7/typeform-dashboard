@@ -100,6 +100,10 @@ Route::middleware('check_auth','check_route')->group(function(){
         Route::get('/survey/generate/csv/{survey}',[AnswerController::class,'generateIndividualCSV'])->name('survey.single.csv');
         Route::get('/fecthallsurvey', [AnswerController::class, 'fetchAllSurvey'])->name('survey.fecthallsurvey');
 
+        //Import Answer through csv
+        Route::get('/survey/import/csv',[AnswerController::class,'importAnswerSurveyCSVIndex'])->name('answer.import.index');
+        Route::post('/survey/import/csv',[AnswerController::class,'importAnswerSurveyCSV'])->name('answer.import.csv');
+
         //About Us
         Route::get('about',[AboutController::class,'index'])->name('about.index');
     });

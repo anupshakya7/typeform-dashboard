@@ -727,4 +727,55 @@ class AnswerController extends Controller
     //         'page' => $page
     //     ]);
     // }
+
+    public function importAnswerSurveyCSVIndex(){
+        return view('typeform.survey.importResponse');
+    }
+
+    public function importAnswerSurveyCSV(Request $request){
+        try{
+            $request->validate([
+                'survey_id'=>'required',
+                'csv' => 'required|mimes:csv,txt'
+            ]);
+    
+            $file = fopen($request->file('csv'),'r');
+            
+            //Skip Header
+            fgetcsv($file);
+            
+            $surveyLabel = [
+                'event_id',
+                'name',
+                'age',
+                'gender',
+                'village-town-city',
+                'well_functioning_government',
+                'low_level_corruption',
+                'equitable_distribution',
+                'good_relations',
+                'free_flow',
+                'high_levels',
+                'sound_business',
+                'acceptance_rights',
+                'positive_peace',
+                'negative_peace',
+            ];
+            $surveyId = [
+                'form_id' => $request->survey_id
+            ];
+    
+      
+            while($row = fgetcsv($file)){
+                 $data = array_combine($surveyLabel,$row);
+                 $data = array_merge($data,$surveyId);
+                 
+                 Answer::create($data);
+            }
+
+            return 'Successfully Inserted Survey Responses for Survey Id: '.$request->survey_id;
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
+    }
 }

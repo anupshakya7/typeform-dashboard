@@ -248,10 +248,12 @@ class IndexController extends Controller
                         }
                         return $answer->country == $country;
                     })->pluck($flag);
-
+                   
                 }
 
-                return $form->answer->pluck($flag);
+                return $form->answer->pluck($flag)->map(function($v){
+                    return empty($v) ? 0 : (int) $v;
+                });
             })->sum();
 
             $count = $forms->flatMap(function($form) use($flag,$form_type,$country,$state){
@@ -272,7 +274,9 @@ class IndexController extends Controller
             if($form_type == 0){
                 $forms = Form::with('answer')->where('state',$state)->get();
                 
-                $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+                $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag)->map(function($v){
+                    return empty($v) ? 0 : (int) $v;
+                }))->sum();
                 $count = $forms->sum(fn($form) => $form->answer->count());
             }else{
                 $formTypeSingleAnswers = Form::with('answer')
@@ -293,7 +297,9 @@ class IndexController extends Controller
             if($form_type == 0){
                 $forms = Form::with('answer')->where('country',$country)->get();
 
-                $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+                $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag)->map(function($v){
+                    return empty($v) ? 0 : (int) $v;
+                }))->sum();
                 $count = $forms->sum(fn($form) => $form->answer->count());
             }else{
                 $countryFull = NCountry::where('code',$country)->pluck('name')->first();
@@ -315,7 +321,9 @@ class IndexController extends Controller
         }elseif($type === "globalMean"){
             $forms = Form::with('answer')->get();
             
-            $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag))->sum();
+            $sum = $forms->flatMap(fn($form) => $form->answer->pluck($flag)->map(function($v){
+                return empty($v) ? 0 : (int) $v;
+            }))->sum();
             $count = $forms->sum(fn($form) => $form->answer->count());
         }
 
@@ -430,7 +438,9 @@ class IndexController extends Controller
 
                         }
         
-                        return $form->answer->pluck($pillar);
+                        return $form->answer->pluck($pillar)->map(function($v){
+                            return empty($v) ? 0 : (int) $v;
+                        });
                     })->sum();
         
                     $count = $forms->flatMap(function($form) use($pillar,$form_type,$country,$state){
@@ -450,7 +460,9 @@ class IndexController extends Controller
                     if($form_type == 0){
                         $forms = Form::with('answer')->where('state',$state)->get();
 
-                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->sum();
+                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar)->map(function($v){
+                            return empty($v) ? 0 : (int) $v;
+                        }))->sum();
                         $count = $forms->sum(fn($form) => $form->answer->count());
 
                     }else{
@@ -474,7 +486,9 @@ class IndexController extends Controller
                     if($form_type == 0){
                         $forms = Form::with('answer')->where('country',$country)->get();
 
-                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->sum();
+                        $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar)->map(function($v){
+                            return empty($v) ? 0 : (int) $v;
+                        }))->sum();
                         $count = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->count();
                     }else{
                         $countryFull = NCountry::where('code',$country)->pluck('name')->first();
@@ -499,7 +513,9 @@ class IndexController extends Controller
                 }elseif($type === "globalMean"){
                     $forms = Form::with('answer')->get();
 
-                    $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->sum();
+                    $sum = $forms->flatMap(fn($form) => $form->answer->pluck($pillar)->map(function($v){
+                        return empty($v) ? 0 : (int) $v;
+                    }))->sum();
                     $count = $forms->flatMap(fn($form) => $form->answer->pluck($pillar))->count();
                 }
 
@@ -600,7 +616,8 @@ class IndexController extends Controller
 
                 $overTimeMean = [];
                 foreach ($pillars as $pillar) {
-                    $answerSum = $answersInTimeRange->sum($pillar);
+                    
+                    $answerSum = $answersInTimeRange->pluck($pillar)->map(fn($val) => (int) $val)->sum();
                     $answerCount = $answersInTimeRange->count();
 
                     $answerCount = max($answerCount, 1);
