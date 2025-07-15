@@ -347,7 +347,8 @@ class AnswerController extends Controller
         $formName = Str::slug(Form::where('form_id', $request->survey)->pluck('form_title')->first()) . '-survey-data.csv';
 
         $filename = $formName;
-        $fp = fopen($filename, 'w+');
+        $filepath = storage_path('app/report/'.$filename);
+        $fp = fopen($filepath, 'w+');
 
         $headers = [
             'ID',
@@ -417,81 +418,89 @@ class AnswerController extends Controller
         fclose($fp);
         $headers = array('Content-Type' => 'text/csv');
 
-        return response()->download($filename, $formName, $headers);
+        return response()->download($filepath, $formName, $headers);
     }
 
     public function generateIndividualCSV($id)
     { 
-        $surveySingle = Answer::with('form', 'form.extraQuestions', 'form.organization', 'extraAnswer')->filterSurvey()->where('id', $id)->first();
+        try{
+            $surveySingle = Answer::with('form', 'form.extraQuestions', 'form.organization', 'extraAnswer')->filterSurvey()->where('id', $id)->first();
 
-        $filename = 'survey.csv';
-        $fp = fopen($filename, 'w+');
-
-        $headers = [
-            'ID',
-            'Survey Data ID',
-            'Survey ID',
-            'Survey',
-            'Participant',
-            'Age',
-            'Gender',
-            'Address',
-            'Well-Functioning Government',
-            'Low Levels of Corruption',
-            'Equitable Distribution of Resources',
-            'Good Relations with Neighbours',
-            'Free Flow of Information',
-            'High Levels of Human Capital',
-            'Sound Business Environment',
-            'Acceptance of the Rights of Others',
-            'Positive Peace',
-            'Negative Peace'
-        ];
-
-        if ($surveySingle->form->extraQuestions !== null) {
-            $extraQuestions = $surveySingle->form->extraQuestions->pluck('title');
-            $headers = array_merge($headers, $extraQuestions->toArray());
+            $filename = 'survey.csv';
+            $filepath = storage_path('app/individual-report/'.$filename);
+            $fp = fopen($filepath, 'w+');
+    
+            $headers = [
+                'ID',
+                'Survey Data ID',
+                'Survey ID',
+                'Survey',
+                'Participant',
+                'Age',
+                'Gender',
+                'Address',
+                'Well-Functioning Government',
+                'Low Levels of Corruption',
+                'Equitable Distribution of Resources',
+                'Good Relations with Neighbours',
+                'Free Flow of Information',
+                'High Levels of Human Capital',
+                'Sound Business Environment',
+                'Acceptance of the Rights of Others',
+                'Positive Peace',
+                'Negative Peace'
+            ];
+    
+            if ($surveySingle->form->extraQuestions !== null) {
+                $extraQuestions = $surveySingle->form->extraQuestions->pluck('title');
+                $headers = array_merge($headers, $extraQuestions->toArray());
+            }
+    
+            $headers = array_merge($headers, ['Survey Date']);
+    
+            fputcsv($fp, $headers);
+            $values = [
+                $surveySingle->id,
+                $surveySingle->event_id,
+                $surveySingle->form_id,
+                $surveySingle->form ? optional($surveySingle->form)->form_title : null,
+                $surveySingle->name,
+                $surveySingle->age,
+                $surveySingle->gender,
+                $surveySingle->{'village-town-city'},
+                $surveySingle->well_functioning_government,
+                $surveySingle->low_level_corruption,
+                $surveySingle->equitable_distribution,
+                $surveySingle->good_relations,
+                $surveySingle->free_flow,
+                $surveySingle->high_levels,
+                $surveySingle->sound_business,
+                $surveySingle->acceptance_rights,
+                $surveySingle->positive_peace,
+                $surveySingle->negative_peace
+            ];
+    
+            if ($surveySingle->form->extraQuestions !== null) {
+                $extraAnswers = $surveySingle->extraAnswer->pluck('value')->toArray();
+                $values = array_merge($values, $extraAnswers);
+            }
+    
+            $values = array_merge($values, [
+                Carbon::parse($surveySingle->created_at)->format('d M, Y')
+            ]);
+            
+            fputcsv($fp, $values);
+    
+            fclose($fp);
+            $headers = array('Content-Type' => 'text/csv');
+            
+            Log::info("Export Successfully!!!");
+            return response()->download($filepath, $surveySingle->name . ' survey.csv', $headers);
+        }catch(Exception $e){
+            Log::error('Error:',$e->getMessage());
+            return $e->getMessage();
         }
-
-        $headers = array_merge($headers, ['Survey Date']);
-
-        fputcsv($fp, $headers);
-        $values = [
-            $surveySingle->id,
-            $surveySingle->event_id,
-            $surveySingle->form_id,
-            $surveySingle->form ? optional($surveySingle->form)->form_title : null,
-            $surveySingle->name,
-            $surveySingle->age,
-            $surveySingle->gender,
-            $surveySingle->{'village-town-city'},
-            $surveySingle->well_functioning_government,
-            $surveySingle->low_level_corruption,
-            $surveySingle->equitable_distribution,
-            $surveySingle->good_relations,
-            $surveySingle->free_flow,
-            $surveySingle->high_levels,
-            $surveySingle->sound_business,
-            $surveySingle->acceptance_rights,
-            $surveySingle->positive_peace,
-            $surveySingle->negative_peace
-        ];
-
-        if ($surveySingle->form->extraQuestions !== null) {
-            $extraAnswers = $surveySingle->extraAnswer->pluck('value')->toArray();
-            $values = array_merge($values, $extraAnswers);
-        }
-
-        $values = array_merge($values, [
-            Carbon::parse($surveySingle->created_at)->format('d M, Y')
-        ]);
-
-        fputcsv($fp, $values);
-
-        fclose($fp);
-        $headers = array('Content-Type' => 'text/csv');
-
-        return response()->download($filename, $surveySingle->name . ' survey.csv', $headers);
+       
     }
 
     public function fetchAllSurvey(Request $request)
